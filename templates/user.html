@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>user</title>
+</head>
+<body>
+    <h2>user</h2>
+    <form action='{{ url_for("edit_user", username=username) }}' method="post">    
+    <label for="name">Name:</label>
+        <input type="string" name="name" id="name" value= "{{user.name}}" required><br>
+        <label for="surname">Surname:</label>
+        <input type="string" name="surname" id="surname" value= "{{user.surname}}" required><br>   
+        <button type="submit">Save</button>  
+</body>
+</html>
+
+

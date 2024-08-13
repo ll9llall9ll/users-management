@@ -54,10 +54,16 @@ users = {user.username: user.password for user in users_data.values()}
 def home():
     return redirect(url_for('login'))
 
-@app.route('/edit_user', methods=['GET', 'POST'])
+@app.route('/edit_user', methods = ['GET', 'POST'])
 def edit_user():
-    if not appData.IsLoggedIn or not users_data[appData.loggedInusername].is_admin:
-        return redirect(url_for('login'))
+    current_username = request.args.get('username')
+    user_info = users_data[current_username]
+    if request.method == 'GET' and appData.IsLoggedIn == True and users_data[appData.loggedInusername].is_admin == True and appData.IsLoggedIn:
+        return render_template('user.html', user = user_info, username = current_username) 
+    elif request.method == 'POST' and appData.IsLoggedIn == True and users_data[appData.loggedInusername].is_admin == True and appData.IsLoggedIn:
+        users_data[current_username].name = request.form['name']
+        users_data[current_username].surname = request.form['surname'] 
+    return redirect(url_for('login'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
