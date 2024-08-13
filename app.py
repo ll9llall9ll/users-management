@@ -54,6 +54,11 @@ users = {user.username: user.password for user in users_data.values()}
 def home():
     return redirect(url_for('login'))
 
+@app.route('/edit_user', methods=['GET', 'POST'])
+def edit_user():
+    if not appData.IsLoggedIn or not users_data[appData.loggedInusername].is_admin:
+        return redirect(url_for('login'))
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None

@@ -27,7 +27,7 @@
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-            max-width: 800px;
+            max-width: 900px;
             width: 100%;
             background: #ffffff;
         }
@@ -109,6 +109,18 @@
             color: white;
         }
 
+        td {
+            background-color: #f9f9f9;
+        }
+
+        tr:nth-child(even) td {
+            background-color: #f1f1f1;
+        }
+
+        tr:hover {
+            background-color: #e0f2f1;
+        }
+
         .btn {
             display: inline-block;
             padding: 10px 20px;
@@ -161,7 +173,6 @@
                         <th>Name</th>
                         <th>Surname</th>
                         <th>Edit</th>
-
                     </tr>
                 </thead>
                 <tbody>
@@ -170,14 +181,13 @@
                         <td>{{ username }}</td>
                         <td>{{ user.name }}</td>
                         <td>{{ user.surname }}</td>
+                        <td><a href="{{ url_for('edit_user', username=username) }}" class="btn">Edit</a></td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
             <a href="{{ url_for('profile') }}" class="btn">Back to Profile</a>
             <a href="{{ url_for('logout') }}" class="btn">Logout</a>
-            <a href="{{ url_for('profile') }}" class="btn">Delete user</a>
-            <a href="{{ url_for('profile') }}" class="btn">Edit user profile</a>
         </div>
     </div>
 </body>

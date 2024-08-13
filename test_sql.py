@@ -10,31 +10,16 @@ class User:
 
 
 def getUserListFromDb():
-    l = []
+    # Database connection parameters
+    conn_params = {
+        'dbname': 'avecoder',
+        'user': 'postgres',
+        'password': 'postgres',
+        'host': 'localhost',  # Or the appropriate host
+        'port': '5433'        # Default PostgreSQL port
+    }
+    userList = []
 
-
-    return l
-
-def getUserById(id):
-    
-    return User()
-
-userList = getUserListFromDb()
-if len(userList) != 1 or userList[0].name != 'Jane' or userList[0].id != 1:
-    print('getUserListFromDb test failed')
-else:
-    print('getUserListFromDb succeeded')
-
-# Database connection parameters
-conn_params = {
-    'dbname': 'avecoder',
-    'user': 'postgres',
-    'password': 'postgres',
-    'host': 'localhost',  # Or the appropriate host
-    'port': '5433'        # Default PostgreSQL port
-}
-
-try:
     # Establish a connection to the database
     conn = psycopg2.connect(**conn_params)
     
@@ -50,11 +35,29 @@ try:
     
     # Print each user
     for user in users:
-        print(f"ID: {user[0]}, Username: {user[1]}, Name: {user[2]}, Surname: {user[3]}")
-    
+        user_obj = User(
+            id=user[0],
+            username=user[1],
+            name=user[2],
+            surname=user[3],
+            password=None
+        )
+        userList.append(user_obj)
     # Close the cursor and connection
     cur.close()
     conn.close()
 
-except Exception as e:
-    print(f"An error occurred: {e}")
+    return userList
+        
+
+def getUserById(id):
+
+    return User()
+
+userList = getUserListFromDb()
+if len(userList) != 1 or userList[0].name != 'Jane' or userList[0].id != 1:
+    print('getUserListFromDb test failed')
+else:
+    print('getUserListFromDb succeeded')
+
+
