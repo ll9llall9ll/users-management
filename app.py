@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session
+from murad_db import getUserByUsernameAndPassword, insertUser, getUserByUsername
 
 class AppData:
     def __init__(self):
@@ -24,7 +25,7 @@ def check_password(password: str) -> str:
     
     has_number = False
     has_symbol = False
-    special_characters = ',/;-+%$#@*'
+    special_characters = '.,:;!?}''()[]{<>+=-*%/$^|@#&_~`'
 
     for char in password:
         if char.isdigit():
@@ -35,7 +36,7 @@ def check_password(password: str) -> str:
     if not has_number:
         return "Password should contain at least one number."
     if not has_symbol:
-        return "Password should contain at least one special character (,/;-+%$#@*)."
+        return "Password should contain at least one special character ('.,:;!?}''()[]{<>+=-*%/$^|@#&_~`')."
     
     return None 
 
@@ -46,9 +47,10 @@ app.secret_key = 'supersecretkey'
 users_data = {
     'user1': User('user1', 'Ivan', 'Ivanov', 'password1'),
     'user2': User('user2', 'Hovannes', 'Hovhannisyan', 'password2'),
+    'janedoe': User('janedoe', 'Jane', 'Doe', 'newsecurepassword' ),
     'admin': User('admin', 'Petr', 'Poghosyan', 'supersecret', True)  }
 
-users = {user.username: user.password for user in users_data.values()}
+#users = {user.username: user.password for user in users_data.values()}
 
 @app.route('/')
 def home():
@@ -69,11 +71,12 @@ def edit_user():
 def login():
     error = None
     if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        if username in users and users[username] == password:
+        current_username = request.form['username']
+        current_password = request.form['password']
+        db_user = getUserByUsernameAndPassword(current_username, current_password)
+        if db_user != None:
             appData.IsLoggedIn = True
-            appData.loggedInusername = username
+            appData.loggedInusername = db_user.username
             return redirect(url_for('profile'))
         else:
             error = "Invalid username or password"
@@ -85,9 +88,7 @@ def login():
 def profile():
     if not appData.IsLoggedIn:
         return redirect(url_for('login'))
-
     user = users_data[appData.loggedInusername]
-
     if request.method == 'POST':
         user.name = request.form['name']
         user.surname = request.form['surname']
@@ -128,30 +129,28 @@ def changepassword():
         if error is None:
             user = users_data[appData.loggedInusername]
             user.change_password(new_password)
-            users[appData.loggedInusername] = new_password  
+            #users[appData.loggedInusername] = new_password  
             return redirect(url_for('profile'))
-    
     return render_template('changepassword.html', error=error)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     error = None
     if request.method == 'POST':
-        new_username = request.form['new_username']
-        new_password = request.form['new_password']
+        current_username = request.form['new_username']
+        password = request.form['new_password']
         repeat_password = request.form['repeat_password']
-
-        if new_username in users:
+        
+        if getUserByUsername(current_username) != None:
             error = "Username already exists, please choose a different username."
-        elif new_password != repeat_password:
+        elif password != repeat_password:
             error = "Passwords do not match. Please try again."
         else:
-            error = check_password(new_password)
+            error = check_password(password)
             if error is None:
-                users[new_username] = new_password
-                users_data[new_username] = User(new_username, '', '', new_password)
+                user = User(current_username, '', '', password)
+                insertUser(user)
                 return redirect(url_for('login'))
-    
     return render_template('register.html', error=error)
 
 @app.route('/delete_user', methods=['GET', 'POST'])
