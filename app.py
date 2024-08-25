@@ -1,20 +1,10 @@
 from flask import Flask, render_template, request, redirect, url_for, session
-from murad_db import getUserByUsernameAndPassword, insertUser, getUserByUsername
+from murad_db import getUserByUsernameAndPassword, insertUser, getUserByUsername, User
 
 class AppData:
     def __init__(self):
         self.IsLoggedIn = False
-        self.loggedInusername = None
-
-class User:
-    def __init__(self, username, name, surname, password, is_admin=False):
-        self.username = username
-        self.name = name
-        self.surname = surname
-        self.password = password
-        self.is_admin = is_admin  
-
-
+        self.loggedInusername = None 
     
     def change_password(self, new_password):
         self.password = new_password
@@ -45,10 +35,10 @@ appData = AppData()
 app.secret_key = 'supersecretkey'
 
 users_data = {
-    'user1': User('user1', 'Ivan', 'Ivanov', 'password1'),
-    'user2': User('user2', 'Hovannes', 'Hovhannisyan', 'password2'),
-    'janedoe': User('janedoe', 'Jane', 'Doe', 'newsecurepassword' ),
-    'admin': User('admin', 'Petr', 'Poghosyan', 'supersecret', True)  }
+    'user1': User(1, 'user1', 'Ivan', 'Ivanov', 'password1'),
+    'user2': User(2, 'user2', 'Hovannes', 'Hovhannisyan', 'password2'),
+    'janedoe': User(3, 'janedoe', 'Jane', 'Doe', 'newsecurepassword' ),
+    'admin': User(4, 'admin', 'Petr', 'Poghosyan', 'supersecret', True)  }
 
 #users = {user.username: user.password for user in users_data.values()}
 
@@ -88,7 +78,7 @@ def login():
 def profile():
     if not appData.IsLoggedIn:
         return redirect(url_for('login'))
-    user = users_data[appData.loggedInusername]
+    user = getUserByUsername(appData.loggedInusername)
     if request.method == 'POST':
         user.name = request.form['name']
         user.surname = request.form['surname']
@@ -97,7 +87,8 @@ def profile():
 
 @app.route('/view_users',methods=['GET', 'POST'])
 def view_users():
-    if not appData.IsLoggedIn or not users_data[appData.loggedInusername].is_admin:
+    current_user = getUserByUsername(appData.loggedInusername)
+    if not appData.IsLoggedIn or not current_user.is_admin:
         return redirect(url_for('login'))
 
     return render_template('view_users.html', users=users_data)

@@ -1,4 +1,21 @@
 import psycopg2
+from enum import Enum
+
+
+class Template:
+    def __init__(self, id, name, view_name, template_type, preview_url):
+        self.id = id
+        self.name = name
+        self.view_name = view_name
+        self.template_type = template_type
+        self.preview_url = preview_url
+
+class TemplateType(Enum):
+    Wedding = 1
+    Birthday = 2
+
+
+a = TemplateType.Wedding
 
 class User:
     def __init__(self, id, username, name, surname, password):

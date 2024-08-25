@@ -1,20 +1,21 @@
 import psycopg2
 
 class User:
-    def __init__(self, id, username, name, surname, password):
+    def __init__(self, id, username, name, surname, password, is_admin = False):
         self.id = id
         self.username = username
         self.name = name
         self.surname = surname
         self.password = password
+        self.is_admin = is_admin
 
 # Database connection parameters
 conn_params = {
-    'dbname': 'test',
+    'dbname': 'avecoder',
     'user': 'postgres',
     'password': 'postgres',
     'host': 'localhost',  # Or the appropriate host
-    'port': '5432'        # Default PostgreSQL port
+    'port': '5433'        # Default PostgreSQL port
 }
 
 def getUserListFromDb():
@@ -46,11 +47,6 @@ def getUserListFromDb():
         print(f"An error occurred: {e}")
 
 userlist = getUserListFromDb()
-
-if len(userlist) != 1 or userlist[0].name != 'Jane' or userlist[0].id != 1:
-    print('getUserListFromDb test failed')
-else:
-    print('getUserListFromDb test succeeded') 
 
 def getUserById(user_id):
     #def getUserById(user_id):
@@ -100,7 +96,7 @@ def getUserByUsernameAndPassword(user_username, user_password):
 
     if len(users) == 0:
         return None
-    b = User(users[0][0], users[0][1], users[0][2], users[0][3], users[0][4])
+    b = User(users[0][0], users[0][1], users[0][2], users[0][3], users[0][4], is_admin = users[0][5])
     
     return b
 
@@ -156,5 +152,5 @@ def getUserByUsername(current_username):
     if user == None:
         return None
 
-    return User(user[0], user[1], user[2], user[3], user[4])
+    return User(user[0], user[1], user[2], user[3], user[4], user[5])
     
