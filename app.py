@@ -110,7 +110,7 @@ def admin_menu():
     return render_template('admin_menu.html')
 
 
-@app.route('/logout')
+@app.route('/logout', methods=['GET', 'POST'])
 def logout():
     appData.IsLoggedIn = False
     appData.loggedInusername = None
@@ -153,6 +153,16 @@ def register():
                 return redirect(url_for('login'))
     
     return render_template('register.html', error=error)
+
+@app.route('/delete_user', methods=['GET', 'POST'])
+def delete_user(username):
+    if username in users_data:
+        del users_data[username]
+        del users[username]
+        return redirect(url_for('view_users'))
+    else:
+        return "User not found"
+
 
 if __name__ == '__main__':
     app.run(debug=False)

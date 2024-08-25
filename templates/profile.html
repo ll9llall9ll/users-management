@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    
     <title>Profile</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
@@ -191,7 +193,7 @@
         <div class="side-image">
             <div class="text">
                 <p>Welcome to your profile at <strong>Qanaqer Coding School</strong></p>
-                <img src="images/photo_2024-08-08_11-43-14.jpg" alt="Descriptive text">
+                <img src="{{url_for('static', filename='image/photo_2024-08-08_11-43-14.jpg')}}" alt="">
             </div>
         </div>
 
@@ -211,7 +213,7 @@
             </form>
 
             <div class="links">
-                <a href="{{ url_for('logout') }}">Logout</a>
+                <button id="logout">Logout</button>
                 <a href="{{ url_for('changepassword') }}">Change Password</a>
                 {% if is_admin %}
                     <a href="{{ url_for('view_users') }}">View All Users</a>
@@ -219,5 +221,25 @@
             </div>
         </div>
     </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#logout').on('click', function() {
+                // Send a POST request when the button is clicked
+                $.ajax({
+                    url: '/logout',
+                    type: 'POST',
+                    success: function(response) {
+                        // Handle successful logout (e.g., redirect to a login page)
+                        window.location.href = '/login'; // Redirect to login page
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle errors (e.g., display a message to the user)
+                        alert('Logout failed. Please try again.');
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>

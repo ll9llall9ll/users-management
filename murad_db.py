@@ -52,28 +52,24 @@ else:
     print('getUserListFromDb test succeeded') 
 
 def getUserById(user_id):
+    #def getUserById(user_id):
     # Establish a connection to the database
-    conn = psycopg2.connect(**conn_params)
-    
-    # Create a cursor object
-    cur = conn.cursor()
-    
-    # Execute a query to select all users
-    cur.execute(f"SELECT id, username, name, surname FROM users WHERE id = {user_id}")
-    
-    # Fetch all rows from the executed query
-    users = cur.fetchall()
+    with psycopg2.connect(**conn_params) as conn:
+        # Create a cursor object
+        with conn.cursor() as cur:
+            # Use parameterized query to prevent SQL injection
+            query = sql.SQL("SELECT id, username, name, surname FROM users WHERE id = %s")
+            cur.execute(query, (user_id,))
+            
+            # Fetch the result
+            user = cur.fetchone()
 
-    if len(users) == 0:
-        return None
+            if user is None:
+                return None
 
-    a = User(users[0][0], users[0][1], users[0][2], users[0][3], '')
-    
-    # Close the cursor and connection
-    cur.close()
-    conn.close()
-    return a
-
+            # Create and return the User object
+            a = User(user[0], user[1], user[2], user[3], '')
+            return a
 user_id = 2
 e = getUserById(user_id)
 if e is not None:
