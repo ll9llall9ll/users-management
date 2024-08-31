@@ -11,11 +11,11 @@ class User:
 
 # Database connection parameters
 conn_params = {
-    'dbname': 'avecoder',
+    'dbname': 'test',
     'user': 'postgres',
     'password': 'postgres',
     'host': 'localhost',  # Or the appropriate host
-    'port': '5433'        # Default PostgreSQL port
+    'port': '5432'        # Default PostgreSQL port
 }
 
 def getUserListFromDb():
@@ -38,15 +38,27 @@ def getUserListFromDb():
         for user in users:
             a = User(user[0], user[1], user[2], user[3], '')
             l.append(a)
-
+        
+        dic = {}
+        for e in l:
+            dic[f'{e.username}'] = e
         # Close the cursor and connection
         cur.close()
         conn.close()
-        return l
+        return dic    
+
     except Exception as e:
         print(f"An error occurred: {e}")
 
-userlist = getUserListFromDb()
+u = getUserListFromDb()
+for k, v in u.items():
+    print(k, v)
+
+#a = getUserListFromDb()
+#dic = {}
+#for e in a:
+#    dic[f'{e.username}'] = e.id, f'{e.username}', f'{e.name}', f'{e.surname}'
+#print(dic)
 
 def getUserById(user_id):
     #def getUserById(user_id):
@@ -97,7 +109,6 @@ def getUserByUsernameAndPassword(user_username, user_password):
     if len(users) == 0:
         return None
     b = User(users[0][0], users[0][1], users[0][2], users[0][3], users[0][4], is_admin = users[0][5])
-    
     return b
 
 user_username = 'janedoe'
@@ -117,8 +128,8 @@ def insertUser(user):
     
     # SQL-запрос для вставки нового пользователя
     insert_query = f"""
-        INSERT INTO users (username, name, surname, password)
-        VALUES ('{user.username}', '{user.name}', '{user.surname}', '{user.password}');
+        INSERT INTO users (username, name, surname, password, is_admin)
+        VALUES ('{user.username}', '{user.name}', '{user.surname}', '{user.password}', '{user.is_admin}');
     """
     
     # Выполнение запроса
@@ -152,5 +163,48 @@ def getUserByUsername(current_username):
     if user == None:
         return None
 
-    return User(user[0], user[1], user[2], user[3], user[4], user[5])
+    return User(user[0], user[1], user[2], user[3], user[4], user[5]) 
+
+def editUser(user):
+    conn = psycopg2.connect(**conn_params)
+    # Параметры подключения к базе данных
     
+    # Создание курсора для выполнения операций с базой данных
+    cur = conn.cursor()
+    
+    # SQL-запрос для вставки нового пользователя
+    insert_query = f"""
+        UPDATE users SET name = '{user.name}', surname = '{user.surname}', password = '{user.password}'  WHERE username = '{user.username}';
+    """
+    
+    # Выполнение запроса
+    cur.execute(insert_query)
+    
+    # Подтверждение изменений
+    conn.commit()
+    
+    # Закрытие курсора и соединения
+    cur.close()
+    conn.close()
+
+def deleteUser(user):
+    conn = psycopg2.connect(**conn_params)
+    # Параметры подключения к базе данных
+    
+    # Создание курсора для выполнения операций с базой данных
+    cur = conn.cursor()
+    
+    # SQL-запрос для вставки нового пользователя
+    insert_query = f"""
+       DELETE FROM users WHERE username = '{user.username}';
+    """
+    
+    # Выполнение запроса
+    cur.execute(insert_query)
+    
+    # Подтверждение изменений
+    conn.commit()
+    
+    # Закрытие курсора и соединения
+    cur.close()
+    conn.close()

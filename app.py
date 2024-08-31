@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session
-from murad_db import getUserByUsernameAndPassword, insertUser, getUserByUsername, User
+from murad_db import getUserByUsernameAndPassword, insertUser, getUserByUsername, User, editUser, deleteUser, getUserListFromDb
 
 class AppData:
     def __init__(self):
@@ -49,12 +49,13 @@ def home():
 @app.route('/edit_user', methods = ['GET', 'POST'])
 def edit_user():
     current_username = request.args.get('username')
-    user_info = users_data[current_username]
-    if request.method == 'GET' and appData.IsLoggedIn == True and users_data[appData.loggedInusername].is_admin == True and appData.IsLoggedIn:
+    user_info = getUserByUsername(current_username)
+    if request.method == 'GET' and getUserByUsername(appData.loggedInusername).is_admin == True and appData.IsLoggedIn:
         return render_template('user.html', user = user_info, username = current_username) 
-    elif request.method == 'POST' and appData.IsLoggedIn == True and users_data[appData.loggedInusername].is_admin == True and appData.IsLoggedIn:
-        users_data[current_username].name = request.form['name']
-        users_data[current_username].surname = request.form['surname'] 
+    elif request.method == 'POST' and getUserByUsername(appData.loggedInusername).is_admin == True and appData.IsLoggedIn:
+        user = User('', current_username, request.form['name'], request.form['surname'], '', False) 
+        editUser(user)
+        return redirect(url_for('profile'))
     return redirect(url_for('login'))
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -82,7 +83,7 @@ def profile():
     if request.method == 'POST':
         user.name = request.form['name']
         user.surname = request.form['surname']
-
+        editUser(user)
     return render_template('profile.html', username=user.username, name=user.name, surname=user.surname, is_admin=user.is_admin)
 
 @app.route('/view_users',methods=['GET', 'POST'])
@@ -90,15 +91,12 @@ def view_users():
     current_user = getUserByUsername(appData.loggedInusername)
     if not appData.IsLoggedIn or not current_user.is_admin:
         return redirect(url_for('login'))
-
-    return render_template('view_users.html', users=users_data)
-
+    return render_template('view_users.html', users = getUserListFromDb())
 
 @app.route('/admin_menu')
 def admin_menu():
-    if not appData.IsLoggedIn or not users_data[appData.loggedInusername].is_admin:
+    if not appData.IsLoggedIn or not getUserByUsername(appData.loggedInusername).is_admin:
         return redirect(url_for('login'))
-    
     return render_template('admin_menu.html')
 
 
@@ -112,15 +110,22 @@ def logout():
 def changepassword():
     if not appData.IsLoggedIn:
         return redirect(url_for('login'))
-    
     error = None
     if request.method == 'POST':
-        new_password = request.form['password']
-        error = check_password(new_password)
+        current_password = request.form['current_password']
+        new_password = request.form['new_password']
+        repeat_new_password = request.form['repeat_new_password']
+        password = getUserByUsername(appData.loggedInusername).password
+        if current_password != password:
+            error = "Wrong Password."
+        elif  check_password(new_password) != None:
+            error = check_password(new_password)
+        elif repeat_new_password != new_password:
+            error = 'incorrect Password Repetition'
         if error is None:
-            user = users_data[appData.loggedInusername]
-            user.change_password(new_password)
-            #users[appData.loggedInusername] = new_password  
+            user= getUserByUsername(appData.loggedInusername)
+            user.password = new_password
+            editUser(user)
             return redirect(url_for('profile'))
     return render_template('changepassword.html', error=error)
 
@@ -139,20 +144,19 @@ def register():
         else:
             error = check_password(password)
             if error is None:
-                user = User(current_username, '', '', password)
+                user = User('', current_username, '', '', password, False)
                 insertUser(user)
                 return redirect(url_for('login'))
     return render_template('register.html', error=error)
 
-@app.route('/delete_user', methods=['GET', 'POST'])
-def delete_user(username):
-    if username in users_data:
-        del users_data[username]
-        del users[username]
+@app.route('/delete_user', methods=['GET'])
+def delete_user():
+    current_username = request.args.get('username')
+    if getUserByUsername(appData.loggedInusername).is_admin == True and appData.IsLoggedIn:
+        user = User('', current_username, '', '', '', False) 
+        deleteUser(user)
         return redirect(url_for('view_users'))
-    else:
-        return "User not found"
-
+    return redirect(url_for('login'))
 
 if __name__ == '__main__':
     app.run(debug=False)
