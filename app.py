@@ -1,10 +1,10 @@
 from flask import Flask, render_template, request, redirect, url_for, session
-from murad_db import getUserByUsernameAndPassword, insertUser, getUserByUsername, User, editUser, deleteUser, getUserListFromDb
+from murad_db import getUserByUsernameAndPassword, insertUser, getUserById, User, editUser, deleteUser, getUserListFromDb, getUserByUsername
 
 class AppData:
     def __init__(self):
         self.IsLoggedIn = False
-        self.loggedInusername = None 
+        self.loggedInuserId = None 
     
     def change_password(self, new_password):
         self.password = new_password
@@ -50,10 +50,10 @@ def home():
 def edit_user():
     current_username = request.args.get('username')
     user_info = getUserByUsername(current_username)
-    if request.method == 'GET' and getUserByUsername(appData.loggedInusername).is_admin == True and appData.IsLoggedIn:
+    if request.method == 'GET' and user_info.is_admin == True and appData.IsLoggedIn:
         return render_template('user.html', user = user_info, username = current_username) 
-    elif request.method == 'POST' and getUserByUsername(appData.loggedInusername).is_admin == True and appData.IsLoggedIn:
-        user = User('', current_username, request.form['name'], request.form['surname'], '', False) 
+    elif request.method == 'POST' and user_info.is_admin == True and appData.IsLoggedIn:
+        user = User('', current_username, request.form['name'], request.form['surname'], '', True) 
         editUser(user)
         return redirect(url_for('profile'))
     return redirect(url_for('login'))
@@ -67,7 +67,7 @@ def login():
         db_user = getUserByUsernameAndPassword(current_username, current_password)
         if db_user != None:
             appData.IsLoggedIn = True
-            appData.loggedInusername = db_user.username
+            appData.loggedInuserId = db_user.id
             return redirect(url_for('profile'))
         else:
             error = "Invalid username or password"
@@ -79,23 +79,23 @@ def login():
 def profile():
     if not appData.IsLoggedIn:
         return redirect(url_for('login'))
-    user = getUserByUsername(appData.loggedInusername)
+    user = getUserById(appData.loggedInuserId)    
     if request.method == 'POST':
         user.name = request.form['name']
         user.surname = request.form['surname']
         editUser(user)
-    return render_template('profile.html', username=user.username, name=user.name, surname=user.surname, is_admin=user.is_admin)
+    return render_template('profile.html', loggedInuserId = user.id, username=user.username, name=user.name, surname=user.surname, is_admin=user.is_admin)
 
 @app.route('/view_users',methods=['GET', 'POST'])
 def view_users():
-    current_user = getUserByUsername(appData.loggedInusername)
+    current_user = getUserById(appData.loggedInuserId)
     if not appData.IsLoggedIn or not current_user.is_admin:
         return redirect(url_for('login'))
     return render_template('view_users.html', users = getUserListFromDb())
 
 @app.route('/admin_menu')
 def admin_menu():
-    if not appData.IsLoggedIn or not getUserByUsername(appData.loggedInusername).is_admin:
+    if not appData.IsLoggedIn or not getUserById(appData.loggedInuserId).is_admin:
         return redirect(url_for('login'))
     return render_template('admin_menu.html')
 
@@ -103,7 +103,7 @@ def admin_menu():
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
     appData.IsLoggedIn = False
-    appData.loggedInusername = None
+    appData.loggedInuserId = None
     return redirect(url_for('login'))
 
 @app.route('/changePassword', methods=['GET', 'POST'])
@@ -115,7 +115,7 @@ def changepassword():
         current_password = request.form['current_password']
         new_password = request.form['new_password']
         repeat_new_password = request.form['repeat_new_password']
-        password = getUserByUsername(appData.loggedInusername).password
+        password = getUserById(appData.loggedInuserId).password
         if current_password != password:
             error = "Wrong Password."
         elif  check_password(new_password) != None:
@@ -123,7 +123,7 @@ def changepassword():
         elif repeat_new_password != new_password:
             error = 'incorrect Password Repetition'
         if error is None:
-            user= getUserByUsername(appData.loggedInusername)
+            user= getUserById(appData.loggedInuserId)
             user.password = new_password
             editUser(user)
             return redirect(url_for('profile'))
@@ -151,9 +151,9 @@ def register():
 
 @app.route('/delete_user', methods=['GET'])
 def delete_user():
-    current_username = request.args.get('username')
-    if getUserByUsername(appData.loggedInusername).is_admin == True and appData.IsLoggedIn:
-        user = User('', current_username, '', '', '', False) 
+    current_id = request.args.get('id')
+    if getUserByUsername(appData.loggedInuserId).is_admin == True and appData.IsLoggedIn:
+        user = User(current_id, '', '', '', '', False) 
         deleteUser(user)
         return redirect(url_for('view_users'))
     return redirect(url_for('login'))
