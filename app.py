@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, abort, render_template, request, redirect, url_for, session
 from murad_db import getUserByUsernameAndPassword, insertUser, getUserById, User, editUser, deleteUser, getUserListFromDb, getUserByUsername
 
 class AppData:
@@ -15,6 +15,7 @@ def check_password(password: str) -> str:
     
     has_number = False
     has_symbol = False
+    has_upper = False
     special_characters = '.,:;!?}''()[]{<>+=-*%/$^|@#&_~`'
 
     for char in password:
@@ -22,12 +23,15 @@ def check_password(password: str) -> str:
             has_number = True
         if char in special_characters:
             has_symbol = True
+        if char.isupper():
+            has_upper = True
 
     if not has_number:
         return "Password should contain at least one number."
     if not has_symbol:
         return "Password should contain at least one special character ('.,:;!?}''()[]{<>+=-*%/$^|@#&_~`')."
-    
+    if not has_upper:
+        return "The password must contain at least one capital letter."
     return None 
 
 app = Flask(__name__, static_folder='test')
@@ -48,12 +52,14 @@ def home():
 
 @app.route('/edit_user', methods = ['GET', 'POST'])
 def edit_user():
-    current_username = request.args.get('username')
-    user_info = getUserByUsername(current_username)
-    if request.method == 'GET' and user_info.is_admin == True and appData.IsLoggedIn:
-        return render_template('user.html', user = user_info, username = current_username) 
-    elif request.method == 'POST' and user_info.is_admin == True and appData.IsLoggedIn:
-        user = User('', current_username, request.form['name'], request.form['surname'], '', True) 
+    if  appData.IsLoggedIn == False or getUserById(appData.loggedInuserId).is_admin == False:
+        abort(403)
+    current_id = request.args.get('id')
+    user_info = getUserById(current_id)
+    if request.method == 'GET' and getUserById(appData.loggedInuserId).is_admin == True and appData.IsLoggedIn:
+        return render_template('user.html', user = user_info, id = current_id) 
+    elif request.method == 'POST' and getUserById(appData.loggedInuserId).is_admin == True and appData.IsLoggedIn:
+        user = User(current_id, '', request.form['name'], request.form['surname'], user_info.password, False) 
         editUser(user)
         return redirect(url_for('profile'))
     return redirect(url_for('login'))
@@ -82,12 +88,14 @@ def profile():
     user = getUserById(appData.loggedInuserId)    
     if request.method == 'POST':
         user.name = request.form['name']
-        user.surname = request.form['surname']
+        user.surname = request.form['surname']  
         editUser(user)
     return render_template('profile.html', loggedInuserId = user.id, username=user.username, name=user.name, surname=user.surname, is_admin=user.is_admin)
 
 @app.route('/view_users',methods=['GET', 'POST'])
 def view_users():
+    if  appData.IsLoggedIn == False or getUserById(appData.loggedInuserId).is_admin == False:
+        abort(403)
     current_user = getUserById(appData.loggedInuserId)
     if not appData.IsLoggedIn or not current_user.is_admin:
         return redirect(url_for('login'))
@@ -123,7 +131,7 @@ def changepassword():
         elif repeat_new_password != new_password:
             error = 'incorrect Password Repetition'
         if error is None:
-            user= getUserById(appData.loggedInuserId)
+            user = getUserById(appData.loggedInuserId)
             user.password = new_password
             editUser(user)
             return redirect(url_for('profile'))
@@ -151,8 +159,10 @@ def register():
 
 @app.route('/delete_user', methods=['GET'])
 def delete_user():
+    if  appData.IsLoggedIn == False or getUserById(appData.loggedInuserId).is_admin == False:
+        abort(403)
     current_id = request.args.get('id')
-    if getUserByUsername(appData.loggedInuserId).is_admin == True and appData.IsLoggedIn:
+    if getUserById(appData.loggedInuserId).is_admin == True and appData.IsLoggedIn:
         user = User(current_id, '', '', '', '', False) 
         deleteUser(user)
         return redirect(url_for('view_users'))

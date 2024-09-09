@@ -180,7 +180,7 @@
                 <tbody>
                     {% for user in users %}
                     <tr>
-                        <td>{{ user.id }}</td>
+                        <td>{{ user.username }}</td>
                         <td>{{ user.name }}</td>
                         <td>{{ user.surname }}</td>
                         <td><a href="{{ url_for('edit_user', id=user.id) }}" class="btn">Edit</a></td>
