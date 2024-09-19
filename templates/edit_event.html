@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit User</title>
+    <title>Edit Event</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
@@ -181,22 +181,50 @@
     <div class="container">
         <div class="side-image">
             <div class="text">
-                <p>Edit User Profile at <strong>Qanaqer Coding School</strong></p>
+                <p>Edit Event Profile at <strong>Qanaqer Coding School</strong></p>
                 <img src="{{url_for('static', filename='image/photo_2024-08-08_11-43-14.jpg')}}" alt="">
                 <img src="images/photo_2024-08-08_11-43-14.jpg" alt="Descriptive text">
             </div>
         </div>
 
         <div class="right">
-            <h2>Edit User Profile</h2>
-            <form method="POST" action="{{ url_for('edit_user', id=user.id) }}">
+            <h2>Edit Event Profile</h2>
+            <form method="POST" action="{{ url_for('edit_event', id = event.id) }}">
                 <div class="form-group">
-                    <label for="name">First Name:</label>
-                    <input type="text" name="name" id="name" value="{{ user.name }}" required>
+                    <label for="internal_name">Internal name:</label>
+                    <input type="text" name="internal_name" value="{{ event.internal_name }}" required>
                 </div>
                 <div class="form-group">
-                    <label for="surname">Last Name:</label>
-                    <input type="text" name="surname" id="surname" value="{{ user.surname }}" required>
+                    <label for="template_id">Template id:</label>
+                    <input type="number" name="template_id" value="{{ event.template_id }}" required>
+                </div>
+                <div class="form-group">    
+                    <label for="date">Date:</label>
+                    <input type="datetime-local" name="date" value="{{ event.date }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="address_coumtry">Address country:</label>
+                    <input type="text" name="address_country" value="{{ event.address_country }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="address_city">Address city:</label>
+                    <input type="text" name="address_city" value="{{ event.address_city }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="address_line">Address line:</label>
+                    <input type="text" name="address_line" value="{{ event.address_line }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="display_name">Display name:</label>
+                    <input type="text" name="display_name" value="{{ event.display_name }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="hall_name">Hall name:</label>
+                    <input type="text" name="hall_name" value="{{ event.hall_name }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="unique_domain">Unique domain:</label>
+                    <input type="text" name="unique_domain" value="{{ event.unique_domain }}" required>
                 </div>
                 <button type="submit" class="btn">Save Changes</button>
             </form>

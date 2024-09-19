@@ -1,11 +1,13 @@
 from flask import Flask, abort, render_template, request, redirect, url_for, session
 from murad_db import getUserByUsernameAndPassword, insertUser, getUserById, User, editUser, deleteUser, getUserListFromDb, getUserByUsername
+from event_db import Event, createEvent, getEventByUserId, updateEvent, getEventById, deleteEvent
+from datetime import datetime
 
 class AppData:
     def __init__(self):
         self.IsLoggedIn = False
         self.loggedInuserId = None 
-    
+       
     def change_password(self, new_password):
         self.password = new_password
 
@@ -117,6 +119,7 @@ def logout():
 @app.route('/changePassword', methods=['GET', 'POST'])
 def changepassword():
     if not appData.IsLoggedIn:
+        
         return redirect(url_for('login'))
     error = None
     if request.method == 'POST':
@@ -167,6 +170,73 @@ def delete_user():
         deleteUser(user)
         return redirect(url_for('view_users'))
     return redirect(url_for('login'))
+
+@app.route('/create_event', methods = ['GET', 'POST'])
+def create_event():
+    if request.method == 'GET' and appData.IsLoggedIn:
+        return render_template('create_event.html')
+    elif request.method == 'POST' and appData.IsLoggedIn:
+        internal_name = request.form['internal_name']
+        template_id = request.form['template_id']
+        user_id = appData.loggedInuserId
+        date = request.form['date']
+        address_country = request.form['address_country']
+        address_city = request.form['address_city']
+        address_line = request.form['address_line']
+        display_name = request.form['display_name']
+        hall_name = request.form['hall_name']
+        unique_domain = request.form['unique_domain']
+        date_string = date
+        date_format = '%Y-%m-%dT%H:%M'
+        datetime_obj = datetime.strptime(date_string, date_format)
+        event = Event(internal_name, template_id, user_id, datetime_obj, address_country, address_city, address_line, display_name, hall_name, unique_domain)
+        createEvent(event)
+        return redirect(url_for('view_events'))
+    return redirect(url_for('login'))
+
+@app.route('/view_events', methods = ['GET', 'POST'])
+def view_events():
+    if not appData.IsLoggedIn:
+        return redirect(url_for('login'))
+    user_id = appData.loggedInuserId
+    if appData.IsLoggedIn and request.method == 'GET':
+        return render_template('view_events.html', events = getEventByUserId(user_id))
+        
+
+@app.route('/edit_event', methods = ['GET', 'POST'])
+def edit_event():
+    id = request.args.get('id')
+    event = getEventById(id)
+    if appData.IsLoggedIn and request.method == 'GET':
+        return render_template('edit_event.html', event = event)
+    elif appData.IsLoggedIn and request.method == 'POST':    
+        internal_name = request.form['internal_name']
+        template_id = request.form['template_id']
+        user_id = appData.loggedInuserId
+        date = request.form['date']
+        address_country = request.form['address_country']
+        address_city = request.form['address_city']
+        address_line = request.form['address_line']
+        display_name = request.form['display_name']
+        hall_name = request.form['hall_name']
+        unique_domain = request.form['unique_domain']
+        date_string = date
+        date_format = '%Y-%m-%dT%H:%M'
+        datetime_obj = datetime.strptime(date_string, date_format)
+        event = Event(internal_name, template_id, user_id, datetime_obj, address_country, address_city, address_line, display_name, hall_name, unique_domain, id = id)
+        updateEvent(event)
+        return redirect(url_for('view_events'))
+    return redirect(url_for('login'))
+
+@app.route('/delete_event', methods = ['GET', 'POST'])
+def delete_event(): 
+    id = request.args.get('id')
+    if appData.IsLoggedIn:
+        deleteEvent(id)
+        return redirect(url_for('view_events'))
+    return redirect(url_for('login'))
+
+
 
 if __name__ == '__main__':
     app.run(debug=False)

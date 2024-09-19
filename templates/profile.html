@@ -211,35 +211,60 @@
                 </div>
                 <button type="submit" class="btn">Save</button>
             </form>
-
             <div class="links">
-                <button id="logout">Logout</button>
+                <a href="{{ url_for('view_events') }}">Event</a>
                 <a href="{{ url_for('changepassword') }}">Change Password</a>
                 {% if is_admin %}
-                    <a href="{{ url_for('view_users') }}">View All Users</a>
+                    <a href="{{ url_for('view_users') }}">View All Users</a>                   
                 {% endif %}
+                <a href="{{ url_for('logout') }}" class="btn">Logout</a>
+
             </div>
         </div>
-    </div>
-
+    </div>  
+    <script>
+        $(document).ready(function() {
+            $('#view_events').on('click', function() {
+                // Send a POST request when the button is clicked
+                $.ajax({
+                    url: '/view_events',
+                    type: 'GET',
+                    success: function(response) {
+                        // Handle successful logout (e.g., redirect to a login page)
+                        window.location.href = '/view_events'; // Redirect to login page
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle errors (e.g., display a message to the user)
+                        alert('event failed. Please try again.');
+                        
+    
+                    }
+                });
+            });
+        });
+    </script>
+    </body>
+    </html>
     <script>
         $(document).ready(function() {
             $('#logout').on('click', function() {
                 // Send a POST request when the button is clicked
                 $.ajax({
                     url: '/logout',
-                    type: 'POST',
+                    type: 'GET',
                     success: function(response) {
                         // Handle successful logout (e.g., redirect to a login page)
                         window.location.href = '/login'; // Redirect to login page
                     },
                     error: function(xhr, status, error) {
                         // Handle errors (e.g., display a message to the user)
-                        alert('Logout failed. Please try again.');
+                        alert('logout failed. Please try again.');
+                        
+    
                     }
                 });
             });
         });
     </script>
-</body>
-</html>
+    </body>
+    </html>

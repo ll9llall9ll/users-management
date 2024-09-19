@@ -1,7 +1,7 @@
 import psycopg2
 
 class User:
-    def __init__(self, id, username, name, surname, password, is_admin = False):
+    def __init__(self, id, username, name, surname, password, is_admin=False):
         self.id = id
         self.username = username
         self.name = name
@@ -14,182 +14,85 @@ conn_params = {
     'dbname': 'test',
     'user': 'postgres',
     'password': 'postgres',
-    'host': 'localhost',  # Or the appropriate host
-    'port': '5432'        # Default PostgreSQL port
+    'host': 'localhost',
+    'port': '5432'
 }
 
 def getUserListFromDb():
     userlist = []
     try:
-        # Establish a connection to the database
-        conn = psycopg2.connect(**conn_params)
-        
-        # Create a cursor object
-        cur = conn.cursor()
-        
-        # Execute a query to select all users
-        cur.execute("SELECT * FROM users")
-        
-        # Fetch all rows from the executed query
-        users = cur.fetchall()
-        
-        # Print each user
-        
-        for user in users:
-            a = User(user[0], user[1], user[2], user[3], '')
-            userlist.append(a)
-        return userlist 
+        with psycopg2.connect(**conn_params) as conn:
+            with conn.cursor() as cur:
+                cur.execute("SELECT * FROM users")
+                users = cur.fetchall()
+
+                for user in users:
+                    a = User(user[0], user[1], user[2], user[3], '')
+                    userlist.append(a)
+
+        return userlist
 
     except Exception as e:
         print(f"An error occurred: {e}")
-#users = getUserListFromDb()
-#for user in users:
-#    print(user.id)
 
 def getUserById(user_id):
-    # Establish a connection to the database
+    with psycopg2.connect(**conn_params) as conn:
+        with conn.cursor() as cur:
+            cur.execute(f"SELECT * FROM users WHERE id = {user_id}")
+            user = cur.fetchone()
 
-    conn = psycopg2.connect(**conn_params)
-    
-    # Create a cursor object
-    cur = conn.cursor()
-    
-    # Execute a query to select all users
-    cur.execute(f"SELECT * FROM users WHERE id = {user_id}")
-    
-    # Fetch all rows from the executed query
-    user = cur.fetchone()
+            if user is None:
+                return None
 
-    if user is None:
-        return None
-
-    # Create and return the User object
-    a = User(user[0], user[1], user[2], user[3], user[4], user[5])
-    return a
-
-#user_id = 1
-#e = getUserById(user_id)
-#if e is not None:
-#    print(e.id, e.username, e.name, e.surname, e.password)
-#else:
-#    print(f'User with id: {user_id} doesn''t exist')
+            return User(user[0], user[1], user[2], user[3], user[4], user[5])
 
 def getUserByUsernameAndPassword(user_username, user_password):
-    # Establish a connection to the database
-    conn = psycopg2.connect(**conn_params)
-    
-    # Create a cursor object
-    cur = conn.cursor()
-    
-    # Execute a query to select all users
-    cur.execute(f"SELECT * FROM users WHERE username = '{user_username}' and password = '{user_password}'")
-    
-    # Fetch all rows from the executed query
-    users = cur.fetchall()
+    with psycopg2.connect(**conn_params) as conn:
+        with conn.cursor() as cur:
+            cur.execute(f"SELECT * FROM users WHERE username = '{user_username}' AND password = '{user_password}'")
+            users = cur.fetchall()
 
-    # Close the cursor and connection
-    cur.close()
-    conn.close()
+            if len(users) == 0:
+                return None
 
-    if len(users) == 0:
-        return None
-    b = User(users[0][0], users[0][1], users[0][2], users[0][3], users[0][4], is_admin = users[0][5])
-    return b
-
-#user_username = 'janedoe'
-#user_password = 'newsecurepassword'
-#c = getUserByUsernameAndPassword(user_username, user_password)
-#if c is not None:
-#    print(c.id, c.username,  c.name, c.surname, c.password)
-#else:
-#    print(f"User with username: {user_username} and password: {user_password} doesn't exist")
+            return User(users[0][0], users[0][1], users[0][2], users[0][3], users[0][4], is_admin=users[0][5])
 
 def insertUser(user):
-    conn = psycopg2.connect(**conn_params)
-    # Параметры подключения к базе данных
-    
-    # Создание курсора для выполнения операций с базой данных
-    cur = conn.cursor()
-    
-    # SQL-запрос для вставки нового пользователя
     insert_query = f"""
         INSERT INTO users (username, name, surname, password, is_admin)
         VALUES ('{user.username}', '{user.name}', '{user.surname}', '{user.password}', '{user.is_admin}');
     """
-    
-    # Выполнение запроса
-    cur.execute(insert_query)
-    
-    # Подтверждение изменений
-    conn.commit()
-    
-    # Закрытие курсора и соединения
-    cur.close()
-    conn.close()
 
-
+    with psycopg2.connect(**conn_params) as conn:
+        with conn.cursor() as cur:
+            cur.execute(insert_query)
+            conn.commit()
 
 def getUserByUsername(current_username):
-    conn = psycopg2.connect(**conn_params)
-    
-    # Create a cursor object
-    cur = conn.cursor()
-    
-    # Execute a query to select all users
-    cur.execute(f"SELECT * FROM users WHERE username = '{current_username}'")
-    
-    # Fetch all rows from the executed query
-    user = cur.fetchone()
+    with psycopg2.connect(**conn_params) as conn:
+        with conn.cursor() as cur:
+            cur.execute(f"SELECT * FROM users WHERE username = '{current_username}'")
+            user = cur.fetchone()
 
-    # Close the cursor and connection
-    cur.close()
-    conn.close()
+            if user is None:
+                return None
 
-    if user == None:
-        return None
-
-    return User(user[0], user[1], user[2], user[3], user[4], user[5]) 
+            return User(user[0], user[1], user[2], user[3], user[4], user[5])
 
 def editUser(user):
-    conn = psycopg2.connect(**conn_params)
-    # Параметры подключения к базе данных
-    
-    # Создание курсора для выполнения операций с базой данных
-    cur = conn.cursor()
-    
-    # SQL-запрос для вставки нового пользователя
-    insert_query = f"""
-        UPDATE users SET name = '{user.name}', surname = '{user.surname}', password = '{user.password}'  WHERE id = '{user.id}';
+    update_query = f"""
+        UPDATE users SET name = '{user.name}', surname = '{user.surname}', password = '{user.password}' WHERE id = '{user.id}';
     """
-    
-    # Выполнение запроса
-    cur.execute(insert_query)
-    
-    # Подтверждение изменений
-    conn.commit()
-    
-    # Закрытие курсора и соединения
-    cur.close()
-    conn.close()
+
+    with psycopg2.connect(**conn_params) as conn:
+        with conn.cursor() as cur:
+            cur.execute(update_query)
+            conn.commit()
 
 def deleteUser(user):
-    conn = psycopg2.connect(**conn_params)
-    # Параметры подключения к базе данных
-    
-    # Создание курсора для выполнения операций с базой данных
-    cur = conn.cursor()
-    
-    # SQL-запрос для вставки нового пользователя
-    insert_query = f"""
-       DELETE FROM users WHERE id = '{user.id}';
-    """
-    
-    # Выполнение запроса
-    cur.execute(insert_query)
-    
-    # Подтверждение изменений
-    conn.commit()
-    
-    # Закрытие курсора и соединения
-    cur.close()
-    conn.close()
+    delete_query = f"DELETE FROM users WHERE id = '{user.id}';"
+
+    with psycopg2.connect(**conn_params) as conn:
+        with conn.cursor() as cur:
+            cur.execute(delete_query)
+            conn.commit()

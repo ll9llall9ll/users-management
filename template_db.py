@@ -16,79 +16,61 @@ conn_params = {
 }
 
 def create_template(template):
-    conn = psycopg2.connect(**conn_params)
-
-    cur = conn.cursor()
-    
     insert_query = f"""
-        INSERT INTO templates ( displayname, viewname, type)
+        INSERT INTO templates (displayname, viewname, type)
         VALUES ('{template.displayname}', '{template.viewname}', '{template.type}');
     """
-    
-    cur.execute(insert_query)
-    
-    conn.commit()
 
-    cur.close()
-    conn.close()
+    with psycopg2.connect(**conn_params) as conn:
+        with conn.cursor() as cur:
+            cur.execute(insert_query)
+            conn.commit()
 
 template = TemplateDB('', 'Update_template2', 'Samplevew3', 'TypeB')
 create_template(template)
 
 def get_template_by_id(id):
-    conn = psycopg2.connect(**conn_params)
-    
-    cur = conn.cursor()
+    with psycopg2.connect(**conn_params) as conn:
+        with conn.cursor() as cur:
+            cur.execute(f"SELECT * FROM templates WHERE id = {id}")
+            template = cur.fetchone()
 
-    cur.execute(f"SELECT * FROM templates WHERE id = {id}")
-    
-    template = cur.fetchone()
+            if template is None:
+                return None
 
-    if template is None:
-        return None
+            return TemplateDB(template[0], template[1], template[2], template[3])
 
-    a = TemplateDB(template[0], template[1], template[2], template[3])
-    return a   
-
-#e = get_template_by_id(id = 1)
-#print(e.id, e.displayname, e.viewname, e.type)
+# e = get_template_by_id(id=1)
+# print(e.id, e.displayname, e.viewname, e.type)
 
 def update_template(template):
-    conn = psycopg2.connect(**conn_params)
-    
-    cur = conn.cursor()
-
-    insert_query = f"""
-        UPDATE templates SET displayname = '{template.displayname}', viewname = '{template.viewname}', 
-        type = '{template.type}';
+    update_query = f"""
+        UPDATE templates SET displayname = '{template.displayname}', 
+        viewname = '{template.viewname}', type = '{template.type}'
+        WHERE id = {template.id};
     """
-    
-    cur.execute(insert_query)
-    
-    conn.commit()
-    
-    cur.close()
-    conn.close()
 
-#template = TemplateDB('', 'Updated Template', 'SampleView2', 'TypeA')
-#update_template(template)
-     
-def get_all_tamplates():
-    l = []
-    conn = psycopg2.connect(**conn_params)
-    
-    cur = conn.cursor()
+    with psycopg2.connect(**conn_params) as conn:
+        with conn.cursor() as cur:
+            cur.execute(update_query)
+            conn.commit()
 
-    cur.execute(f"SELECT * FROM templates;")
-    
-    templates = cur.fetchall()
+# template = TemplateDB(1, 'Updated Template', 'SampleView2', 'TypeA')
+# update_template(template)
 
-    if templates is None:
-        return None
+def get_all_templates():
+    templates_list = []
     
-    for template in templates:
-        l.append(template)
-    return l
-        
-print(get_all_tamplates())
-        
+    with psycopg2.connect(**conn_params) as conn:
+        with conn.cursor() as cur:
+            cur.execute("SELECT * FROM templates;")
+            templates = cur.fetchall()
+
+            for template in templates:
+                templates_list.append(TemplateDB(template[0], template[1], template[2], template[3]))
+
+    return templates_list
+
+# templates = get_all_templates()
+# for template in templates:
+#     print(template.id, template.displayname, template.viewname, template.type)
