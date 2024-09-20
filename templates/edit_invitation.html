@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Event</title>
+    <title>Edit Invitation</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
@@ -181,60 +181,42 @@
     <div class="container">
         <div class="side-image">
             <div class="text">
-                <p>Create Evenet Profile For <strong>Qanaqer Coding School</strong></p>
+                <p>Edit Profile at <strong>Qanaqer Coding School</strong></p>
                 <img src="{{url_for('static', filename='image/photo_2024-08-08_11-43-14.jpg')}}" alt="">
                 <img src="images/photo_2024-08-08_11-43-14.jpg" alt="Descriptive text">
             </div>
         </div>
 
         <div class="right">
-            <h2>Event</h2>
-            <form method="POST" action="{{ url_for('create_event') }}">
+            <h2>Edit Invitation Profile</h2>
+            <form method="POST" action="{{ url_for('edit_invitation', id=invitation.id) }}">
                 <div class="form-group">
-                    <label for="internal_name">Internal name:</label>
-                    <input type="text" name="internal_name" value="{{ internal_name }}" required>
-                </div>
-                <div class="form-group">
-                    <label for="template_id">Template id:</label>
-                    <input type="number" name="template_id" value="{{ template_id }}" required>
-                </div>
-                <div class="form-group">    
-                    <label for="date">Date:</label>
-                    <input type="datetime-local" name="date" value="{{ date }}" required>
+                    <label for="name">Name:</label>
+                    <input type="text" name="name" id="name" value="{{ invitation.name }}" required>
                 </div>
                 <div class="form-group">
-                    <label for="address_coumtry">Address country:</label>
-                    <input type="text" name="address_country" value="{{ address_country }}" required>
+                    <label for="hash">Hash:</label>
+                    <input type="text" name="hash" id="hash" value="{{ invitation.hash }}" required>
                 </div>
                 <div class="form-group">
-                    <label for="address_city">Address city:</label>
-                    <input type="text" name="address_city" value="{{ address_city }}" required>
+                    <label for="event_id">Event Id:</label>
+                    <input type="number" name="event_id" id="event_id" value="{{ invitation.event_id }}" required>
                 </div>
                 <div class="form-group">
-                    <label for="address_line">Address line:</label>
-                    <input type="text" name="address_line" value="{{ address_line }}" required>
+                    <label for="width_spouse">With Spouse:</label>
+                    <input type="text" name="with_spouse" id="with_spouse" value="{{ invitation.with_spouse }}" required>
                 </div>
                 <div class="form-group">
-                    <label for="display_name">Display name:</label>
-                    <input type="text" name="display_name" value="{{ display_name }}" required>
+                    <label for="accepted">Accepted:</label>
+                    <input type="text" name="accepted" id="accepted" value="{{ invitation.accepted }}" required>
                 </div>
-                <div class="form-group">
-                    <label for="hall_name">Hall name:</label>
-                    <input type="text" name="hall_name" value="{{ hall_name }}" required>
-                </div>
-                <div class="form-group">
-                    <label for="unique_domain">Unique domain:</label>
-                    <input type="text" name="unique_domain" value="{{ unique_domain }}" required>
-                </div>
-                <button type="submit" class="btn">Save</button>
-            </form>     
+                <button type="submit" class="btn">Save Changes</button>
+            </form>
+
             {% if error %}
-            <p class="error-message">{{ error }}</p>
-        {% endif %}
-        <a href="{{ url_for('profile') }}" class="btn">Back to Profile</a>
-        <a href="{{ url_for('logout') }}" class="btn">Logout</a>
+                <p class="error-message">{{ error }}</p>
+            {% endif %}
+        </div>
     </div>
-</div>
 </body>
 </html>
-            

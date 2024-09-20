@@ -21,9 +21,6 @@ def create_template(template):
             cur.execute(insert_query)
             conn.commit()
 
-template = TemplateDB('', 'Update_template2', 'Samplevew3', 'TypeB')
-create_template(template)
-
 def get_template_by_id(id):
     with psycopg2.connect(**conn_params) as conn:
         with conn.cursor() as cur:

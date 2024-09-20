@@ -49,7 +49,7 @@ def getInvitationById(invitation_id):
             
             return constructInv(invitation)
 
-def getInvitationsList(event_id):
+def getInvitationsListByEventId(event_id):
     invitationlist = []
     try:
         with psycopg2.connect(**conn_params) as conn:

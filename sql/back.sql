@@ -25,7 +25,7 @@ SET default_table_access_method = heap;
 --
 
 CREATE TABLE public.events (
-    id integer NOT NULL,
+    id serial PRIMARY KEY,
     internal_name character varying(255) NOT NULL,
     template_id integer,
     user_id integer,
@@ -47,7 +47,7 @@ ALTER TABLE public.events OWNER TO postgres;
 --
 
 CREATE TABLE public.invitation (
-    id integer NOT NULL,
+    id serial PRIMARY KEY,
     name character varying(255) NOT NULL,
     event_id integer NOT NULL,
     with_spouse boolean NOT NULL,
@@ -85,7 +85,7 @@ ALTER SEQUENCE public.new_table_id_seq OWNED BY public.invitation.id;
 --
 
 CREATE TABLE public.templates (
-    id integer NOT NULL,
+    id serial PRIMARY KEY,
     displayname character varying(255) NOT NULL,
     viewname character varying(255) NOT NULL,
     type character varying(100) NOT NULL,
@@ -136,7 +136,7 @@ ALTER TABLE public.test_table OWNER TO postgres;
 --
 
 CREATE TABLE public.users (
-    id integer NOT NULL,
+    id serial PRIMARY KEY,
     username character varying(50) NOT NULL,
     name character varying(50) NOT NULL,
     surname character varying(50) NOT NULL,

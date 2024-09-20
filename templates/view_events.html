@@ -174,6 +174,7 @@
                         <th>Internal name</th>
                         <th>Edit</th>
                         <th>Delete</th>
+                        <th>View invitation</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -183,6 +184,8 @@
                         <td>{{ event.internal_name }}</td>
                         <td><a href="{{ url_for('edit_event', id=event.id) }}" class="btn">Edit</a></td>
                         <td><a href="{{ url_for('delete_event', id=event.id) }}" class="btn">Delete</a></td>
+                        <td><a href="{{ url_for('view_invitation', event_id=event.id) }}" class="btn">View</a></td>
+
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -195,33 +198,4 @@
     </div>
 </body>
 </html>
-        <div class="right">
-            <h2>Invitations</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Name</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for invitation in invitations %}
-                        <tr>
-                        <td>{{ invitation.id }}</td>
-                        <td>{{ invitation.name }}</td>
-                        <td><a href="{{ url_for('edit_invitation', id=invitation.id) }}" class="btn">Edit</a></td>
-                        <td><a href="{{ url_for('delete_invitation', id=invitation.id) }}" class="btn">Delete</a></td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-
-            </table>
-            <a href="{{ url_for('create_event') }}" class="btn">Creat Invitation</a>
-            <a href="{{ url_for('profile') }}" class="btn">Back To Profile</a>
-            <a href="{{ url_for('logout') }}" class="btn">Logout</a>
-        </div>
-    </div>
-</body>
-</html>
+        
