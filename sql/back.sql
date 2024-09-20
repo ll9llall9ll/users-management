@@ -51,6 +51,7 @@ CREATE TABLE public.invitation (
     name character varying(255) NOT NULL,
     event_id integer NOT NULL,
     with_spouse boolean NOT NULL,
+    hash character varying(255) NOT NULL,
     accepted boolean
 );
 
@@ -219,23 +220,6 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 
 
 --
--- Data for Name: events; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-INSERT INTO public.events (id, internal_name, template_id, user_id, date, address_country, address_city, address_line, display_name, hall_name, unique_domain, is_deleted) VALUES (2, 'example_internal_name', 1, 1001, '2024-09-03 00:00:00', 'Armenia', 'Erevan', '123 Main St.', 'Example Site', 'Main Hall', 'example.com', false);
-INSERT INTO public.events (id, internal_name, template_id, user_id, date, address_country, address_city, address_line, display_name, hall_name, unique_domain, is_deleted) VALUES (4, 'example_internal_name2', 1, 1001, '2024-09-03 12:34:59', 'Armenia', 'Erevan', '123 Main St.', 'Example Site2', 'Main Hall', 'example.com2', false);
-INSERT INTO public.events (id, internal_name, template_id, user_id, date, address_country, address_city, address_line, display_name, hall_name, unique_domain, is_deleted) VALUES (7, 'example_internal_name3', 1, 1001, '2021-11-16 11:24:13', 'Armenia', 'Erevan', '123 Main St.', 'Example Site2', 'Main Hall', 'example.com3', false);
-INSERT INTO public.events (id, internal_name, template_id, user_id, date, address_country, address_city, address_line, display_name, hall_name, unique_domain, is_deleted) VALUES (8, 'example_internal_name4', 1, 1001, '2021-11-16 11:24:13', 'Armenia', 'Erevan', '123 Main St.', 'Example Site2', 'Main Hall', 'example.com4', false);
-INSERT INTO public.events (id, internal_name, template_id, user_id, date, address_country, address_city, address_line, display_name, hall_name, unique_domain, is_deleted) VALUES (9, 'test', 2, 11, '2024-09-14 02:59:00', 'test', 'test', 'tests', 'test', 'test', 'test', false);
-INSERT INTO public.events (id, internal_name, template_id, user_id, date, address_country, address_city, address_line, display_name, hall_name, unique_domain, is_deleted) VALUES (22, 'a', 1, 11, '2024-09-17 18:07:00', 'a', 'a', 'a', 'a', 'a', 'a', false);
-INSERT INTO public.events (id, internal_name, template_id, user_id, date, address_country, address_city, address_line, display_name, hall_name, unique_domain, is_deleted) VALUES (25, 'w', 1, 11, '2024-09-17 18:11:00', 'w', 'w', 'w', 'w', 'w', 'ww', true);
-INSERT INTO public.events (id, internal_name, template_id, user_id, date, address_country, address_city, address_line, display_name, hall_name, unique_domain, is_deleted) VALUES (24, 'w', 1, 11, '2024-09-17 18:11:00', 'w', 'w', 'w', 'w', 'w', 'w', true);
-INSERT INTO public.events (id, internal_name, template_id, user_id, date, address_country, address_city, address_line, display_name, hall_name, unique_domain, is_deleted) VALUES (23, 'f', 1, 11, '2024-09-17 18:09:00', 'f', 'f', 'f', 'f', 'f', 'f', true);
-INSERT INTO public.events (id, internal_name, template_id, user_id, date, address_country, address_city, address_line, display_name, hall_name, unique_domain, is_deleted) VALUES (26, 'er', 3, 11, '2024-09-18 20:47:00', 'er', 'er', 'er', 'er', 'er', 'er', false);
-INSERT INTO public.events (id, internal_name, template_id, user_id, date, address_country, address_city, address_line, display_name, hall_name, unique_domain, is_deleted) VALUES (14, 'test33', 1, 11, '2024-09-16 19:47:00', 'test3', 'test3', 'test3', 'test3', 'test3', 'test3', false);
-
-
---
 -- Data for Name: invitation; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -245,18 +229,7 @@ INSERT INTO public.events (id, internal_name, template_id, user_id, date, addres
 -- Data for Name: templates; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.templates (id, displayname, viewname, type, created_at, updated_at) VALUES (1, 'Updated Template', 'SampleView2', 'TypeA', '2024-09-02 07:03:59.669016', '2024-09-02 07:03:59.676657');
-INSERT INTO public.templates (id, displayname, viewname, type, created_at, updated_at) VALUES (2, 'Update_template2', 'Samplevew3', 'TypeB', '2024-09-06 05:49:20.211591', '2024-09-06 05:49:20.211591');
-INSERT INTO public.templates (id, displayname, viewname, type, created_at, updated_at) VALUES (3, 'Birthday Template 1', 'birthday_template_1.html', 'birthday', '2024-09-18 02:41:30.595756', '2024-09-18 02:41:30.595756');
-
-
---
--- Data for Name: test_table; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-INSERT INTO public.test_table ("Id", name, age) VALUES (1, 'T', 18);
-INSERT INTO public.test_table ("Id", name, age) VALUES (2, 'A', 20);
-INSERT INTO public.test_table ("Id", name, age) VALUES (3, 'C', 20);
+INSERT INTO public.templates (id, displayname, viewname, type, created_at, updated_at) VALUES (1, 'Birthday Template 1', 'birthday_template_1.html', 'birthday', '2024-09-18 02:41:30.595756', '2024-09-18 02:41:30.595756');
 
 
 --

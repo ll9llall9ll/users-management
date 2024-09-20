@@ -2,7 +2,8 @@ from flask import Flask, abort, render_template, request, redirect, url_for, ses
 from murad_db import getUserByUsernameAndPassword, insertUser, getUserById, User, editUser, deleteUser, getUserListFromDb, getUserByUsername
 from event_db import Event, createEvent, getEventByUserId, updateEvent, getEventById, deleteEvent
 from datetime import datetime
-from invitation_db import Invitation, getInvitationById, updateInvitation
+from invitation_db import Invitation, getInvitationByHash, getInvitationById, updateInvitation
+from template_db import get_template_by_id
 
 class AppData:
     def __init__(self):
@@ -48,6 +49,25 @@ users_data = {
     'admin': User(4, 'admin', 'Petr', 'Poghosyan', 'supersecret', True)  }
 
 #users = {user.username: user.password for user in users_data.values()}
+
+@app.route('/invite', methods = ['GET', 'POST'])
+def invite():
+    hash = request.args.get('h')
+    invitation = getInvitationByHash(hash)
+    if invitation.accepted == True:
+        return "Դուք ընդունել եք հրավերը, շնորհակալություն!&#127881;"
+    event = getEventById(invitation.event_id)
+    template = get_template_by_id(event.template_id)
+    if request.method == 'POST':
+        with_spouse = 'options' in request.form and request.form['options'] == 'with_spouse'
+        accepted = request.form['action'] == 'accepted'
+        invitation.with_spouse = with_spouse
+        invitation.accepted = accepted
+        updateInvitation(invitation)
+        returnMsg = "Դուք ընդունել եք հրավերը, շնորհակալություն!&#127881;" if accepted else "Ցավում ենք, որ չեք կարողանա միանալ մեզ:&#128546"
+        return returnMsg
+    
+    return render_template(template.viewname, invitation = invitation, event = event)
 
 @app.route('/')
 def home():

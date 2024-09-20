@@ -1,4 +1,5 @@
 import psycopg2
+from config import getDbConfig
 
 class TemplateDB:
     def __init__(self, id, displayname, viewname, type):
@@ -7,13 +8,7 @@ class TemplateDB:
         self.viewname = viewname
         self.type = type
 
-conn_params = {
-    'dbname': 'test',
-    'user': 'postgres',
-    'password': 'postgres',
-    'host': 'localhost',
-    'port': '5432'
-}
+conn_params = getDbConfig()
 
 def create_template(template):
     insert_query = f"""

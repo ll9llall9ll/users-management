@@ -1,6 +1,8 @@
 import datetime
 import psycopg2
 
+from config import getDbConfig
+
 class Event:
     def __init__(self, internal_name, template_id, user_id, date, address_country, address_city, address_line, display_name, hall_name, unique_domain, is_deleted = False, id = None):
         self.internal_name = internal_name
@@ -16,13 +18,7 @@ class Event:
         self.is_deleted = is_deleted
         self.id = id
 
-conn_params = {
-    'dbname': 'test',
-    'user': 'postgres',
-    'password': 'postgres',
-    'host': 'localhost',
-    'port': '5432'
-}
+conn_params = getDbConfig()
 
 def createEvent(event):
     insert_query = f"""

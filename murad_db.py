@@ -1,4 +1,5 @@
 import psycopg2
+from config import getDbConfig
 
 class User:
     def __init__(self, id, username, name, surname, password, is_admin=False):
@@ -10,13 +11,7 @@ class User:
         self.is_admin = is_admin
 
 # Database connection parameters
-conn_params = {
-    'dbname': 'test',
-    'user': 'postgres',
-    'password': 'postgres',
-    'host': 'localhost',
-    'port': '5432'
-}
+conn_params = getDbConfig()
 
 def getUserListFromDb():
     userlist = []
