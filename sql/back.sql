@@ -59,28 +59,6 @@ CREATE TABLE public.invitation (
 ALTER TABLE public.invitation OWNER TO postgres;
 
 --
--- Name: new_table_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.new_table_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.new_table_id_seq OWNER TO postgres;
-
---
--- Name: new_table_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.new_table_id_seq OWNED BY public.invitation.id;
-
-
---
 -- Name: templates; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -95,28 +73,6 @@ CREATE TABLE public.templates (
 
 
 ALTER TABLE public.templates OWNER TO postgres;
-
---
--- Name: templates_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.templates_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.templates_id_seq OWNER TO postgres;
-
---
--- Name: templates_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.templates_id_seq OWNED BY public.templates.id;
-
 
 --
 -- Name: test_table; Type: TABLE; Schema: public; Owner: postgres
@@ -148,78 +104,6 @@ CREATE TABLE public.users (
 ALTER TABLE public.users OWNER TO postgres;
 
 --
--- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.users_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.users_id_seq OWNER TO postgres;
-
---
--- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
-
-
---
--- Name: websites_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.websites_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.websites_id_seq OWNER TO postgres;
-
---
--- Name: websites_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.websites_id_seq OWNED BY public.events.id;
-
-
---
--- Name: events id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.events ALTER COLUMN id SET DEFAULT nextval('public.websites_id_seq'::regclass);
-
-
---
--- Name: invitation id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.invitation ALTER COLUMN id SET DEFAULT nextval('public.new_table_id_seq'::regclass);
-
-
---
--- Name: templates id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.templates ALTER COLUMN id SET DEFAULT nextval('public.templates_id_seq'::regclass);
-
-
---
--- Name: users id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
-
-
---
 -- Data for Name: invitation; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -240,81 +124,12 @@ INSERT INTO public.users (id, username, name, surname, password, is_admin) VALUE
 INSERT INTO public.users (id, username, name, surname, password, is_admin) VALUES (4, 'admin', 'Petr', 'Poghosyan', 'supersecret', true);
 INSERT INTO public.users (id, username, name, surname, password, is_admin) VALUES (11, 'ivanivanov', 'Ivan', 'Ivanov', 'Password1)', false);
 
-
---
--- Name: new_table_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.new_table_id_seq', 1, false);
-
-
---
--- Name: templates_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.templates_id_seq', 2, true);
-
-
---
--- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.users_id_seq', 15, true);
-
-
---
--- Name: websites_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.websites_id_seq', 26, true);
-
-
---
--- Name: invitation new_table_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.invitation
-    ADD CONSTRAINT new_table_pkey PRIMARY KEY (id);
-
-
---
--- Name: templates templates_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.templates
-    ADD CONSTRAINT templates_pkey PRIMARY KEY (id);
-
-
---
--- Name: test_table test_table_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.test_table
-    ADD CONSTRAINT test_table_pkey PRIMARY KEY ("Id");
-
-
---
--- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.users
-    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
-
-
 --
 -- Name: users users_username_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_username_key UNIQUE (username);
-
-
---
--- Name: events websites_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.events
-    ADD CONSTRAINT websites_pkey PRIMARY KEY (id);
 
 
 --
