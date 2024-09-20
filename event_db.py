@@ -62,7 +62,7 @@ def getEventById(id):
             if site is None:
                 return None
 
-            return Event(site[1], site[2], site[3], site[4], site[5], site[6], site[7], site[8], site[9], site[10], site[0])
+            return Event(site[1], site[2], site[3], site[4], site[5], site[6], site[7], site[8], site[9], site[10], site[11], site[0])
 
 def getEventByUserId(user_id):
     events = []
@@ -81,8 +81,8 @@ def getEventByUserId(user_id):
 
     return events
 
-a = getEventByUserId(user_id = 11)
-print(a[1].id)
+#a = getEventByUserId(user_id = 11)
+#print(a[1].id)
 
 def deleteEvent(id):
     delete_query = f"UPDATE events SET is_deleted = TRUE WHERE id = {id};"

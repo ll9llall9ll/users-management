@@ -1,12 +1,12 @@
 import psycopg2
 
 class Invitation:
-    def __init__(self, id, name, event_id, with_spouce, accepted):
-        self.id = id
+    def __init__(self, name, event_id, with_spouse, accepted = None, id = None):
         self.name = name
         self.event_id = event_id
-        self.with_spouce = with_spouce
+        self.with_spouse = with_spouse
         self.accepted = accepted
+        self.id = id
 
 conn_params = {
     'dbname': 'test',
@@ -15,6 +15,17 @@ conn_params = {
     'host': 'localhost',
     'port': '5432'
 }
+
+def createInvitation(invitation):
+    insert_query = f"""
+        INSERT INTO invitation (name, event_id, with_spouse)
+        VALUES ('{invitation.name}', {invitation.event_id}, {invitation.with_spouse});
+    """
+
+    with psycopg2.connect(**conn_params) as conn:
+        with conn.cursor() as cur:
+            cur.execute(insert_query)
+            conn.commit()
 
 def getInvitationById(invitation_id):
     with psycopg2.connect(**conn_params) as conn:
@@ -27,12 +38,12 @@ def getInvitationById(invitation_id):
             
             return Invitation(invitation[0], invitation[1], invitation[2], invitation[3], invitation[4], invitation[5])
 
-def getInvitationsList():
+def getInvitationsList(event_id):
     invitationlist = []
     try:
         with psycopg2.connect(**conn_params) as conn:
             with conn.cursor() as cur:
-                cur.execute("SELECT * FROM invitation")
+                cur.execute(f"SELECT * FROM invitation where event_id = {event_id}")
                 invitations = cur.fetchall()
                 
                 for invitation in invitations:
@@ -49,3 +60,20 @@ def deleteInvitation(id):
             delete_query = f"DELETE FROM invitation WHERE id = '{id}'"
             cur.execute(delete_query)
             conn.commit()
+
+def updateInvitation(invitation):
+    update_query = f"""
+        UPDATE invitation SET name = '{invitation.name}', 
+            event_id = '{invitation.event_id}', 
+            with_spouse = {invitation.with_spouse}, 
+            accepted = {invitation.accepted} 
+        WHERE id = {invitation.id};
+    """
+
+    with psycopg2.connect(**conn_params) as conn:
+        with conn.cursor() as cur:
+            cur.execute(update_query)
+            conn.commit()
+
+
+updateInvitation(Invitation('updatetest', 24, False, True, id = 1))

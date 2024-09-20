@@ -2,6 +2,7 @@ from flask import Flask, abort, render_template, request, redirect, url_for, ses
 from murad_db import getUserByUsernameAndPassword, insertUser, getUserById, User, editUser, deleteUser, getUserListFromDb, getUserByUsername
 from event_db import Event, createEvent, getEventByUserId, updateEvent, getEventById, deleteEvent
 from datetime import datetime
+from invitation_db import Invitation, getInvitationById, updateInvitation
 
 class AppData:
     def __init__(self):
@@ -236,7 +237,41 @@ def delete_event():
         return redirect(url_for('view_events'))
     return redirect(url_for('login'))
 
+@app.route('/create_invitation', methods = ['GET', 'POST'])
+def create_invitation():
+    if request.method == 'GET' and appData.IsLoggedIn:
+        return render_template(url_for('create_invitation.html'))
+    elif request.method == 'POST' and appData.IsLoggedIn:
+        name = request.form['name']
+        event_id = request.form['event_id']
+        with_spouse = request.form['with_spouse']
+        invitation = Invitation('', name, event_id, with_spouse, '')
+        create_invitation(invitation)
+        return redirect(url_for())
 
+
+@app.route('/edit_invitation', methods = ['GET', 'POST'])
+def edit_invitation():
+    id = request.args.get('id')
+    invitation = getInvitationById(id)
+    if appData.IsLoggedIn and request.method == 'GET':
+        return render_template('edit_invitation', invitation = invitation)
+    elif appData.IsLoggedIn and request.method == 'POST':
+        name = request.form['name']
+        event_id = request.form['event_id']
+        with_spouse = request.form['with_spouse']
+        invitation = Invitation('', name, event_id, with_spouse, '')
+        updateInvitation(invitation)
+        return redirect(url_for('view_events'))
+    return redirect(url_for('login'))
+
+@app.route('/delete_invitation', methods = ['GET', 'POST'])
+def delete_invitation():
+    id = request.args.get('id')
+    if appData.IsLoggedIn:
+        delete_invitation(id)
+        return redirect(url_for('view_events'))
+    return redirect(url_for('login'))
 
 if __name__ == '__main__':
     app.run(debug=False)

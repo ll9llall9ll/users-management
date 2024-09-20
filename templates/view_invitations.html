@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Events</title>
+    <title>All Users</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
@@ -159,67 +159,38 @@
     <div class="container">
         <div class="side-image">
             <div class="text">
-                <p>Manage events at <strong>Qanaqer Coding School</strong></p>
+                <p>Managee users at <strong>Qanaqer Coding School</strong></p>
                 <img src="{{url_for('static', filename='image/photo_2024-08-08_11-43-14.jpg')}}" alt="">
                 <img src="images/photo_2024-08-08_11-43-14.jpg" alt="">
             </div>
         </div>
 
         <div class="right">
-            <h2>Your Added Events</h2>
+            <h2>All Registered Users</h2>
             <table>
                 <thead>
                     <tr>
-                        <th>Id</th>
-                        <th>Internal name</th>
+                        <th>Username</th>
+                        <th>Name</th>
+                        <th>Surname</th>
                         <th>Edit</th>
-                        <th>Delete</th>
+                        <th>Delete</th> 
                     </tr>
                 </thead>
                 <tbody>
-                    {% for event in events %}
+                    {% for user in users %}
                     <tr>
-                        <td>{{ event.id }}</td>
-                        <td>{{ event.internal_name }}</td>
-                        <td><a href="{{ url_for('edit_event', id=event.id) }}" class="btn">Edit</a></td>
-                        <td><a href="{{ url_for('delete_event', id=event.id) }}" class="btn">Delete</a></td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.name }}</td>
+                        <td>{{ user.surname }}</td>
+                        <td><a href="{{ url_for('edit_user', id=user.id) }}" class="btn">Edit</a></td>
+                        <td><a href="{{ url_for('delete_user', id=user.id) }}" class="btn">Delete</a></td>
                     </tr>
                     {% endfor %}
                 </tbody>
             
             </table>
-            <a href="{{ url_for('create_event') }}" class="btn">Creat Event</a>
-            <a href="{{ url_for('profile') }}" class="btn">Back To Profile</a>
-            <a href="{{ url_for('logout') }}" class="btn">Logout</a>
-        </div>
-    </div>
-</body>
-</html>
-        <div class="right">
-            <h2>Invitations</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Name</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for invitation in invitations %}
-                        <tr>
-                        <td>{{ invitation.id }}</td>
-                        <td>{{ invitation.name }}</td>
-                        <td><a href="{{ url_for('edit_invitation', id=invitation.id) }}" class="btn">Edit</a></td>
-                        <td><a href="{{ url_for('delete_invitation', id=invitation.id) }}" class="btn">Delete</a></td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-
-            </table>
-            <a href="{{ url_for('create_event') }}" class="btn">Creat Invitation</a>
-            <a href="{{ url_for('profile') }}" class="btn">Back To Profile</a>
+            <a href="{{ url_for('profile') }}" class="btn">Back to Profile</a>
             <a href="{{ url_for('logout') }}" class="btn">Logout</a>
         </div>
     </div>
