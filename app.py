@@ -2,7 +2,7 @@ from flask import Flask, abort, render_template, request, redirect, url_for, ses
 from murad_db import getUserByUsernameAndPassword, insertUser, getUserById, User, editUser, deleteUser, getUserListFromDb, getUserByUsername
 from event_db import Event, createEvent, getEventByUserId, updateEvent, getEventById, deleteEvent
 from datetime import datetime
-from template_db import get_template_by_id
+from template_db import TemplateDB, create_template_with_id, get_template_by_id
 from invitation_db import Invitation, createInvitation, getInvitationByHash, getInvitationById, updateInvitation, getInvitationsListByEventId
 
 class AppData:
@@ -306,4 +306,7 @@ def view_invitation():
     return redirect(url_for('login'))
 
 if __name__ == '__main__':
+    baloonTemplate = get_template_by_id(2)
+    if baloonTemplate is None:
+        create_template_with_id(TemplateDB(2, 'Baloons', 'baloons_template.html', 'birthday'))
     app.run(debug=False)

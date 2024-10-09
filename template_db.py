@@ -10,10 +10,10 @@ class TemplateDB:
 
 conn_params = getDbConfig()
 
-def create_template(template):
+def create_template_with_id(template):
     insert_query = f"""
-        INSERT INTO templates (displayname, viewname, type)
-        VALUES ('{template.displayname}', '{template.viewname}', '{template.type}');
+        INSERT INTO templates (id, displayname, viewname, type)
+        VALUES ({template.id}, '{template.displayname}', '{template.viewname}', '{template.type}');
     """
 
     with psycopg2.connect(**conn_params) as conn:
