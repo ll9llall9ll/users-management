@@ -55,7 +55,7 @@ def invite():
     hash = request.args.get('h')
     invitation = getInvitationByHash(hash)
     if invitation.accepted == True:
-        return "Դուք ընդունել եք հրավերը, շնորհակալություն!&#127881;"
+        return render_template('invite_accepted.html', msg = "Դուք ընդունել եք հրավերը, շնորհակալություն!"  )
     event = getEventById(invitation.event_id)
     template = get_template_by_id(event.template_id)
     if request.method == 'POST':

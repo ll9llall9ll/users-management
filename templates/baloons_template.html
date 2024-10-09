@@ -539,6 +539,77 @@ body {
     font-weight: 600;
     margin-bottom: -6px;
 }
+
+
+.infoSchool {
+    display: none;
+    background-image: url('/test/Image/thumbnail_large-1.jpg');
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    z-index: 2;
+    max-width: 600px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+}
+
+.newTitle {
+    font-size: 36px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.time, .meet {
+    font-size: 18px;
+    margin: 0;
+    padding: 0;
+}
+
+.time {
+    margin-bottom: 5px; /* Уменьшаем отступ между временем и мероприятием */
+}
+
+.meet {
+    margin-bottom: 20px; /* Добавляем отступ между мероприятиями */
+}
+
+.surprise {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    color: brown;
+}
+@media (max-width: 1024px) {
+            .newTitle {
+                font-size: 30px; /* Уменьшаем размер заголовка */
+            }
+            
+            .time, .meet {
+                font-size: 16px; /* Уменьшаем текст */
+            }
+            
+            .surprise {
+                font-size: 18px; /* Уменьшаем текст сюрприза */
+            }
+        }
+@media (max-width: 767px) {
+            .newTitle {
+                font-size: 24px; /* Еще больше уменьшаем размер заголовка */
+            }
+
+            .time, .meet {
+                font-size: 14px; /* Уменьшаем текст */
+            }
+
+            .surprise {
+                font-size: 16px; /* Уменьшаем текст сюрприза */
+            }
+
+        }
 	</style>
 </head>
 
@@ -598,6 +669,23 @@ body {
         <p class="p5">{{ event.hall_name }}</p>
         <div><img class="ball" src="{{url_for('static', filename='image/balloons.png')}}"></div>
     </div>
+    <div class="infoSchool">
+        <p class="newTitle">ПРОГРАММА МЕРОПРИЯТИЙ</p>
+        <p class="time">9:30</p>
+        <p class="meet">Встреча выпусников и гостей школы</p>
+        <p class="time">10:30</p>
+        <p class="meet">Торжественная линейка</p>
+        <p class="time">10:50</p>
+        <p class="meet">Урок истории школы <br> с показом слайдов о школьгой жизни <br> &#171; Тридцать лет вместе &#187; </p>
+        <p class="surprise">СЛАДКИЙ СЮРПРИЗ</p>
+        <p class="time">11:40</p>
+        <p class="meet">Отьезд детей из школы</p>
+        <p class="time">12:00</p>
+        <p class="meet">Театрально-музыкальное предстовление <br><br> &#171; ТРИДЦАТЬ ЛЕТ С ЛЮБОВЮ &#187; </p>
+        <p class="time">13:30</p>
+        <p class="meet">Встреча школьных друзей <br> &#40; Классные кабинеты &#41;</p>
+    </div>
+
 
     <script>
         // Обработчик нажатия кнопки "Да"
@@ -605,6 +693,9 @@ body {
             var initialDiv = document.getElementById("initial-div");
             initialDiv.style.display = "none"; // Скрыть начальный div
 
+            setTimeout(function() {
+            document.querySelector('.infoSchool').style.display = 'flex';
+        }, 29200);
             // Показать остальные элементы и запустить музыку
             var infoElements = document.querySelectorAll('.info, .info2');
             infoElements.forEach(function(element) {
@@ -638,6 +729,10 @@ body {
     <script>setTimeout(function() {
         document.querySelector('.info2').classList.add('show');
     }, 30000);</script>
+    <script>
+        // Показать блок с задержкой в 33 секунды (33000 миллисекунд)
+       
+    </script>
 </body>
 
 </html>
