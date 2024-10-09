@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="{{url_for('static', filename='image/email.png')}}">
     <title>Event Information - Cake Style</title>
     
     <link rel="stylesheet" href="styles.css">
@@ -533,69 +532,6 @@ body {
     transform: scale(1.05); /* Увеличение при наведении */
 }
 
-.button {
-    background-color: #ffcc00; /* Цвет фона */
-    border: none; /* Убираем границу */
-    color: #fff; /* Цвет текста */
-    padding: 20px 80px; /* Увеличенные отступы */
-    text-align: center; /* Выравнивание текста */
-    text-decoration: none; /* Убираем подчеркивание */
-    display: inline-block; /* Делает элемент блочным */
-    font-size: 24px; /* Увеличенный размер шрифта */
-    margin: 15px; /* Отступы между кнопками */
-    cursor: pointer; /* Указатель при наведении */
-    border-radius: 12px; /* Закругление углов */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Тень */
-    transition: background-color 0.3s, transform 0.2s; /* Плавные переходы */
-}
-
-.button:hover {
-    background-color: #ffb300; /* Цвет при наведении */
-    transform: scale(1.05); /* Увеличение при наведении */
-}
-
-.button-confirm {
-    background-color: rgb(9, 122, 9); /* Цвет фона */
-    border: none; /* Убираем границу */
-    color: #fff; /* Цвет текста */
-    padding: 20px 80px; /* Увеличенные отступы */
-    text-align: center; /* Выравнивание текста */
-    text-decoration: none; /* Убираем подчеркивание */
-    display: inline-block; /* Делает элемент блочным */
-    font-size: 24px; /* Увеличенный размер шрифта */
-    margin: 15px; /* Отступы между кнопками */
-    cursor: pointer; /* Указатель при наведении */
-    border-radius: 12px; /* Закругление углов */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Тень */
-    transition: background-color 0.3s, transform 0.2s; /* Плавные переходы */
-}
-
-.button-confirm:hover {
-    background-color:  rgb(63, 183, 63);; /* Цвет при наведении */
-    transform: scale(1.05); /* Увеличение при наведении */
-}
-
-.button-no {
-    background-color: #6b0303; /* Цвет фона */
-    border: none; /* Убираем границу */
-    color: #fff; /* Цвет текста */
-    padding: 20px 80px; /* Увеличенные отступы */
-    text-align: center; /* Выравнивание текста */
-    text-decoration: none; /* Убираем подчеркивание */
-    display: inline-block; /* Делает элемент блочным */
-    font-size: 24px; /* Увеличенный размер шрифта */
-    margin: 15px; /* Отступы между кнопками */
-    cursor: pointer; /* Указатель при наведении */
-    border-radius: 12px; /* Закругление углов */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Тень */
-    transition: background-color 0.3s, transform 0.2s; /* Плавные переходы */
-}
-
-.button-no:hover {
-    background-color: #920408; /* Цвет при наведении */
-    transform: scale(1.05); /* Увеличение при наведении */
-}
-
 .startQuest p{
     font-size: 35px;
     color: #ffffff;
@@ -674,23 +610,6 @@ body {
             }
 
         }
-        .btn {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            border: none;
-            border-radius: 8px;
-            background-color: #00796b;
-            color: #fff;
-            font-size: 1em;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.3s;
-        }
-
-        .btn:hover {
-            background-color: #004d40;
-            transform: scale(1.02);
-        }
 	</style>
 </head>
 
@@ -740,13 +659,13 @@ body {
     <svg class="bubble" width="195px" height="195px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" transform="rotate(45)" stroke="#d6cdcd"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M9.15316 5.40838C10.4198 3.13613 11.0531 2 12 2C12.9469 2 13.5802 3.13612 14.8468 5.40837L15.1745 5.99623C15.5345 6.64193 15.7144 6.96479 15.9951 7.17781C16.2757 7.39083 16.6251 7.4699 17.3241 7.62805L17.9605 7.77203C20.4201 8.32856 21.65 8.60682 21.9426 9.54773C22.2352 10.4886 21.3968 11.4691 19.7199 13.4299L19.2861 13.9372C18.8096 14.4944 18.5713 14.773 18.4641 15.1177C18.357 15.4624 18.393 15.8341 18.465 16.5776L18.5306 17.2544C18.7841 19.8706 18.9109 21.1787 18.1449 21.7602C17.3788 22.3417 16.2273 21.8115 13.9243 20.7512L13.3285 20.4768C12.6741 20.1755 12.3469 20.0248 12 20.0248C11.6531 20.0248 11.3259 20.1755 10.6715 20.4768L10.0757 20.7512C7.77268 21.8115 6.62118 22.3417 5.85515 21.7602C5.08912 21.1787 5.21588 19.8706 5.4694 17.2544L5.53498 16.5776C5.60703 15.8341 5.64305 15.4624 5.53586 15.1177C5.42868 14.773 5.19043 14.4944 4.71392 13.9372L4.2801 13.4299C2.60325 11.4691 1.76482 10.4886 2.05742 9.54773C2.35002 8.60682 3.57986 8.32856 6.03954 7.77203L6.67589 7.62805C7.37485 7.4699 7.72433 7.39083 8.00494 7.17781C8.28555 6.96479 8.46553 6.64194 8.82547 5.99623L9.15316 5.40838Z" stroke="#ffffff" stroke-width="1.5"></path> </g></svg>
 
     <div class="info fade-in" style="display:none;">
-        <p class="p1">Հարգելի՛ {{invitation.name}},</p>
-        <p class="p1_1">Դուք հրավիրված եք</p>
-        <p class="p1_2">{{event.display_name}} -ի տարեդարձի </p>
-        <p class="p1_3">կապակցությամբ միջոցառմանը</p>
-        <p class="p2">ամսի {{ event.date | date }} -ին </p>
-        <p class="p3">Որտե՞ղ:</p>
-        <p class="p4">Հասցե: {{ event.address_country }} , {{ event.address_city }} , {{ event.address_line }} </label>
+        <p class="p1">Дорог{{'ой' if invitation.is_male else 'ая'}} {{invitation.name}},</p>
+        <p class="p1_1">Вы приглашены</p>
+        <p class="p1_2">На мероприятие приуроченное к Юбилею: </p>
+        <p class="p1_3">{{event.display_name}} </p>
+        <p class="p2">Оно состоится: {{ event.date }} </p>
+        <p class="p3">Где?</p>
+        <p class="p4">Адрес: {{ event.address_country }} , {{ event.address_city }} , {{ event.address_line }} </label>
         <p class="p5">{{ event.hall_name }}</p>
         <div><img class="ball" src="{{url_for('static', filename='image/balloons.png')}}"></div>
     </div>
@@ -762,13 +681,9 @@ body {
         <p class="time">11:40</p>
         <p class="meet">Отьезд детей из школы</p>
         <p class="time">12:00</p>
-        <p class="meet">Театрально-музыкальное представление <br><br> &#171; ТРИДЦАТЬ ЛЕТ С ЛЮБОВЮ &#187; </p>
+        <p class="meet">Театрально-музыкальное предстовление <br><br> &#171; ТРИДЦАТЬ ЛЕТ С ЛЮБОВЮ &#187; </p>
         <p class="time">13:30</p>
         <p class="meet">Встреча школьных друзей <br> &#40; Классные кабинеты &#41;</p>
-        <form method="post" action="{{ url_for('invite', h=invitation.hash) }}">
-            <button type="submit" name='action' class="button-confirm" onclick="return confirm('Դուք Համոզվա՞ծ եք?')" value="accepted">Ընդունել</button>
-            <button type="submit" name='action' class="button-no" onclick="return confirm('Դուք Համոզվա՞ծ եք?')" value="rejected">Մերժել</button>
-        </form>
     </div>
 
 
