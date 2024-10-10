@@ -561,9 +561,9 @@ body {
     padding: 20px 80px; /* Увеличенные отступы */
     text-align: center; /* Выравнивание текста */
     text-decoration: none; /* Убираем подчеркивание */
-    display: inline-block; /* Делает элемент блочным */
+    /* display: inline-block;  */
     font-size: 24px; /* Увеличенный размер шрифта */
-    margin: 15px; /* Отступы между кнопками */
+    /* margin: 15px;  */
     cursor: pointer; /* Указатель при наведении */
     border-radius: 12px; /* Закругление углов */
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Тень */
@@ -606,7 +606,7 @@ body {
 
 
 .infoSchool {
-    display: none;
+    display: flex;
     background-image: url('/test/Image/thumbnail_large-1.jpg');
     flex-direction: column;
     align-items: center;
@@ -636,7 +636,7 @@ body {
 }
 
 .meet {
-    margin-bottom: 20px; /* Добавляем отступ между мероприятиями */
+    margin-bottom: 15px; /* Добавляем отступ между мероприятиями */
 }
 
 .surprise {
@@ -672,7 +672,36 @@ body {
             .surprise {
                 font-size: 16px; /* Уменьшаем текст сюрприза */
             }
-
+            .button-confirm {
+    background-color: rgb(9, 122, 9); /* Цвет фона */
+    border: none; /* Убираем границу */
+    color: #fff; /* Цвет текста */
+    padding: 10px 40px; /* Увеличенные отступы */
+    text-align: center; /* Выравнивание текста */
+    text-decoration: none; /* Убираем подчеркивание */
+    /* display: inline-block;  */
+    font-size: 12px; 
+    /* margin: 15px;  */
+    cursor: pointer; /* Указатель при наведении */
+    border-radius: 12px; /* Закругление углов */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Тень */
+    transition: background-color 0.3s, transform 0.2s; /* Плавные переходы */
+}
+.button-no {
+    background-color: #6b0303; /* Цвет фона */
+    border: none; /* Убираем границу */
+    color: #fff; /* Цвет текста */
+    padding: 10px 40px; /* Увеличенные отступы */
+    text-align: center; /* Выравнивание текста */
+    text-decoration: none; /* Убираем подчеркивание */
+    display: inline-block; /* Делает элемент блочным */
+    font-size: 12px; /* Увеличенный размер шрифта */
+    margin: 5px; /* Отступы между кнопками */
+    cursor: pointer; /* Указатель при наведении */
+    border-radius: 12px; /* Закругление углов */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Тень */
+    transition: background-color 0.3s, transform 0.2s; /* Плавные переходы */
+}
         }
         .btn {
             display: block;
