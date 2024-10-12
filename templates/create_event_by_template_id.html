@@ -181,7 +181,7 @@
     <div class="container">
         <div class="side-image">
             <div class="text">
-                <p>Create Evenet Profile For <strong>Qanaqer Coding School</strong></p>
+                <p>Create Event For <strong>Qanaqer Coding School</strong></p>
                 <img src="{{url_for('static', filename='image/photo_2024-08-08_11-43-14.jpg')}}" alt="">
                 <img src="images/photo_2024-08-08_11-43-14.jpg" alt="Descriptive text">
             </div>
@@ -189,52 +189,55 @@
 
         <div class="right">
             <h2>Event</h2>
-            <form method="POST" action="{{ url_for('create_event') }}">
+            <form method="POST" action="{{ url_for('create_event_by_template_id') }}">
                 <div class="form-group">
                     <label for="internal_name">Internal name:</label>
-                    <input type="text" name="internal_name" value="{{ internal_name }}" required>
+                    <input type="text" name="internal_name" value="{{ internal_name or '' }}" required>
                 </div>
                 <div class="form-group">
                     <label for="template_id">Template id:</label>
-                    <input type="number" name="template_id" value="{{ template_id }}" required>
+                    <input type="number" name="template_id" value="{{ template_id or '' }}" required>
                 </div>
                 <div class="form-group">    
                     <label for="date">Date:</label>
-                    <input type="datetime-local" name="date" value="{{ date }}" required>
+                    <input type="datetime-local" name="date" value="{{ date or '' }}" required>
                 </div>
                 <div class="form-group">
-                    <label for="address_coumtry">Address country:</label>
-                    <input type="text" name="address_country" value="{{ address_country }}" required>
+                    <label for="address_country">Address country:</label>
+                    <input type="text" name="address_country" value="{{ address_country or '' }}" required>
                 </div>
                 <div class="form-group">
                     <label for="address_city">Address city:</label>
-                    <input type="text" name="address_city" value="{{ address_city }}" required>
+                    <input type="text" name="address_city" value="{{ address_city or '' }}" required>
                 </div>
                 <div class="form-group">
                     <label for="address_line">Address line:</label>
-                    <input type="text" name="address_line" value="{{ address_line }}" required>
+                    <input type="text" name="address_line" value="{{ address_line or '' }}" required>
                 </div>
                 <div class="form-group">
                     <label for="display_name">Display name:</label>
-                    <input type="text" name="display_name" value="{{ display_name }}" required>
+                    <input type="text" name="display_name" value="{{ display_name or '' }}" required>
                 </div>
                 <div class="form-group">
                     <label for="hall_name">Hall name:</label>
-                    <input type="text" name="hall_name" value="{{ hall_name }}" required>
+                    <input type="text" name="hall_name" value="{{ hall_name or '' }}" required>
                 </div>
                 <div class="form-group">
                     <label for="unique_domain">Unique domain:</label>
-                    <input type="text" name="unique_domain" value="{{ unique_domain }}" required>
+                    <input type="text" name="unique_domain" value="{{ unique_domain or '' }}" required>
                 </div>
                 <button type="submit" class="btn">Save</button>
-            </form>     
+            </form>
+        
             {% if error %}
-            <p class="error-message">{{ error }}</p>
-        {% endif %}
-        <a href="{{ url_for('profile') }}" class="btn">Back to Profile</a>
-        <a href="{{ url_for('logout') }}" class="btn">Logout</a>
-    </div>
-</div>
-</body>
-</html>
+                <p class="error-message">{{ error }}</p>
+            {% endif %}
+            
+            <a href="{{ url_for('profile') }}" class="btn">Back to Profile</a>
+            <a href="{{ url_for('logout') }}" class="btn">Logout</a>
+        </div>
+        </div>
+        </body>
+        </html>
+        
             

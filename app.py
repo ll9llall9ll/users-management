@@ -2,7 +2,7 @@ from flask import Flask, abort, render_template, request, redirect, url_for, ses
 from murad_db import getUserByUsernameAndPassword, insertUser, getUserById, User, editUser, deleteUser, getUserListFromDb, getUserByUsername
 from event_db import Event, createEvent, getEventByUserId, updateEvent, getEventById, deleteEvent
 from datetime import datetime
-from template_db import get_template_by_id
+from template_db import get_template_by_id, get_all_templates
 from invitation_db import Invitation, createInvitation, getInvitationByHash, getInvitationById, updateInvitation, getInvitationsListByEventId
 
 class AppData:
@@ -82,7 +82,10 @@ def edit_user():
     if request.method == 'GET' and getUserById(appData.loggedInuserId).is_admin == True and appData.IsLoggedIn:
         return render_template('user.html', user = user_info, id = current_id) 
     elif request.method == 'POST' and getUserById(appData.loggedInuserId).is_admin == True and appData.IsLoggedIn:
-        user = User(current_id, '', request.form['name'], request.form['surname'], user_info.password, False) 
+        name = request.form['name']
+        surname = request.form['surname']
+        password = user_info.password
+        user = User(current_id, '', name, surname, password, False) 
         editUser(user)
         return redirect(url_for('profile'))
     return redirect(url_for('login'))
@@ -140,7 +143,6 @@ def logout():
 @app.route('/changePassword', methods=['GET', 'POST'])
 def changepassword():
     if not appData.IsLoggedIn:
-        
         return redirect(url_for('login'))
     error = None
     if request.method == 'POST':
@@ -192,28 +194,75 @@ def delete_user():
         return redirect(url_for('view_users'))
     return redirect(url_for('login'))
 
-@app.route('/create_event', methods = ['GET', 'POST'])
+@app.route('/create_event', methods=['GET', 'POST'])
 def create_event():
-    if request.method == 'GET' and appData.IsLoggedIn:
-        return render_template('create_event.html')
-    elif request.method == 'POST' and appData.IsLoggedIn:
-        internal_name = request.form['internal_name']
-        template_id = request.form['template_id']
-        user_id = appData.loggedInuserId
-        date = request.form['date']
-        address_country = request.form['address_country']
-        address_city = request.form['address_city']
-        address_line = request.form['address_line']
-        display_name = request.form['display_name']
-        hall_name = request.form['hall_name']
-        unique_domain = request.form['unique_domain']
-        date_string = date
-        date_format = '%Y-%m-%dT%H:%M'
-        datetime_obj = datetime.strptime(date_string, date_format)
-        event = Event(internal_name, template_id, user_id, datetime_obj, address_country, address_city, address_line, display_name, hall_name, unique_domain)
-        createEvent(event)
-        return redirect(url_for('view_events'))
+    if appData.IsLoggedIn and request.method == 'GET':
+        templates = get_all_templates()
+        return render_template('choose_a_template.html', templates=templates)
+    elif appData.IsLoggedIn and request.method == 'POST':
+        template_id = request.form.get('template_id')
+        if template_id:
+            return redirect(url_for('create_event_by_template_id', template_id=template_id))
     return redirect(url_for('login'))
+
+
+@app.route('/create_event_by_template_id', methods=['GET', 'POST'])
+def create_event_by_template_id():
+    try:
+        if not appData.IsLoggedIn:
+            return redirect(url_for('login'))
+        
+        if request.method == 'GET':
+            template_id = request.args.get('template_id')
+            if not template_id:
+                return "Template ID not provided!", 400 
+            return render_template('create_event_by_template_id.html', template_id=template_id)
+        
+        if request.method == 'POST':  
+            internal_name = request.form.get('internal_name')
+            template_id = request.form.get('template_id')
+            user_id = appData.loggedInuserId
+            date = request.form.get('date')
+            address_country = request.form.get('address_country')
+            address_city = request.form.get('address_city')
+            address_line = request.form.get('address_line')
+            display_name = request.form.get('display_name')
+            hall_name = request.form.get('hall_name')
+            unique_domain = request.form.get('unique_domain')
+            if not internal_name:
+                return "Internal name is missing!", 400
+            if not template_id:
+                return "Template ID is missing!", 400
+            if not date:
+                return "Event date is missing!", 400
+            
+            try:
+                date_format = '%Y-%m-%dT%H:%M'
+                datetime_obj = datetime.strptime(date, date_format)
+            except ValueError:
+                return "Invalid date format!", 400
+            
+            event = Event(
+                internal_name=internal_name, 
+                template_id=template_id, 
+                user_id=user_id, 
+                date=datetime_obj, 
+                address_country=address_country, 
+                address_city=address_city, 
+                address_line=address_line, 
+                display_name=display_name, 
+                hall_name=hall_name, 
+                unique_domain=unique_domain
+            )
+            createEvent(event)
+            return redirect(url_for('view_events'))
+        return redirect(url_for('profile'))
+
+    except Exception as e:
+        print(f"Error: {e}")
+        return "An error occurred!", 500
+
+
 
 @app.route('/view_events', methods = ['GET', 'POST'])
 def view_events():

@@ -51,17 +51,17 @@ def update_template(template):
 # update_template(template)
 
 def get_all_templates():
-    templates_list = []
+    templates = []
     
     with psycopg2.connect(**conn_params) as conn:
         with conn.cursor() as cur:
             cur.execute("SELECT * FROM templates;")
-            templates = cur.fetchall()
+            all_templates = cur.fetchall()
 
-            for template in templates:
-                templates_list.append(TemplateDB(template[0], template[1], template[2], template[3]))
+            for template in all_templates:
+                templates.append(TemplateDB(template[0], template[1], template[2], template[3]))
 
-    return templates_list
+    return templates
 
 # templates = get_all_templates()
 # for template in templates:

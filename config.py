@@ -1,5 +1,5 @@
 conn_params = {
-    'dbname': 'diginv',
+    'dbname': 'test',
     'user': 'postgres',
     'password': 'postgres',
     'host': 'localhost',
