@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <link rel="stylesheet" href="/templates/styles/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accepted</title>
+    <style>
+        /* styles/style.css */
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000;
+    overflow: hidden;
+}
+
+.container {
+    position: relative;
+    text-align: center;
+}
+
+h1 {
+    font-size: 3rem; /* Размер текста для больших экранов */
+    color: #fff;
+    opacity: 0;
+    position: relative;
+    animation: explosion 2s ease-in-out forwards;
+    text-align: center;
+}
+
+
+/* Анимация взрыва */
+@keyframes shatter {
+    0% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(calc(100px * (1 - 2 * random())), calc(100px * (1 - 2 * random()))) scale(3);
+    }
+}
+
+@keyframes explosion {
+    0% {
+        opacity: 1;
+        transform: scale(0.1);
+        color: yellow;
+        text-shadow: 0 0 5px yellow, 0 0 10px orange, 0 0 15px red, 0 0 20px red;
+    }
+    50% {
+        transform: scale(1.5);
+        color: red;
+        text-shadow: 0 0 10px red, 0 0 20px orange, 0 0 30px yellow, 0 0 40px yellow;
+    }
+    75% {
+        opacity: 0.8;
+        transform: scale(1.4);
+        color: transparent;
+        text-shadow: 0 0 50px transparent, 0 0 100px transparent;
+    }
+    85% {
+        opacity: 0.5;
+        transform: scale(1.3);
+        color: yellow;
+        text-shadow: 0 0 30px yellow, 0 0 40px orange;
+    }
+    95% {
+        opacity: 0.9;
+        transform: scale(1.1);
+        color: yellow;
+        text-shadow: 0 0 10px yellow, 0 0 20px orange;
+        transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+        color: yellow;
+        text-shadow: 0 0 5px yellow, 0 0 10px orange, 0 0 15px red, 0 0 20px red;
+    }
+}
+
+
+
+
+
+/* Медиа-запросы */
+
+/* Для мобильных устройств */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem; /* Уменьшаем размер текста */
+    }
+    .shard {
+        width: 6px;
+        height: 6px; /* Уменьшаем размер осколков */
+    }
+}
+
+/* Для маленьких экранов (например, до 480px) */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.5rem; /* Ещё меньше текст */
+    }
+    .shard {
+        width: 4px;
+        height: 4px; /* Ещё меньше осколки */
+    }
+}
+
+/* Для больших экранов */
+@media (min-width: 1200px) {
+    h1 {
+        font-size: 4rem; /* Увеличиваем размер текста */
+    }
+    .shard {
+        width: 12px;
+        height: 12px; /* Увеличиваем размер осколков */
+    }
+}
+
+    </style>
+</head>
+<body>
+
+    <h1 class="msg1">{{msg}}&#127881;</h1>
+</body>
+</html>

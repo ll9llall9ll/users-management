@@ -1,8 +1,9 @@
 from flask import Flask, abort, render_template, request, redirect, url_for, session
+from db_extensions import executeQuery
 from murad_db import getUserByUsernameAndPassword, insertUser, getUserById, User, editUser, deleteUser, getUserListFromDb, getUserByUsername
 from event_db import Event, createEvent, getEventByUserId, updateEvent, getEventById, deleteEvent
 from datetime import datetime
-from template_db import get_template_by_id, get_all_templates
+from template_db import get_template_by_id , TemplateDB, create_template_with_id , get_all_templates
 from invitation_db import Invitation, createInvitation, getInvitationByHash, getInvitationById, updateInvitation, getInvitationsListByEventId
 
 class AppData:
@@ -39,6 +40,12 @@ def check_password(password: str) -> str:
     return None 
 
 app = Flask(__name__, static_folder='test')
+
+def date(d):
+     d.strftime("%d-%m-%y")
+     return d
+app.add_template_filter(date)
+
 appData = AppData()
 app.secret_key = 'supersecretkey'
 
@@ -55,7 +62,7 @@ def invite():
     hash = request.args.get('h')
     invitation = getInvitationByHash(hash)
     if invitation.accepted == True:
-        return "Դուք ընդունել եք հրավերը, շնորհակալություն!&#127881;"
+        return render_template('invite_accepted.html', msg = "Դուք ընդունել եք հրավերը, շնորհակալություն!"  )
     event = getEventById(invitation.event_id)
     template = get_template_by_id(event.template_id)
     if request.method == 'POST':
@@ -315,7 +322,8 @@ def create_invitation():
         hash = request.form['hash']
         event_id = request.form['event_id']
         with_spouse = request.form['with_spouse']
-        invitation = Invitation(name, event_id, with_spouse, hash)
+        is_male = request.form['is_male']
+        invitation = Invitation(name, event_id, with_spouse, hash, is_male)
         createInvitation(invitation)
         return redirect(url_for('view_invitation', event_id = event_id))
     return redirect(url_for('login'))
@@ -332,9 +340,10 @@ def edit_invitation():
         event_id = request.form['event_id']
         with_spouse = request.form['with_spouse']
         accepted = request.form['accepted']
-        invitation = Invitation(name, event_id, with_spouse, hash, accepted, id)
+        is_male = request.form['is_male']
+        invitation = Invitation(name, event_id, with_spouse, hash, is_male, accepted, id)
         updateInvitation(invitation)
-        return redirect(url_for('view_invitation'))
+        return redirect(url_for('view_invitation', event_id = event_id))
     return redirect(url_for('login'))
 
 @app.route('/delete_invitation', methods = ['GET', 'POST'])
@@ -355,4 +364,11 @@ def view_invitation():
     return redirect(url_for('login'))
 
 if __name__ == '__main__':
+    baloonTemplate = get_template_by_id(2)
+    if baloonTemplate is None:
+        create_template_with_id(TemplateDB(2, 'Baloons', 'baloons_template.html', 'birthday'))
+    baloonTemplateRu = get_template_by_id(3)
+    if baloonTemplateRu is None:
+        create_template_with_id(TemplateDB(3, 'Baloons RU', 'baloons_template_ru.html', 'birthday'))
+    executeQuery("ALTER TABLE invitation ADD COLUMN IF NOT EXISTS is_male BOOLEAN;")
     app.run(debug=False)

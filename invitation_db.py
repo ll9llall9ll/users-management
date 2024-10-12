@@ -1,13 +1,13 @@
 import psycopg2
-
 from config import getDbConfig
 
 class Invitation:
-    def __init__(self, name, event_id, with_spouse, hash, accepted = None, id = None):
+    def __init__(self, name, event_id, with_spouse, hash, is_male, accepted=None, id=None):
         self.name = name
         self.event_id = event_id
         self.with_spouse = with_spouse
         self.hash = hash
+        self.is_male = is_male
         self.accepted = accepted
         self.id = id
 
@@ -26,8 +26,8 @@ def getInvitationByHash(hash):
 
 def createInvitation(invitation):
     insert_query = f"""
-        INSERT INTO invitation (name, event_id, with_spouse, hash)
-        VALUES ('{invitation.name}', {invitation.event_id}, {invitation.with_spouse}, '{invitation.hash}');
+        INSERT INTO invitation (name, event_id, with_spouse, hash, is_male)
+        VALUES ('{invitation.name}', {invitation.event_id}, {invitation.with_spouse}, '{invitation.hash}', {invitation.is_male});
     """
 
     with psycopg2.connect(**conn_params) as conn:
@@ -36,7 +36,7 @@ def createInvitation(invitation):
             conn.commit()
 
 def constructInv(dbRes):
-    return Invitation(dbRes[1], dbRes[2], dbRes[3], dbRes[4], dbRes[5], dbRes[0])
+    return Invitation(dbRes[1], dbRes[2], dbRes[3], dbRes[4], dbRes[6], dbRes[5], dbRes[0])
 
 def getInvitationById(invitation_id):
     with psycopg2.connect(**conn_params) as conn:
@@ -54,7 +54,7 @@ def getInvitationsListByEventId(event_id):
     try:
         with psycopg2.connect(**conn_params) as conn:
             with conn.cursor() as cur:
-                cur.execute(f"SELECT * FROM invitation where event_id = {event_id}")
+                cur.execute(f"SELECT * FROM invitation WHERE event_id = {event_id}")
                 invitations = cur.fetchall()
                 
                 for invitation in invitations:
@@ -68,17 +68,18 @@ def getInvitationsListByEventId(event_id):
 def deleteInvitation(id):
     with psycopg2.connect(**conn_params) as conn:
         with conn.cursor() as cur:
-            delete_query = f"DELETE FROM invitation WHERE id = '{id}'"
+            delete_query = f"DELETE FROM invitation WHERE id = {id}"
             cur.execute(delete_query)
             conn.commit()
 
 def updateInvitation(invitation):
     update_query = f"""
         UPDATE invitation SET name = '{invitation.name}', 
-            event_id = '{invitation.event_id}', 
+            event_id = {invitation.event_id}, 
             with_spouse = {invitation.with_spouse}, 
-            accepted = {invitation.accepted},
-            hash = '{invitation.hash}'
+            accepted = {invitation.accepted}, 
+            hash = '{invitation.hash}', 
+            is_male = {invitation.is_male}
         WHERE id = {invitation.id};
     """
 
