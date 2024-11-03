@@ -33,7 +33,7 @@ def getUserListFromDb():
         'user': 'postgres',
         'password': 'postgres',
         'host': 'localhost',  # Or the appropriate host
-        'port': '5433'        # Default PostgreSQL port
+        'port': '5432'        # Default PostgreSQL port
     }
     userList = []
 

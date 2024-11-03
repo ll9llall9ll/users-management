@@ -75,9 +75,9 @@ def deleteInvitation(id):
 def updateInvitation(invitation):
     update_query = f"""
         UPDATE invitation SET name = '{invitation.name}', 
-            event_id = {invitation.event_id}, 
-            with_spouse = {invitation.with_spouse}, 
-            accepted = {invitation.accepted}, 
+            event_id = {invitation.event_id},
+            with_spouse = {invitation.with_spouse},  
+            accepted = {invitation.accepted if invitation.accepted is not None else 'NULL'},
             hash = '{invitation.hash}', 
             is_male = {invitation.is_male}
         WHERE id = {invitation.id};

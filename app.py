@@ -4,7 +4,7 @@ from murad_db import getUserByUsernameAndPassword, insertUser, getUserById, User
 from event_db import Event, createEvent, getEventByUserId, updateEvent, getEventById, deleteEvent
 from datetime import datetime
 from template_db import get_template_by_id , TemplateDB, create_template_with_id , get_all_templates
-from invitation_db import Invitation, createInvitation, getInvitationByHash, getInvitationById, updateInvitation, getInvitationsListByEventId
+from invitation_db import Invitation, createInvitation, getInvitationByHash, getInvitationById, updateInvitation, getInvitationsListByEventId, deleteInvitation
 
 class AppData:
     def __init__(self):
@@ -313,20 +313,23 @@ def delete_event():
         return redirect(url_for('view_events'))
     return redirect(url_for('login'))
 
-@app.route('/create_invitation', methods = ['GET', 'POST'])
+@app.route('/create_invitation', methods=['GET', 'POST'])
 def create_invitation():
-    if request.method == 'GET' and appData.IsLoggedIn:
-        return render_template('create_invitation.html')
-    elif request.method == 'POST' and appData.IsLoggedIn:
-        name = request.form['name']
-        hash = request.form['hash']
-        event_id = request.form['event_id']
-        with_spouse = request.form['with_spouse']
-        is_male = request.form['is_male']
-        invitation = Invitation(name, event_id, with_spouse, hash, is_male)
-        createInvitation(invitation)
-        return redirect(url_for('view_invitation', event_id = event_id))
+    if appData.IsLoggedIn:
+        event_id = request.args.get('event_id')  
+        if request.method == 'GET':
+            event = getEventByUserId(appData.loggedInuserId)
+            return render_template('create_invitation.html', event=event, event_id=event_id)
+        elif request.method == 'POST':
+            name = request.form['name']
+            hash = request.form['hash']
+            with_spouse = request.form['with_spouse']
+            is_male = request.form['is_male']
+            invitation = Invitation(name, event_id, with_spouse, hash, is_male)
+            createInvitation(invitation)
+            return redirect(url_for('view_invitation', event_id=event_id))
     return redirect(url_for('login'))
+
 
 @app.route('/edit_invitation', methods = ['GET', 'POST'])
 def edit_invitation():
@@ -350,18 +353,19 @@ def edit_invitation():
 def delete_invitation():
     id = request.args.get('id')
     if appData.IsLoggedIn:
-        delete_invitation(id)
+        deleteInvitation(id)
         return redirect(url_for('view_events'))
     return redirect(url_for('login'))
 
 
-@app.route('/view_invitation', methods = ['GET', 'POST'])
+@app.route('/view_invitation', methods=['GET', 'POST'])
 def view_invitation():
     event_id = request.args.get('event_id')
     invitations = getInvitationsListByEventId(event_id)
     if appData.IsLoggedIn:
-        return render_template('view_invitations.html', invitations = invitations)
+        return render_template('view_invitations.html', invitations=invitations, event_id=event_id)
     return redirect(url_for('login'))
+
 
 if __name__ == '__main__':
     baloonTemplate = get_template_by_id(2)

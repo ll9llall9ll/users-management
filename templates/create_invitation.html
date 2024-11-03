@@ -189,33 +189,32 @@
 
         <div class="right">
             <h2>Invitation</h2>
-            <form method="POST" action="{{ url_for('create_invitation') }}">
+            <form method="POST" action="{{ url_for('create_invitation', event_id=event_id) }}">
+                <input type="hidden" name="event_id" value="{{ event_id }}"> 
                 <div class="form-group">
-                    <label for="name">name:</label>
-                    <input type="text" name="name" value="{{ name }}" required>
+                    <label for="name">Name:</label>
+                    <input type="text" name="name" required>
                 </div>
                 <div class="form-group">
-                    <label for="hash">hash:</label>
-                    <input type="text" name="hash" value="{{ hash }}" required>
+                    <label for="hash">Hash:</label>
+                    <input type="text" name="hash" required>
                 </div>
-                <div class="form-group">
-                    <label for="event_id">Event id:</label>
-                    <input type="number" name="event_id" value="{{ event_id }}" required>
-                </div>
-                <div class="form-group">
+                <label for="with_spouse">With spouse?</label>
+                <select id="with_spouse" name="with_spouse" required>
+                    <option value="True">Yes</option>
+                    <option value="False">No</option>
+                </select>
+                <!-- <div class="form-group">
                     <label for="with_spouse">With Spouse:</label>
-                    <input type="text" name="with_spouse" value="{{ with_spouse }}" required>
-                </div>
+                    <input type="text" name="with_spouse" required>
+                </div> -->
                 <div class="form-group">
                     <label for="is_male">Is Male:</label>
-                    <input type="text" name="is_male" value="{{ is_male }}" required>
-                </div>
-                <div class="form-group">
-                    <label for="accepted">Accepted:</label>
-                    <input type="text" name="address_city" value="{{ accepted }}" required>
+                    <input type="text" name="is_male" required>
                 </div>
                 <button type="submit" class="btn">Save</button>
-            </form>     
+            </form>
+                 
             {% if error %}
             <p class="error-message">{{ error }}</p>
         {% endif %}
