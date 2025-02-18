@@ -71,8 +71,8 @@ def invite():
         invitation.with_spouse = with_spouse
         invitation.accepted = accepted
         updateInvitation(invitation)
-        returnMsg = "Դուք ընդունել եք հրավերը, շնորհակալություն!&#127881;" if accepted else "Ցավում ենք, որ չեք կարողանա միանալ մեզ:&#128546"
-        return returnMsg
+        returnMsg = "Դուք ընդունել եք հրավերը, շնորհակալություն!" if accepted else "Ցավում ենք, որ չեք կարողանա միանալ մեզ:"
+        return render_template('invite_accepted.html',  msg = returnMsg  )
     
     return render_template(template.viewname, invitation = invitation, event = event)
 
@@ -374,5 +374,11 @@ if __name__ == '__main__':
     baloonTemplateRu = get_template_by_id(3)
     if baloonTemplateRu is None:
         create_template_with_id(TemplateDB(3, 'Baloons RU', 'baloons_template_ru.html', 'birthday'))
+    widTemplate = get_template_by_id(4)
+    if widTemplate is None:
+        create_template_with_id(TemplateDB(4, 'Wid Template', 'wed_template.html', 'wedding')) 
+    birdTemplate = get_template_by_id(5)
+    if birdTemplate is None:
+        create_template_with_id(TemplateDB(5, 'birdTemplate', 'bird_template.html', 'bird'))
     executeQuery("ALTER TABLE invitation ADD COLUMN IF NOT EXISTS is_male BOOLEAN;")
     app.run(debug=False)

@@ -29,9 +29,9 @@ class User:
 def getUserListFromDb():
     # Database connection parameters
     conn_params = {
-        'dbname': 'avecoder',
+        'dbname': 'postgres',
         'user': 'postgres',
-        'password': 'postgres',
+        'password': '231097vahan',
         'host': 'localhost',  # Or the appropriate host
         'port': '5432'        # Default PostgreSQL port
     }

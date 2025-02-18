@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>W:D</title>
+    <style>
+        /* Центрирование контейнера */
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background:  #fff3cc;
+            /* background-color: radial-gradient(circle, rgba(255, 243, 204, 1) 0%, rgba(252, 220, 160, 1) 100%); */
+            /* background-color: #f6f5f5; */
+            overflow: hidden;
+        }
+
+        /* Контейнер двери */
+        .door-container {
+            width: 362px;
+            height: 600px;
+            perspective: 1200px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: stretch;
+            position: relative;
+        }
+
+        /* Фото за дверью */
+        .background {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: white;
+        }
+
+        .background img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Дверь */
+        .door {
+            width: 100%;
+            height: 100%;
+            transform-origin: left;
+            transition: transform 1s ease-in-out;
+            cursor: pointer;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            position: relative;
+            background-color: #8B5A2B;
+            z-index: 2;
+        }
+
+        .door img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        /* Открытая дверь */
+        .door.open {
+            transform: rotateY(-90deg);
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Птичка с письмом */
+        .bird {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 407px;
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.5);
+            transition: transform 2s ease-in-out, opacity 1s ease-in-out;
+            z-index: 1;
+            cursor: pointer;
+            animation-name: scaled;
+            animation-duration: 3s;
+            animation-delay: 3s;
+            animation-iteration-count: infinite;
+        }
+
+        @keyframes scaled {
+            0% {
+                top: 50%;
+            }
+
+            10% {
+                top: 47%;
+                width: 400px;
+            }
+
+            20% {
+                top: 48%;
+                width: 409px;
+            }
+
+            30% {
+                top: 49%;
+                width: 405px;
+            }
+
+            40% {
+                top: 51%;
+                width: 407px;
+            }
+
+            50% {
+                top: 50%;
+                width: 410px;
+            }
+
+            60% {
+                top: 48%;
+                width: 403px;
+            }
+
+            70% {
+                top: 49%;
+                width: 408px;
+            }
+
+            80% {
+                top: 52%;
+                width: 402px;
+            }
+
+            90% {
+                top: 47%;
+                width: 410px;
+            }
+
+            100% {
+                top: 50%;
+                width: 405px;
+            }
+        }
+
+        /* Анимация прилета */
+        .bird.fly {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        /* Облачко с текстом */
+        .speech-bubble {
+            position: absolute;
+            top: 21%;
+            left: 33%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            z-index: 1;
+        }
+
+        .speech-bubble.show {
+            opacity: 1;
+        }
+
+        /* Письмо */
+        .letter {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 0;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transition: all 1s ease-in-out;
+            z-index: 3;
+            overflow: hidden;
+            transform: translate(0, 0) scale(0);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background-image: url("{{url_for('static', filename='image/letterBack.gif')}}");
+            background-repeat: repeat-x;
+            background-position: top;
+            background-size: auto;
+        }
+
+        /* Анимация появления письма */
+        @keyframes letterAppear {
+            0% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .letter.show {
+            animation: letterAppear 1s ease-in-out forwards;
+        }
+
+        /* Скрытие всех элементов при открытии письма */
+        .hide {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .messageContainer {
+            display: flex;
+            width: 70%;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .p1 {
+            font-size: 1.5em;
+            color: #ba3353;
+            font-weight: bold;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .p1_1,
+        .p1_2,
+        .p1_3,
+        .p2,
+        .p3,
+        .p5 {
+            font-size: 24px;
+            color: #576549;
+            margin: 8px 0;
+            text-align: center;
+        }
+
+        .p2 {
+            color: #576549;
+            font-size: 20px;
+            text-align: center;
+            margin: 8px 0;
+        }
+
+        .p4 {
+            color: #576549;
+            font-size: 18px;
+            text-align: center;
+            margin: 8px 0;
+        }
+
+        .button-confirm, 
+.button-no {
+    font-size: 1.2em;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+}
+
+.button-confirm {
+    background: linear-gradient(135deg, #28a745, #5ddc64); /* Зеленый градиент */
+    color: white;
+}
+
+.button-confirm:hover {
+    background: linear-gradient(135deg, #218838, #4cc356);
+    transform: scale(1.05);
+}
+
+.button-no {
+    background: linear-gradient(135deg, #dc3545, #ff6b6b); /* Красный градиент */
+    color: white;
+}
+
+.button-no:hover {
+    background: linear-gradient(135deg, #c82333, #ff4d4d);
+    transform: scale(1.05);
+}
+.formAC{
+    margin-top: 30px;
+}
+    </style>
+</head>
+
+<body>
+    <div class="door-container">
+        <!-- Фото за дверью -->
+        <div class="background">
+            <img src="{{url_for('static', filename='image/doroga.jpg')}}" alt="Фото за дверью">
+        </div>
+        <!-- Дверь -->
+        <div class="door" onclick="openDoor()">
+            <img src="{{url_for('static', filename='image/door2.jpg')}}" alt="Дверь">
+        </div>
+        <!-- Птичка с письмом -->
+        <img src="{{url_for('static', filename='image/bird100.png')}}" alt="Птица с письмом" class="bird" id="bird" onclick="showLetter()">
+        <!-- Облачко с текстом -->
+        <div class="speech-bubble" id="speech-bubble">Բացիր նամակը!</div>
+        <!-- Письмо -->
+        <div class="letter" id="letter">
+            <div class="messageContainer">
+                <p class="p1">Հարգելի՛ {{invitation.name}},</p>
+                <p class="p1_1">Դուք հրավիրված եք</p>
+                <p class="p1_2"> {{event.display_name}} -ի հարսանիքին </p>
+                <p class="p2">ամսի {{ event.date | date }} -ին </p>
+                <p class="p3">Որտե՞ղ:</p>
+                <p class="p4">Հասցե: <br>{{ event.address_country }} , {{ event.address_city }} , {{ event.address_line
+                    }}
+                    </label>
+                <p class="p5">{{ event.hall_name }}</p>
+            </div>
+            <form class="formAC" method="post" action="{{ url_for('invite', h=invitation.hash) }}">
+                <button type="submit" name='action' class="button-confirm"
+                    onclick="return confirm('Դուք Համոզվա՞ծ եք?')" value="accepted">Ընդունել</button>
+                <button type="submit" name='action' class="button-no" onclick="return confirm('Դուք Համոզվա՞ծ եք?')"
+                    value="rejected">Մերժել</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openDoor() {
+            let door = document.querySelector('.door');
+            let bird = document.getElementById('bird');
+            let speechBubble = document.getElementById('speech-bubble');
+
+            door.classList.toggle('open');
+
+            if (door.classList.contains('open')) {
+                setTimeout(() => {
+                    bird.classList.add('fly');
+                    // Заменяем изображение птицы через 3 секунды
+                    setTimeout(() => {
+                        bird.src = "{{url_for('static', filename='image/bird200.png')}}"; // Путь к новому изображению птицы
+                    }, 2000);
+                }, 500);  // Птичка начнёт лететь через 0.5 секунд
+
+                setTimeout(() => {
+                    speechBubble.classList.add('show'); // Показываем текст после того, как птичка прилетела
+                }, 2100);  // Через 2 секунды, когда птичка пролетела
+            } else {
+                bird.classList.remove('fly');
+                speechBubble.classList.remove('show'); // Скрываем текст
+            }
+        }
+
+        function showLetter() {
+            let letter = document.getElementById('letter');
+            let body = document.querySelector('body');
+
+            // Удаляем все элементы, кроме письма
+            body.innerHTML = '';
+
+            // Добавляем письмо обратно в body
+            body.appendChild(letter);
+
+            // Показываем письмо с анимацией
+            letter.classList.add('show');
+        }
+    </script>
+</body>
+
+</html>

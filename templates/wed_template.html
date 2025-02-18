@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Website</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #f3e5f5;
+            --secondary-color: #e1bee7;
+            --accent-color: #e3b8ef;
+            --text-color: #37474f;
+            --background-color: #ffffff;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 80rem;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Great Vibes', cursive;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+        }
+
+        main {
+            min-height: 100vh;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+
+        /* Add placeholder styles for components */
+        #language-toggle {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+        }
+
+        /* Hero Section Styles with Slideshow */
+        #hero-section {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero-slide.active {
+            opacity: 1;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-date {
+            font-size: 2rem;
+        }
+
+        /* Welcome Section Styles */
+        #welcome-message {
+            text-align: center;
+            padding: 4rem 1rem;
+            background-color: var(--primary-color);
+        }
+
+        /* Countdown Styles */
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .countdown-item {
+            font-size: 3rem;
+        }
+
+        .countdown-label {
+            font-size: 1.2rem;
+            text-transform: uppercase;
+        }
+
+        /* Timeline Styles */
+        .timeline {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .event {
+            display: grid;
+            grid-template-columns: auto 1px auto;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-line {
+            background-color: var(--accent-color);
+            width: 1px;
+        }
+
+        /* RSVP Form Styles */
+        .rsvp-form {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid var(--accent-color);
+            border-radius: 4px;
+        }
+
+        .attendance-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .attendance-button {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--accent-color);
+            border-radius: 4px;
+            background: none;
+            cursor: pointer;
+        }
+
+        .attendance-button.active {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div id="language-toggle">
+            <button onclick="toggleLanguage()">EN</button>
+        </div>
+
+        <section id="hero-section">
+            <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')"></div>
+            <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1529636798458-92182e662485?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80')"></div>
+            <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80')"></div>
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <h1 class="hero-title">{{event.display_name}}</h1>
+                <p class="hero-date">{{ event.date | date }}</p>
+            </div>
+        </section>
+
+        <section id="welcome-message">
+            <h2>Welcome Title</h2>
+            <p>We are excited to celebrate our special day with you!</p>
+        </section>
+
+        <section id="countdown-timer">
+            <div class="countdown">
+                <div class="countdown-item">
+                    <div id="days">28</div>
+                    <div class="countdown-label">Days</div>
+                </div>
+                <div class="countdown-item">
+                    <div id="hours">15</div>
+                    <div class="countdown-label">Hours</div>
+                </div>
+                <div class="countdown-item">
+                    <div id="minutes">28</div>
+                    <div class="countdown-label">Minutes</div>
+                </div>
+                <div class="countdown-item">
+                    <div id="seconds">08</div>
+                    <div class="countdown-label">Seconds</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="event-timeline">
+            <h2>Event Timeline</h2>
+            <div class="timeline">
+                <div class="event">
+                    <div>
+                        <h3>Ceremony</h3>
+                        <p>10:00 AM</p>
+                    </div>
+                    <div class="timeline-line"></div>
+                    <div>
+                        <h3>St. Mary's Church</h3>
+                        <p>123 Church St, City, Country</p>
+                        <a href="#" class="map-link">Open in Maps</a>
+                    </div>
+                </div>
+                <div class="event">
+                    <div>
+                        <h3>Reception</h3>
+                        <p>2:00 PM</p>
+                    </div>
+                    <div class="timeline-line"></div>
+                    <div>
+                        <h3>Grand Ballroom</h3>
+                        <p>456 Venue Rd, City, Country</p>
+                        <a href="#" class="map-link">Open in Maps</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="rsvp-form">
+            <h2>RSVP</h2>
+            <form class="rsvp-form">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="guests">Number of Guests</label>
+                    <input type="number" id="guests" value="1" min="1" required>
+                </div>
+                <div class="form-group">
+                    <label>Attending?</label>
+                    <div class="attendance-buttons">
+                        <button type="button" class="attendance-button active">Will Attend</button>
+                        <button type="button" class="attendance-button">Won't Attend</button>
+                    </div>
+                </div>
+                <button type="submit" class="submit-button">Submit</button>
+            </form>
+        </section>
+    </main>
+
+    <script>
+        // Language context implementation
+        let currentLanguage = 'en';
+        const translations = {
+            en: {
+                welcome: 'Welcome to our wedding',
+                // Add more translations as needed
+            },
+            es: {
+                welcome: 'Bienvenidos a nuestra boda',
+                // Add more translations as needed
+            }
+        };
+
+        function toggleLanguage() {
+            currentLanguage = currentLanguage === 'en' ? 'es' : 'en';
+            updateContent();
+        }
+
+        function updateContent() {
+            // Update content based on selected language
+            document.querySelector('#welcome-message').textContent = 
+                translations[currentLanguage].welcome;
+            // Update other translated content
+        }
+
+        // Countdown Timer Implementation
+        function updateCountdown() {
+            const weddingDate = new Date('2024-12-19'); // Set your wedding date
+            const now = new Date();
+            const difference = weddingDate - now;
+
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+            document.querySelector('#countdown-timer').innerHTML = `
+                <div class="countdown">
+                    <div>${days} days</div>
+                    <div>${hours} hours</div>
+                    <div>${minutes} minutes</div>
+                    <div>${seconds} seconds</div>
+                </div>
+            `;
+        }
+
+        // Slideshow functionality
+        function initSlideshow() {
+            const slides = document.querySelectorAll('.hero-slide');
+            let currentSlide = 0;
+
+            slides[currentSlide].classList.add('active');
+
+            setInterval(() => {
+                slides[currentSlide].classList.remove('active');
+                currentSlide = (currentSlide + 1) % slides.length;
+                slides[currentSlide].classList.add('active');
+            }, 5000); // Change slide every 5 seconds
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', () => {
+            updateContent();
+            setInterval(updateCountdown, 1000);
+            initSlideshow();
+        });
+    </script>
+</body>
+</html> 
