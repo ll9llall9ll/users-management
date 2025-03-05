@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Celebration</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #FFE4E1, #FFF0F5);
+            font-family: 'Parisienne', cursive;
+            overflow: hidden;
+            perspective: 1000px;
+        }
+
+        .scene {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 {
+            font-size: 4rem;
+            color: #351a28;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            position: relative;
+            animation: heartBeat 2s infinite;
+        }
+
+        /* Heart animation */
+        @keyframes heartBeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Floating hearts */
+        .heart {
+            position: absolute;
+            color: rgba(255,105,180,0.5);
+            font-size: 30px;
+            animation: floatHeart 10s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Sparkle effect */
+        .sparkle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: gold;
+            border-radius: 50%;
+            animation: sparkleAnimation 3s ease-in-out infinite;
+        }
+
+        @keyframes sparkleAnimation {
+            0%, 100% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.5);
+                opacity: 1;
+            }
+        }
+
+        /* Rotating rings */
+        .ring {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border: 3px solid rgba(255,105,180,0.3);
+            border-radius: 50%;
+            animation: ringRotate 10s linear infinite;
+        }
+
+        @keyframes ringRotate {
+            0% { transform: rotate(0deg) scale(0.7); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        .ring1 { left: 10%; top: 10%; }
+        .ring2 { right: 10%; bottom: 10%; }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Parisienne&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="scene">
+        <!-- Rotating rings -->
+        <div class="ring ring1"></div>
+        <div class="ring ring2"></div>
+
+        <!-- Floating hearts -->
+        <script>
+            function createHearts() {
+                const scene = document.querySelector('.scene');
+                for (let i = 0; i < 20; i++) {
+                    const heart = document.createElement('div');
+                    heart.classList.add('heart');
+                    heart.innerHTML = '❤️';
+                    heart.style.left = `${Math.random() * 100}%`;
+                    heart.style.animationDelay = `${Math.random() * 10}s`;
+                    scene.appendChild(heart);
+                }
+            }
+
+            function createSparkles() {
+                const scene = document.querySelector('.scene');
+                for (let i = 0; i < 50; i++) {
+                    const sparkle = document.createElement('div');
+                    sparkle.classList.add('sparkle');
+                    sparkle.style.left = `${Math.random() * 100}%`;
+                    sparkle.style.top = `${Math.random() * 100}%`;
+                    sparkle.style.animationDelay = `${Math.random() * 3}s`;
+                    scene.appendChild(sparkle);
+                }
+            }
+
+            createHearts();
+            createSparkles();
+        </script>
+
+        <!-- Container for wedding message -->
+        <div class="container">
+            <h1>{{msg}} &#10084;&#65039;</h1>
+        </div>
+    </div>
+</body>
+</html>

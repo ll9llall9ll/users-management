@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Уютный Вечер</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-background: #F4E1D2;
+            --color-text-primary: #5D4037;
+            --color-text-secondary: #795548;
+            --color-accent: #D7CCC8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Merriweather', serif;
+            background-color: var(--color-background);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            line-height: 1.6;
+            color: var(--color-text-primary);
+            perspective: 1000px;
+            overflow: hidden;
+        }
+
+        .invitation-container {
+            width: 450px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            transform: rotateX(10deg);
+            transition: all 0.6s ease;
+        }
+
+        .invitation-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(
+                circle at center, 
+                rgba(255, 204, 153, 0.3) 0%, 
+                rgba(255, 204, 153, 0) 70%
+            );
+            animation: candleGlow 5s infinite alternate;
+            z-index: 1;
+        }
+
+        @keyframes candleGlow {
+            0% { opacity: 0.4; }
+            100% { opacity: 0.7; }
+        }
+
+        .candle-effect {
+            position: absolute;
+            width: 100px;
+            height: 200px;
+            background: radial-gradient(
+                ellipse at center, 
+                rgba(255, 221, 136, 0.5) 0%, 
+                rgba(255, 221, 136, 0) 70%
+            );
+            border-radius: 50%;
+            opacity: 0.6;
+            filter: blur(50px);
+            z-index: 0;
+        }
+
+        .candle-top-left {
+            top: -50px;
+            left: -50px;
+        }
+
+        .candle-bottom-right {
+            bottom: -50px;
+            right: -50px;
+        }
+
+        .invite-header {
+            font-family: 'Caveat', cursive;
+            color: var(--color-text-secondary);
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .invite-details {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .detail-item {
+            margin: 10px 0;
+            color: var(--color-text-primary);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .invitation-container:hover .detail-item {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .detail-item:nth-child(1) { transition-delay: 0.1s; }
+        .detail-item:nth-child(2) { transition-delay: 0.2s; }
+        .detail-item:nth-child(3) { transition-delay: 0.3s; }
+        .detail-item:nth-child(4) { transition-delay: 0.4s; }
+
+        .decor-elements {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            opacity: 0.5;
+            z-index: 1;
+        }
+
+        .decor-icon {
+            width: 40px;
+            height: 40px;
+            margin-left: 10px;
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        .tea-icon {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='%235D4037'%3E%3Cpath d='M50 22h-4v-8c0-2.2-1.8-4-4-4H6c-2.2 0-4 1.8-4 4v16c0 8.8 7.2 16 16 16h12c8.8 0 16-7.2 16-16v-4h4c3.3 0 6-2.7 6-6s-2.7-6-6-6zm-6-6v6h-8v-6h8zM16 42c-5.5 0-10-4.5-10-10V22h14v10c0 5.5-4.5 10-10 10zm38-10c0 3.3-2.7 6-6 6h-4v-12h4c3.3 0 6 2.7 6 6z'/%3E%3C/svg%3E");
+        }
+
+        .book-icon {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='%235D4037'%3E%3Cpath d='M54 8H14c-3.3 0-6 2.7-6 6v36c0 3.3 2.7 6 6 6h40c3.3 0 6-2.7 6-6V14c0-3.3-2.7-6-6-6zM32 20c-4.4 0-8-3.6-8-8h16c0 4.4-3.6 8-8 8zm22 20H10v-2h44v2zm0-8H10v-2h44v2z'/%3E%3C/svg%3E");
+        }
+
+        .btn-confirm {
+            display: block;
+            width: 200px;
+            margin: 30px auto 0;
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #795548, #5D4037);
+            color: #F4E1D2;
+            border: none;
+            border-radius: 25px;
+            font-family: 'Merriweather', serif;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 3;
+        }
+
+        .btn-confirm:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="invitation-container">
+        <div class="candle-effect candle-top-left"></div>
+        <div class="candle-effect candle-bottom-right"></div>
+        
+        <div class="decor-elements">
+            <div class="decor-icon tea-icon"></div>
+            <div class="decor-icon book-icon"></div>
+        </div>
+
+        <h1 class="invite-header">Уютный Вечер</h1>
+
+        <div class="invite-details">
+            <div class="detail-item">Приглашаем вас</div>
+            <div class="detail-item">на вечер в кругу друзей</div>
+            <div class="detail-item">15 сентября 2024</div>
+            <div class="detail-item">Начало в 19:00</div>
+            <div class="detail-item">Мой дом: ул. Центральная, 25</div>
+
+            <button class="btn-confirm">Я приду!</button>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magic Door Animation</title>
+    <style>
+       body,
+html {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Делаем так, чтобы тело занимало весь экран */
+    background-color: #0b1213;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+}
+
+.container {
+    width: 100vw; /* Растягиваем контейнер на всю ширину экрана */
+    height: 100vh; /* Растягиваем контейнер на всю высоту экрана */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform-origin: center;
+    position: relative; /* Чтобы элементы внутри могли позиционироваться относительно контейнера */
+    overflow: hidden; /* Скрываем все, что выходит за границы контейнера */
+}
+
+#background,
+#background2 {
+    position: absolute;
+    width: 100%; /* Растягиваем на всю ширину */
+    height: 100%; /* Растягиваем на всю высоту */
+    object-fit: cover; /* Убедимся, что фон растягивается, сохраняя пропорции */
+    z-index: -1; /* Фон будет под остальными элементами */
+}
+
+#door {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: transform 3s ease-in-out;
+    transform-origin: top center; /* Сдвигаем точку трансформации вверх */
+    object-fit: contain;
+}
+
+#door.fly-away {
+    transform: scaleY(0) translateY(-100%); /* Свертываем дверь и сдвигаем наверх */
+}
+
+.open {
+    position: absolute;
+    width: 6%; /* Ширина кнопки */
+    height: 18%; /* Высота кнопки */
+    background-color: rgba(0, 255, 255, 0); /* Временная подсветка */
+    cursor: pointer;
+    z-index: 50;
+    left: 59%;
+    top: 60%;
+    transform: translate(-50%, -50%);
+    pointer-events: auto;
+}
+
+@media (max-width: 1200px) {
+    .open {
+        width: 8%;
+        height: 19%;
+        left: 62%;
+        top: 60%;
+    }
+}
+
+@media (max-width: 800px) {
+    .open {
+        width: 13%;
+        height: 17%;
+        left: 70%;
+        top: 58%;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .container {
+        transform: scale(calc(100vw / 1200));
+    }
+}
+
+@media screen and (max-width: 896px) {
+    .container {
+        transform: scale(calc(100vw / 896));
+    }
+}
+
+        .doors {
+
+            animation: door 0.5s infinite alternate;
+        }
+
+        @keyframes door {
+            0% {
+                top: -5px;
+            }
+
+            100% {
+                top: 0px;
+            }
+        }
+
+        /* .open {
+            position: absolute;
+            width: 55px;
+            height: 144px;
+            background-color: aqua;
+            cursor: pointer;
+            z-index: 50;
+            left: 59%;
+            top: 60%;
+        } */
+
+        @media screen and (max-width: 896px) {
+            .container {
+                transform: scale(calc(100vw / 896));
+                /* Масштабирование под ширину */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <img id="background2" src="./images/background2.jpg" alt="Background">
+        <img id="background" src="./images/background1.png" alt="Background">
+        <img class="doors" id="door" src="./images/door_1.png" alt="Magic Door">
+        <!-- <img class="doors" id="door2" src="./images/dorrefect2.png" alt="Magic Door"> -->
+        
+        <div class="open"></div>
+    </div>
+
+    <script>
+        // const door = document.getElementById('door');
+        const background = document.getElementById('background');
+        // const door = document.getElementById('door');
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const door = document.getElementById('door');
+            const openButton = document.querySelector('.open'); // Берём .open
+
+            openButton.addEventListener('click', () => {
+                door.classList.add('fly-away'); // Анимация срабатывает только при клике на .open
+                background.style.zIndex = 10;
+                openButton.style.display='none';
+            });
+        });
+        document.addEventListener("DOMContentLoaded", function () {
+            let door = document.getElementById("door");
+            let isOriginal = true;
+
+            setInterval(() => {
+                if (isOriginal) {
+                    door.src = "./images/dorrefect2.png";
+                } else {
+                    door.src = "./images/door_1.png";
+                }
+                isOriginal = !isOriginal;
+            }, 400); // Интервал в 500 мс (0.5 секунды)
+        });
+
+    </script>
+</body>
+
+</html>

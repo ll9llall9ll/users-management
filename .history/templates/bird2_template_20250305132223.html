@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magic Door Animation</title>
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #0b1213;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 500px;
+            height: 700px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        #background,
+        #background2,
+        .doors {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        #door {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transition: transform 2s ease-in-out, opacity 1s ease-in-out;
+        }
+
+        #door.fly-away {
+            transform: translateY(-80%); /* Увеличил подъем */
+            opacity: 0.3;
+        }
+
+        .open {
+            position: absolute;
+            width: 14%;
+            height: 15%;
+            background-color: rgba(0, 255, 255, 0.603);
+            cursor: pointer;
+            z-index: 50;
+            left: 80%;
+            top: 62%;
+            transform: translate(-50%, -50%);
+            pointer-events: auto;
+        }
+
+        @media screen and (max-width: 600px) {
+            .container {
+                width: 100%;
+                height: 100vh;
+            }
+        }
+
+        .doors {
+            animation: door 0.5s infinite alternate;
+        }
+
+        @keyframes door {
+            0% {
+                top: -5px;
+            }
+            100% {
+                top: 0px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <img id="background2" src="./images/background2.jpg" alt="Background">
+        <img id="background" src="./images/background1.png" alt="Background">
+        <img class="doors" id="door" src="./images/door_1.png" alt="Magic Door">
+        
+        <div class="open"></div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const door = document.getElementById('door');
+            const background = document.getElementById('background');
+            const openButton = document.querySelector('.open');
+
+            openButton.addEventListener('click', () => {
+                door.classList.add('fly-away');
+                background.style.zIndex = 10;
+                setTimeout(() => {
+                    openButton.style.display = 'none';
+                }, 100); // Небольшая задержка перед скрытием
+            });
+
+            let isOriginal = true;
+            setInterval(() => {
+                if (isOriginal) {
+                    door.src = "./images/dorrefect2.png";
+                } else {
+                    door.src = "./images/door_1.png";
+                }
+                isOriginal = !isOriginal;
+            }, 400);
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magic Door Animation</title>
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #0b1213;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            position: relative;
+            width: 1200px;
+            /* Увеличенный размер */
+            height: 800px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform-origin: center;
+        }
+
+        #background,
+        #background2,
+        .doors {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        #door {
+            position: absolute;
+            top: 0;
+            /* Исходное положение */
+            transition: top 3s ease-in-out;
+            /* Анимация */
+        }
+
+        #door.fly-away {
+            top: -100%;
+            /* Поднимаем вверх */
+        }
+
+        .open {
+            position: absolute;
+            width: 8%;
+            height: 28%;
+            background-color: rgba(0, 255, 255, 0.3);
+            /* Временная подсветка */
+            cursor: pointer;
+            z-index: 50;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        @media screen and (max-width: 1200px) {
+            .container {
+                transform: scale(calc(100vw / 1200));
+                /* Масштабирование */
+            }
+        }
+
+        .doors {
+
+            animation: door 0.5s infinite alternate;
+        }
+
+        @keyframes door {
+            0% {
+                top: -5px;
+            }
+
+            100% {
+                top: 0px;
+            }
+        }
+
+        .open {
+            position: absolute;
+            width: 55px;
+            height: 144px;
+            background-color: aqua;
+            cursor: pointer;
+            z-index: 50;
+            left: 55%;
+            top: 52%;
+        }
+
+        @media screen and (max-width: 896px) {
+            .container {
+                transform: scale(calc(100vw / 896));
+                /* Масштабирование под ширину */
+            }
+        }
+
+        /* 
+
+        @media (min-width: 641px) and (max-width: 896px) {
+            .container {
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        @media (max-width: 640px) {
+            #door {
+                width: 100%;
+                max-width: 640px;
+            }
+
+            .container {
+                width: 100%;
+                height: 100%;
+            }
+        } */
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <img id="background2" src="./images/background2.jpg" alt="Background">
+        <img id="background" src="./images/background1.png" alt="Background">
+        <img class="doors" id="door" src="./images/door_1.png" alt="Magic Door">
+        <!-- <img class="doors" id="door2" src="./images/dorrefect2.png" alt="Magic Door"> -->
+        <div class="open"></div>
+    </div>
+
+    <script>
+        // const door = document.getElementById('door');
+        const background = document.getElementById('background');
+        const door = document.getElementById('door');
+
+        door.addEventListener('click', () => {
+            door.classList.add('fly-away'); // Запускаем анимацию
+            background.style.zIndex = 10;
+        });
+        door.addEventListener('click', () => {
+            door.classList.add('fly-away');
+           
+        });
+        document.addEventListener("DOMContentLoaded", function () {
+            let door = document.getElementById("door");
+            let isOriginal = true;
+
+            setInterval(() => {
+                if (isOriginal) {
+                    door.src = "./images/dorrefect2.png";
+                } else {
+                    door.src = "./images/door_1.png";
+                }
+                isOriginal = !isOriginal;
+            }, 40000); // Интервал в 500 мс (0.5 секунды)
+        });
+
+    </script>
+</body>
+
+</html>

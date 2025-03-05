@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Magic Door Animation</title>
+    <style>
+        body, html {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            position: relative;
+            width: 600px;
+            height: 600px;
+            overflow: hidden;
+        }
+        #background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        #door {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            cursor: pointer;
+            transition: transform 1s ease-in-out;
+        }
+        #door.fly-away {
+            transform: translateY(-100%);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img id="background" src="https://raw.githubusercontent.com/Stability-AI/StableStudio/main/assets/images/placeholder.png" alt="Background">
+        <img id="door" src="https://raw.githubusercontent.com/Stability-AI/StableStudio/main/assets/images/placeholder.png" alt="Magic Door">
+    </div>
+
+    <script>
+        const door = document.getElementById('door');
+        
+        door.addEventListener('click', () => {
+            door.classList.add('fly-away');
+        });
+
+        door.addEventListener('transitionend', () => {
+            // Optional: Reset door position after animation
+            setTimeout(() => {
+                door.classList.remove('fly-away');
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

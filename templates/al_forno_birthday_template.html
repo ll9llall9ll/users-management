@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>День Рождения в Al Forno</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-background: #FFF4E6;
+            --color-primary: #8B4513;
+            --color-secondary: #D2691E;
+            --color-accent: #FF6347;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--color-background);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .invitation-container {
+            width: 450px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            border: 5px solid var(--color-primary);
+            transform-style: preserve-3d;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(1deg); }
+            50% { transform: translateY(-10px) rotate(-1deg); }
+        }
+
+        .pizza-decor {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #FFA500, #FF6347);
+            border-radius: 50%;
+            opacity: 0.2;
+            transform: rotate(45deg);
+        }
+
+        .pizza-decor-top-left {
+            top: -60px;
+            left: -60px;
+        }
+
+        .pizza-decor-bottom-right {
+            bottom: -60px;
+            right: -60px;
+        }
+
+        .chef-hat {
+            position: absolute;
+            top: -30px;
+            right: 20px;
+            width: 80px;
+            height: 50px;
+            background: white;
+            border-radius: 50% 50% 0 0;
+            border: 3px solid var(--color-primary);
+            transform: rotate(-15deg);
+        }
+
+        .chef-hat::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 20px;
+            background: var(--color-primary);
+        }
+
+        .tomato-slice {
+            position: absolute;
+            bottom: -20px;
+            left: 20px;
+            width: 60px;
+            height: 40px;
+            background: #FF6347;
+            border-radius: 50% 0 50% 0;
+            transform: rotate(45deg);
+            opacity: 0.3;
+        }
+
+        .confetti-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 2;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: transparent;
+            border-style: solid;
+            border-width: 5px;
+            border-top-color: transparent;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        .invite-header {
+            font-family: 'Caveat', cursive;
+            color: var(--color-secondary);
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 20px;
+            animation: bounce 1s ease infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .invite-details {
+            text-align: center;
+            position: relative;
+            z-index: 3;
+        }
+
+        .detail-item {
+            margin: 10px 0;
+            color: var(--color-primary);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: revealDetails 1s ease forwards;
+            animation-delay: calc(0.2s * var(--delay));
+        }
+
+        @keyframes revealDetails {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .btn-confirm {
+            display: block;
+            width: 200px;
+            margin: 30px auto 0;
+            padding: 12px 20px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 3;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .btn-confirm:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .pizzeria-watermark {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-family: 'Caveat', cursive;
+            color: var(--color-primary);
+            opacity: 0.5;
+            font-size: 1.2rem;
+            transform: rotate(-10deg);
+        }
+    </style>
+</head>
+<body>
+    <div class="invitation-container">
+        <div class="pizza-decor pizza-decor-top-left"></div>
+        <div class="pizza-decor pizza-decor-bottom-right"></div>
+        <div class="chef-hat"></div>
+        <div class="tomato-slice"></div>
+        <div class="confetti-container" id="confetti-container"></div>
+
+        <h1 class="invite-header">Приглашение!</h1>
+
+        <div class="invite-details">
+            <div class="detail-item" style="--delay: 1">Приглашаю вас</div>
+            <div class="detail-item" style="--delay: 2">отпраздновать мой день рождения</div>
+            <div class="detail-item" style="--delay: 3">15 сентября 2024</div>
+            <div class="detail-item" style="--delay: 4">Начало в 19:00</div>
+            <div class="detail-item" style="--delay: 5">Ресторан Al Forno: ул. Центральная, 25</div>
+
+            <button class="btn-confirm">Я приду!</button>
+        </div>
+
+        <div class="pizzeria-watermark">Al Forno</div>
+    </div>
+
+    <script>
+        function createConfetti() {
+            const container = document.getElementById('confetti-container');
+            const colors = ['#FFA500', '#FF6347', '#FFD700', '#FF4500', '#8B4513'];
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                confetti.style.borderColor = colors[Math.floor(Math.random() * colors.length)] + ' transparent transparent transparent';
+                confetti.style.animationDelay = Math.random() * 2 + 's';
+                
+                container.appendChild(confetti);
+            }
+        }
+
+        createConfetti();
+    </script>
+</body>
+</html>

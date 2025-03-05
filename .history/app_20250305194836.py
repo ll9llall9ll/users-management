@@ -72,7 +72,7 @@ def invite():
         invitation.accepted = accepted
         updateInvitation(invitation)
         returnMsg = "Դուք ընդունել եք հրավերը, շնորհակալություն!" if accepted else "Ցավում ենք, որ չեք կարողանա միանալ մեզ:"
-        return render_template('invite_accepted4.html',  msg = returnMsg  )
+        return render_template('invite_accepted.html',  msg = returnMsg  )
     
     return render_template(template.viewname, invitation = invitation, event = event)
 

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Приглашение на День Рождения</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-brick-wall: #8B4513;
+            --color-wood: #D2691E;
+            --color-text: #2C3E50;
+            --color-accent: #C0392B;
+            --color-background: #F4E1D2;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--color-background);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            perspective: 1000px;
+            overflow: hidden;
+        }
+
+        .invitation-container {
+            width: 500px;
+            height: 700px;
+            background-color: #FFF;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        /* SVG-анимация текста */
+        .handwriting {
+            font-family: 'Caveat', cursive;
+            font-size: 60px;
+            fill: none;
+            stroke: var(--color-accent);
+            stroke-width: 2px;
+            stroke-dasharray: 500;
+            stroke-dashoffset: 500;
+            animation: writeText 3s ease forwards;
+        }
+
+        @keyframes writeText {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        .event-details {
+            font-family: 'Caveat', cursive;
+            font-size: 1.3rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .btn-confirm {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, var(--color-accent), #E74C3C);
+            color: #FFF;
+            text-decoration: none;
+            border-radius: 30px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-confirm:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="invitation-container">
+        <svg width="400" height="100">
+            <text x="20" y="60" class="handwriting">С Днём Рождения!</text>
+        </svg>
+
+        <div class="event-details">
+            <p>Приглашаю вас</p>
+            <p>разделить со мной</p>
+            <p>вкус праздника</p>
+            <p>в неаполитанской пиццерии</p>
+            <p>15 сентября 2024</p>
+            <p>Начало в 19:00</p>
+            <p>Ресторан "Pizzeria Felice"</p>
+            <p>ул. Центральная, 25</p>
+        </div>
+
+        <a href="#" class="btn-confirm">Я приду!</a>
+    </div>
+</body>
+</html>

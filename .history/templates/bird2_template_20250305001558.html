@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magic Door Animation</title>
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 80%;
+            height: 80%;
+            max-width: 896px;
+            max-height: 600px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        #background {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transform: translate(-50%, -50%);
+        }
+
+        #background2 {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transform: translate(-50%, -50%);
+        }
+
+        #door {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 3s ease-in-out;
+        }
+
+        #door2 {
+            /* position: relative; */
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            /* transition: transform 3s ease-in-out; */
+        }
+
+        #door.fly-away {
+            transform: translateY(-100%);
+            pointer-events: none;
+            /* Disable click interactions after flying away */
+        }
+        .doors{
+            cursor: pointer;
+            animation: door 0.5s infinite alternate;
+        }
+        @keyframes door {
+            0% { top: -5px; }
+            100% { top: 0px; }
+        }
+        @media (min-width: 641px) and (max-width: 896px) {
+            .container {
+                width: 90%;
+                height: 90%;
+            }
+        }
+
+        @media (max-width: 640px) {
+            #door {
+                width: 100%;
+                max-width: 640px;
+            }
+
+            .container {
+                width: 95%;
+                height: 95%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <img id="background2" src="./images/background2.jpg" alt="Background">
+        <img id="background" src="./images/background1.png" alt="Background">
+        <img class="doors" id="door" src="./images/door_1.png" alt="Magic Door">
+        <img class="doors" id="door2" src="./images/dorrefect.png" alt="Magic Door">
+    </div>
+
+    <script>
+        const door = document.getElementById('door');
+        const background = document.getElementById('background');
+
+        door.addEventListener('click', () => {
+            door.classList.add('fly-away');
+            background.style.zIndex = 10;
+        });
+        document.addEventListener("DOMContentLoaded", function () {
+            let door = document.getElementById("door");
+            let isOriginal = true;
+
+            setInterval(() => {
+                if (isOriginal) {
+                    door.src = "./images/dorrefect.png";
+                } else {
+                    door.src = "./images/door_1.png";
+                }
+                isOriginal = !isOriginal;
+            }, 100); // Интервал в 500 мс (0.5 секунды)
+        });
+
+    </script>
+</body>
+
+</html>

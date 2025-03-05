@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Приглашение на День Рождения</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-brick-wall: #8B4513;
+            --color-wood: #D2691E;
+            --color-text: #2C3E50;
+            --color-accent: #C0392B;
+            --color-background: #F4E1D2;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Caveat', cursive;
+            background-color: var(--color-background);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            perspective: 1000px;
+            overflow: hidden;
+        }
+
+        .invitation-container {
+            width: 500px;
+            height: 700px;
+            background-color: #FFF;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            transform: rotateY(-5deg);
+        }
+
+        .brick-wall {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.8)),
+                url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 30h30v30H30V30zm15-15h15v15H45V15z' fill='%238B4513' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+            z-index: 1;
+        }
+
+        .invitation-content {
+            position: relative;
+            z-index: 4;
+            text-align: center;
+            padding: 40px 30px;
+            color: var(--color-text);
+        }
+
+        .title {
+            font-size: 3rem;
+            color: var(--color-accent);
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+
+        .event-details p {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes writeText {
+            to {
+                stroke-dashoffset: 0;
+                opacity: 1;
+            }
+        }
+
+        .writing-text {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            fill: transparent;
+            stroke: var(--color-text);
+            stroke-width: 1.5;
+            animation: writeText 3s linear forwards;
+            animation-delay: 1s;
+        }
+
+        .btn-confirm {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, var(--color-accent), #E74C3C);
+            color: #FFF;
+            text-decoration: none;
+            border-radius: 30px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+            animation-delay: 4s;
+        }
+
+        .btn-confirm:hover {
+            transform: scale(1.05);
+        }
+
+        .animated-text {
+            position: relative;
+        }
+
+        .animated-text span {
+            display: inline-block;
+            opacity: 0;
+            animation: fadeInText 0.5s forwards;
+        }
+
+        @keyframes fadeInText {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .animated-text span:nth-child(1) { animation-delay: 1.5s; }
+        .animated-text span:nth-child(2) { animation-delay: 1.7s; }
+        .animated-text span:nth-child(3) { animation-delay: 1.9s; }
+        .animated-text span:nth-child(4) { animation-delay: 2.1s; }
+        .animated-text span:nth-child(5) { animation-delay: 2.3s; }
+        .animated-text span:nth-child(6) { animation-delay: 2.5s; }
+        .animated-text span:nth-child(7) { animation-delay: 2.7s; }
+        .animated-text span:nth-child(8) { animation-delay: 2.9s; }
+    </style>
+</head>
+<body>
+    <div class="invitation-container">
+        <div class="brick-wall"></div>
+
+        <div class="invitation-content">
+            <h1 class="title">С Днём Рождения!</h1>
+
+            <div class="event-details animated-text">
+                <p>
+                    <span>П</span><span>р</span><span>и</span><span>г</span><span>л</span><span>а</span><span>ш</span><span>а</span><span>ю</span> 
+                    <span>в</span><span>а</span><span>с</span>
+                </p>
+                <p>
+                    <span>р</span><span>а</span><span>з</span><span>д</span><span>е</span><span>л</span><span>и</span><span>т</span><span>ь</span> 
+                    <span>с</span><span>о</span> <span>м</span><span>н</span><span>о</span><span>й</span>
+                </p>
+                <p>
+                    <span>в</span><span>к</span><span>у</span><span>с</span> 
+                    <span>п</span><span>р</span><span>а</span><span>з</span><span>д</span><span>н</span><span>и</span><span>к</span><span>а</span>
+                </p>
+                <p>
+                    <span>в</span> <span>н</span><span>е</span><span>а</span><span>п</span><span>о</span><span>л</span><span>и</span><span>т</span><span>а</span><span>н</span><span>с</span><span>к</span><span>о</span><span>й</span> 
+                    <span>п</span><span>и</span><span>ц</span><span>ц</span><span>е</span><span>р</span><span>и</span><span>и</span>
+                </p>
+                <p>15 сентября 2024</p>
+                <p>Начало в 19:00</p>
+                <p>Ресторан "Pizzeria Felice"</p>
+                <p>ул. Центральная, 25</p>
+            </div>
+
+            <a href="#" class="btn-confirm">Я приду!</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Приглашение в итальянскую пиццерию</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-terracotta: #A0522D;
+            --color-cream: #FFF5E1;
+            --color-olive: #808000;
+            --color-burgundy: #800020;
+            --color-wood-brown: #85613D;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--color-cream);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: var(--color-terracotta);
+            line-height: 1.6;
+            overflow: hidden;
+        }
+
+        .invitation-container {
+            width: 500px;
+            background-color: var(--color-cream);
+            border: 3px solid var(--color-terracotta);
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            z-index: 10;
+        }
+
+        .fireworks {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .firework {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background-color: var(--firework-color);
+            border-radius: 50%;
+            opacity: 0;
+            animation: firework 1.5s ease-out;
+        }
+
+        @keyframes firework {
+            0% { 
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% { 
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+
+        .vine-border {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .vine-border::before,
+        .vine-border::after {
+            content: '';
+            position: absolute;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50,10 Q70,30 50,50 Q30,70 50,90' fill='none' stroke='%23808000' stroke-width='2' stroke-dasharray='5,5'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            top: -50px;
+            left: -50px;
+            right: -50px;
+            bottom: -50px;
+            opacity: 0.3;
+        }
+
+        .name-highlight {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 48px;
+            color: var(--color-burgundy);
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            animation: name-pulse 2s infinite alternate;
+        }
+
+        @keyframes name-pulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.05); }
+        }
+
+        .event-details {
+            background-color: rgba(160, 82, 45, 0.05);
+            border-left: 4px solid var(--color-terracotta);
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .event-details p {
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .btn-confirm {
+            display: block;
+            width: 100%;
+            text-align: center;
+            padding: 15px;
+            background-color: var(--color-burgundy);
+            color: var(--color-cream);
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            position: relative;
+            z-index: 20;
+        }
+
+        .btn-confirm:hover {
+            background-color: var(--color-terracotta);
+        }
+
+        .texture-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23A0522D' fill-opacity='0.05'%3E%3Cpath opacity='.5' d='M96 95h4v1h-4v4h-1v-4h-9v-1h9v-9h1v9h9v1h-9v9h-1v-9zm-22 0h4v1h-4v4h-1v-4h-9v-1h9v-9h1v9h9v1h-9v9h-1v-9zm-22 0h4v1h-4v4h-1v-4h-9v-1h9v-9h1v9h9v1h-9v9h-1v-9zm-22 0h4v1h-4v4h-1v-4h-9v-1h9v-9h1v9h9v1h-9v9h-1v-9zm-22 0h4v1h-4v4h-1v-4h-9v-1h9v-9h1v9h9v1h-9v9h-1v-9zm-22 0h4v1h-4v4h-1v-4h-9v-1h9v-9h1v9h9v1h-9v9h-1v-9zm-22 0h4v1h-4v4h-1v-4h-9v-1h9v-9h1v9h9v1h-9v9h-1v-9zm-22 0h4v1h-4v4h-1v-4h-9v-1h9v-9h1v9h9v1h-9v9h-1v-9z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="invitation-container">
+        <div class="fireworks"></div>
+        <div class="vine-border"></div>
+        <div class="texture-overlay"></div>
+
+        <div class="name-highlight">Антонио</div>
+
+        <div class="event-details">
+            <p>🍕 Приглашаем вас на</p>
+            <p>Изысканный вечер итальянской кухни</p>
+            <p>в уютной пиццерии "La Dolce Vita"</p>
+            <p>20 октября 2024</p>
+            <p>Начало в 20:00</p>
+            <p>ул. Виноградная, 12</p>
+        </div>
+
+        <a href="#" class="btn-confirm">Подтвердить</a>
+    </div>
+
+    <script>
+        function createFireworks() {
+            const fireworksContainer = document.querySelector('.fireworks');
+            
+            function createFirework() {
+                const firework = document.createElement('div');
+                firework.classList.add('firework');
+                
+                firework.style.setProperty('--firework-color', `hsl(${Math.random() * 360}, 100%, 50%)`);
+                firework.style.left = `${Math.random() * 100}%`;
+                firework.style.top = `${Math.random() * 100}%`;
+                firework.style.animationDelay = `${Math.random() * 2}s`;
+                
+                fireworksContainer.appendChild(firework);
+                
+                setTimeout(() => {
+                    fireworksContainer.removeChild(firework);
+                }, 2000);
+            }
+
+            setInterval(createFirework, 500);
+        }
+
+        createFireworks();
+    </script>
+</body>
+</html>

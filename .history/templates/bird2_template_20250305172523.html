@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magic Door Animation</title>
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #0b1213;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 500px;
+            height: 700px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        #background,
+        #background2,
+        .doors {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        #door {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transition: transform 2s ease-in-out, opacity 1s ease-in-out;
+        }
+
+        #door.fly-away {
+            transform: translateY(-75%);
+            opacity: 0.9;
+        }
+
+        .open {
+            position: absolute;
+            width: 14%;
+            height: 20%;
+            background-color: rgba(0, 255, 255, 0);
+            cursor: pointer;
+            z-index: 50;
+            left: 71%;
+            top: 62%;
+            transform: translate(-50%, -50%);
+            pointer-events: auto;
+        }
+
+
+        .openMessage {
+            position: absolute;
+            width: 23%;
+            height: 13%;
+            background-color: rgba(0, 255, 255, 0);
+            cursor: pointer;
+            z-index: 50;
+            left: 59%;
+            top: 39%;
+            transform: translate(-50%, -50%);
+            pointer-events: auto;
+        }
+
+        #pegasus {
+            position: absolute;
+            right: -100%;
+            /* Полностью за пределами экрана */
+            top: 66%;
+            transform: translateY(-50%);
+            width: 370px;
+            transition: right 2s ease-in-out;
+            z-index: 2;
+            display: none;
+        }
+
+        #pegasus.appear {
+            display: block;
+            right: 0%;
+            /* Въезжает в кадр */
+        }
+
+        .backgroundOR {
+            z-index: 3;
+        }
+
+        #speech-bubble {
+            display: none;
+            position: absolute;
+            top: 63%;
+            right: 20%;
+            background-color: white;
+            border-radius: 20px;
+            padding: 15px;
+            max-width: 250px;
+            z-index: 10;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            animation: showBubble 1s forwards;
+            animation-delay: 1s;
+        }
+
+        #speech-bubble::before {
+            content: '';
+            position: absolute;
+            bottom: 55px;
+            right: 41px;
+            border-width: 0px 20px 18px;
+            border-style: solid;
+            border-color: white transparent;
+        }
+
+
+
+        #speech-bubble2 {
+            display: none;
+            position: absolute;
+            top: 70%;
+            right: 13%;
+            background-color: #cfb457;
+            border-radius: 20px;
+            padding: 15px;
+            max-width: 250px;
+            z-index: 10;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            animation: showBubble2 4s forwards;
+            animation-delay: 4s;
+        }
+
+        @keyframes showBubble2 {
+
+            0% {
+                /* display: block; */
+                opacity: 0;
+            }
+
+            100% {
+                /* display: block; */
+                opacity: 1;
+            }
+        }
+
+        #pegasus.appear+#speech-bubble2 {
+            display: block;
+            animation-delay: 1.8s;
+        }
+
+        @keyframes showBubble {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        #pegasus.appear+#speech-bubble {
+            display: block;
+            animation-delay: 1.8s;
+        }
+
+        /* Медиа-запросы для разных устройств */
+        @media screen and (max-width: 600px) {
+            .open {
+                width: 16%;
+                height: 12%;
+                left: 78%;
+                top: 60%;
+            }
+
+            .openMessage {
+                width: 31%;
+                height: 12%;
+                left: 50%;
+                top: 44%;
+            }
+        }
+
+        @media screen and (min-width: 800px) {
+            .container {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 500px;
+                height: 700px;
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            }
+
+            .openMessage {
+                width: 25%;
+                height: 12%;
+                left: 60%;
+                top: 39%;
+            }
+        }
+
+        @media screen and (width: 360px) and (height: 740px) {
+            .open {
+                width: 18%;
+                height: 10%;
+                left: 80%;
+                top: 58%;
+            }
+
+            .openMessage {
+                width: 31%;
+                height: 12%;
+                left: 45%;
+                top: 40%;
+            }
+        }
+
+        @media screen and (width: 375px) and (height: 667px) {
+            .open {
+                width: 18%;
+                height: 10%;
+                left: 80%;
+                top: 58%;
+            }
+
+            .openMessage {
+                width: 31%;
+                height: 12%;
+                left: 45%;
+                top: 37%;
+            }
+        }
+
+        @media screen and (width: 540px) and (height: 720px) {
+            .open {
+                width: 18%;
+                height: 10%;
+                left: 80%;
+                top: 58%;
+            }
+
+            .openMessage {
+                width: 31%;
+                height: 12%;
+                left: 45%;
+                top: 37%;
+            }
+        }
+
+        @media screen and (width: 768px) and (height: 1024px) {
+            .open {
+                width: 14%;
+                height: 20%;
+                left: 71%;
+                top: 61%;
+            }
+
+            .openMessage {
+                width: 20%;
+                height: 11%;
+                left: 70%;
+                top: 47%;
+            }
+        }
+
+        @media screen and (width: 390px) and (height: 844px) {
+            .open {
+                width: 17%;
+                height: 11%;
+                left: 79%;
+                top: 59%;
+            }
+
+            .openMessage {
+                width: 31%;
+                height: 12%;
+                left: 48%;
+                top: 43%;
+            }
+        }
+
+        @media screen and (width: 414px) and (height: 896px) {
+            .open {
+                width: 16%;
+                height: 12%;
+                left: 78%;
+                top: 60%;
+            }
+
+            .openMessage {
+                width: 31%;
+                height: 12%;
+                left: 50%;
+                top: 44%;
+            }
+        }
+
+        .doors {
+            animation: door 0.5s infinite alternate;
+        }
+
+        @keyframes door {
+            0% {
+                top: -5px;
+            }
+
+            100% {
+                top: 0px;
+            }
+        }
+
+        /* Стили для модального окна */
+        #message-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 10px;
+            position: relative;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            border-radius: 25px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+            /* position: relative; */
+            overflow: hidden;
+            text-align: center;
+            padding: 50px 20px;
+            transform-style: preserve-3d;
+            transform: rotateX(10deg);
+            transition: all 0.5s ease;
+        }
+
+        .close-modal {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-modal:hover {
+            color: black;
+        }
+
+
+        /*Стили для письмо */ 
+
+        
+        .party-balloons {
+            position: absolute;
+            top: -50px;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            z-index: 10;
+        }
+
+        .balloon {
+            width: 60px;
+            height: 80px;
+            background-color: var(--color-accent);
+            border-radius: 50% 50% 0 0;
+            transform: rotate(var(--rotation));
+            animation: balloon-float 2s infinite alternate;
+            position: relative;
+        }
+
+        .balloon::before {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 20px;
+            background-color: #666;
+        }
+
+        @keyframes balloon-float {
+            0% { transform: translateY(0) rotate(var(--rotation)); }
+            100% { transform: translateY(-10px) rotate(var(--rotation)); }
+        }
+
+        .fireworks {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .firework {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: var(--firework-color);
+            border-radius: 50%;
+            opacity: 0;
+            animation: firework 1.5s ease-out;
+        }
+
+        @keyframes firework {
+            0% { 
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% { 
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+
+        .birthday-emoji {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .name-highlight {
+            font-family: 'Caveat', cursive;
+            font-size: 60px;
+            color: #FFFFFF;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            margin-bottom: 20px;
+            animation: name-bounce 1s infinite alternate;
+        }
+
+        @keyframes name-bounce {
+            0% { transform: scale(1) rotate(-5deg); }
+            100% { transform: scale(1.05) rotate(5deg); }
+        }
+
+        .invitation-text {
+            font-family: 'Caveat', cursive;
+            font-size: 30px;
+            color: #FFFFFF;
+            margin-bottom: 30px;
+        }
+
+        .event-details {
+            background-color: rgba(255,255,255,0.2);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 0 20px 30px;
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+
+        .btn-confirm {
+            display: inline-block;
+            padding: 15px 40px;
+            background-color: var(--color-accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .btn-confirm:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+            background-color: var(--color-primary);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <img id="background2" src="./images/background2.jpg" alt="Background">
+        <img class="backgroundOR" id="background" src="./images/background1.png" alt="Background">
+        <img class="doors" id="door" src="./images/door_1.png" alt="Magic Door">
+        <img id="pegasus" src="./images/pegas1.png" alt="Pegasus">
+        <div id="speech-bubble">Բարև {invitation.name} ! , ես քեզ նամակ եմ բերել!</div>
+        <div id="speech-bubble2">Սեղմիր նամակի վրա!</div>
+        <div class="open"></div>
+        <div class="openMessage"></div>
+    </div>
+
+    <!-- Модальное окно -->
+    <div id="message-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="invitation-container">
+                <div class="party-balloons">
+                    <div class="balloon" style="--rotation: -15deg; background-color: #FF4F79;"></div>
+                    <div class="balloon" style="--rotation: 10deg; background-color: #4ECDC4;"></div>
+                    <div class="balloon" style="--rotation: -5deg; background-color: #FFD700;"></div>
+                </div>
+        
+                <div class="fireworks"></div>
+        
+                <div class="birthday-emoji">🎉🎂</div>
+        
+                <div class="name-highlight">Антонио!</div>
+        
+                <div class="invitation-text">
+                    Приглашаем тебя на праздник
+                </div>
+        
+                <div class="event-details">
+                    <p>🍕 Большой день рождения</p>
+                    <p>Суббота, 20 октября 2024</p>
+                    <p>Начало в 19:00</p>
+                    <p>Ресторан "Festa Italiana"</p>
+                    <p>ул. Праздничная, 15</p>
+                </div>
+        
+                <a href="#" class="btn-confirm">Я приду!</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const door = document.getElementById('door');
+    const background = document.getElementById('background');
+    const openButton = document.querySelector('.open');
+    const openMessageButton = document.querySelector('.openMessage');
+    const pegasus = document.getElementById('pegasus');
+    let bubble2 = document.getElementById("speech-bubble2");
+
+    
+    
+    const messageModal = document.getElementById('message-modal');
+    const closeModal = document.querySelector('.close-modal');
+
+    // Start blinking the door immediately
+    let isOriginal = true;
+    const blinkInterval = setInterval(() => {
+        if (isOriginal) {
+            door.src = "./images/dorrefect2.png";
+        } else {
+            door.src = "./images/door_1.png";
+        }
+        isOriginal = !isOriginal;
+    }, 400);
+
+    openButton.addEventListener('click', () => {
+        door.classList.add('fly-away');
+        background.style.zIndex = 10;
+
+        // Stop door blinking
+        clearInterval(blinkInterval);
+
+        pegasus.style.display = 'block';
+        setTimeout(() => {
+            pegasus.classList.add('appear');
+        }, 50);
+
+        // Start pegasus blinking
+        const pegasusBlink = setInterval(() => {
+            if (isOriginal) {
+                pegasus.src = "./images/pegas1.png";
+            } else {
+                pegasus.src = "./images/pegas2.png";
+            }
+            isOriginal = !isOriginal;
+        }, 400);
+
+        setTimeout(() => {
+            openButton.style.display = 'none';
+        }, 100);
+        setTimeout(() => {
+        bubble2.style.display = "block";
+        bubble2.style.animation = "showBubble2 3s forwards";
+    }, 3000);
+    });
+
+    // Обработчик для открытия модального окна
+    openMessageButton.addEventListener('click', () => {
+        messageModal.style.display = 'block';
+    });
+
+    // Обработчик для закрытия модального окна
+    closeModal.addEventListener('click', () => {
+        messageModal.style.display = 'none';
+    });
+
+    // Закрытие модального окна при клике вне его
+    window.addEventListener('click', (event) => {
+        if (event.target == messageModal) {
+            messageModal.style.display = 'none';
+        }
+    });
+});
+    </script>
+</body>
+
+</html>

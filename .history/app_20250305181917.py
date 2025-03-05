@@ -62,7 +62,7 @@ def invite():
     hash = request.args.get('h')
     invitation = getInvitationByHash(hash)
     if invitation.accepted == True:
-        return render_template('invite_accepted4.html', msg = "Դուք ընդունել եք հրավերը, շնորհակալություն!"  )
+        return render_template('invite_accepted.html', msg = "Դուք ընդունել եք հրավերը, շնորհակալություն!"  )
     event = getEventById(invitation.event_id)
     template = get_template_by_id(event.template_id)
     if request.method == 'POST':
@@ -72,7 +72,7 @@ def invite():
         invitation.accepted = accepted
         updateInvitation(invitation)
         returnMsg = "Դուք ընդունել եք հրավերը, շնորհակալություն!" if accepted else "Ցավում ենք, որ չեք կարողանա միանալ մեզ:"
-        return render_template('invite_accepted4.html',  msg = returnMsg  )
+        return render_template('invite_accepted.html',  msg = returnMsg  )
     
     return render_template(template.viewname, invitation = invitation, event = event)
 

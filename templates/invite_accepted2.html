@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Celebrazione del Matrimonio</title>
+    <style>
+        /* Italian-inspired color palette and background */
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, rgba(255, 235, 205, 1) 0%, rgba(255, 192, 203, 0.6) 100%);
+            font-family: 'Italiana', serif;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Container styling with subtle Italian design elements */
+        .container {
+            text-align: center;
+            max-width: 90%;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        /* Elegant typography with Italian flair */
+        h1 {
+            font-size: 3.5rem;
+            color: #8B4513; /* Warm brown reminiscent of Tuscan earth */
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: bold;
+            position: relative;
+            z-index: 1;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            animation: romanticFade 2.5s ease-out forwards;
+        }
+
+        /* Romantic fade-in animation */
+        @keyframes romanticFade {
+            0% { 
+                opacity: 0; 
+                transform: scale(0.8);
+            }
+            100% { 
+                opacity: 1; 
+                transform: scale(1);
+            }
+        }
+
+        /* Decorative elements inspired by Italian wedding traditions */
+        .ornament {
+            position: absolute;
+            background: rgba(199, 21, 133, 0.2);
+            border-radius: 50%;
+            animation: ornamentPulse 3s infinite alternate;
+        }
+
+        @keyframes ornamentPulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.2); }
+        }
+
+        .ornament1 { top: 10%; left: 5%; width: 100px; height: 100px; }
+        .ornament2 { bottom: 10%; right: 5%; width: 80px; height: 80px; }
+
+        /* Vine-like decorative elements */
+        .vine {
+            position: absolute;
+            border: 2px solid rgba(34, 139, 34, 0.3);
+            border-radius: 50% 0;
+            transform: rotate(45deg);
+        }
+
+        .vine1 { top: 20%; left: 10%; width: 150px; height: 50px; }
+        .vine2 { bottom: 20%; right: 10%; width: 120px; height: 40px; }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+                letter-spacing: 2px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Italiana&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Decorative ornaments -->
+    <div class="ornament ornament1"></div>
+    <div class="ornament ornament2"></div>
+
+    <!-- Vine-like decorations -->
+    <div class="vine vine1"></div>
+    <div class="vine vine2"></div>
+
+    <!-- Container for wedding message -->
+    <div class="container">
+        <h1>{{msg}} &#10084;&#65039;</h1>
+    </div>
+</body>
+</html>
