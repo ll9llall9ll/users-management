@@ -6,6 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Magic Door Animation</title>
     <style>
+        @-webkit-keyframes balloon-float {
+            0% {
+                -webkit-transform: translateY(0) rotate(var(--rotation));
+                transform: translateY(0) rotate(var(--rotation));
+            }
+
+            100% {
+                -webkit-transform: translateY(-10px) rotate(var(--rotation));
+                transform: translateY(-10px) rotate(var(--rotation));
+            }
+        }
+
         body,
         html {
             margin: 0;
@@ -39,6 +51,7 @@
         }
 
         #door {
+            -webkit-transition: transform 2s ease-in-out, opacity 1s ease-in-out;
             position: absolute;
             top: 0;
             left: 0;
@@ -100,6 +113,7 @@
 
         .backgroundOR {
             z-index: 3;
+            position: relative;
         }
 
         #speech-bubble {
@@ -541,24 +555,28 @@
             box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
             background-color: var(--color-primary);
         }
-        .btn-confirm, .button-no {
+
+        .btn-confirm,
+        .button-no {
             padding: 20px;
-    position: relative;
-    z-index: 10;
-}
-        .formAC{
+            position: relative;
+            z-index: 10;
+        }
+
+        .formAC {
             position: absolute;
             cursor: pointer;
             left: 20%;
             /* margin-top: 30px; */
-}
+        }
     </style>
 </head>
 
 <body>
     <div class="container">
         <img id="background2" src="{{url_for('static', filename='image/background2.jpg')}}" alt="Background">
-        <img class="backgroundOR" id="background" src="{{url_for('static', filename='image/background1.png')}}" alt="Background">
+        <img class="backgroundOR" id="background" src="{{url_for('static', filename='image/background1.png')}}"
+            alt="Background">
         <img class="doors" id="door" src="{{url_for('static', filename='image/door_1.png')}}" alt="Magic Door">
         <img id="pegasus" src="{{url_for('static', filename='image/pegas1.png')}}" alt="Pegasus">
         <div id="speech-bubble">Բարև {{invitation.name}} ! , ես քեզ նամակ եմ բերել!</div>
