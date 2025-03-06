@@ -570,6 +570,29 @@
             left: 20%;
             /* margin-top: 30px; */
         }
+
+        @supports (-webkit-hyphens:none) {
+            #door {
+                top: 0 !important;
+                transform: translateY(0) !important;
+            }
+
+            #door.fly-away {
+                transform: translateY(-100%) !important;
+                opacity: 0.9;
+            }
+
+            .doors {
+                animation: none !important;
+                /* Disable the initial animation in Safari */
+                top: 0 !important;
+            }
+
+            .container {
+                position: relative !important;
+                overflow: hidden !important;
+            }
+        }
     </style>
 </head>
 
