@@ -59,7 +59,12 @@
             width: 100%;
             height: 100%;
             transition: transform 2s ease-in-out, opacity 1s ease-in-out;
-            outline: none;
+            pointer-events: auto;
+            /* Оставляем реакцию на клик */
+            user-select: none;
+            /* Отключаем выделение текста при клике */
+            outline: #e36385;
+            /* Убираем рамку при фокусе */
         }
 
         #door.fly-away {
@@ -77,7 +82,14 @@
             left: 71%;
             top: 62%;
             transform: translate(-50%, -50%);
-            pointer-events: auto;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+            /* For mobile browsers */
+            box-shadow: none;
+            -webkit-appearance: none;
+            /* For inputs on Safari */
+            -moz-appearance: none;
+            appearance: none;
         }
 
 
@@ -92,8 +104,15 @@
             left: 59%;
             top: 39%;
             transform: translate(-50%, -50%);
-            pointer-events: auto;
+            
             outline: none;
+            -webkit-tap-highlight-color: transparent;
+            /* For mobile browsers */
+            box-shadow: none;
+            -webkit-appearance: none;
+            /* For inputs on Safari */
+            -moz-appearance: none;
+            appearance: none;
         }
 
         #pegasus {
@@ -668,17 +687,17 @@
         <span class="loader"></span>
     </div>
     <div id="main-content">
-    <div class="container">
-        <img id="background2" src="{{url_for('static', filename='image/background2.jpg')}}" alt="Background">
-        <img class="backgroundOR" id="background" src="{{url_for('static', filename='image/background1.png')}}"
-            alt="Background">
-        <img class="doors" id="door" src="{{url_for('static', filename='image/door_1.png')}}" alt="Magic Door">
-        <img id="pegasus" src="{{url_for('static', filename='image/pegas1.png')}}" alt="Pegasus">
-        <div id="speech-bubble">Բարև՜, ես քեզ նամակ եմ բերե՜լ:</div>
-        <div id="speech-bubble2">Սեղմիր՛ նամակի վրա:</div>
-        <div class="open"></div>
-        <div class="openMessage"></div>
-    </div>
+        <div class="container">
+            <img id="background2" src="{{url_for('static', filename='image/background2.jpg')}}" alt="Background">
+            <img class="backgroundOR" id="background" src="{{url_for('static', filename='image/background1.png')}}"
+                alt="Background">
+            <img class="doors" id="door" src="{{url_for('static', filename='image/door_1.png')}}" alt="Magic Door">
+            <img id="pegasus" src="{{url_for('static', filename='image/pegas1.png')}}" alt="Pegasus">
+            <div id="speech-bubble">Բարև՜, ես քեզ նամակ եմ բերե՜լ:</div>
+            <div id="speech-bubble2">Սեղմիր՛ նամակի վրա:</div>
+            <div class="open"></div>
+            <div class="openMessage"></div>
+        </div>
 
         <!-- Модальное окно -->
         <div id="message-modal">
@@ -701,107 +720,110 @@
                     հրավիրում եմ ձեզ իմ ծննդյան օրվա կապակցության արթիվ հանդիպմանը
                 </div> -->
 
-                <div class="event-details">
-			<p>Սիրելիներս, հրավիրում եմ ձեզ իմ ծնունդը նշելու ինձ հետ <b>Al Forno</b> ռեստորան, հասցեն՝ <b>Ծարավ Աղբյուր</b>, Yerevan City-ի հարևանությամբ, <b>մարտի 15-ին ժամը 15:00</b>: Մեծ սիրով սպասում եմ ձեզ:</p>
-            <div class="beautiful-name">Նոռա</div>
+                    <div class="event-details">
+                        <p>Սիրելիներս, հրավիրում եմ ձեզ իմ ծնունդը նշելու ինձ հետ <b>Al Forno</b> ռեստորանում, հասցեն՝
+                            <b>Ծարավ Աղբյուր</b>, Yerevan City-ի հարևանությամբ, <b>մարտի 15-ին ժամը 15:00</b>: Մեծ սիրով
+                            սպասում եմ ձեզ:
+                        </p>
+                        <div class="beautiful-name">Նոռա</div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
 
-            setTimeout(function () {
-                document.getElementById('loading-overlay').style.opacity = '0';
-                document.getElementById('main-content').style.display = 'block';
-
-                // Remove the loading overlay after fade out
                 setTimeout(function () {
-                    document.getElementById('loading-overlay').style.display = 'none';
-                }, 500);
-            }, 3000);
-            const door = document.getElementById('door');
-            const background = document.getElementById('background');
-            const openButton = document.querySelector('.open');
-            const openMessageButton = document.querySelector('.openMessage');
-            const pegasus = document.getElementById('pegasus');
-            let bubble2 = document.getElementById("speech-bubble2");
+                    document.getElementById('loading-overlay').style.opacity = '0';
+                    document.getElementById('main-content').style.display = 'block';
+
+                    // Remove the loading overlay after fade out
+                    setTimeout(function () {
+                        document.getElementById('loading-overlay').style.display = 'none';
+                    }, 500);
+                }, 3000);
+                const door = document.getElementById('door');
+                const background = document.getElementById('background');
+                const openButton = document.querySelector('.open');
+                const openMessageButton = document.querySelector('.openMessage');
+                const pegasus = document.getElementById('pegasus');
+                let bubble2 = document.getElementById("speech-bubble2");
 
 
 
-            const messageModal = document.getElementById('message-modal');
-            const closeModal = document.querySelector('.close-modal');
+                const messageModal = document.getElementById('message-modal');
+                const closeModal = document.querySelector('.close-modal');
 
-            // Start blinking the door immediately
-            let isOriginal = true;
-            const blinkInterval = setInterval(() => {
-                if (isOriginal) {
-                    door.src = "{{url_for('static', filename='image/dorrefect2.png')}}"
-                } else {
-                    door.src = "{{url_for('static', filename='image/door_1.png')}}";
-                }
-                isOriginal = !isOriginal;
-            }, 400);
-            openMessageButton.addEventListener('click', () => {
-                messageModal.style.display = 'flex';
-            });
-
-            openButton.addEventListener('click', () => {
-                door.classList.add('fly-away');
-                background.style.zIndex = 10;
-
-                // Stop door blinking
-                clearInterval(blinkInterval);
-
-                pegasus.style.display = 'block';
-                setTimeout(() => {
-                    pegasus.classList.add('appear');
-                }, 50);
-
-                // Start pegasus blinking
-                const pegasusBlink = setInterval(() => {
+                // Start blinking the door immediately
+                let isOriginal = true;
+                const blinkInterval = setInterval(() => {
                     if (isOriginal) {
-                        pegasus.src = "{{url_for('static', filename='image/pegas1.png')}}";
+                        door.src = "{{url_for('static', filename='image/dorrefect2.png')}}"
                     } else {
-                        pegasus.src = "{{url_for('static', filename='image/pegas2.png')}}";
+                        door.src = "{{url_for('static', filename='image/door_1.png')}}";
                     }
                     isOriginal = !isOriginal;
                 }, 400);
+                openMessageButton.addEventListener('click', () => {
+                    messageModal.style.display = 'flex';
+                });
 
-                setTimeout(() => {
-                    openButton.style.display = 'none';
-                }, 100);
-                setTimeout(() => {
-                    bubble2.style.display = "block";
-                    bubble2.style.animation = "showBubble2 2s forwards";
-                }, 2500);
+                openButton.addEventListener('click', () => {
+                    door.classList.add('fly-away');
+                    background.style.zIndex = 10;
 
-                setTimeout(() => {
-                    openMessageButton.style.display = "block";
+                    // Stop door blinking
+                    clearInterval(blinkInterval);
 
-                }, 1500);
+                    pegasus.style.display = 'block';
+                    setTimeout(() => {
+                        pegasus.classList.add('appear');
+                    }, 50);
 
-            });
+                    // Start pegasus blinking
+                    const pegasusBlink = setInterval(() => {
+                        if (isOriginal) {
+                            pegasus.src = "{{url_for('static', filename='image/pegas1.png')}}";
+                        } else {
+                            pegasus.src = "{{url_for('static', filename='image/pegas2.png')}}";
+                        }
+                        isOriginal = !isOriginal;
+                    }, 400);
 
-            // Обработчик для открытия модального окна
-            openMessageButton.addEventListener('click', () => {
-                messageModal.style.display = 'flex';
-            });
+                    setTimeout(() => {
+                        openButton.style.display = 'none';
+                    }, 100);
+                    setTimeout(() => {
+                        bubble2.style.display = "block";
+                        bubble2.style.animation = "showBubble2 2s forwards";
+                    }, 2500);
 
-            // Обработчик для закрытия модального окна
-            closeModal.addEventListener('click', () => {
-                messageModal.style.display = 'none';
-            });
+                    setTimeout(() => {
+                        openMessageButton.style.display = "block";
 
-            // Закрытие модального окна при клике вне его
-            window.addEventListener('click', (event) => {
-                if (event.target == messageModal) {
+                    }, 1500);
+
+                });
+
+                // Обработчик для открытия модального окна
+                openMessageButton.addEventListener('click', () => {
+                    messageModal.style.display = 'flex';
+                });
+
+                // Обработчик для закрытия модального окна
+                closeModal.addEventListener('click', () => {
                     messageModal.style.display = 'none';
-                }
+                });
+
+                // Закрытие модального окна при клике вне его
+                window.addEventListener('click', (event) => {
+                    if (event.target == messageModal) {
+                        messageModal.style.display = 'none';
+                    }
+                });
             });
-        });
-    </script>
+        </script>
 </body>
 
 </html>
