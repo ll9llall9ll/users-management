@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Magic Door Animation</title>
+    <title>Հրավիրատոմս</title>
+    <link rel="icon" type="image/png" href="{{url_for('static', filename='image/favicon.png')}}">
     <style>
         @-webkit-keyframes balloon-float {
             0% {
@@ -742,7 +743,7 @@
                     setTimeout(function () {
                         document.getElementById('loading-overlay').style.display = 'none';
                     }, 500);
-                }, 3000);
+                }, 2000);
                 const door = document.getElementById('door');
                 const background = document.getElementById('background');
                 const openButton = document.querySelector('.open');
