@@ -10,6 +10,7 @@
     <meta property="og:image" content="{{url_for('static', filename='image/favicon.png')}}">
     <meta property="og:url" content="https://cnund.am">
     <meta property="og:type" content="website">
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
     <link rel="icon" type="image/png" href="{{url_for('static', filename='image/favicon.png')}}">
     <style>
         @-webkit-keyframes balloon-float {
@@ -685,6 +686,76 @@
                 opacity: 0.7;
             }
         }
+
+        .map-container {
+        margin-top: 15px;
+        padding: 12px;
+        border: 3px solid gold;
+        border-radius: 15px;
+        background-color: rgba(0, 0, 0, 0.2);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+        position: relative;
+        overflow: hidden;
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .map-title {
+        font-size: 18px;
+        color: yellow;
+        margin-bottom: 10px;
+        text-align: center;
+        font-weight: bold;
+    }
+    
+    .map-frame {
+        border: 1px solid rgba(255, 215, 0, 0.3);
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        width: 100%;
+        height: 200px;
+        position: relative;
+    }
+    
+    .map-frame iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+    
+    /* Adding a subtle shine effect */
+    .map-container::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(45deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+        transform: rotate(45deg);
+        animation: shine 3s infinite ease-in-out;
+        z-index: 1;
+        pointer-events: none;
+    }
+    
+    @keyframes shine {
+        0% {
+            transform: translateX(-100%) translateY(-100%) rotate(45deg);
+        }
+        100% {
+            transform: translateX(100%) translateY(100%) rotate(45deg);
+        }
+    }
+
+    #map2 {
+            width: 200px;
+            height: 200px;
+        }
     </style>
 </head>
 
@@ -726,11 +797,16 @@
                     հրավիրում եմ ձեզ իմ ծննդյան օրվա կապակցության արթիվ հանդիպմանը
                 </div> -->
 
-                    <div class="event-details">
-                        <p>Սիրելիս, հրավիրում եմ քեզ իմ ծնունդը նշելու ինձ հետ <b>Keghar </b> ռեստորանում, հասցեն՝
-                            <b>94 Սերո Խանզադյանի փողոց,</b><b>մարտի 15-ին ժամը 15:00</b>: Մեծ սիրով սպասում եմ քեզ:</p>
-                        <!-- <div class="beautiful-name">:&#41;</div> -->
+                <div class="event-details">
+                    <p>Սիրելիս, հրավիրում եմ քեզ իմ ծնունդը նշելու ինձ հետ <b>Keghar </b> ռեստորանում, հասցեն՝
+                        <b>94 Սերո Խանզադյանի փողոց,</b><b>մարտի 15-ին ժամը 15:00</b>: Մեծ սիրով սպասում եմ քեզ:</p>
+                       
+                    <div class="map-container">
+                        <div class="map-title">Տեղակայումը քարտեզի վրա՝</div>
+                        <iframe src="https://yandex.ru/map-widget/v1/?ll=44.537457%2C40.191365&z=18" width="230" height="230" frameborder="0"></iframe>
+
                     </div>
+                </div>
                 </div>
             </div>
         </div>
