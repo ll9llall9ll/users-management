@@ -662,15 +662,21 @@
         }
 
         .beautiful-name {
+            width: 106px;
+            height: 54px;
+            border-radius: 32% 62% 0% 8%;
             position: absolute;
-            bottom: 19%;
-            left: 62%;
-            font-size: 48px;
+            /* border-radius: 71%; */
+            bottom: 86%;
+            left: 78%;
+            font-size: 28px;
+            background-color: #FFD700;
+            box-shadow: 16 15 30px rgba(255, 215, 0, 0.6);
             font-family: 'Brush Script MT', cursive;
-            color: #e36385;
-            transform: rotate(336deg);
+            color: #000000;
+            z-index: 1;
+            transform: rotate(42deg);
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-            animation: shimmer 3s infinite;
         }
 
         @keyframes shimmer {
@@ -688,47 +694,65 @@
         }
 
         .map-container {
-        margin-top: 15px;
-        padding: 12px;
-        border: 3px solid gold;
-        border-radius: 15px;
-        background-color: rgba(0, 0, 0, 0.2);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
-        position: relative;
-        width: 90%;
-        margin-left: auto;
-        margin-right: auto;
-    }
-    
-    .map-title {
-        font-size: 14px;
-        color: yellow;
-        margin-bottom: 10px;
-        text-align: center;
-        font-weight: bold;
-    }
-    
-    .map-frame {
-        border: 1px solid rgba(255, 215, 0, 0.3);
-        border-radius: 10px;
-        overflow: hidden;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-        width: 100%;
-        height: 200px;
-        position: relative;
-    }
-    
-    .map-frame iframe {
-        width: 100%;
-        height: 100%;
-        border: none;
-    }
-    
-    /* Adding a subtle shine effect */
-    /* .map-container::before {
+            margin-top: 35px;
+            padding: 12px;
+            border: 3px solid gold;
+            border-radius: 15px;
+            background-color: rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+            position: relative;
+            width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Псевдоэлемент для скрытия правого верхнего угла */
+        .map-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 10px;
+            /* Укажите размер, подходящий для вашего дизайна */
+            height: 10px;
+            /* Укажите размер, подходящий для вашего дизайна */
+            background-color: rgba(0, 0, 0, 0.2);
+            /* Цвет фона, чтобы скрыть бордер */
+        }
+
+        .map-title {
+            font-size: 14px;
+            color: yellow;
+            margin-bottom: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .map-frame {
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            height: 200px;
+            position: relative;
+        }
+
+        .map-frame iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            /* z-index: 2; */
+        }
+        .iframe{
+            z-index: 2;
+        }
+
+        /* Adding a subtle shine effect */
+        /* .map-container::before {
         content: "";
         position: absolute;
         top: -50%;
@@ -742,16 +766,17 @@
         pointer-events: none;
     }
      */
-    @keyframes shine {
-        0% {
-            transform: translateX(-100%) translateY(-100%) rotate(45deg);
-        }
-        100% {
-            transform: translateX(100%) translateY(100%) rotate(45deg);
-        }
-    }
+        @keyframes shine {
+            0% {
+                transform: translateX(-100%) translateY(-100%) rotate(45deg);
+            }
 
-    #map2 {
+            100% {
+                transform: translateX(100%) translateY(100%) rotate(45deg);
+            }
+        }
+
+        #map2 {
             width: 200px;
             height: 200px;
         }
@@ -796,16 +821,18 @@
                     հրավիրում եմ ձեզ իմ ծննդյան օրվա կապակցության արթիվ հանդիպմանը
                 </div> -->
 
-                <div class="event-details">
-                    <p>Սիրելիս, հրավիրում եմ քեզ իմ ծնունդը նշելու ինձ հետ <b>Keghar </b> ռեստորանում, հասցեն՝
-                        <b>94 Սերո Խանզադյանի փողոց,</b><b>մարտի 15-ին ժամը 15:00</b>: Մեծ սիրով սպասում եմ քեզ:</p>
-                       
-                    <div class="map-container">
-                        <div class="map-title">Տեղակայումը քարտեզի վրա՝</div>
-                        <iframe src="https://yandex.ru/map-widget/v1/?ll=44.537457%2C40.191365&z=18" width="250" height="180" frameborder="0"></iframe>
+                    <div class="event-details">
+                        <p>Սիրելիս, հրավիրում եմ քեզ իմ ծնունդը նշելու ինձ հետ <b>Keghar </b> ռեստորանում, հասցեն՝
+                            <b>94 Սերո Խանզադյանի փողոց,</b><b>մարտի 15-ին ժամը 15:00</b>: Մեծ սիրով սպասում եմ քեզ:
+                        </p>
 
+                        <div class="map-container">
+                            <div class="map-title">Տեղակայումը քարտեզի վրա՝</div>
+                            <iframe class="iframe" src="https://yandex.ru/map-widget/v1/?ll=44.537457%2C40.191365&z=18" width="250"
+                                height="180" frameborder="0"></iframe>
+                            <div class="beautiful-name">Նոռա</div>
+                        </div>
                     </div>
-                </div>
                 </div>
             </div>
         </div>
