@@ -810,7 +810,15 @@
                 </div>
             </div>
         </div>
-
+        <script>
+            ymaps.ready(function () {
+                var myMap = new ymaps.Map("map", {
+                    center: [40.191365, 44.537457], // Ереван
+                    zoom: 17, // Изменяй этот параметр для нужного масштаба
+                    controls: [] // Убираем все лишние элементы управления
+                });
+            });
+        </script>
         <script>
             document.addEventListener("DOMContentLoaded", function () {
 
