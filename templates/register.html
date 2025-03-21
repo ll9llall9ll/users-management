@@ -47,13 +47,13 @@
             align-items: center;
             padding: 20px;
             position: relative;
-            overflow-x: hidden;
+            overflow: hidden; /* Prevent scrolling */
         }
 
         /* Background shimmer */
         body::before {
             content: '';
-            position: absolute;
+            position: fixed;
             width: 200vw;
             height: 200vh;
             background: radial-gradient(circle, rgba(255,255,255,0.5) 10%, transparent 80%);
@@ -61,6 +61,7 @@
             top: -50vh;
             left: -50vw;
             z-index: 0;
+            pointer-events: none;
         }
 
         @keyframes shimmer {
@@ -86,22 +87,81 @@
             height: 8px;
             background: rgba(156, 132, 104, 0.6);
             border-radius: 50%;
-            animation: particleMove 20s infinite ease-in-out;
         }
 
-        @keyframes particleMove {
+        .particles span:nth-child(1) {
+            top: 12%; 
+            left: 18%;
+            animation: particle1 18s infinite ease-in-out;
+        }
+        .particles span:nth-child(2) {
+            top: 22%; 
+            left: 65%;
+            animation: particle2 22s infinite ease-in-out;
+        }
+        .particles span:nth-child(3) {
+            top: 35%; 
+            left: 42%;
+            animation: particle3 25s infinite ease-in-out;
+        }
+        .particles span:nth-child(4) {
+            top: 55%; 
+            left: 78%;
+            animation: particle4 20s infinite ease-in-out;
+        }
+        .particles span:nth-child(5) {
+            top: 75%; 
+            left: 25%;
+            animation: particle5 16s infinite ease-in-out;
+        }
+        .particles span:nth-child(6) {
+            top: 15%; 
+            left: 85%;
+            animation: particle6 19s infinite ease-in-out;
+        }
+        .particles span:nth-child(7) {
+            top: 45%; 
+            left: 15%;
+            animation: particle7 21s infinite ease-in-out;
+        }
+        .particles span:nth-child(8) {
+            top: 65%; 
+            left: 60%;
+            animation: particle8 24s infinite ease-in-out;
+        }
+
+        @keyframes particle1 {
             0% { transform: translateY(0) translateX(0); opacity: 1; }
-            100% { transform: translateY(800px) translateX(-200px); opacity: 0; }
+            100% { transform: translateY(70vh) translateX(-10vw); opacity: 0; }
         }
-
-        .particles span:nth-child(1) { top: 12%; left: 18%; animation-duration: 18s; }
-        .particles span:nth-child(2) { top: 22%; left: 65%; animation-duration: 22s; }
-        .particles span:nth-child(3) { top: 35%; left: 42%; animation-duration: 25s; }
-        .particles span:nth-child(4) { top: 55%; left: 78%; animation-duration: 20s; }
-        .particles span:nth-child(5) { top: 75%; left: 25%; animation-duration: 16s; }
-        .particles span:nth-child(6) { top: 15%; left: 85%; animation-duration: 19s; }
-        .particles span:nth-child(7) { top: 45%; left: 15%; animation-duration: 21s; }
-        .particles span:nth-child(8) { top: 65%; left: 60%; animation-duration: 24s; }
+        @keyframes particle2 {
+            0% { transform: translateY(0) translateX(0); opacity: 1; }
+            100% { transform: translateY(60vh) translateX(-15vw); opacity: 0; }
+        }
+        @keyframes particle3 {
+            0% { transform: translateY(0) translateX(0); opacity: 1; }
+            100% { transform: translateY(50vh) translateX(-8vw); opacity: 0; }
+        }
+        @keyframes particle4 {
+            0% { transform: translateY(0) translateX(0); opacity: 1; }
+            100% { transform: translateY(30vh) translateX(-12vw); opacity: 0; }
+        }
+        @keyframes particle5 {
+            0% { transform: translateY(0) translateX(0); opacity: 1; }
+            100% { transform: translateY(20vh) translateX(-5vw); opacity: 0; }
+        }
+        @keyframes particle6 {
+            0% { transform: translateY(0) translateX(0); opacity: 1; }
+            100% { transform: translateY(40vh) translateX(-10vw); opacity: 0; }
+        }
+        @keyframes particle7 {
+            0% { transform: translateY(0) translateX(0); opacity: 1; }
+            100% { transform: translateY(45vh) translateX(-7vw); opacity: 0; }
+        }
+        @keyframes particle8 {
+            0% { transform: translateY(0) translateX(0); opacity: 1; }
+            100% { transform: translateY(25vh) translateX(-9vw); opacity: 0; }
+        }
 
         /* Main container */
         .container {
@@ -402,6 +462,7 @@
             .container {
                 padding: 40px 30px;
                 border-radius: var(--radius-medium);
+                max-width: 90%;
             }
 
             h2 {
