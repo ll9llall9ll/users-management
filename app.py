@@ -47,15 +47,7 @@ def date(d):
 app.add_template_filter(date)
 
 appData = AppData()
-app.secret_key = 'supersecretkey'
 
-users_data = {
-    'user1': User(1, 'user1', 'Ivan', 'Ivanov', 'password1'),
-    'user2': User(2, 'user2', 'Hovannes', 'Hovhannisyan', 'password2'),
-    'janedoe': User(3, 'janedoe', 'Jane', 'Doe', 'newsecurepassword' ),
-    'admin': User(4, 'admin', 'Petr', 'Poghosyan', 'supersecret', True)  }
-
-#users = {user.username: user.password for user in users_data.values()}
 
 @app.route('/invite', methods = ['GET', 'POST'])
 def invite():

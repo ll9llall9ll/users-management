@@ -22,7 +22,7 @@ def getUserListFromDb():
                 users = cur.fetchall()
 
                 for user in users:
-                    a = User(user[0], user[1], user[2], user[3], '')
+                    a = User(user[0], user[1], user[2], user[3], user[4])
                     userlist.append(a)
 
         return userlist
