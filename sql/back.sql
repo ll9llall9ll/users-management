@@ -120,9 +120,9 @@ INSERT INTO public.templates (id, displayname, viewname, type, created_at, updat
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.users (id, username, name, surname, password, is_admin) VALUES (1, 'janedoe', 'Jane', 'Doe', 'newsecretpassword', false);
-INSERT INTO public.users (id, username, name, surname, password, is_admin) VALUES (4, 'admin', 'Petr', 'Poghosyan', 'supersecret', true);
-INSERT INTO public.users (id, username, name, surname, password, is_admin) VALUES (11, 'ivanivanov', 'Ivan', 'Ivanov', 'Password1)', false);
+INSERT INTO public.users (username, name, surname, password, is_admin) VALUES ('janedoe', 'Jane', 'Doe', 'newsecretpassword', false);
+INSERT INTO public.users (username, name, surname, password, is_admin) VALUES ('admin', 'Petr', 'Poghosyan', 'supersecret', true);
+INSERT INTO public.users (username, name, surname, password, is_admin) VALUES ('ivanivanov', 'Ivan', 'Ivanov', 'Password1)', false);
 
 --
 -- Name: users users_username_key; Type: CONSTRAINT; Schema: public; Owner: postgres
