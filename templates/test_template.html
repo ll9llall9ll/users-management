@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тестовый шаблон приглашения</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            color: #4a6fa5;
+            text-align: center;
+        }
+        .invitation-header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #eaeaea;
+            padding-bottom: 20px;
+        }
+        .event-details {
+            margin-bottom: 30px;
+            padding: 15px;
+            background-color: #f0f4f8;
+            border-radius: 8px;
+        }
+        .event-details p {
+            margin: 8px 0;
+        }
+        .response-form {
+            margin-top: 20px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            min-height: 100px;
+            resize: vertical;
+        }
+        .radio-group {
+            margin: 15px 0;
+        }
+        input[type="radio"] {
+            margin-right: 5px;
+        }
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-top: 5px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        .btn-accept {
+            background-color: #4caf50;
+            color: white;
+        }
+        .btn-accept:hover {
+            background-color: #3d8b40;
+        }
+        .btn-decline {
+            background-color: #f44336;
+            color: white;
+        }
+        .btn-decline:hover {
+            background-color: #d32f2f;
+        }
+        /* Улучшенные стили для секции комментариев */
+        .comments-section {
+            background-color: #fffaed;
+            border-left: 4px solid #ffcc80;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 5px;
+        }
+        .comments-section h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: #e65100;
+        }
+        .comments-section p {
+            font-size: 0.9em;
+            margin-bottom: 10px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="invitation-header">
+            <h1>Тестовый шаблон приглашения</h1>
+            <h2>Дорогой {{ invitation.name }}!</h2>
+            <p>Мы рады пригласить вас на наше мероприятие</p>
+        </div>
+
+        <div class="event-details">
+            <h3>Детали мероприятия:</h3>
+            <p><strong>Название:</strong> {{ event.display_name }}</p>
+            <p><strong>Дата и время:</strong> {{ event.date.strftime('%d.%m.%Y, %H:%M') }}</p>
+            <p><strong>Адрес:</strong> {{ event.address_country }}, {{ event.address_city }}, {{ event.address_line }}</p>
+            <p><strong>Место проведения:</strong> {{ event.hall_name }}</p>
+        </div>
+
+        <form class="response-form" method="POST">
+            <div class="radio-group">
+                <h3>Ваш ответ:</h3>
+                <div>
+                    <label>
+                        <input type="radio" name="options" value="alone" checked>
+                        Я приду один/одна
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        <input type="radio" name="options" value="with_spouse">
+                        Я приду с супругом/супругой
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="attendees_count">Количество человек (включая вас):</label>
+                <select name="attendees_count" id="attendees_count">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
+
+            <!-- Улучшенная секция комментариев -->
+            <div class="comments-section">
+                <h3>Оставьте свой комментарий</h3>
+                <p>Здесь вы можете указать особые пожелания, диетические предпочтения или любую другую информацию, которую хотели бы сообщить организаторам.</p>
+                <textarea name="comment" id="comment" placeholder="Напишите ваши комментарии здесь..." rows="5"></textarea>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <button type="submit" name="action" value="accepted" class="btn btn-accept">Я приду</button>
+                <button type="submit" name="action" value="declined" class="btn btn-decline">Не смогу прийти</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invitation Details</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap');
+
+        :root {
+            --primary: #9c8468;
+            --primary-dark: #8a7559;
+            --primary-darker: #6d5a44;
+            --primary-light: #d9cdbf;
+            --accent: #c9b199;
+            --text-dark: #333333;
+            --text-medium: #666666;
+            --text-light: #999999;
+            --white: #ffffff;
+            --black: #000000;
+            --background: #f8f4ef;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --shadow-light: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --shadow-medium: 0 15px 35px rgba(0, 0, 0, 0.12);
+            --shadow-dark: 0 20px 40px rgba(0, 0, 0, 0.15);
+            --radius-small: 10px;
+            --radius-medium: 16px;
+            --radius-large: 20px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+            margin: 0;
+            position: relative;
+            overflow-x: hidden;
+            font-family: 'Cormorant Garamond', serif;
+            background-image: url('/api/placeholder/1920/1080');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        /* Background overlay */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 30% 40%, rgba(156, 132, 104, 0.08) 0%, transparent 30%),
+                radial-gradient(circle at 70% 60%, rgba(156, 132, 104, 0.1) 0%, transparent 30%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Shimmer effect */
+        .bg-shimmer {
+            position: fixed;
+            width: 200vw;
+            height: 200vh;
+            background: radial-gradient(circle, rgba(255,255,255,0.6) 10%, transparent 80%);
+            animation: shimmer 40s infinite linear;
+            top: -50vh;
+            left: -50vw;
+            z-index: -1;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        /* Floating particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particles span {
+            position: absolute;
+            display: block;
+            width: 8px;
+            height: 8px;
+            background: rgba(156, 132, 104, 0.4);
+            border-radius: 50%;
+            animation: particleMove 20s infinite ease-in-out;
+        }
+
+        @keyframes particleMove {
+            0% { transform: translateY(0) translateX(0); opacity: 1; }
+            100% { transform: translateY(800px) translateX(-200px); opacity: 0; }
+        }
+
+        .particles span:nth-child(1) { top: 12%; left: 18%; animation-duration: 18s; }
+        .particles span:nth-child(2) { top: 22%; left: 65%; animation-duration: 22s; }
+        .particles span:nth-child(3) { top: 35%; left: 42%; animation-duration: 25s; }
+        .particles span:nth-child(4) { top: 55%; left: 78%; animation-duration: 20s; }
+        .particles span:nth-child(5) { top: 75%; left: 25%; animation-duration: 16s; }
+        .particles span:nth-child(6) { top: 15%; left: 85%; animation-duration: 19s; }
+        .particles span:nth-child(7) { top: 45%; left: 15%; animation-duration: 21s; }
+        .particles span:nth-child(8) { top: 65%; left: 60%; animation-duration: 24s; }
+
+        /* Main container */
+        .container {
+            display: flex;
+            border-radius: var(--radius-large);
+            overflow: hidden;
+            box-shadow: var(--shadow-medium);
+            max-width: 1000px;
+            width: 95%;
+            min-height: 600px;
+            max-height: 800px;
+            background: var(--card-bg);
+            position: relative;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Left side panel */
+        .side-image {
+            flex: 0.6;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--white);
+        }
+
+        .side-image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                135deg, 
+                rgba(156, 132, 104, 0.85) 0%,
+                rgba(138, 117, 89, 0.75) 100%
+            );
+            backdrop-filter: blur(2px);
+            z-index: 1;
+        }
+
+        .side-image-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('/api/placeholder/600/800');
+            background-size: cover;
+            background-position: center;
+            transition: transform 8s var(--transition);
+        }
+
+        .container:hover .side-image-bg {
+            transform: scale(1.1);
+        }
+
+        .side-image .text {
+            position: relative;
+            z-index: 2;
+            padding: 20px;
+            text-align: center;
+            max-width: 90%;
+        }
+
+        .side-image .logo {
+            width: 50px;
+            height: 50px;
+            background-color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .side-image .logo i {
+            font-size: 24px;
+            color: var(--primary);
+        }
+
+        .side-image .text h3 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-family: 'Cormorant Garamond', serif;
+            letter-spacing: 1px;
+        }
+
+        .side-image .text p {
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.4;
+            opacity: 0.9;
+        }
+
+        /* Right side content */
+        .right {
+            flex: 1.1;
+            padding: 30px;
+            position: relative;
+            z-index: 1;
+            overflow-y: auto;
+        }
+
+        .right::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .right::-webkit-scrollbar-track {
+            background: rgba(156, 132, 104, 0.1);
+            border-radius: 10px;
+        }
+
+        .right::-webkit-scrollbar-thumb {
+            background: var(--primary-light);
+            border-radius: 10px;
+        }
+
+        .right::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+
+        .invitation-header {
+            text-align: center;
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .invitation-header h2 {
+            font-size: 32px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 5px;
+            font-family: 'Cormorant Garamond', serif;
+            letter-spacing: 1px;
+        }
+
+        .invitation-header::after {
+            content: "";
+            display: block;
+            width: 50px;
+            height: 3px;
+            background: var(--primary);
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        /* Top navigation */
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        /* Button styles */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 15px;
+            border: none;
+            border-radius: var(--radius-small);
+            background-color: var(--primary);
+            color: var(--white);
+            font-size: 13px;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn i {
+            margin-right: 6px;
+            font-size: 14px;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-edit {
+            background-color: var(--primary);
+        }
+
+        .btn-delete {
+            background-color: rgba(211, 47, 47, 0.8);
+        }
+
+        .btn-logout {
+            background-color: rgba(211, 47, 47, 0.8);
+        }
+
+        .actions-container {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+
+        .actions-container .btn {
+            padding: 10px 18px;
+            font-size: 14px;
+        }
+        
+        .credit {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            font-size: 12px;
+            color: var(--text-medium);
+            opacity: 0.7;
+        }
+
+        /* Detail cards */
+        .details-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .detail-card {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: var(--radius-small);
+            overflow: hidden;
+            box-shadow: var(--shadow-light);
+            border-left: 4px solid var(--primary);
+        }
+
+        .detail-card-header {
+            background-color: rgba(156, 132, 104, 0.15);
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(156, 132, 104, 0.1);
+        }
+
+        .detail-card-header h3 {
+            font-size: 18px;
+            color: var(--primary-dark);
+            margin: 0;
+            font-weight: 600;
+            font-family: 'Cormorant Garamond', serif;
+            letter-spacing: 0.5px;
+        }
+
+        .detail-card-body {
+            padding: 20px;
+        }
+
+        .detail-list {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .detail-item {
+            display: flex;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(156, 132, 104, 0.1);
+        }
+
+        .detail-item:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            flex: 0 0 140px;
+            font-weight: 500;
+            color: var(--text-medium);
+        }
+
+        .detail-value {
+            flex: 1;
+            color: var(--text-dark);
+        }
+
+        /* Status badge */
+        .badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 500;
+            text-align: center;
+            color: var(--white);
+        }
+
+        .badge-success {
+            background-color: rgba(76, 175, 80, 0.8);
+        }
+
+        .badge-danger {
+            background-color: rgba(211, 47, 47, 0.8);
+        }
+
+        .badge-warning {
+            background-color: rgba(255, 152, 0, 0.8);
+            color: var(--text-dark);
+        }
+
+        /* Comments section */
+        .comments-section {
+            margin-top: 20px;
+        }
+
+        .comment-card {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: var(--radius-small);
+            padding: 20px;
+            box-shadow: var(--shadow-light);
+        }
+
+        .comment-text {
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--text-dark);
+            white-space: pre-line;
+        }
+
+        .no-comments {
+            font-style: italic;
+            color: var(--text-light);
+        }
+
+        /* Responsive styles */
+        @media (max-width: 1200px) {
+            .container {
+                width: 95%;
+                max-height: 85vh;
+            }
+            
+            .invitation-header h2 {
+                font-size: 28px;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .container {
+                height: auto;
+                min-height: 600px;
+                max-height: 90vh;
+            }
+            
+            .right {
+                padding: 25px 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                max-width: 95%;
+                height: auto;
+                overflow-y: auto;
+            }
+
+            .side-image {
+                min-height: 140px;
+                max-height: 140px;
+                width: 100%;
+            }
+
+            .right {
+                width: 100%;
+                padding: 20px 15px;
+                overflow-y: visible;
+                max-height: none;
+            }
+
+            .invitation-header h2 {
+                font-size: 26px;
+            }
+
+            .side-image .text {
+                padding: 15px;
+            }
+
+            .side-image .logo {
+                width: 45px;
+                height: 45px;
+                margin-bottom: 8px;
+            }
+
+            .side-image .logo i {
+                font-size: 22px;
+            }
+            
+            .top-nav {
+                margin-bottom: 15px;
+            }
+            
+            .top-nav .btn {
+                padding: 8px 15px;
+                font-size: 13px;
+            }
+            
+            .actions-container {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+            }
+            
+            .actions-container .btn {
+                flex: 1 0 calc(50% - 10px);
+                min-width: 100px;
+                max-width: calc(50% - 10px);
+                padding: 8px 15px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            body {
+                padding: 0;
+            }
+            
+            .container {
+                width: 100%;
+                height: 100vh;
+                max-height: none;
+                border-radius: 0;
+                flex-direction: column;
+                overflow-y: auto;
+            }
+            
+            .side-image {
+                min-height: 120px;
+                max-height: 120px;
+            }
+            
+            .side-image .text {
+                padding: 10px;
+            }
+            
+            .side-image .text h3 {
+                font-size: 20px;
+                margin-bottom: 5px;
+            }
+            
+            .side-image .text p {
+                font-size: 13px;
+                line-height: 1.3;
+            }
+            
+            .side-image .logo {
+                width: 40px;
+                height: 40px;
+                margin-bottom: 5px;
+            }
+            
+            .side-image .logo i {
+                font-size: 20px;
+            }
+            
+            .right {
+                padding: 15px 12px;
+                flex: 1;
+            }
+            
+            .top-nav {
+                flex-direction: row;
+                margin-bottom: 15px;
+            }
+            
+            .top-nav .btn {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+            
+            .invitation-header h2 {
+                font-size: 24px;
+            }
+            
+            .invitation-header::after {
+                margin: 8px auto 0;
+            }
+
+            .actions-container {
+                flex-direction: column;
+                gap: 8px;
+                margin-top: 15px;
+            }
+            
+            .actions-container .btn {
+                width: 100%;
+                max-width: 100%;
+                padding: 10px;
+            }
+            
+            .credit {
+                font-size: 10px;
+                margin-top: 10px;
+                position: relative;
+                text-align: center;
+                bottom: auto;
+                right: auto;
+            }
+
+            .detail-label {
+                flex: 0 0 100px;
+            }
+        }
+
+        @media (orientation: landscape) and (max-width: 900px) {
+            .container {
+                flex-direction: row;
+                height: 100vh;
+                max-height: none;
+                width: 100%;
+                border-radius: 0;
+            }
+            
+            .side-image {
+                max-width: 250px;
+                height: 100%;
+                max-height: none;
+            }
+            
+            .right {
+                overflow-y: auto;
+                height: 100vh;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes fadeInLeft {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .container {
+            animation: fadeIn 0.8s ease forwards;
+        }
+        
+        .side-image {
+            animation: fadeInLeft 1s ease forwards;
+        }
+        
+        .right {
+            animation: fadeInRight 1s ease forwards;
+        }
+        
+        .detail-card {
+            animation: fadeIn 0.6s ease forwards;
+            animation-delay: 0.2s;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+
+        .detail-card:nth-child(2) {
+            animation-delay: 0.3s;
+        }
+
+        .detail-card:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-shimmer"></div>
+    
+    <div class="particles">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    
+    <div class="container">
+        <div class="side-image">
+            <div class="side-image-bg"></div>
+            <div class="side-image-overlay"></div>
+            <div class="text">
+                <div class="logo">
+                    <i class="fas fa-envelope-open-text"></i>
+                </div>
+                <h3>Invitation Details</h3>
+                <p>View all details for this invitation including guest responses and comments</p>
+            </div>
+        </div>
+
+        <div class="right">
+            <div class="top-nav">
+                <a href="{{ url_for('view_invitation', event_id=event.id) }}" class="btn">
+                    <i class="fas fa-arrow-left"></i> Back to Invitations
+                </a>
+                <a href="{{ url_for('logout') }}" class="btn btn-logout">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+            
+            <div class="invitation-header">
+                <h2>{{ invitation.name }}'s Invitation</h2>
+            </div>
+            
+            <div class="details-container">
+                <!-- Guest Information -->
+                <div class="detail-card">
+                    <div class="detail-card-header">
+                        <h3>Guest Information</h3>
+                    </div>
+                    <div class="detail-card-body">
+                        <ul class="detail-list">
+                            <li class="detail-item">
+                                <div class="detail-label">Name:</div>
+                                <div class="detail-value">{{ invitation.name }}</div>
+                            </li>
+                            <li class="detail-item">
+                                <div class="detail-label">Status:</div>
+                                <div class="detail-value">
+                                    {% if invitation.accepted == True %}
+                                        <span class="badge badge-success">Accepted</span>
+                                    {% elif invitation.accepted == False %}
+                                        <span class="badge badge-danger">Declined</span>
+                                    {% else %}
+                                        <span class="badge badge-warning">Pending</span>
+                                    {% endif %}
+                                </div>
+                            </li>
+                            <li class="detail-item">
+                                <div class="detail-label">With Spouse:</div>
+                                <div class="detail-value">{{ "Yes" if invitation.with_spouse else "No" }}</div>
+                            </li>
+                            <li class="detail-item">
+                                <div class="detail-label">Gender:</div>
+                                <div class="detail-value">{{ "Male" if invitation.is_male else "Female" }}</div>
+                            </li>
+                            <li class="detail-item">
+                                <div class="detail-label">Number of Guests:</div>
+                                <div class="detail-value">
+                                    {% if invitation.attendee_count %}
+                                        {{ invitation.attendee_count }}
+                                    {% else %}
+                                        <span class="badge badge-warning">Not specified</span>
+                                    {% endif %}
+                                </div>
+                            </li>
+                            <li class="detail-item">
+                                <div class="detail-label">Invitation Hash:</div>
+                                <div class="detail-value" style="word-break: break-all;">{{ invitation.hash }}</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Event Information -->
+                <div class="detail-card">
+                    <div class="detail-card-header">
+                        <h3>Event Information</h3>
+                    </div>
+                    <div class="detail-card-body">
+                        <ul class="detail-list">
+                            <li class="detail-item">
+                                <div class="detail-label">Event Name:</div>
+                                <div class="detail-value">{{ event.display_name }}</div>
+                            </li>
+                            <li class="detail-item">
+                                <div class="detail-label">Date:</div>
+                                <div class="detail-value">{{ event.date.strftime('%d-%m-%Y %H:%M') }}</div>
+                            </li>
+                            <li class="detail-item">
+                                <div class="detail-label">Venue:</div>
+                                <div class="detail-value">{{ event.hall_name }}</div>
+                            </li>
+                            <li class="detail-item">
+                                <div class="detail-label">Location:</div>
+                                <div class="detail-value">{{ event.address_line }}, {{ event.address_city }}, {{ event.address_country }}</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Comments Section -->
+                <div class="detail-card">
+                    <div class="detail-card-header">
+                        <h3>Guest Comments</h3>
+                    </div>
+                    <div class="detail-card-body">
+                        <div class="comment-card">
+                            {% if invitation.comments %}
+                                <div class="comment-text">{{ invitation.comments }}</div>
+                            {% else %}
+                                <div class="no-comments">No comments provided</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="actions-container">
+                <a href="{{ url_for('edit_invitation', id=invitation.id) }}" class="btn btn-edit">
+                    <i class="fas fa-edit"></i> Edit Invitation
+                </a>
+                <a href="{{ url_for('delete_invitation', id=invitation.id) }}" class="btn btn-delete" onclick="return confirm('Are you sure you want to delete this invitation?');">
+                    <i class="fas fa-trash-alt"></i> Delete Invitation
+                </a>
+                <button id="copyLinkBtn" class="btn" data-hash="{{ invitation.hash }}">
+                    <i class="fas fa-copy"></i> Copy Invitation Link
+                </button>
+            </div>
+            
+            <div class="credit">© 2024 Invitation Manager</div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Copy invitation link functionality
+            const copyLinkBtn = document.getElementById('copyLinkBtn');
+            
+            copyLinkBtn.addEventListener('click', function() {
+                const hash = this.getAttribute('data-hash');
+                const inviteUrl = `${window.location.origin}/invite?h=${hash}`;
+                
+                navigator.clipboard.writeText(inviteUrl).then(() => {
+                    // Change button text temporarily
+                    const originalText = this.innerHTML;
+                    this.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                    setTimeout(() => {
+                        this.innerHTML = originalText;
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Failed to copy: ', err);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

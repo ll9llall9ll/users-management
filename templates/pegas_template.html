@@ -780,6 +780,93 @@
             width: 200px;
             height: 200px;
         }
+
+        /* Добавьте эти стили в ваш CSS файл или включите в шаблон в теге <style> */
+
+.invitation-form-section {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    padding: 25px;
+    margin: 30px auto;
+    max-width: 600px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.invitation-form-section h3 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #333;
+    font-weight: 600;
+}
+
+.invitation-response-form .form-group {
+    margin-bottom: 20px;
+}
+
+.invitation-response-form label {
+    font-weight: 500;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.invitation-response-form .custom-radio {
+    margin: 10px 0;
+}
+
+.invitation-response-form select,
+.invitation-response-form textarea {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    width: 100%;
+    transition: border-color 0.3s;
+}
+
+.invitation-response-form select:focus,
+.invitation-response-form textarea:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.invitation-response-form .btn {
+    padding: 10px 20px;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+
+.invitation-response-form .btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.invitation-response-form .btn-success:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+
+.invitation-response-form .btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.invitation-response-form .btn-danger:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+/* Стили для мобильных устройств */
+@media (max-width: 576px) {
+    .invitation-form-section {
+        padding: 15px;
+        margin: 15px auto;
+    }
+    
+    .invitation-response-form .btn {
+        margin: 5px 0;
+        width: 100%;
+    }
+}
     </style>
 </head>
 
@@ -831,6 +918,54 @@
                             <iframe class="iframe" src="https://yandex.ru/map-widget/v1/?ll=44.537457%2C40.191365&z=18"
                                 width="250" height="180" frameborder="0"></iframe>
                             <div class="beautiful-name">Նոռա</div>
+                        </div>
+                        <div class="invitation-form-section">
+                            <h3>Пожалуйста, подтвердите ваше присутствие</h3>
+                            
+                            <form method="POST" action="{{ url_for('invite', h=invitation.hash) }}" class="invitation-response-form">
+                                <!-- Существующие поля формы -->
+                                <div class="form-group mb-4">
+                                    <label>Выберите вариант:</label>
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" id="with_spouse_yes" name="options" value="with_spouse" class="custom-control-input">
+                                        <label class="custom-control-label" for="with_spouse_yes">С супругой/супругом</label>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" id="with_spouse_no" name="options" value="without_spouse" class="custom-control-input" checked>
+                                        <label class="custom-control-label" for="with_spouse_no">Без супруги/супруга</label>
+                                    </div>
+                                </div>
+                                
+                                <!-- Новое поле для указания количества гостей -->
+                                <div class="form-group mb-4">
+                                    <label for="attendees_count">Сколько человек будет присутствовать?</label>
+                                    <select name="attendees_count" id="attendees_count" class="form-control">
+                                        <option value="1">1 человек</option>
+                                        <option value="2">2 человека</option>
+                                        <option value="3">3 человека</option>
+                                        <option value="4">4 человека</option>
+                                        <option value="5">5 человек</option>
+                                        <option value="6">6+ человек</option>
+                                    </select>
+                                </div>
+                                
+                                <!-- Новое поле для комментария -->
+                                <div class="form-group mb-4">
+                                    <label for="comment">Ваш комментарий или особые пожелания:</label>
+                                    <textarea name="comment" id="comment" class="form-control" rows="3" 
+                                              placeholder="Напишите здесь ваш комментарий или особые пожелания..."></textarea>
+                                </div>
+                                
+                                <!-- Кнопки для подтверждения/отказа -->
+                                <div class="text-center mt-4">
+                                    <button type="submit" name="action" value="accepted" class="btn btn-success btn-lg mx-2">
+                                        Я приду
+                                    </button>
+                                    <button type="submit" name="action" value="declined" class="btn btn-danger btn-lg mx-2">
+                                        Я не смогу прийти
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>

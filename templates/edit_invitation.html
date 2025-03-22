@@ -823,6 +823,25 @@
                     <input type="hidden" name="accepted" value="NULL">
                     {% endif %}
                     
+                    <!-- Новое поле: Количество гостей -->
+                    <div class="form-group" style="--i:7">
+                        <label for="attendee_count">Количество гостей</label>
+                        <div class="input-wrapper">
+                            <input type="number" name="attendee_count" id="attendee_count" value="{{ invitation.attendee_count if invitation.attendee_count is not none else 0 }}" min="0">
+                            <span class="input-icon">
+                                <i class="fas fa-users"></i>
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <!-- Новое поле: Комментарии -->
+                    <div class="form-group" style="--i:8">
+                        <label for="comments">Комментарии гостя</label>
+                        <div class="input-wrapper" style="flex-direction: column; align-items: stretch;">
+                            <textarea name="comments" id="comments" style="padding: 12px 15px; height: 100px; width: 100%; border: 1px solid var(--text-light); border-radius: var(--radius-small); outline: none; transition: var(--transition); font-size: 15px; color: var(--text-dark); background-color: rgba(255, 255, 255, 0.8);">{{ invitation.comments if invitation.comments }}</textarea>
+                        </div>
+                    </div>
+                    
                     <button type="submit" class="btn">
                         <i class="fas fa-save"></i> Save Changes
                     </button>

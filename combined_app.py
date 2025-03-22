@@ -12,6 +12,7 @@ import uuid
 # In-memory session storage
 active_sessions = set()
 
+
 def generate_session_id():
     return str(uuid.uuid4())
 
@@ -82,18 +83,142 @@ def invite():
     invitation = getInvitationByHash(hash)
     if invitation.accepted == True:
         return render_template('invite_accepted4.html', msg = "Դուք ընդունել եք հրավերը, շնորհակալություն!"  )
+    
     event = getEventById(invitation.event_id)
     template = get_template_by_id(event.template_id)
+    
     if request.method == 'POST':
         with_spouse = 'options' in request.form and request.form['options'] == 'with_spouse'
         accepted = request.form['action'] == 'accepted'
+        
+        # Получаем комментарии из формы - проверяем на None и empty string
+        comments = request.form.get('comment', '')
+        if not comments:  # Это проверит на None, пустую строку и строку с пробелами
+            comments = None
+        
+        # Получаем количество гостей
+        attendee_count = 0
+        if accepted:
+            try:
+                attendee_count = int(request.form.get('attendees_count', 1))
+                if attendee_count < 0:
+                    attendee_count = 1
+            except ValueError:
+                attendee_count = 1
+        
+        # Обновляем объект приглашения
         invitation.with_spouse = with_spouse
         invitation.accepted = accepted
+        invitation.comments = comments
+        invitation.attendee_count = attendee_count
+        
+        # Отладочная информация
+        print(f"Debug - Saving invitation with comments: '{invitation.comments}'")
+        
+        # Сохраняем в базу данных
         updateInvitation(invitation)
+        
         returnMsg = "Դուք ընդունել եք հրավերը, շնորհակալություն!" if accepted else "Ցավում ենք, որ չեք կարողանա միանալ մեզ:"
-        return render_template('invite_accepted4.html',  msg = returnMsg  )
+        return render_template('invite_accepted4.html', msg = returnMsg)
     
     return render_template(template.viewname, invitation = invitation, event = event)
+
+
+
+# Новый маршрут для просмотра деталей приглашения
+@app.route('/invitation_details', methods=['GET'])
+def invitation_details():
+    try:
+        user_id = request.cookies.get('user_id')
+        if not user_id:
+            return redirect(url_for('login'))
+        
+        invitation_id = request.args.get('id')
+        if not invitation_id:
+            return "Invitation ID not provided!", 400
+            
+        print(f"Debug - Looking for invitation with id: {invitation_id}")
+        
+        # Получаем приглашение и проверяем, что оно существует
+        invitation = getInvitationById(invitation_id)
+        if invitation is None:
+            return f"Invitation with ID {invitation_id} not found!", 404
+            
+        print(f"Debug - Found invitation for: {invitation.name}")
+        
+        # Отладочная информация для комментариев
+        print(f"Debug - Comments in invitation: '{invitation.comments}'")
+        print(f"Debug - Comments type: {type(invitation.comments)}")
+        
+        # Получаем событие и проверяем, что оно существует
+        event = getEventById(invitation.event_id)
+        if event is None:
+            return f"Event with ID {invitation.event_id} not found!", 404
+            
+        print(f"Debug - Found event: {event.display_name}")
+        
+        # Рендерим шаблон
+        return render_template('invitation_details.html', invitation=invitation, event=event)
+        
+    except Exception as e:
+        print(f"Error in invitation_details: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        return f"An error occurred: {str(e)}", 500
+    
+    
+# Обновленный маршрут редактирования приглашения
+@app.route('/edit_invitation', methods = ['GET', 'POST'])
+def edit_invitation():
+    user_id = request.cookies.get('user_id')
+    if not user_id:
+        return redirect(url_for('login'))
+        
+    id = request.args.get('id')
+    invitation = getInvitationById(id)
+    
+    if request.method == 'GET':
+        return render_template('edit_invitation.html', invitation=invitation)
+    elif request.method == 'POST':
+        name = request.form['name']
+        hash = request.form['hash']
+        event_id = request.form['event_id']
+        with_spouse = request.form['with_spouse'] == 'True'
+        
+        # Обработка значения accepted
+        accepted_str = request.form.get('accepted')
+        if accepted_str == 'NULL':
+            accepted = None
+        else:
+            accepted = accepted_str == 'True'
+            
+        is_male = request.form['is_male'] == 'True'
+        
+        # Получаем комментарии - проверяем на пустую строку
+        comments = request.form.get('comments', '')
+        if not comments.strip():  # Если строка пуста после удаления пробелов
+            comments = None
+        
+        # Получаем количество гостей
+        try:
+            attendee_count = int(request.form.get('attendee_count', 0))
+            if attendee_count < 0:
+                attendee_count = 0
+        except ValueError:
+            attendee_count = 0
+            
+        # Отладочная информация
+        print(f"Debug - Updating invitation with comments: '{comments}'")
+        
+        # Создаем обновленный объект приглашения со всеми полями
+        invitation = Invitation(name, event_id, with_spouse, hash, is_male, accepted, id, comments, attendee_count)
+        
+        # Сохраняем в базу данных
+        updateInvitation(invitation)
+        
+        return redirect(url_for('view_invitation', event_id=event_id))
+        
+    return redirect(url_for('login'))
 
 @app.route('/')
 def home():
@@ -389,48 +514,56 @@ def delete_event():
 
 @app.route('/create_invitation', methods=['GET', 'POST'])
 def create_invitation():
-    user_id = request.cookies.get('user_id')
-    if not user_id:
+    try:
+        user_id = request.cookies.get('user_id')
+        if not user_id:
+            return redirect(url_for('login'))
+            
+        event_id = request.args.get('event_id')  
+        if request.method == 'GET':
+            event = getEventByUserId(user_id)
+            return render_template('create_invitation.html', event=event, event_id=event_id)
+        elif request.method == 'POST':
+            name = request.form['name']
+            hash = request.form['hash']
+            
+            # Отладочная информация
+            print(f"Debug - Form data: name={name}, hash={hash}")
+            print(f"Debug - Form with_spouse={request.form['with_spouse']}")
+            print(f"Debug - Form is_male={request.form['is_male']}")
+            
+            # Преобразование строк в булевы значения
+            with_spouse = request.form['with_spouse'].lower() in ('true', 'yes', 'on', '1')
+            is_male = request.form['is_male'].lower() in ('true', 'yes', 'on', '1')
+            
+            # Создаем приглашение
+            invitation = Invitation(
+                name, 
+                event_id, 
+                with_spouse, 
+                hash, 
+                is_male, 
+                None, 
+                None, 
+                None, 
+                0
+            )
+            
+            result = createInvitation(invitation)
+            if not result:
+                return "Failed to create invitation. Check server logs for details.", 500
+                
+            return redirect(url_for('view_invitation', event_id=event_id))
+            
         return redirect(url_for('login'))
-        
-    event_id = request.args.get('event_id')  
-    if request.method == 'GET':
-        event = getEventByUserId(user_id)
-        return render_template('create_invitation.html', event=event, event_id=event_id)
-    elif request.method == 'POST':
-        name = request.form['name']
-        hash = request.form['hash']
-        with_spouse = request.form['with_spouse']
-        is_male = request.form['is_male']
-        invitation = Invitation(name, event_id, with_spouse, hash, is_male)
-        createInvitation(invitation)
-        return redirect(url_for('view_invitation', event_id=event_id))
-        
-    return redirect(url_for('login'))
+    except Exception as e:
+        print(f"Error in create_invitation view: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        return f"An error occurred: {str(e)}", 500
 
-@app.route('/edit_invitation', methods = ['GET', 'POST'])
-def edit_invitation():
-    user_id = request.cookies.get('user_id')
-    if not user_id:
-        return redirect(url_for('login'))
-        
-    id = request.args.get('id')
-    invitation = getInvitationById(id)
-    
-    if request.method == 'GET':
-        return render_template('edit_invitation.html', invitation=invitation)
-    elif request.method == 'POST':
-        name = request.form['name']
-        hash = request.form['hash']
-        event_id = request.form['event_id']
-        with_spouse = request.form['with_spouse']
-        accepted = request.form['accepted']
-        is_male = request.form['is_male']
-        invitation = Invitation(name, event_id, with_spouse, hash, is_male, accepted, id)
-        updateInvitation(invitation)
-        return redirect(url_for('view_invitation', event_id=event_id))
-        
-    return redirect(url_for('login'))
+
+
 
 @app.route('/delete_invitation', methods = ['GET', 'POST'])
 def delete_invitation():
@@ -439,9 +572,10 @@ def delete_invitation():
         return redirect(url_for('login'))
         
     id = request.args.get('id')
+    invitation = getInvitationById(id)
+    event_id = invitation.event_id
     deleteInvitation(id)
-    return redirect(url_for('view_events'))
-
+    return redirect(url_for('view_invitation', event_id=event_id))
 @app.route('/view_invitation', methods=['GET', 'POST'])
 def view_invitation():
     user_id = request.cookies.get('user_id')
@@ -450,6 +584,12 @@ def view_invitation():
         
     event_id = request.args.get('event_id')
     invitations = getInvitationsListByEventId(event_id)
+    
+    # Отладочная информация
+    print(f"Debug - Number of invitations: {len(invitations)}")
+    for i, invitation in enumerate(invitations):
+        print(f"Debug - Invitation {i}: name={invitation.name}, comments={invitation.comments}, attendee_count={invitation.attendee_count}")
+    
     return render_template('view_invitations.html', invitations=invitations, event_id=event_id)
 
 # Function to update existing users' passwords in the database to SHA-256
@@ -481,9 +621,23 @@ if __name__ == '__main__':
         create_template_with_id(TemplateDB(6, 'pegasTemplate', 'pegas_template.html', 'Pegas'))
         birdTemplate = get_template_by_id(6)
 
-    executeQuery("ALTER TABLE invitation ADD COLUMN IF NOT EXISTS is_male BOOLEAN;")
+    testTemplate = get_template_by_id(7)
+    if testTemplate is None:
+        create_template_with_id(TemplateDB(7, 'testTemplate', 'test_template.html', 'Test'))
+        print("Тестовый шаблон создан успешно.")
+
+try:
+    print("Attempting to add comments column...")
+    result = executeQuery("ALTER TABLE invitation ADD COLUMN IF NOT EXISTS comments TEXT;")
+    print(f"Result: {result}")
     
+    print("Attempting to add attendee_count column...")
+    result = executeQuery("ALTER TABLE invitation ADD COLUMN IF NOT EXISTS attendee_count INTEGER DEFAULT 0;")
+    print(f"Result: {result}")
+except Exception as e:
+    print(f"Error adding columns: {e}")
     # Upgrade existing passwords to SHA-256
-    upgrade_passwords_to_sha256()
     
-    app.run(debug=False)
+
+upgrade_passwords_to_sha256()
+app.run(debug=False)
