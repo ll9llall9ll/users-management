@@ -559,7 +559,7 @@
         </div>
         
         <div class="signin">
-            <span id="signupText">Չունե՞ք հաշիվ <a href="#" id="signupLink">Գրանցվել այստեղ</a></span>
+            <span id="signupText">Չունե՞ք հաշիվ <a href="/register" id="signupLink">Գրանցվել այստեղ</a></span>
         </div>
     </div>
 
@@ -606,7 +606,7 @@
             
             // Обновляем текст регистрации с ссылкой
             const signupText = document.getElementById('signupText');
-            signupText.innerHTML = translations[lang].signup + '<a href="#" id="signupLink">' + translations[lang].signupLink + '</a>';
+            signupText.innerHTML = translations[lang].signup + '<a href="/register" id="signupLink">' + translations[lang].signupLink + '</a>';
             
             // Обновляем атрибут lang в HTML
             document.documentElement.lang = lang;

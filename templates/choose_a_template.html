@@ -7,14 +7,15 @@
     <title>Շաբլոններ | Шаблоны</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap');
 
         :root {
-            --primary: #9c8468;
-            --primary-dark: #8a7559;
-            --primary-darker: #6d5a44;
+            --primary: #8a7157;
+            --primary-dark: #6d5a44;
+            --primary-darker: #52432f;
             --primary-light: #d9cdbf;
+            --primary-lighter: #f0eae3;
             --accent: #c9b199;
             --text-dark: #333333;
             --text-medium: #666666;
@@ -22,43 +23,44 @@
             --white: #ffffff;
             --black: #000000;
             --background: #f8f4ef;
-            --card-bg: rgba(255, 255, 255, 0.9);
-            --template-bg: rgba(156, 132, 104, 0.2);
-            --template-hover: rgba(156, 132, 104, 0.3);
-            --shadow-light: 0 10px 30px rgba(0, 0, 0, 0.08);
-            --shadow-medium: 0 15px 35px rgba(0, 0, 0, 0.12);
-            --shadow-dark: 0 20px 40px rgba(0, 0, 0, 0.15);
-            --radius-small: 10px;
-            --radius-medium: 16px;
-            --radius-large: 20px;
+            --card-bg: rgba(255, 255, 255, 0.92);
+            --template-bg: rgba(138, 113, 87, 0.1);
+            --template-hover: rgba(138, 113, 87, 0.2);
+            --shadow-light: 0 8px 20px rgba(0, 0, 0, 0.06);
+            --shadow-medium: 0 12px 28px rgba(0, 0, 0, 0.09);
+            --shadow-dark: 0 16px 32px rgba(0, 0, 0, 0.12);
+            --radius-xs: 6px;
+            --radius-sm: 10px;
+            --radius-md: 16px;
+            --radius-lg: 20px;
+            --transition-fast: all 0.2s ease;
             --transition: all 0.3s ease;
+            --transition-slow: all 0.4s ease;
+            --header-height: 72px;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
         }
 
         body {
+            font-family: 'Montserrat', sans-serif;
             background-color: var(--background);
             color: var(--text-dark);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            padding: 0;
-            margin: 0;
             position: relative;
             overflow-x: hidden;
-            font-family: 'Cormorant Garamond', serif;
             background-image: url('/api/placeholder/1920/1080');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
         }
 
-        /* Background overlay */
+        /* Background overlay with subtle gradient */
         body::before {
             content: "";
             position: fixed;
@@ -66,36 +68,26 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background:
-                radial-gradient(circle at 30% 40%, rgba(156, 132, 104, 0.08) 0%, transparent 30%),
-                radial-gradient(circle at 70% 60%, rgba(156, 132, 104, 0.1) 0%, transparent 30%);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.2) 100%);
             z-index: -1;
             pointer-events: none;
         }
 
-        /* Shimmer effect */
-        .bg-shimmer {
+        /* Fixed background grid pattern */
+        .bg-pattern {
             position: fixed;
-            width: 200vw;
-            height: 200vh;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.6) 10%, transparent 80%);
-            animation: shimmer 40s infinite linear;
-            top: -50vh;
-            left: -50vw;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(rgba(138, 113, 87, 0.03) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(138, 113, 87, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
             z-index: -1;
+            opacity: 0.6;
         }
 
-        @keyframes shimmer {
-            0% {
-                transform: translate(-50%, -50%) rotate(0deg);
-            }
-
-            100% {
-                transform: translate(-50%, -50%) rotate(360deg);
-            }
-        }
-
-        /* Floating particles */
+        /* Elegant floating particles */
         .particles {
             position: fixed;
             top: 0;
@@ -108,87 +100,70 @@
 
         .particles span {
             position: absolute;
-            display: block;
-            width: 8px;
-            height: 8px;
-            background: rgba(156, 132, 104, 0.4);
+            width: 4px;
+            height: 4px;
+            background: rgba(138, 113, 87, 0.3);
             border-radius: 50%;
-            animation: particleMove 20s infinite ease-in-out;
+            animation: float 15s infinite ease-in-out;
         }
 
-        @keyframes particleMove {
+        @keyframes float {
             0% {
-                transform: translateY(0) translateX(0);
-                opacity: 1;
+                transform: translateY(0) translateX(0) rotate(0deg);
+                opacity: 0;
             }
-
+            20% {
+                opacity: 0.8;
+            }
+            80% {
+                opacity: 0.8;
+            }
             100% {
-                transform: translateY(800px) translateX(-200px);
+                transform: translateY(-100px) translateX(30px) rotate(180deg);
                 opacity: 0;
             }
         }
 
-        .particles span:nth-child(1) {
-            top: 12%;
-            left: 18%;
-            animation-duration: 18s;
-        }
+        /* Position individual particles */
+        .particles span:nth-child(1) { top: 15%; left: 10%; animation-duration: 22s; animation-delay: 0s; }
+        .particles span:nth-child(2) { top: 25%; left: 30%; animation-duration: 18s; animation-delay: 1s; }
+        .particles span:nth-child(3) { top: 45%; left: 25%; animation-duration: 24s; animation-delay: 2s; }
+        .particles span:nth-child(4) { top: 65%; left: 70%; animation-duration: 19s; animation-delay: 3s; }
+        .particles span:nth-child(5) { top: 75%; left: 45%; animation-duration: 21s; animation-delay: 4s; }
+        .particles span:nth-child(6) { top: 35%; left: 85%; animation-duration: 20s; animation-delay: 5s; }
+        .particles span:nth-child(7) { top: 55%; left: 15%; animation-duration: 23s; animation-delay: 6s; }
+        .particles span:nth-child(8) { top: 85%; left: 60%; animation-duration: 17s; animation-delay: 7s; }
+        .particles span:nth-child(9) { top: 20%; left: 50%; animation-duration: 25s; animation-delay: 8s; }
+        .particles span:nth-child(10) { top: 70%; left: 90%; animation-duration: 26s; animation-delay: 9s; }
 
-        .particles span:nth-child(2) {
-            top: 22%;
-            left: 65%;
-            animation-duration: 22s;
-        }
-
-        .particles span:nth-child(3) {
-            top: 35%;
-            left: 42%;
-            animation-duration: 25s;
-        }
-
-        .particles span:nth-child(4) {
-            top: 55%;
-            left: 78%;
-            animation-duration: 20s;
-        }
-
-        .particles span:nth-child(5) {
-            top: 75%;
-            left: 25%;
-            animation-duration: 16s;
-        }
-
-        .particles span:nth-child(6) {
-            top: 15%;
-            left: 85%;
-            animation-duration: 19s;
-        }
-
-        .particles span:nth-child(7) {
-            top: 45%;
-            left: 15%;
-            animation-duration: 21s;
-        }
-
-        .particles span:nth-child(8) {
-            top: 65%;
-            left: 60%;
-            animation-duration: 24s;
-        }
-
-        /* Header */
+        /* Fixed header with improved design */
         .header {
+            height: var(--header-height);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 40px;
+            padding: 0 40px;
             width: 100%;
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             z-index: 100;
-            position: relative;
+            position: fixed;
+            top: 0;
+            left: 0;
+            transition: var(--transition);
+        }
+
+        .header.scrolled {
+            height: 60px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .logo {
@@ -202,12 +177,13 @@
         }
 
         .logo h1 {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 600;
             font-family: 'Cormorant Garamond', serif;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
             margin: 0;
             color: var(--primary);
+            white-space: nowrap;
         }
 
         .back-link {
@@ -218,37 +194,47 @@
             text-decoration: none;
             font-size: 14px;
             font-weight: 500;
-            transition: var(--transition);
+            transition: var(--transition-fast);
             padding: 8px 12px;
-            border-radius: var(--radius-small);
+            border-radius: var(--radius-xs);
+            background-color: var(--primary-lighter);
         }
 
         .back-link:hover {
-            background-color: rgba(156, 132, 104, 0.1);
+            background-color: var(--primary-light);
+            transform: translateX(-3px);
         }
 
         .back-link i {
             margin-right: 8px;
         }
 
-        /* Burger Menu */
+        /* Improved burger menu with animation */
         .menu-toggle {
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            width: 30px;
-            height: 21px;
+            width: 28px;
+            height: 20px;
             cursor: pointer;
             z-index: 1000;
-            position: relative;
         }
 
         .menu-toggle .bar {
             width: 100%;
-            height: 3px;
+            height: 2px;
             background-color: var(--primary);
-            border-radius: 3px;
-            transition: var(--transition);
+            border-radius: 2px;
+            transition: var(--transition-fast);
+        }
+
+        .menu-toggle .bar:nth-child(2) {
+            width: 70%;
+            align-self: flex-end;
+        }
+
+        .menu-toggle:hover .bar:nth-child(2) {
+            width: 100%;
         }
 
         .menu-toggle.active .bar:nth-child(1) {
@@ -257,25 +243,26 @@
 
         .menu-toggle.active .bar:nth-child(2) {
             opacity: 0;
+            width: 100%;
         }
 
         .menu-toggle.active .bar:nth-child(3) {
             transform: translateY(-9px) rotate(-45deg);
         }
 
-        /* Side Navigation */
+        /* Side Navigation with improved UX */
         .side-nav {
             position: fixed;
             top: 0;
-            right: -320px;
-            width: 320px;
+            right: -350px;
+            width: 350px;
             height: 100vh;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.97);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             box-shadow: -5px 0 30px rgba(0, 0, 0, 0.1);
             z-index: 999;
-            transition: right 0.3s ease;
+            transition: right 0.4s cubic-bezier(0.65, 0, 0.35, 1);
             display: flex;
             flex-direction: column;
             overflow-y: auto;
@@ -292,6 +279,8 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px);
             z-index: 998;
             opacity: 0;
             visibility: hidden;
@@ -305,7 +294,7 @@
 
         .side-nav-header {
             padding: 30px 25px 20px;
-            border-bottom: 1px solid rgba(156, 132, 104, 0.2);
+            border-bottom: 1px solid rgba(138, 113, 87, 0.1);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -314,35 +303,36 @@
         .close-menu-btn {
             background: none;
             border: none;
-            color: var(--text-dark);
-            font-size: 20px;
+            color: var(--text-medium);
+            font-size: 18px;
             cursor: pointer;
-            padding: 5px;
+            padding: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 32px;
-            height: 32px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
-            transition: var(--transition);
+            transition: var(--transition-fast);
+            background-color: var(--primary-lighter);
         }
 
         .close-menu-btn:hover {
-            background-color: rgba(156, 132, 104, 0.1);
-            color: var(--primary);
+            background-color: var(--primary-light);
+            color: var(--primary-dark);
+            transform: rotate(90deg);
         }
 
         .side-nav-title {
-            font-size: 20px;
+            font-size: 22px;
             font-weight: 600;
             color: var(--primary);
             font-family: 'Cormorant Garamond', serif;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
+            letter-spacing: 0.5px;
         }
 
         .nav-items {
-            padding: 20px 25px;
+            padding: 25px;
             flex: 1;
         }
 
@@ -354,100 +344,127 @@
         .nav-link {
             display: flex;
             align-items: center;
-            padding: 12px 15px;
-            border-radius: var(--radius-small);
+            padding: 14px 16px;
+            border-radius: var(--radius-sm);
             text-decoration: none;
             color: var(--text-dark);
             font-weight: 500;
-            transition: var(--transition);
+            transition: var(--transition-fast);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background-color: var(--primary-lighter);
+            z-index: -1;
+            transition: var(--transition-fast);
+        }
+
+        .nav-link:hover::before {
+            left: 0;
         }
 
         .nav-link:hover {
-            background-color: rgba(156, 132, 104, 0.1);
-            color: var(--primary);
+            color: var(--primary-dark);
+            transform: translateX(5px);
         }
 
         .nav-link i {
-            margin-right: 10px;
+            margin-right: 12px;
             font-size: 18px;
-            width: 22px;
+            width: 24px;
             text-align: center;
+            color: var(--primary);
         }
 
         .nav-link.logout {
             color: #d32f2f;
+            margin-top: 30px;
         }
 
-        .nav-link.logout:hover {
+        .nav-link.logout i {
+            color: #d32f2f;
+        }
+
+        .nav-link.logout:hover::before {
             background-color: rgba(211, 47, 47, 0.1);
         }
 
+        /* Language selector with improved design */
         .side-nav-footer {
-            display: flex;
-            position: absolute;
-            width: 100%;
-            bottom: 230px;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px 25px;
-            border-top: 1px solid rgba(156, 132, 104, 0.2);
+            padding: 25px;
+            border-top: 1px solid rgba(138, 113, 87, 0.1);
+            background-color: rgba(138, 113, 87, 0.03);
         }
 
         .language-selector {
             display: flex;
-            margin-bottom: 15px;
             flex-direction: column;
             align-items: center;
+            margin-bottom: 20px;
         }
 
         .language-title {
             font-size: 16px;
             font-weight: 500;
             color: var(--text-medium);
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            text-align: center;
         }
 
         .language-buttons {
             display: flex;
+            width: 100%;
             gap: 10px;
         }
 
         .language-btn {
             flex: 1;
-            padding: 10px;
-            border: 1px solid var(--primary);
-            border-radius: var(--radius-small);
-            background-color: transparent;
+            padding: 12px;
+            border: 1px solid transparent;
+            border-radius: var(--radius-sm);
+            background-color: var(--primary-lighter);
             color: var(--primary);
             font-size: 14px;
             font-weight: 500;
             cursor: pointer;
-            transition: var(--transition);
+            transition: var(--transition-fast);
+            text-align: center;
         }
 
         .language-btn.active {
             background-color: var(--primary);
             color: var(--white);
+            box-shadow: 0 4px 10px rgba(138, 113, 87, 0.3);
         }
 
         .language-btn:hover:not(.active) {
-            background-color: rgba(156, 132, 104, 0.1);
+            background-color: var(--primary-light);
+            transform: translateY(-2px);
         }
 
         .copyright {
             font-size: 12px;
             color: var(--text-light);
             text-align: center;
-            margin-top: 15px;
+            margin-top: 20px;
+            font-weight: 400;
         }
 
-        /* Main content */
+        /* Main content with proper spacing for fixed header */
         .main-content {
             flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 40px 20px;
+            padding: calc(var(--header-height) + 40px) 40px 60px;
             width: 100%;
             max-width: 1400px;
             margin: 0 auto;
@@ -457,28 +474,30 @@
             font-size: 36px;
             font-weight: 600;
             color: var(--primary);
-            margin-bottom: 40px;
+            margin-bottom: 50px;
             text-align: center;
             font-family: 'Cormorant Garamond', serif;
             letter-spacing: 1px;
             position: relative;
+            padding-bottom: 15px;
         }
 
         .page-title::after {
             content: "";
-            display: block;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
             width: 60px;
             height: 3px;
             background: var(--primary);
-            margin: 15px auto 0;
-            border-radius: 2px;
+            border-radius: 3px;
         }
 
-        /* Template container */
+        /* Redesigned template container with better grid */
         .templateContainer {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 30px;
             width: 100%;
             animation: fadeIn 0.8s ease forwards;
@@ -489,111 +508,53 @@
                 opacity: 0;
                 transform: translateY(20px);
             }
-
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
 
+        /* Redesigned template cards with better visual hierarchy */
         .templateCart {
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            width: 300px;
-            min-height: 400px;
-            padding: 25px;
-            border-radius: var(--radius-medium);
+            height: 420px;
             background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            border-radius: var(--radius-md);
             box-shadow: var(--shadow-light);
             transition: var(--transition);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            position: relative;
             overflow: hidden;
-            text-align: center;
+            position: relative;
             animation: fadeIn 0.5s ease forwards;
             animation-delay: calc(0.1s * var(--i, 1));
             opacity: 0;
+            transform: translateY(20px);
             animation-fill-mode: forwards;
-        }
-
-        .templateCart::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, var(--template-bg) 0%, transparent 100%);
-            z-index: 0;
-            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.4);
         }
 
         .templateCart:hover {
-            transform: translateY(-8px);
+            transform: translateY(-10px);
             box-shadow: var(--shadow-medium);
         }
 
-        .templateCart:hover::before {
-            background: linear-gradient(135deg, var(--template-hover) 0%, transparent 100%);
-        }
-
-        .cartName {
-            position: relative;
-            z-index: 1;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-
-        .cartName h1 {
-            font-size: 24px;
-            font-weight: 600;
-            color: var(--primary);
-            margin-bottom: 15px;
-            font-family: 'Cormorant Garamond', serif;
-            letter-spacing: 0.5px;
-        }
-
-        .template-icon {
-            font-size: 48px;
-            color: var(--primary);
-            margin-bottom: 20px;
-            opacity: 0.8;
-        }
-
-        .template-desc {
-            font-size: 14px;
-            color: var(--text-medium);
-            margin-bottom: 20px;
-            line-height: 1.5;
-        }
-
-        /* Template Preview */
+        /* Template preview with better spacing */
         .template-preview {
             width: 100%;
             height: 180px;
-            margin-bottom: 20px;
-            border-radius: var(--radius-small);
-            overflow: hidden;
             position: relative;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
         }
 
         .template-preview img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s ease;
+            transition: transform 0.6s ease;
         }
 
         .templateCart:hover .template-preview img {
-            transform: scale(1.05);
+            transform: scale(1.08);
         }
 
         .preview-overlay {
@@ -605,64 +566,130 @@
             background: linear-gradient(to bottom,
                     rgba(0, 0, 0, 0.1) 0%,
                     rgba(0, 0, 0, 0.3) 100%);
+            z-index: 1;
         }
 
-        .btn {
+        /* Template content with better spacing and typography */
+        .template-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 25px;
             position: relative;
-            z-index: 1;
-            display: inline-block;
-            padding: 12px 25px;
+        }
+
+        .template-icon {
+            font-size: 42px;
+            color: var(--primary);
+            margin-bottom: 15px;
+            opacity: 0.8;
+            transition: var(--transition);
+        }
+
+        .templateCart:hover .template-icon {
+            transform: scale(1.1);
+            opacity: 1;
+        }
+
+        .template-name {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-bottom: 12px;
+            font-family: 'Cormorant Garamond', serif;
+            letter-spacing: 0.5px;
+            line-height: 1.2;
+        }
+
+        .template-desc {
+            font-size: 14px;
+            color: var(--text-medium);
+            margin-bottom: auto;
+            line-height: 1.6;
+        }
+
+        /* Template tag */
+        .template-tag {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--primary);
+            color: white;
+            padding: 5px 10px;
+            border-radius: var(--radius-xs);
+            font-size: 12px;
+            font-weight: 500;
+            z-index: 2;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Template footer */
+        .template-footer {
+            padding: 20px 25px;
+            border-top: 1px solid rgba(138, 113, 87, 0.1);
+            background-color: rgba(138, 113, 87, 0.03);
+        }
+
+        /* Create button with better design */
+        .create-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 14px 20px;
             border: none;
-            border-radius: var(--radius-small);
+            border-radius: var(--radius-sm);
             background-color: var(--primary);
             color: var(--white);
             font-size: 15px;
             font-weight: 500;
             text-decoration: none;
-            text-align: center;
-            transition: var(--transition);
+            transition: var(--transition-fast);
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
             overflow: hidden;
         }
 
-        .btn::after {
+        .create-btn::before {
             content: '';
             position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 120%;
-            height: 120%;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            opacity: 0;
-            transition: transform 0.5s, opacity 0.3s;
-            z-index: -1;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to right,
+                transparent,
+                rgba(255, 255, 255, 0.1),
+                transparent
+            );
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
         }
 
-        .btn:hover::after {
-            transform: translate(-50%, -50%) scale(1);
-            opacity: 1;
+        .create-btn:hover::before {
+            transform: translateX(100%);
         }
 
-        .btn:hover {
+        .create-btn:hover {
             background-color: var(--primary-dark);
             transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(156, 132, 104, 0.4);
+            box-shadow: 0 8px 15px rgba(138, 113, 87, 0.3);
         }
 
-        .btn i {
+        .create-btn i {
             margin-right: 8px;
+            font-size: 16px;
         }
 
-        /* No templates message */
+        /* Empty state with better design */
         .no-templates {
-            font-size: 18px;
-            color: var(--text-medium);
+            width: 100%;
+            max-width: 500px;
             text-align: center;
-            padding: 30px;
+            padding: 40px;
             background: var(--card-bg);
-            border-radius: var(--radius-medium);
+            border-radius: var(--radius-md);
             box-shadow: var(--shadow-light);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
@@ -670,118 +697,339 @@
             animation: fadeIn 0.8s ease forwards;
         }
 
+        .no-templates-icon {
+            font-size: 50px;
+            color: var(--primary);
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+
+        .no-templates-text {
+            font-size: 18px;
+            color: var(--text-medium);
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
         .back-btn {
-            margin-top: 30px;
             display: inline-flex;
             align-items: center;
-            padding: 10px 20px;
+            padding: 12px 24px;
             background-color: transparent;
             color: var(--primary);
             border: 1px solid var(--primary);
-            border-radius: var(--radius-small);
+            border-radius: var(--radius-sm);
             font-size: 15px;
             font-weight: 500;
             text-decoration: none;
-            transition: var(--transition);
+            transition: var(--transition-fast);
         }
 
         .back-btn:hover {
-            background-color: rgba(156, 132, 104, 0.1);
-            transform: translateY(-2px);
+            background-color: var(--primary-lighter);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(138, 113, 87, 0.15);
         }
 
         .back-btn i {
             margin-right: 8px;
         }
 
-        /* Responsive styles */
-        @media (max-width: 992px) {
+        /* Skeleton loading animation */
+        @keyframes skeleton-loading {
+            0% {
+                background-position: -200px 0;
+            }
+            100% {
+                background-position: calc(200px + 100%) 0;
+            }
+        }
+
+        .skeleton {
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.3) 25%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0.3) 75%);
+            background-size: 200px 100%;
+            animation: skeleton-loading 1.5s infinite linear;
+            border-radius: var(--radius-xs);
+        }
+
+        /* Loading templates placeholder */
+        .loading-templates {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            width: 100%;
+        }
+
+        .loading-template {
+            height: 420px;
+            background: var(--card-bg);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-light);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .loading-preview {
+            width: 100%;
+            height: 180px;
+            background-color: rgba(138, 113, 87, 0.1);
+        }
+
+        .loading-content {
+            padding: 25px;
+        }
+
+        .loading-icon {
+            width: 42px;
+            height: 42px;
+            margin-bottom: 15px;
+        }
+
+        .loading-title {
+            height: 22px;
+            width: 70%;
+            margin-bottom: 15px;
+        }
+
+        .loading-desc {
+            height: 14px;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .loading-desc:last-of-type {
+            width: 80%;
+        }
+
+        .loading-footer {
+            padding: 20px 25px;
+            border-top: 1px solid rgba(138, 113, 87, 0.1);
+            background-color: rgba(138, 113, 87, 0.03);
+        }
+
+        .loading-button {
+            height: 45px;
+            width: 100%;
+            border-radius: var(--radius-sm);
+        }
+
+        /* Tooltip styles */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            width: 200px;
+            background-color: rgba(51, 51, 51, 0.95);
+            color: white;
+            text-align: center;
+            border-radius: var(--radius-xs);
+            padding: 8px 12px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            pointer-events: none;
+        }
+
+        .tooltip .tooltip-text::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: rgba(51, 51, 51, 0.95) transparent transparent transparent;
+        }
+
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Scroll to top button */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 45px;
+            height: 45px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 99;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: var(--transition-fast);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .scroll-top:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Responsive Grid for Better Mobile Experience */
+        @media (max-width: 1200px) {
             .templateContainer {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 25px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .header {
+                padding: 0 25px;
+            }
+
+            .main-content {
+                padding-left: 25px;
+                padding-right: 25px;
+            }
+
+            .templateContainer {
+                grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
                 gap: 20px;
             }
 
-            .templateCart {
-                width: 280px;
-                min-height: 380px;
-            }
-
-            .header {
-                padding: 15px 30px;
+            .page-title {
+                font-size: 32px;
+                margin-bottom: 40px;
             }
         }
 
         @media (max-width: 768px) {
             .header {
-                padding: 15px 20px;
+                padding: 0 20px;
+                height: 60px;
+            }
+
+            .header.scrolled {
+                height: 50px;
             }
 
             .logo h1 {
-                font-size: 20px;
+                font-size: 18px;
+            }
+
+            .back-link {
+                padding: 6px 10px;
+                font-size: 13px;
+            }
+
+            .side-nav {
+                width: 300px;
+                right: -300px;
+            }
+
+            .main-content {
+                padding-top: calc(60px + 30px);
+                padding-left: 20px;
+                padding-right: 20px;
             }
 
             .page-title {
-                font-size: 28px;
+                font-size: 26px;
                 margin-bottom: 30px;
             }
 
             .templateContainer {
-                gap: 15px;
+                grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+            }
+
+            .loading-templates {
+                grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
             }
 
             .templateCart {
-                width: calc(50% - 15px);
-                min-height: 350px;
-                padding: 20px;
+                height: auto;
+                min-height: 380px;
             }
 
-            .cartName h1 {
-                font-size: 20px;
+            .no-templates {
+                padding: 30px 20px;
             }
 
-            .template-icon {
-                font-size: 36px;
-            }
-
-            .template-preview {
-                height: 140px;
-            }
-
-            .side-nav {
-                width: 280px;
-                right: -280px;
+            .scroll-top {
+                bottom: 20px;
+                right: 20px;
+                width: 40px;
+                height: 40px;
             }
         }
 
         @media (max-width: 576px) {
+            .header {
+                padding: 0 15px;
+            }
+
+            .back-link span {
+                display: none;
+            }
+
+            .back-link i {
+                margin-right: 0;
+                font-size: 16px;
+            }
+
+            .logo h1 {
+                font-size: 16px;
+            }
+
             .page-title {
                 font-size: 24px;
+                margin-bottom: 25px;
             }
 
-            .templateContainer {
-                flex-direction: column;
-                align-items: center;
+            .template-preview {
+                height: 160px;
             }
 
-            .templateCart {
-                width: 100%;
-                max-width: 300px;
-                min-height: 380px;
+            .template-content {
+                padding: 20px;
             }
 
-            .main-content {
-                padding: 30px 15px;
+            .template-footer {
+                padding: 15px 20px;
             }
 
-            .side-nav {
-                width: 100%;
-                right: -100%;
+            .template-name {
+                font-size: 20px;
+            }
+
+            .no-templates-icon {
+                font-size: 40px;
+            }
+
+            .no-templates-text {
+                font-size: 16px;
             }
         }
     </style>
 </head>
 
 <body>
-    <div class="bg-shimmer"></div>
+    <div class="bg-pattern"></div>
 
     <div class="particles">
         <span></span>
@@ -792,15 +1040,19 @@
         <span></span>
         <span></span>
         <span></span>
+        <span></span>
+        <span></span>
     </div>
 
-    <header class="header">
-        <div class="logo">
+    <header class="header" id="header">
+        <div class="logo-container">
             <a href="{{ url_for('view_events') }}" class="back-link">
                 <i class="fas fa-arrow-left"></i>
                 <span id="backLinkText">Վերադառնալ</span>
             </a>
-            <h1 id="headerTitle">Միջոցառումների Շաբլոններ</h1>
+            <div class="logo">
+                <h1 id="headerTitle">Միջոցառումների Շաբլոններ</h1>
+            </div>
         </div>
         <div class="menu-toggle" id="menuToggle">
             <span class="bar"></span>
@@ -855,31 +1107,79 @@
     <div class="main-content">
         <h1 class="page-title" id="pageTitle">Ընտրեք Շաբլոն</h1>
 
+        <div id="loadingTemplates" class="loading-templates">
+            <!-- Loading skeletons, will be hidden when data is loaded -->
+            <div class="loading-template">
+                <div class="loading-preview skeleton"></div>
+                <div class="loading-content">
+                    <div class="loading-icon skeleton"></div>
+                    <div class="loading-title skeleton"></div>
+                    <div class="loading-desc skeleton"></div>
+                    <div class="loading-desc skeleton"></div>
+                </div>
+                <div class="loading-footer">
+                    <div class="loading-button skeleton"></div>
+                </div>
+            </div>
+            <div class="loading-template">
+                <div class="loading-preview skeleton"></div>
+                <div class="loading-content">
+                    <div class="loading-icon skeleton"></div>
+                    <div class="loading-title skeleton"></div>
+                    <div class="loading-desc skeleton"></div>
+                    <div class="loading-desc skeleton"></div>
+                </div>
+                <div class="loading-footer">
+                    <div class="loading-button skeleton"></div>
+                </div>
+            </div>
+            <div class="loading-template">
+                <div class="loading-preview skeleton"></div>
+                <div class="loading-content">
+                    <div class="loading-icon skeleton"></div>
+                    <div class="loading-title skeleton"></div>
+                    <div class="loading-desc skeleton"></div>
+                    <div class="loading-desc skeleton"></div>
+                </div>
+                <div class="loading-footer">
+                    <div class="loading-button skeleton"></div>
+                </div>
+            </div>
+        </div>
+
         {% if templates %}
-        <div class="templateContainer">
+        <div class="templateContainer" id="templateContainer" style="display: none;">
             {% for template in templates %}
             <div class="templateCart" style="--i: {{ loop.index }};">
+                {% if template.is_new %}
+                <div class="template-tag" id="templateTag-{{ loop.index }}">Նոր</div>
+                {% endif %}
                 <div class="template-preview">
-                    <img src="/test/image/pegas1.png" alt="Template preview">
+                    <img src="/test/image/pegas1.png" alt="{{ template.displayname }}">
                     <div class="preview-overlay"></div>
                 </div>
-                <div class="cartName">
+                <div class="template-content">
                     <div class="template-icon">
                         <i class="fas fa-file-alt"></i>
                     </div>
-                    <h1>{{ template.displayname }}</h1>
-                    <p class="template-desc" id="template-desc-{{ loop.index }}">Օգտագործեք այս շաբլոնը որպես հիմք ձեր
-                        նոր միջոցառման համար</p>
+                    <h3 class="template-name">{{ template.displayname }}</h3>
+                    <p class="template-desc" id="template-desc-{{ loop.index }}">Օգտագործեք այս շաբլոնը որպես հիմք ձեր նոր միջոցառման համար: Այն ներառում է բոլոր անհրաժեշտ դաշտերը և կառուցվածքը:</p>
                 </div>
-                <a href="{{ url_for('create_event_by_template_id', template_id=template.id) }}" class="btn">
-                    <i class="fas fa-plus"></i> <span id="createBtnText-{{ loop.index }}">Ստեղծել Միջոցառում</span>
-                </a>
+                <div class="template-footer">
+                    <a href="{{ url_for('create_event_by_template_id', template_id=template.id) }}" class="create-btn tooltip">
+                        <i class="fas fa-plus"></i> <span id="createBtnText-{{ loop.index }}">Ստեղծել Միջոցառում</span>
+                        <span class="tooltip-text" id="tooltipText-{{ loop.index }}">Ստեղծել նոր միջոցառում օգտագործելով այս շաբլոնը</span>
+                    </a>
+                </div>
             </div>
             {% endfor %}
         </div>
         {% else %}
-        <div class="no-templates">
-            <p id="noTemplatesText">Ներկա պահին շաբլոններ հասանելի չեն։</p>
+        <div class="no-templates" id="noTemplates" style="display: none;">
+            <div class="no-templates-icon">
+                <i class="fas fa-file-alt"></i>
+            </div>
+            <p class="no-templates-text" id="noTemplatesText">Ներկա պահին շաբլոններ հասանելի չեն։ Խնդրում ենք ստուգել ավելի ուշ:</p>
             <a href="{{ url_for('view_events') }}" class="back-btn">
                 <i class="fas fa-arrow-left"></i> <span id="backBtnText">Վերադառնալ Միջոցառումներ</span>
             </a>
@@ -887,8 +1187,13 @@
         {% endif %}
     </div>
 
+    <!-- Scroll to top button -->
+    <div class="scroll-top" id="scrollTopBtn">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
     <script>
-        // Mobile menu toggle
+        // Mobile menu toggle functionality
         const menuToggle = document.getElementById('menuToggle');
         const sideNav = document.getElementById('sideNav');
         const overlay = document.getElementById('overlay');
@@ -898,6 +1203,18 @@
         const hyBtn = document.getElementById('hyBtn');
         const ruBtn = document.getElementById('ruBtn');
         
+        // Loading state management
+        const loadingTemplates = document.getElementById('loadingTemplates');
+        const templateContainer = document.getElementById('templateContainer');
+        const noTemplates = document.getElementById('noTemplates');
+        
+        // Header scroll effect
+        const header = document.getElementById('header');
+        
+        // Scroll to top button
+        const scrollTopBtn = document.getElementById('scrollTopBtn');
+        
+        // Mobile menu toggle
         menuToggle.addEventListener('click', toggleMenu);
         overlay.addEventListener('click', toggleMenu);
         closeMenuBtn.addEventListener('click', toggleMenu);
@@ -910,7 +1227,7 @@
         }
         
         // Language toggle functionality
-        // Загружаем сохраненный язык из localStorage или устанавливаем армянский по умолчанию
+        // Load saved language from localStorage or default to Armenian
         let currentLanguage = localStorage.getItem('selectedLanguage') || 'hy';
         
         hyBtn.addEventListener('click', function () {
@@ -951,12 +1268,14 @@
                 profileText: 'Պրոֆիլ',
                 logoutText: 'Դուրս գալ',
                 languageTitle: 'Լեզու',
-                templateDesc: 'Օգտագործեք այս շաբլոնը որպես հիմք ձեր նոր միջոցառման համար',
+                templateDesc: 'Օգտագործեք այս շաբլոնը որպես հիմք ձեր նոր միջոցառման համար: Այն ներառում է բոլոր անհրաժեշտ դաշտերը և կառուցվածքը:',
                 createBtnText: 'Ստեղծել Միջոցառում',
-                noTemplatesText: 'Ներկա պահին շաբլոններ հասանելի չեն։',
+                noTemplatesText: 'Ներկա պահին շաբլոններ հասանելի չեն։ Խնդրում ենք ստուգել ավելի ուշ:',
                 backBtnText: 'Վերադառնալ Միջոցառումներ',
                 backLinkText: 'Վերադառնալ',
-                copyright: '© 2024 Միջոցառումների Կառավարիչ'
+                copyright: '© 2024 Միջոցառումների Կառավարիչ',
+                templateTag: 'Նոր',
+                tooltipText: 'Ստեղծել նոր միջոցառում օգտագործելով այս շաբլոնը'
             },
             ru: {
                 headerTitle: 'Шаблоны Событий',
@@ -966,12 +1285,14 @@
                 profileText: 'Профиль',
                 logoutText: 'Выйти',
                 languageTitle: 'Язык',
-                templateDesc: 'Используйте этот шаблон как основу для вашего нового события',
+                templateDesc: 'Используйте этот шаблон как основу для вашего нового события. Он включает все необходимые поля и структуру:',
                 createBtnText: 'Создать Событие',
-                noTemplatesText: 'В настоящее время шаблоны недоступны.',
+                noTemplatesText: 'В настоящее время шаблоны недоступны. Пожалуйста, проверьте позже.',
                 backBtnText: 'Вернуться к Событиям',
                 backLinkText: 'Назад',
-                copyright: '© 2024 Менеджер Событий'
+                copyright: '© 2024 Менеджер Событий',
+                templateTag: 'Новый',
+                tooltipText: 'Создать новое событие, используя этот шаблон'
             }
         };
         
@@ -1002,6 +1323,8 @@
             // Update template descriptions and create button text
             const templateDescs = document.querySelectorAll('[id^="template-desc-"]');
             const createBtnTexts = document.querySelectorAll('[id^="createBtnText-"]');
+            const tooltipTexts = document.querySelectorAll('[id^="tooltipText-"]');
+            const templateTags = document.querySelectorAll('[id^="templateTag-"]');
         
             templateDescs.forEach(desc => {
                 desc.textContent = translations[lang].templateDesc;
@@ -1010,20 +1333,65 @@
             createBtnTexts.forEach(btn => {
                 btn.textContent = translations[lang].createBtnText;
             });
+            
+            tooltipTexts.forEach(tooltip => {
+                tooltip.textContent = translations[lang].tooltipText;
+            });
+            
+            templateTags.forEach(tag => {
+                tag.textContent = translations[lang].templateTag;
+            });
         
             // Update HTML lang attribute
             document.documentElement.lang = lang;
         }
         
-        // Применяем сохраненный язык при загрузке страницы
-        document.addEventListener('DOMContentLoaded', function() {
-            // Если сохранен русский язык, применяем его
-            if (currentLanguage === 'ru') {
+        // Simulated loading effect
+        window.addEventListener('DOMContentLoaded', function() {
+            // Show loading state
+            loadingTemplates.style.display = 'grid';
+            
+            // Simulate loading delay (remove in production)
+            setTimeout(function() {
+                // Hide loading state
+                loadingTemplates.style.display = 'none';
+                
+                // Show appropriate content
+                if (templateContainer) {
+                    templateContainer.style.display = 'grid';
+                } else if (noTemplates) {
+                    noTemplates.style.display = 'block';
+                }
+                
+                // Apply saved language
                 updateLanguageButtons();
-                updateLanguage('ru');
+                updateLanguage(currentLanguage);
+            }, 1000); // 1 second loading simulation
+        });
+        
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+                if (window.scrollY > 300) {
+                    scrollTopBtn.classList.add('visible');
+                } else {
+                    scrollTopBtn.classList.remove('visible');
+                }
+            } else {
+                header.classList.remove('scrolled');
+                scrollTopBtn.classList.remove('visible');
             }
         });
-        </script>
+        
+        // Scroll to top functionality
+        scrollTopBtn.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
 </body>
 
 </html>
