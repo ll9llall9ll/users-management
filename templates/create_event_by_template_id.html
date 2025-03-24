@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hy">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Event</title>
+    <title>Ստեղծել Միջոցառում | Создать Событие</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
@@ -152,54 +152,227 @@
             font-size: 28px;
         }
 
-        .nav ul {
-            list-style: none;
+        /* Burger Menu */
+        .menu-toggle {
             display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            cursor: pointer;
+            z-index: 1000;
+            position: relative;
+        }
+
+        .menu-toggle .bar {
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary);
+            border-radius: 3px;
+            transition: var(--transition);
+        }
+
+        .menu-toggle.active .bar:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+        
+        .menu-toggle.active .bar:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .menu-toggle.active .bar:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+
+        /* Side Navigation */
+        .side-nav {
+            position: fixed;
+            top: 0;
+            right: -320px;
+            width: 320px;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: -5px 0 30px rgba(0, 0, 0, 0.1);
+            z-index: 999;
+            transition: right 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .side-nav.active {
+            right: 0;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 998;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .side-nav-header {
+            padding: 30px 25px 20px;
+            border-bottom: 1px solid rgba(156, 132, 104, 0.2);
+            display: flex;
+            justify-content: space-between;
             align-items: center;
         }
 
-        .nav ul li {
-            margin: 0 15px;
+        .side-nav-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--primary);
+            font-family: 'Cormorant Garamond', serif;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
         }
 
-        .nav ul li a {
+        .close-menu-btn {
+            background: none;
+            border: none;
             color: var(--text-dark);
-            text-decoration: none;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 5px;
             display: flex;
             align-items: center;
-            font-weight: 500;
-            padding: 8px 15px;
-            border-radius: var(--radius-small);
-            transition: all 0.3s ease;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            transition: var(--transition);
         }
 
-        .nav ul li a:hover {
+        .close-menu-btn:hover {
             background-color: rgba(156, 132, 104, 0.1);
             color: var(--primary);
         }
 
-        .nav ul li a i {
-            margin-right: 8px;
-            font-size: 18px;
+        .nav-items {
+            padding: 20px 25px;
+            flex: 1;
         }
 
-        .logout-btn {
-            color: #d32f2f !important;
+        .nav-item {
+            margin-bottom: 15px;
+            list-style: none;
         }
 
-        .menu-toggle {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-        }
-
-        .menu-toggle .bar {
-            height: 3px;
-            width: 25px;
-            background-color: var(--text-dark);
-            margin: 3px 0;
-            border-radius: 3px;
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            border-radius: var(--radius-small);
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
             transition: var(--transition);
+        }
+
+        .nav-link:hover {
+            background-color: rgba(156, 132, 104, 0.1);
+            color: var(--primary);
+        }
+
+        .nav-link i {
+            margin-right: 10px;
+            font-size: 18px;
+            width: 22px;
+            text-align: center;
+        }
+
+        .nav-link.logout {
+            color: #d32f2f;
+        }
+
+        .nav-link.logout:hover {
+            background-color: rgba(211, 47, 47, 0.1);
+        }
+
+        .side-nav-footer {
+            padding: 20px 25px;
+            border-top: 1px solid rgba(156, 132, 104, 0.2);
+        }
+
+        .language-selector {
+            margin-bottom: 15px;
+        }
+
+        .language-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-medium);
+            margin-bottom: 10px;
+        }
+
+        .language-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .language-btn {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid var(--primary);
+            border-radius: var(--radius-small);
+            background-color: transparent;
+            color: var(--primary);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .language-btn.active {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .language-btn:hover:not(.active) {
+            background-color: rgba(156, 132, 104, 0.1);
+        }
+
+        .copyright {
+            font-size: 12px;
+            color: var(--text-light);
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        /* Back link */
+        .back-link {
+            display: flex;
+            align-items: center;
+            margin-right: 15px;
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 8px 12px;
+            border-radius: var(--radius-small);
+        }
+        
+        .back-link:hover {
+            background-color: rgba(156, 132, 104, 0.1);
+        }
+        
+        .back-link i {
+            margin-right: 8px;
         }
 
         /* Main container */
@@ -375,57 +548,15 @@
             .container {
                 padding: 30px;
             }
+
+            .header {
+                padding: 15px 30px;
+            }
         }
 
         @media (max-width: 768px) {
             .header {
                 padding: 15px 20px;
-            }
-            
-            .nav ul {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 70px;
-                left: 0;
-                width: 100%;
-                background-color: rgba(255, 255, 255, 0.95);
-                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-                padding: 20px 0;
-                z-index: 100;
-                gap: 10px;
-                align-items: flex-start;
-            }
-
-            .nav.active ul {
-                display: flex;
-            }
-
-            .nav ul li {
-                width: 100%;
-                margin: 0;
-            }
-            
-            .nav ul li a {
-                padding: 12px 20px;
-                width: 100%;
-                border-radius: 0;
-            }
-
-            .menu-toggle {
-                display: flex;
-            }
-            
-            .menu-toggle.active .bar:nth-child(1) {
-                transform: translateY(9px) rotate(45deg);
-            }
-            
-            .menu-toggle.active .bar:nth-child(2) {
-                opacity: 0;
-            }
-            
-            .menu-toggle.active .bar:nth-child(3) {
-                transform: translateY(-9px) rotate(-45deg);
             }
             
             .container {
@@ -434,6 +565,11 @@
             
             .container h1 {
                 font-size: 26px;
+            }
+
+            .side-nav {
+                width: 280px;
+                right: -280px;
             }
         }
 
@@ -470,6 +606,11 @@
                 padding: 12px;
                 margin-top: 20px;
             }
+
+            .side-nav {
+                width: 100%;
+                right: -100%;
+            }
         }
     </style>
 </head>
@@ -490,35 +631,75 @@
 
     <header class="header">
         <div class="logo">
+            <a href="{{ url_for('view_events') }}" class="back-link">
+                <i class="fas fa-arrow-left"></i>
+                <span id="backLinkText">Վերադառնալ</span>
+            </a>
             <i class="fas fa-calendar-check"></i>
-            Event Manager
+            <span id="logoText">Միջոցառումների կառավարիչ</span>
         </div>
-        <nav class="nav">
-            <ul>
-                <li><a href="{{ url_for('view_events') }}"><i class="fas fa-arrow-left"></i> Back to Events</a></li>
-                <li><a href="{{ url_for('profile') }}"><i class="fas fa-user"></i> Profile</a></li>
-                <li><a href="{{ url_for('logout') }}" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-            </ul>
-        </nav>
-        <div class="menu-toggle" id="mobile-menu">
+        <div class="menu-toggle" id="menuToggle">
             <span class="bar"></span>
             <span class="bar"></span>
             <span class="bar"></span>
         </div>
     </header>
 
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Side Navigation -->
+    <div class="side-nav" id="sideNav">
+        <div class="side-nav-header">
+            <h2 class="side-nav-title" id="menuTitle">Մենյու</h2>
+            <button class="close-menu-btn" id="closeMenuBtn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <ul class="nav-items">
+            <li class="nav-item">
+                <a href="{{ url_for('view_events') }}" class="nav-link">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span id="eventsText">Միջոցառումներ</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ url_for('profile') }}" class="nav-link">
+                    <i class="fas fa-user"></i>
+                    <span id="profileText">Պրոֆիլ</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ url_for('logout') }}" class="nav-link logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span id="logoutText">Դուրս գալ</span>
+                </a>
+            </li>
+        </ul>
+        <div class="side-nav-footer">
+            <div class="language-selector">
+                <h3 class="language-title" id="languageTitle">Լեզու</h3>
+                <div class="language-buttons">
+                    <button class="language-btn active" id="hyBtn">Հայերեն</button>
+                    <button class="language-btn" id="ruBtn">Русский</button>
+                </div>
+            </div>
+            <div class="copyright" id="copyright">© 2024 Միջոցառումների Կառավարիչ</div>
+        </div>
+    </div>
+
     <div class="main-content">
         <div class="container">
-            <h1>Create New Event</h1>
+            <h1 id="pageTitle">Ստեղծել նոր միջոցառում</h1>
             
             <form class="formEvent" method="POST" action="{{ url_for('create_event_by_template_id') }}">
                 <div class="form-row">
                     <div class="form-group" style="--i:1">
-                        <label for="internal_name">Internal Name:</label>
+                        <label for="internal_name" id="internalNameLabel">Ներքին անվանում:</label>
                         <input type="text" name="internal_name" id="internal_name" value="{{ internal_name or '' }}" required>
                     </div>
                     <div class="form-group" style="--i:2">
-                        <label for="display_name">Display Name:</label>
+                        <label for="display_name" id="displayNameLabel">Ցուցադրման անվանում:</label>
                         <input type="text" name="display_name" id="display_name" value="{{ display_name or '' }}" required>
                     </div>
                 </div>
@@ -526,38 +707,38 @@
                 <input type="number" name="template_id" value="{{ template_id or '' }}" required hidden>
                 
                 <div class="form-group" style="--i:3">
-                    <label for="date">Date & Time:</label>
+                    <label for="date" id="dateLabel">Ամսաթիվ և ժամ:</label>
                     <input type="datetime-local" name="date" id="date" value="{{ date or '' }}" required>
                 </div>
                 
                 <div class="form-row">
                     <div class="form-group" style="--i:4">
-                        <label for="address_country">Country:</label>
+                        <label for="address_country" id="countryLabel">Երկիր:</label>
                         <input type="text" name="address_country" id="address_country" value="{{ address_country or '' }}" required>
                     </div>
                     <div class="form-group" style="--i:5">
-                        <label for="address_city">City:</label>
+                        <label for="address_city" id="cityLabel">Քաղաք:</label>
                         <input type="text" name="address_city" id="address_city" value="{{ address_city or '' }}" required>
                     </div>
                 </div>
                 
                 <div class="form-group" style="--i:6">
-                    <label for="address_line">Address Line:</label>
+                    <label for="address_line" id="addressLabel">Հասցե:</label>
                     <input type="text" name="address_line" id="address_line" value="{{ address_line or '' }}" required>
                 </div>
                 
                 <div class="form-row">
                     <div class="form-group" style="--i:7">
-                        <label for="hall_name">Hall Name:</label>
+                        <label for="hall_name" id="hallNameLabel">Դահլիճի անվանում:</label>
                         <input type="text" name="hall_name" id="hall_name" value="{{ hall_name or '' }}" required>
                     </div>
                     <div class="form-group" style="--i:8">
-                        <label for="unique_domain">Unique Domain:</label>
+                        <label for="unique_domain" id="domainLabel">Եզակի դոմեն:</label>
                         <input type="text" name="unique_domain" id="unique_domain" value="{{ unique_domain or '' }}" required>
                     </div>
                 </div>
                 
-                <button type="submit" class="btn">Create Event</button>
+                <button type="submit" class="btn" id="submitBtn">Ստեղծել միջոցառում</button>
             </form>
             
             {% if error %}
@@ -567,13 +748,126 @@
     </div>
 
     <script>
-        const mobileMenu = document.getElementById('mobile-menu');
-        const nav = document.querySelector('.nav');
-
-        mobileMenu.addEventListener('click', () => {
-            nav.classList.toggle('active');
-            mobileMenu.classList.toggle('active');
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const sideNav = document.getElementById('sideNav');
+        const overlay = document.getElementById('overlay');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
+        
+        // Language buttons
+        const hyBtn = document.getElementById('hyBtn');
+        const ruBtn = document.getElementById('ruBtn');
+        
+        menuToggle.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu);
+        closeMenuBtn.addEventListener('click', toggleMenu);
+        
+        function toggleMenu() {
+            menuToggle.classList.toggle('active');
+            sideNav.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.style.overflow = sideNav.classList.contains('active') ? 'hidden' : 'auto';
+        }
+        
+        // Language toggle functionality
+        let currentLanguage = 'hy'; // Default to Armenian
+        
+        hyBtn.addEventListener('click', function() {
+            if (currentLanguage !== 'hy') {
+                currentLanguage = 'hy';
+                updateLanguageButtons();
+                updateLanguage(currentLanguage);
+            }
         });
+        
+        ruBtn.addEventListener('click', function() {
+            if (currentLanguage !== 'ru') {
+                currentLanguage = 'ru';
+                updateLanguageButtons();
+                updateLanguage(currentLanguage);
+            }
+        });
+        
+        function updateLanguageButtons() {
+            if (currentLanguage === 'hy') {
+                hyBtn.classList.add('active');
+                ruBtn.classList.remove('active');
+            } else {
+                hyBtn.classList.remove('active');
+                ruBtn.classList.add('active');
+            }
+        }
+        
+        // Text content for both languages
+        const translations = {
+            hy: {
+                logoText: 'Միջոցառումների կառավարիչ',
+                menuTitle: 'Մենյու',
+                pageTitle: 'Ստեղծել նոր միջոցառում',
+                eventsText: 'Միջոցառումներ',
+                profileText: 'Պրոֆիլ',
+                logoutText: 'Դուրս գալ',
+                languageTitle: 'Լեզու',
+                backLinkText: 'Վերադառնալ',
+                internalNameLabel: 'Ներքին անվանում:',
+                displayNameLabel: 'Ցուցադրման անվանում:',
+                dateLabel: 'Ամսաթիվ և ժամ:',
+                countryLabel: 'Երկիր:',
+                cityLabel: 'Քաղաք:',
+                addressLabel: 'Հասցե:',
+                hallNameLabel: 'Դահլիճի անվանում:',
+                domainLabel: 'Եզակի դոմեն:',
+                submitBtn: 'Ստեղծել միջոցառում',
+                copyright: '© 2024 Միջոցառումների Կառավարիչ'
+            },
+            ru: {
+                logoText: 'Менеджер событий',
+                menuTitle: 'Меню',
+                pageTitle: 'Создать новое событие',
+                eventsText: 'События',
+                profileText: 'Профиль',
+                logoutText: 'Выйти',
+                languageTitle: 'Язык',
+                backLinkText: 'Назад',
+                internalNameLabel: 'Внутреннее название:',
+                displayNameLabel: 'Отображаемое название:',
+                dateLabel: 'Дата и время:',
+                countryLabel: 'Страна:',
+                cityLabel: 'Город:',
+                addressLabel: 'Адрес:',
+                hallNameLabel: 'Название зала:',
+                domainLabel: 'Уникальный домен:',
+                submitBtn: 'Создать событие',
+                copyright: '© 2024 Менеджер Событий'
+            }
+        };
+        
+        // Function to update all text content based on selected language
+        function updateLanguage(lang) {
+            document.getElementById('logoText').textContent = translations[lang].logoText;
+            document.getElementById('menuTitle').textContent = translations[lang].menuTitle;
+            document.getElementById('pageTitle').textContent = translations[lang].pageTitle;
+            document.getElementById('eventsText').textContent = translations[lang].eventsText;
+            document.getElementById('profileText').textContent = translations[lang].profileText;
+            document.getElementById('logoutText').textContent = translations[lang].logoutText;
+            document.getElementById('languageTitle').textContent = translations[lang].languageTitle;
+            document.getElementById('backLinkText').textContent = translations[lang].backLinkText;
+            document.getElementById('copyright').textContent = translations[lang].copyright;
+            
+            // Form labels
+            document.getElementById('internalNameLabel').textContent = translations[lang].internalNameLabel;
+            document.getElementById('displayNameLabel').textContent = translations[lang].displayNameLabel;
+            document.getElementById('dateLabel').textContent = translations[lang].dateLabel;
+            document.getElementById('countryLabel').textContent = translations[lang].countryLabel;
+            document.getElementById('cityLabel').textContent = translations[lang].cityLabel;
+            document.getElementById('addressLabel').textContent = translations[lang].addressLabel;
+            document.getElementById('hallNameLabel').textContent = translations[lang].hallNameLabel;
+            document.getElementById('domainLabel').textContent = translations[lang].domainLabel;
+            document.getElementById('submitBtn').textContent = translations[lang].submitBtn;
+            
+            // Update HTML lang attribute
+            document.documentElement.lang = lang;
+        }
     </script>
 </body>
 </html>

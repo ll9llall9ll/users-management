@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hy">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invitations</title>
+    <title>Հրավերներ | Приглашения</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
@@ -226,6 +226,209 @@
             opacity: 0.9;
         }
 
+        /* Burger Menu */
+        .menu-toggle {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            cursor: pointer;
+            z-index: 1000;
+            position: absolute;
+            top: 25px;
+            right: 30px;
+        }
+
+        .menu-toggle .bar {
+            width: 100%;
+            height: 3px;
+            background-color: var(--white);
+            border-radius: 3px;
+            transition: var(--transition);
+        }
+
+        .menu-toggle.active .bar:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+        
+        .menu-toggle.active .bar:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .menu-toggle.active .bar:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+
+        /* Side Navigation */
+        .side-nav {
+            position: fixed;
+            top: 0;
+            right: -320px;
+            width: 320px;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: -5px 0 30px rgba(0, 0, 0, 0.1);
+            z-index: 999;
+            transition: right 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .side-nav.active {
+            right: 0;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 998;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .side-nav-header {
+            padding: 30px 25px 20px;
+            border-bottom: 1px solid rgba(156, 132, 104, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .side-nav-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--primary);
+            font-family: 'Cormorant Garamond', serif;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .close-menu-btn {
+            background: none;
+            border: none;
+            color: var(--text-dark);
+            font-size: 20px;
+            cursor: pointer;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .close-menu-btn:hover {
+            background-color: rgba(156, 132, 104, 0.1);
+            color: var(--primary);
+        }
+
+        .nav-items {
+            padding: 20px 25px;
+            flex: 1;
+        }
+
+        .nav-item {
+            margin-bottom: 15px;
+            list-style: none;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            border-radius: var(--radius-small);
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-link:hover {
+            background-color: rgba(156, 132, 104, 0.1);
+            color: var(--primary);
+        }
+
+        .nav-link i {
+            margin-right: 10px;
+            font-size: 18px;
+            width: 22px;
+            text-align: center;
+        }
+
+        .nav-link.logout {
+            color: #d32f2f;
+        }
+
+        .nav-link.logout:hover {
+            background-color: rgba(211, 47, 47, 0.1);
+        }
+
+        .side-nav-footer {
+            padding: 20px 25px;
+            border-top: 1px solid rgba(156, 132, 104, 0.2);
+        }
+
+        .language-selector {
+            margin-bottom: 15px;
+        }
+
+        .language-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-medium);
+            margin-bottom: 10px;
+        }
+
+        .language-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .language-btn {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid var(--primary);
+            border-radius: var(--radius-small);
+            background-color: transparent;
+            color: var(--primary);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .language-btn.active {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .language-btn:hover:not(.active) {
+            background-color: rgba(156, 132, 104, 0.1);
+        }
+
+        .copyright {
+            font-size: 12px;
+            color: var(--text-light);
+            text-align: center;
+            margin-top: 15px;
+        }
+
         /* Right side content */
         .right {
             flex: 1.1;
@@ -283,6 +486,27 @@
             display: flex;
             justify-content: space-between;
             margin-bottom: 20px;
+        }
+
+        /* Back link */
+        .back-link {
+            display: flex;
+            align-items: center;
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 8px 12px;
+            border-radius: var(--radius-small);
+        }
+        
+        .back-link:hover {
+            background-color: rgba(156, 132, 104, 0.1);
+        }
+        
+        .back-link i {
+            margin-right: 8px;
         }
 
         /* Search box */
@@ -581,6 +805,11 @@
             animation-fill-mode: forwards;
         }
 
+        .button-row {
+            display: flex;
+            gap: 5px;
+        }
+
         /* Responsive styles */
         @media (max-width: 1200px) {
             .container {
@@ -616,6 +845,15 @@
             .invitations-table td {
                 padding: 10px 12px;
                 font-size: 13px;
+            }
+
+            .button-row {
+                flex-wrap: wrap;
+            }
+
+            .side-nav {
+                width: 280px;
+                right: -280px;
             }
         }
 
@@ -707,6 +945,11 @@
                 flex: 1 0 45%;
                 margin-bottom: 10px;
             }
+
+            .menu-toggle {
+                top: 15px;
+                right: 15px;
+            }
         }
 
         @media (max-width: 576px) {
@@ -789,8 +1032,7 @@
             
             .credit {
                 font-size: 10px;
-                margin-top: 10px;
-                position: relative;
+                margin-top: 10px;position: relative;
                 text-align: center;
                 bottom: auto;
                 right: auto;
@@ -803,6 +1045,11 @@
             .stat-card {
                 width: 100%;
                 margin-bottom: 10px;
+            }
+
+            .side-nav {
+                width: 100%;
+                right: -100%;
             }
         }
 
@@ -825,11 +1072,6 @@
                 overflow-y: auto;
                 height: 100vh;
             }
-        }
-
-        .button-row {
-            display: flex;
-            gap: 5px;
         }
     </style>
 </head>
@@ -855,33 +1097,81 @@
                 <div class="logo">
                     <i class="fas fa-envelope-open-text"></i>
                 </div>
-                <h3>Invitations Manager</h3>
-                <p>Create and manage all event invitations for your guests</p>
+                <h3 id="sideTitle">Հրավերների կառավարիչ</h3>
+                <p id="sideDescription">Ստեղծեք և կառավարեք բոլոր միջոցառումների հրավերները</p>
+            </div>
+            <div class="menu-toggle" id="menuToggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+
+        <!-- Overlay -->
+        <div class="overlay" id="overlay"></div>
+
+        <!-- Side Navigation -->
+        <div class="side-nav" id="sideNav">
+            <div class="side-nav-header">
+                <h2 class="side-nav-title" id="menuTitle">Մենյու</h2>
+                <button class="close-menu-btn" id="closeMenuBtn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <ul class="nav-items">
+                <li class="nav-item">
+                    <a href="{{ url_for('view_events') }}" class="nav-link">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span id="eventsText">Միջոցառումներ</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('profile') }}" class="nav-link">
+                        <i class="fas fa-user"></i>
+                        <span id="profileText">Պրոֆիլ</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('logout') }}" class="nav-link logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span id="logoutText">Դուրս գալ</span>
+                    </a>
+                </li>
+                <div class="language-selector">
+                    <h3 class="language-title" id="languageTitle">Լեզու</h3>
+                    <div class="language-buttons">
+                        <button class="language-btn active" id="hyBtn">Հայերեն</button>
+                        <button class="language-btn" id="ruBtn">Русский</button>
+                    </div>
+                </div>
+            </ul>
+         
+            <div class="side-nav-footer">
+         
+                <div class="copyright" id="copyright">© 2024 Հրավերների Կառավարիչ</div>
             </div>
         </div>
 
         <div class="right">
             <div class="top-nav">
-                <a href="{{ url_for('view_events') }}" class="btn">
-                    <i class="fas fa-arrow-left"></i> Back to Events
-                </a>
-                <a href="{{ url_for('logout') }}" class="btn btn-logout">
-                    <i class="fas fa-sign-out-alt"></i> Logout
+                <a href="{{ url_for('view_events') }}" class="back-link">
+                    <i class="fas fa-arrow-left"></i>
+                    <span id="backLinkText">Վերադառնալ միջոցառումներին</span>
                 </a>
             </div>
             
             <div class="invitations-header">
-                <h2>All Invitations</h2>
+                <h2 id="pageTitle">Բոլոր հրավերները</h2>
             </div>
             
             <!-- Stats Cards -->
             <div class="stats-container">
                 <div class="stat-card stat-card-primary">
-                    <h3>Total Invited</h3>
+                    <h3 id="totalInvitedLabel">Ընդհանուր հրավիրված</h3>
                     <div class="stat-value">{{ invitations|length }}</div>
                 </div>
                 <div class="stat-card stat-card-success">
-                    <h3>Accepted</h3>
+                    <h3 id="acceptedLabel">Ընդունված</h3>
                     {% set accepted_count = 0 %}
                     {% for invitation in invitations %}
                         {% if invitation.accepted == True %}
@@ -891,7 +1181,7 @@
                     <div class="stat-value">{{ accepted_count }}</div>
                 </div>
                 <div class="stat-card stat-card-warning">
-                    <h3>Pending</h3>
+                    <h3 id="pendingLabel">Սպասվող</h3>
                     {% set pending_count = 0 %}
                     {% for invitation in invitations %}
                         {% if invitation.accepted is none %}
@@ -901,7 +1191,7 @@
                     <div class="stat-value">{{ pending_count }}</div>
                 </div>
                 <div class="stat-card stat-card-info">
-                    <h3>Total Attendees</h3>
+                    <h3 id="totalAttendeesLabel">Ընդհանուր մասնակիցներ</h3>
                     {% set total_attendees = 0 %}
                     {% for invitation in invitations %}
                         {% if invitation.accepted == True %}
@@ -914,17 +1204,17 @@
             
             <div class="search-container">
                 <i class="fas fa-search search-icon"></i>
-                <input type="text" id="searchInput" class="search-box" placeholder="Search for invitations...">
+                <input type="text" id="searchInput" class="search-box" placeholder="Որոնել հրավերներ..." data-placeholder-hy="Որոնել հրավերներ..." data-placeholder-ru="Поиск приглашений...">
             </div>
             
             <table class="invitations-table">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Status</th>
-                        <th>Attendees</th>
-                        <th>Comments</th>
-                        <th>Actions</th>
+                        <th id="nameColumnHeader">Անուն</th>
+                        <th id="statusColumnHeader">Կարգավիճակ</th>
+                        <th id="attendeesColumnHeader">Մասնակիցներ</th>
+                        <th id="commentsColumnHeader">Մեկնաբանություններ</th>
+                        <th id="actionsColumnHeader">Գործողություններ</th>
                     </tr>
                 </thead>
                 <tbody id="invitationsTableBody">
@@ -933,40 +1223,40 @@
                         <td>{{ invitation.name }}</td>
                         <td>
                             {% if invitation.accepted == True %}
-                                <span class="badge badge-success">Accepted</span>
+                                <span class="badge badge-success" data-status="accepted">Ընդունված</span>
                             {% elif invitation.accepted == False %}
-                                <span class="badge badge-danger">Declined</span>
+                                <span class="badge badge-danger" data-status="declined">Մերժված</span>
                             {% else %}
-                                <span class="badge badge-warning">Pending</span>
+                                <span class="badge badge-warning" data-status="pending">Սպասվող</span>
                             {% endif %}
                         </td>
                         <td>
                             {% if invitation.attendee_count %}
                                 {{ invitation.attendee_count }}
                             {% else %}
-                                <span class="badge badge-light">N/A</span>
+                                <span class="badge badge-light" data-na="true">Հ/Հ</span>
                             {% endif %}
                         </td>
                         <td>
                             {% if invitation.comments %}
-                                <span class="badge badge-info">Yes</span>
+                                <span class="badge badge-info" data-comments="yes">Այո</span>
                             {% else %}
-                                <span class="badge badge-light">No</span>
+                                <span class="badge badge-light" data-comments="no">Ոչ</span>
                             {% endif %}
                         </td>
                         <td>
                             <div class="button-row">
                                 <a href="{{ url_for('invitation_details', id=invitation.id) }}" class="btn btn-info">
-                                    <i class="fas fa-eye"></i> View
+                                    <i class="fas fa-eye"></i> <span class="view-text">Դիտել</span>
                                 </a>
                                 <a href="{{ url_for('edit_invitation', id=invitation.id) }}" class="btn btn-edit">
-                                    <i class="fas fa-edit"></i> Edit
+                                    <i class="fas fa-edit"></i> <span class="edit-text">Խմբագրել</span>
                                 </a>
-                                <a href="{{ url_for('delete_invitation', id=invitation.id) }}" class="btn btn-delete" onclick="return confirm('Are you sure you want to delete this invitation?');">
-                                    <i class="fas fa-trash-alt"></i> Delete
+                                <a href="{{ url_for('delete_invitation', id=invitation.id) }}" class="btn btn-delete" onclick="return confirm('Դուք վստահ եք, որ ցանկանում եք ջնջել այս հրավերը?');" data-confirm-hy="Դուք վստահ եք, որ ցանկանում եք ջնջել այս հրավերը?" data-confirm-ru="Вы уверены, что хотите удалить это приглашение?">
+                                    <i class="fas fa-trash-alt"></i> <span class="delete-text">Ջնջել</span>
                                 </a>
                                 <button class="btn btn-copy copy-link" data-hash="{{ invitation.hash }}">
-                                    <i class="fas fa-copy"></i> Copy Link
+                                    <i class="fas fa-copy"></i> <span class="copy-text">Պատճենել հղումը</span>
                                 </button>
                             </div>
                         </td>
@@ -977,17 +1267,229 @@
             
             <div class="actions-container">
                 <a href="{{ url_for('create_invitation', event_id=event_id) }}" class="btn">
-                    <i class="fas fa-plus"></i> Create Invitation
+                    <i class="fas fa-plus"></i> <span id="createInvitationText">Ստեղծել հրավեր</span>
                 </a>
             </div>
             
-            <div class="credit">© 2024 Invitation Manager</div>
+            <!-- <div class="credit" id="copyright2">© 2024 Հրավերների Կառավարիչ</div> -->
         </div>
     </div>
 
     <script>
-        // Simple search functionality
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const sideNav = document.getElementById('sideNav');
+        const overlay = document.getElementById('overlay');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
+        
+        // Language buttons
+        const hyBtn = document.getElementById('hyBtn');
+        const ruBtn = document.getElementById('ruBtn');
+        
+        menuToggle.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu);
+        closeMenuBtn.addEventListener('click', toggleMenu);
+        
+        function toggleMenu() {
+            menuToggle.classList.toggle('active');
+            sideNav.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.style.overflow = sideNav.classList.contains('active') ? 'hidden' : 'auto';
+        }
+        
+        // Language toggle functionality
+        // Загружаем сохраненный язык из localStorage или устанавливаем армянский по умолчанию
+        let currentLanguage = localStorage.getItem('selectedLanguage') || 'hy';
+        
+        hyBtn.addEventListener('click', function() {
+            if (currentLanguage !== 'hy') {
+                currentLanguage = 'hy';
+                updateLanguageButtons();
+                updateLanguage(currentLanguage);
+                localStorage.setItem('selectedLanguage', 'hy');
+            }
+        });
+        
+        ruBtn.addEventListener('click', function() {
+            if (currentLanguage !== 'ru') {
+                currentLanguage = 'ru';
+                updateLanguageButtons();
+                updateLanguage(currentLanguage);
+                localStorage.setItem('selectedLanguage', 'ru');
+            }
+        });
+        
+        function updateLanguageButtons() {
+            if (currentLanguage === 'hy') {
+                hyBtn.classList.add('active');
+                ruBtn.classList.remove('active');
+            } else {
+                hyBtn.classList.remove('active');
+                ruBtn.classList.add('active');
+            }
+        }
+        
+        // Text content for both languages
+        const translations = {
+            hy: {
+                sideTitle: 'Հրավերների կառավարիչ',
+                sideDescription: 'Ստեղծեք և կառավարեք բոլոր միջոցառումների հրավերները',
+                menuTitle: 'Մենյու',
+                pageTitle: 'Բոլոր հրավերները',
+                eventsText: 'Միջոցառումներ',
+                profileText: 'Պրոֆիլ',
+                logoutText: 'Դուրս գալ',
+                languageTitle: 'Լեզու',
+                copyright: '© 2024 Հրավերների Կառավարիչ',
+                backLinkText: 'Վերադառնալ միջոցառումներին',
+                totalInvitedLabel: 'Ընդհանուր հրավիրված',
+                acceptedLabel: 'Ընդունված',
+                pendingLabel: 'Սպասվող',
+                totalAttendeesLabel: 'Ընդհանուր մասնակիցներ',
+                nameColumnHeader: 'Անուն',
+                statusColumnHeader: 'Կարգավիճակ',
+                attendeesColumnHeader: 'Մասնակիցներ',
+                commentsColumnHeader: 'Մեկնաբանություններ',
+                actionsColumnHeader: 'Գործողություններ',
+                acceptedStatus: 'Ընդունված',
+                declinedStatus: 'Մերժված',
+                pendingStatus: 'Սպասվող',
+                naText: 'Հ/Հ',
+                yesText: 'Այո',
+                noText: 'Ոչ',
+                viewText: 'Դիտել',
+                editText: 'Խմբագրել',
+                deleteText: 'Ջնջել',
+                copyText: 'Պատճենել հղումը',
+                createInvitationText: 'Ստեղծել հրավեր',
+                searchPlaceholder: 'Որոնել հրավերներ...',
+                deleteConfirmation: 'Դուք վստահ եք, որ ցանկանում եք ջնջել այս հրավերը?',
+                copiedMessage: 'Պատճենված!'
+            },
+            ru: {
+                sideTitle: 'Менеджер приглашений',
+                sideDescription: 'Создавайте и управляйте всеми приглашениями на события',
+                menuTitle: 'Меню',
+                pageTitle: 'Все приглашения',
+                eventsText: 'События',
+                profileText: 'Профиль',
+                logoutText: 'Выйти',
+                languageTitle: 'Язык',
+                copyright: '© 2024 Менеджер приглашений',
+                backLinkText: 'Вернуться к событиям',
+                totalInvitedLabel: 'Всего приглашено',
+                acceptedLabel: 'Принято',
+                pendingLabel: 'В ожидании',
+                totalAttendeesLabel: 'Всего участников',
+                nameColumnHeader: 'Имя',
+                statusColumnHeader: 'Статус',
+                attendeesColumnHeader: 'Участники',
+                commentsColumnHeader: 'Комментарии',
+                actionsColumnHeader: 'Действия',
+                acceptedStatus: 'Принято',
+                declinedStatus: 'Отклонено',
+                pendingStatus: 'В ожидании',
+                naText: 'Н/Д',
+                yesText: 'Да',
+                noText: 'Нет',
+                viewText: 'Просмотр',
+                editText: 'Изменить',
+                deleteText: 'Удалить',
+                copyText: 'Копировать ссылку',
+                createInvitationText: 'Создать приглашение',
+                searchPlaceholder: 'Поиск приглашений...',
+                deleteConfirmation: 'Вы уверены, что хотите удалить это приглашение?',
+                copiedMessage: 'Скопировано!'
+            }
+        };
+        
+        // Function to update all text content based on selected language
+        function updateLanguage(lang) {
+            document.getElementById('sideTitle').textContent = translations[lang].sideTitle;
+            document.getElementById('sideDescription').textContent = translations[lang].sideDescription;
+            document.getElementById('menuTitle').textContent = translations[lang].menuTitle;
+            document.getElementById('pageTitle').textContent = translations[lang].pageTitle;
+            document.getElementById('eventsText').textContent = translations[lang].eventsText;
+            document.getElementById('profileText').textContent = translations[lang].profileText;
+            document.getElementById('logoutText').textContent = translations[lang].logoutText;
+            document.getElementById('languageTitle').textContent = translations[lang].languageTitle;
+            document.getElementById('copyright').textContent = translations[lang].copyright;
+            
+            // Проверяем, существует ли элемент copyright2
+            const copyright2Element = document.getElementById('copyright2');
+            if (copyright2Element) {
+                copyright2Element.textContent = translations[lang].copyright;
+            }
+            
+            document.getElementById('backLinkText').textContent = translations[lang].backLinkText;
+            document.getElementById('totalInvitedLabel').textContent = translations[lang].totalInvitedLabel;
+            document.getElementById('acceptedLabel').textContent = translations[lang].acceptedLabel;
+            document.getElementById('pendingLabel').textContent = translations[lang].pendingLabel;
+            document.getElementById('totalAttendeesLabel').textContent = translations[lang].totalAttendeesLabel;
+            document.getElementById('nameColumnHeader').textContent = translations[lang].nameColumnHeader;
+            document.getElementById('statusColumnHeader').textContent = translations[lang].statusColumnHeader;
+            document.getElementById('attendeesColumnHeader').textContent = translations[lang].attendeesColumnHeader;
+            document.getElementById('commentsColumnHeader').textContent = translations[lang].commentsColumnHeader;
+            document.getElementById('actionsColumnHeader').textContent = translations[lang].actionsColumnHeader;
+            document.getElementById('createInvitationText').textContent = translations[lang].createInvitationText;
+            
+            // Update status badges text
+            document.querySelectorAll('[data-status="accepted"]').forEach(badge => {
+                badge.textContent = translations[lang].acceptedStatus;
+            });
+            document.querySelectorAll('[data-status="declined"]').forEach(badge => {
+                badge.textContent = translations[lang].declinedStatus;
+            });
+            document.querySelectorAll('[data-status="pending"]').forEach(badge => {
+                badge.textContent = translations[lang].pendingStatus;
+            });
+            
+            // Update N/A and Yes/No badges
+            document.querySelectorAll('[data-na="true"]').forEach(badge => {
+                badge.textContent = translations[lang].naText;
+            });
+            document.querySelectorAll('[data-comments="yes"]').forEach(badge => {
+                badge.textContent = translations[lang].yesText;
+            });
+            document.querySelectorAll('[data-comments="no"]').forEach(badge => {
+                badge.textContent = translations[lang].noText;
+            });
+            
+            // Update action button texts
+            document.querySelectorAll('.view-text').forEach(text => {
+                text.textContent = translations[lang].viewText;
+            });
+            document.querySelectorAll('.edit-text').forEach(text => {
+                text.textContent = translations[lang].editText;
+            });
+            document.querySelectorAll('.delete-text').forEach(text => {
+                text.textContent = translations[lang].deleteText;
+            });
+            document.querySelectorAll('.copy-text').forEach(text => {
+                text.textContent = translations[lang].copyText;
+            });
+            
+            // Update search placeholder
+            document.getElementById('searchInput').placeholder = translations[lang].searchPlaceholder;
+            
+            // Update delete confirmation
+            document.querySelectorAll('.btn-delete').forEach(btn => {
+                btn.setAttribute('onclick', `return confirm('${translations[lang].deleteConfirmation}');`);
+            });
+            
+            // Update HTML lang attribute
+            document.documentElement.lang = lang;
+        }
+        
+        // Применяем сохраненный язык при загрузке страницы
         document.addEventListener('DOMContentLoaded', function() {
+            // Если сохранен русский язык, применяем его
+            if (currentLanguage === 'ru') {
+                updateLanguageButtons();
+                updateLanguage('ru');
+            }
+            
+            // Simple search functionality
             const searchInput = document.getElementById('searchInput');
             const tableBody = document.getElementById('invitationsTableBody');
             const rows = tableBody.querySelectorAll('tr');
@@ -999,8 +1501,7 @@
                     const name = row.cells[0].textContent.toLowerCase();
                     const status = row.cells[1].textContent.toLowerCase();
                     
-                    if (name.includes(searchTerm) || 
-                        status.includes(searchTerm)) {
+                    if (name.includes(searchTerm) || status.includes(searchTerm)) {
                         row.style.display = '';
                     } else {
                         row.style.display = 'none';
@@ -1018,7 +1519,9 @@
                     navigator.clipboard.writeText(inviteUrl).then(() => {
                         // Change button text temporarily
                         const originalText = this.innerHTML;
-                        this.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                        const copiedMessage = currentLanguage === 'hy' ? 
+                            translations.hy.copiedMessage : translations.ru.copiedMessage;
+                        this.innerHTML = `<i class="fas fa-check"></i> ${copiedMessage}`;
                         setTimeout(() => {
                             this.innerHTML = originalText;
                         }, 2000);
@@ -1028,6 +1531,6 @@
                 });
             });
         });
-    </script>
+        </script>
 </body>
 </html>

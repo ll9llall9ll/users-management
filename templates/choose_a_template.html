@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hy">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Templates</title>
+    <title>Շաբլոններ | Шаблоны</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
@@ -65,7 +66,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: 
+            background:
                 radial-gradient(circle at 30% 40%, rgba(156, 132, 104, 0.08) 0%, transparent 30%),
                 radial-gradient(circle at 70% 60%, rgba(156, 132, 104, 0.1) 0%, transparent 30%);
             z-index: -1;
@@ -77,7 +78,7 @@
             position: fixed;
             width: 200vw;
             height: 200vh;
-            background: radial-gradient(circle, rgba(255,255,255,0.6) 10%, transparent 80%);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.6) 10%, transparent 80%);
             animation: shimmer 40s infinite linear;
             top: -50vh;
             left: -50vw;
@@ -85,10 +86,15 @@
         }
 
         @keyframes shimmer {
-            0% { transform: translate(-50%, -50%) rotate(0deg); }
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
         }
-        
+
         /* Floating particles */
         .particles {
             position: fixed;
@@ -111,18 +117,64 @@
         }
 
         @keyframes particleMove {
-            0% { transform: translateY(0) translateX(0); opacity: 1; }
-            100% { transform: translateY(800px) translateX(-200px); opacity: 0; }
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(800px) translateX(-200px);
+                opacity: 0;
+            }
         }
 
-        .particles span:nth-child(1) { top: 12%; left: 18%; animation-duration: 18s; }
-        .particles span:nth-child(2) { top: 22%; left: 65%; animation-duration: 22s; }
-        .particles span:nth-child(3) { top: 35%; left: 42%; animation-duration: 25s; }
-        .particles span:nth-child(4) { top: 55%; left: 78%; animation-duration: 20s; }
-        .particles span:nth-child(5) { top: 75%; left: 25%; animation-duration: 16s; }
-        .particles span:nth-child(6) { top: 15%; left: 85%; animation-duration: 19s; }
-        .particles span:nth-child(7) { top: 45%; left: 15%; animation-duration: 21s; }
-        .particles span:nth-child(8) { top: 65%; left: 60%; animation-duration: 24s; }
+        .particles span:nth-child(1) {
+            top: 12%;
+            left: 18%;
+            animation-duration: 18s;
+        }
+
+        .particles span:nth-child(2) {
+            top: 22%;
+            left: 65%;
+            animation-duration: 22s;
+        }
+
+        .particles span:nth-child(3) {
+            top: 35%;
+            left: 42%;
+            animation-duration: 25s;
+        }
+
+        .particles span:nth-child(4) {
+            top: 55%;
+            left: 78%;
+            animation-duration: 20s;
+        }
+
+        .particles span:nth-child(5) {
+            top: 75%;
+            left: 25%;
+            animation-duration: 16s;
+        }
+
+        .particles span:nth-child(6) {
+            top: 15%;
+            left: 85%;
+            animation-duration: 19s;
+        }
+
+        .particles span:nth-child(7) {
+            top: 45%;
+            left: 15%;
+            animation-duration: 21s;
+        }
+
+        .particles span:nth-child(8) {
+            top: 65%;
+            left: 60%;
+            animation-duration: 24s;
+        }
 
         /* Header */
         .header {
@@ -158,54 +210,235 @@
             color: var(--primary);
         }
 
-        .nav ul {
-            list-style: none;
+        .back-link {
             display: flex;
             align-items: center;
-        }
-
-        .nav ul li {
-            margin: 0 15px;
-        }
-
-        .nav ul li a {
-            color: var(--text-dark);
+            margin-right: 15px;
+            color: var(--primary);
             text-decoration: none;
-            display: flex;
-            align-items: center;
+            font-size: 14px;
             font-weight: 500;
-            padding: 8px 15px;
+            transition: var(--transition);
+            padding: 8px 12px;
             border-radius: var(--radius-small);
-            transition: all 0.3s ease;
         }
 
-        .nav ul li a:hover {
+        .back-link:hover {
+            background-color: rgba(156, 132, 104, 0.1);
+        }
+
+        .back-link i {
+            margin-right: 8px;
+        }
+
+        /* Burger Menu */
+        .menu-toggle {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            cursor: pointer;
+            z-index: 1000;
+            position: relative;
+        }
+
+        .menu-toggle .bar {
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary);
+            border-radius: 3px;
+            transition: var(--transition);
+        }
+
+        .menu-toggle.active .bar:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+
+        .menu-toggle.active .bar:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active .bar:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+
+        /* Side Navigation */
+        .side-nav {
+            position: fixed;
+            top: 0;
+            right: -320px;
+            width: 320px;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: -5px 0 30px rgba(0, 0, 0, 0.1);
+            z-index: 999;
+            transition: right 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .side-nav.active {
+            right: 0;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 998;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .side-nav-header {
+            padding: 30px 25px 20px;
+            border-bottom: 1px solid rgba(156, 132, 104, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .close-menu-btn {
+            background: none;
+            border: none;
+            color: var(--text-dark);
+            font-size: 20px;
+            cursor: pointer;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .close-menu-btn:hover {
             background-color: rgba(156, 132, 104, 0.1);
             color: var(--primary);
         }
 
-        .nav ul li a i {
-            margin-right: 8px;
-            font-size: 18px;
+        .side-nav-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--primary);
+            font-family: 'Cormorant Garamond', serif;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
         }
 
-        .logout-btn {
-            color: #d32f2f !important;
+        .nav-items {
+            padding: 20px 25px;
+            flex: 1;
         }
 
-        .menu-toggle {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
+        .nav-item {
+            margin-bottom: 15px;
+            list-style: none;
         }
 
-        .menu-toggle .bar {
-            height: 3px;
-            width: 25px;
-            background-color: var(--text-dark);
-            margin: 3px 0;
-            border-radius: 3px;
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            border-radius: var(--radius-small);
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
             transition: var(--transition);
+        }
+
+        .nav-link:hover {
+            background-color: rgba(156, 132, 104, 0.1);
+            color: var(--primary);
+        }
+
+        .nav-link i {
+            margin-right: 10px;
+            font-size: 18px;
+            width: 22px;
+            text-align: center;
+        }
+
+        .nav-link.logout {
+            color: #d32f2f;
+        }
+
+        .nav-link.logout:hover {
+            background-color: rgba(211, 47, 47, 0.1);
+        }
+
+        .side-nav-footer {
+            display: flex;
+            position: absolute;
+            width: 100%;
+            bottom: 230px;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 25px;
+            border-top: 1px solid rgba(156, 132, 104, 0.2);
+        }
+
+        .language-selector {
+            display: flex;
+            margin-bottom: 15px;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .language-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-medium);
+            margin-bottom: 10px;
+        }
+
+        .language-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .language-btn {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid var(--primary);
+            border-radius: var(--radius-small);
+            background-color: transparent;
+            color: var(--primary);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .language-btn.active {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .language-btn:hover:not(.active) {
+            background-color: rgba(156, 132, 104, 0.1);
+        }
+
+        .copyright {
+            font-size: 12px;
+            color: var(--text-light);
+            text-align: center;
+            margin-top: 15px;
         }
 
         /* Main content */
@@ -252,8 +485,15 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .templateCart {
@@ -261,7 +501,7 @@
             flex-direction: column;
             justify-content: space-between;
             width: 300px;
-            min-height: 300px;
+            min-height: 400px;
             padding: 25px;
             border-radius: var(--radius-medium);
             background: var(--card-bg);
@@ -334,6 +574,39 @@
             line-height: 1.5;
         }
 
+        /* Template Preview */
+        .template-preview {
+            width: 100%;
+            height: 180px;
+            margin-bottom: 20px;
+            border-radius: var(--radius-small);
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .template-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .templateCart:hover .template-preview img {
+            transform: scale(1.05);
+        }
+
+        .preview-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom,
+                    rgba(0, 0, 0, 0.1) 0%,
+                    rgba(0, 0, 0, 0.3) 100%);
+        }
+
         .btn {
             position: relative;
             z-index: 1;
@@ -371,7 +644,7 @@
             transform: translate(-50%, -50%) scale(1);
             opacity: 1;
         }
-        
+
         .btn:hover {
             background-color: var(--primary-dark);
             transform: translateY(-3px);
@@ -426,10 +699,14 @@
             .templateContainer {
                 gap: 20px;
             }
-            
+
             .templateCart {
                 width: 280px;
-                min-height: 280px;
+                min-height: 380px;
+            }
+
+            .header {
+                padding: 15px 30px;
             }
         }
 
@@ -437,78 +714,41 @@
             .header {
                 padding: 15px 20px;
             }
-            
+
             .logo h1 {
                 font-size: 20px;
             }
-            
-            .nav ul {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 70px;
-                left: 0;
-                width: 100%;
-                background-color: rgba(255, 255, 255, 0.95);
-                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-                padding: 20px 0;
-                z-index: 100;
-                gap: 10px;
-                align-items: flex-start;
-            }
 
-            .nav.active ul {
-                display: flex;
-            }
-
-            .nav ul li {
-                width: 100%;
-                margin: 0;
-            }
-            
-            .nav ul li a {
-                padding: 12px 20px;
-                width: 100%;
-                border-radius: 0;
-            }
-
-            .menu-toggle {
-                display: flex;
-            }
-            
-            .menu-toggle.active .bar:nth-child(1) {
-                transform: translateY(9px) rotate(45deg);
-            }
-            
-            .menu-toggle.active .bar:nth-child(2) {
-                opacity: 0;
-            }
-            
-            .menu-toggle.active .bar:nth-child(3) {
-                transform: translateY(-9px) rotate(-45deg);
-            }
-            
             .page-title {
                 font-size: 28px;
                 margin-bottom: 30px;
             }
-            
+
             .templateContainer {
                 gap: 15px;
             }
-            
+
             .templateCart {
                 width: calc(50% - 15px);
-                min-height: 250px;
+                min-height: 350px;
                 padding: 20px;
             }
-            
+
             .cartName h1 {
                 font-size: 20px;
             }
-            
+
             .template-icon {
                 font-size: 36px;
+            }
+
+            .template-preview {
+                height: 140px;
+            }
+
+            .side-nav {
+                width: 280px;
+                right: -280px;
             }
         }
 
@@ -516,19 +756,25 @@
             .page-title {
                 font-size: 24px;
             }
-            
+
             .templateContainer {
                 flex-direction: column;
                 align-items: center;
             }
-            
+
             .templateCart {
                 width: 100%;
                 max-width: 300px;
+                min-height: 380px;
             }
-            
+
             .main-content {
                 padding: 30px 15px;
+            }
+
+            .side-nav {
+                width: 100%;
+                right: -100%;
             }
         }
     </style>
@@ -536,7 +782,7 @@
 
 <body>
     <div class="bg-shimmer"></div>
-    
+
     <div class="particles">
         <span></span>
         <span></span>
@@ -550,60 +796,234 @@
 
     <header class="header">
         <div class="logo">
-            <h1>Event Templates</h1>
+            <a href="{{ url_for('view_events') }}" class="back-link">
+                <i class="fas fa-arrow-left"></i>
+                <span id="backLinkText">Վերադառնալ</span>
+            </a>
+            <h1 id="headerTitle">Միջոցառումների Շաբլոններ</h1>
         </div>
-        <nav class="nav">
-            <ul>
-                <li><a href="{{ url_for('view_events') }}"><i class="fas fa-calendar-alt"></i> Events</a></li>
-                <li><a href="{{ url_for('profile') }}"><i class="fas fa-user"></i> Profile</a></li>
-                <li><a href="{{ url_for('logout') }}" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-            </ul>
-        </nav>
-        <div class="menu-toggle" id="mobile-menu">
+        <div class="menu-toggle" id="menuToggle">
             <span class="bar"></span>
             <span class="bar"></span>
             <span class="bar"></span>
         </div>
     </header>
 
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Side Navigation -->
+    <div class="side-nav" id="sideNav">
+        <div class="side-nav-header">
+            <h2 class="side-nav-title" id="menuTitle">Մենյու</h2>
+            <button class="close-menu-btn" id="closeMenuBtn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <ul class="nav-items">
+            <li class="nav-item">
+                <a href="{{ url_for('view_events') }}" class="nav-link">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span id="eventsText">Միջոցառումներ</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ url_for('profile') }}" class="nav-link">
+                    <i class="fas fa-user"></i>
+                    <span id="profileText">Պրոֆիլ</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ url_for('logout') }}" class="nav-link logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span id="logoutText">Դուրս գալ</span>
+                </a>
+            </li>
+        </ul>
+        <div class="side-nav-footer">
+            <div class="language-selector">
+                <h3 class="language-title" id="languageTitle">Լեզու</h3>
+                <div class="language-buttons">
+                    <button class="language-btn active" id="hyBtn">Հայերեն</button>
+                    <button class="language-btn" id="ruBtn">Русский</button>
+                </div>
+            </div>
+            <div class="copyright" id="copyright">© 2024 Միջոցառումների Կառավարիչ</div>
+        </div>
+    </div>
+
     <div class="main-content">
-        <h1 class="page-title">Choose a Template</h1>
-        
+        <h1 class="page-title" id="pageTitle">Ընտրեք Շաբլոն</h1>
+
         {% if templates %}
         <div class="templateContainer">
             {% for template in templates %}
             <div class="templateCart" style="--i: {{ loop.index }};">
+                <div class="template-preview">
+                    <img src="/test/image/pegas1.png" alt="Template preview">
+                    <div class="preview-overlay"></div>
+                </div>
                 <div class="cartName">
                     <div class="template-icon">
                         <i class="fas fa-file-alt"></i>
                     </div>
                     <h1>{{ template.displayname }}</h1>
-                    <p class="template-desc">Use this template as a foundation for your new event.</p>
+                    <p class="template-desc" id="template-desc-{{ loop.index }}">Օգտագործեք այս շաբլոնը որպես հիմք ձեր
+                        նոր միջոցառման համար</p>
                 </div>
                 <a href="{{ url_for('create_event_by_template_id', template_id=template.id) }}" class="btn">
-                    <i class="fas fa-plus"></i> Create Event
+                    <i class="fas fa-plus"></i> <span id="createBtnText-{{ loop.index }}">Ստեղծել Միջոցառում</span>
                 </a>
             </div>
             {% endfor %}
         </div>
         {% else %}
         <div class="no-templates">
-            <p>No templates available at the moment.</p>
+            <p id="noTemplatesText">Ներկա պահին շաբլոններ հասանելի չեն։</p>
             <a href="{{ url_for('view_events') }}" class="back-btn">
-                <i class="fas fa-arrow-left"></i> Back to Events
+                <i class="fas fa-arrow-left"></i> <span id="backBtnText">Վերադառնալ Միջոցառումներ</span>
             </a>
         </div>
         {% endif %}
     </div>
 
     <script>
-        const mobileMenu = document.getElementById('mobile-menu');
-        const nav = document.querySelector('.nav');
-
-        mobileMenu.addEventListener('click', () => {
-            nav.classList.toggle('active');
-            mobileMenu.classList.toggle('active');
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const sideNav = document.getElementById('sideNav');
+        const overlay = document.getElementById('overlay');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
+        
+        // Language buttons
+        const hyBtn = document.getElementById('hyBtn');
+        const ruBtn = document.getElementById('ruBtn');
+        
+        menuToggle.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu);
+        closeMenuBtn.addEventListener('click', toggleMenu);
+        
+        function toggleMenu() {
+            menuToggle.classList.toggle('active');
+            sideNav.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.style.overflow = sideNav.classList.contains('active') ? 'hidden' : 'auto';
+        }
+        
+        // Language toggle functionality
+        // Загружаем сохраненный язык из localStorage или устанавливаем армянский по умолчанию
+        let currentLanguage = localStorage.getItem('selectedLanguage') || 'hy';
+        
+        hyBtn.addEventListener('click', function () {
+            if (currentLanguage !== 'hy') {
+                currentLanguage = 'hy';
+                updateLanguageButtons();
+                updateLanguage(currentLanguage);
+                localStorage.setItem('selectedLanguage', 'hy');
+            }
         });
-    </script>
+        
+        ruBtn.addEventListener('click', function () {
+            if (currentLanguage !== 'ru') {
+                currentLanguage = 'ru';
+                updateLanguageButtons();
+                updateLanguage(currentLanguage);
+                localStorage.setItem('selectedLanguage', 'ru');
+            }
+        });
+        
+        function updateLanguageButtons() {
+            if (currentLanguage === 'hy') {
+                hyBtn.classList.add('active');
+                ruBtn.classList.remove('active');
+            } else {
+                hyBtn.classList.remove('active');
+                ruBtn.classList.add('active');
+            }
+        }
+        
+        // Text content for both languages
+        const translations = {
+            hy: {
+                headerTitle: 'Միջոցառումների Շաբլոններ',
+                menuTitle: 'Մենյու',
+                pageTitle: 'Ընտրեք Շաբլոն',
+                eventsText: 'Միջոցառումներ',
+                profileText: 'Պրոֆիլ',
+                logoutText: 'Դուրս գալ',
+                languageTitle: 'Լեզու',
+                templateDesc: 'Օգտագործեք այս շաբլոնը որպես հիմք ձեր նոր միջոցառման համար',
+                createBtnText: 'Ստեղծել Միջոցառում',
+                noTemplatesText: 'Ներկա պահին շաբլոններ հասանելի չեն։',
+                backBtnText: 'Վերադառնալ Միջոցառումներ',
+                backLinkText: 'Վերադառնալ',
+                copyright: '© 2024 Միջոցառումների Կառավարիչ'
+            },
+            ru: {
+                headerTitle: 'Шаблоны Событий',
+                menuTitle: 'Меню',
+                pageTitle: 'Выберите Шаблон',
+                eventsText: 'События',
+                profileText: 'Профиль',
+                logoutText: 'Выйти',
+                languageTitle: 'Язык',
+                templateDesc: 'Используйте этот шаблон как основу для вашего нового события',
+                createBtnText: 'Создать Событие',
+                noTemplatesText: 'В настоящее время шаблоны недоступны.',
+                backBtnText: 'Вернуться к Событиям',
+                backLinkText: 'Назад',
+                copyright: '© 2024 Менеджер Событий'
+            }
+        };
+        
+        // Function to update all text content based on selected language
+        function updateLanguage(lang) {
+            document.getElementById('headerTitle').textContent = translations[lang].headerTitle;
+            document.getElementById('menuTitle').textContent = translations[lang].menuTitle;
+            document.getElementById('pageTitle').textContent = translations[lang].pageTitle;
+            document.getElementById('eventsText').textContent = translations[lang].eventsText;
+            document.getElementById('profileText').textContent = translations[lang].profileText;
+            document.getElementById('logoutText').textContent = translations[lang].logoutText;
+            document.getElementById('languageTitle').textContent = translations[lang].languageTitle;
+            document.getElementById('copyright').textContent = translations[lang].copyright;
+            document.getElementById('backLinkText').textContent = translations[lang].backLinkText;
+        
+            // Update no templates message if it exists
+            const noTemplatesText = document.getElementById('noTemplatesText');
+            if (noTemplatesText) {
+                noTemplatesText.textContent = translations[lang].noTemplatesText;
+            }
+        
+            // Update back button text if it exists
+            const backBtnText = document.getElementById('backBtnText');
+            if (backBtnText) {
+                backBtnText.textContent = translations[lang].backBtnText;
+            }
+        
+            // Update template descriptions and create button text
+            const templateDescs = document.querySelectorAll('[id^="template-desc-"]');
+            const createBtnTexts = document.querySelectorAll('[id^="createBtnText-"]');
+        
+            templateDescs.forEach(desc => {
+                desc.textContent = translations[lang].templateDesc;
+            });
+        
+            createBtnTexts.forEach(btn => {
+                btn.textContent = translations[lang].createBtnText;
+            });
+        
+            // Update HTML lang attribute
+            document.documentElement.lang = lang;
+        }
+        
+        // Применяем сохраненный язык при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            // Если сохранен русский язык, применяем его
+            if (currentLanguage === 'ru') {
+                updateLanguageButtons();
+                updateLanguage('ru');
+            }
+        });
+        </script>
 </body>
+
 </html>

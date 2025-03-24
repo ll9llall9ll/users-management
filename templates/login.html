@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hy">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Log In</title>
+    <title>Մուտք | Вход</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Montserrat:wght@300;400;500&display=swap');
 
@@ -83,6 +84,8 @@
 
         .login-header {
             margin-bottom: 40px;
+            position: relative;
+            padding-top: 25px; /* Added padding to move welcome text down */
         }
 
         h2 {
@@ -364,7 +367,83 @@
             100% { opacity: 1; transform: translateY(0); }
         }
 
-        /* Responsive design */
+        /* Language Menu Toggle */
+        .menu-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            cursor: pointer;
+            z-index: 1000;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .menu-toggle:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(156, 132, 104, 0.3);
+        }
+
+        /* Language dropdown */
+        .language-dropdown {
+            position: absolute;
+            top: 60px;
+            right: 15px;
+            background-color: white;
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            width: auto;
+            min-width: 120px;
+        }
+
+        .language-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .language-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .language-btn {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            border-radius: 8px;
+            color: var(--primary-color);
+            padding: 8px 15px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .language-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .language-btn:hover:not(.active) {
+            background-color: rgba(156, 132, 104, 0.1);
+        }
+
+        /* Responsive styles */
         @media (max-width: 480px) {
             .container {
                 padding: 30px 20px;
@@ -401,8 +480,12 @@
                 height: 45px;
             }
         }
+
+        @keyframes buttonGlow {
+            0% { box-shadow: 0 8px 20px rgba(156, 132, 104, 0.3); }
+            100% { box-shadow: 0 8px 25px rgba(156, 132, 104, 0.6); }
+        }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="bg-pattern"></div>
@@ -420,35 +503,48 @@
     </div>
 
     <div class="container">
+        <!-- Language Menu Toggle -->
+        <div class="menu-toggle" id="menuToggle">
+            <i class="fas fa-globe"></i>
+        </div>
+        
+        <!-- Language selection dropdown -->
+        <div class="language-dropdown" id="languageDropdown">
+            <div class="language-buttons">
+                <button class="language-btn active" id="hyBtn">Հայերեն</button>
+                <button class="language-btn" id="ruBtn">Русский</button>
+            </div>
+        </div>
+        
         <div class="login-header">
-            <h2>Welcome Back</h2>
-            <p>Please enter your details to continue</p>
+            <h2 id="welcomeText">Բարի վերադարձ</h2>
+            <p id="instructionText">Շարունակելու համար մուտքագրեք ձեր տվյալները</p>
         </div>
         
         <form method="post" action="#">
             <div class="form-group">
-                <i class="fa fa-user"></i>
-                <input type="text" name="username" placeholder="Username" required>
+                <input type="text" name="username" id="usernameField" placeholder="Օգտվողի անուն" required>
+                <i class="fas fa-user"></i>
             </div>
             <div class="form-group">
-                <i class="fa fa-lock"></i>
-                <input type="password" name="password" placeholder="Password" required>
+                <input type="password" name="password" id="passwordField" placeholder="Գաղտնաբառ" required>
+                <i class="fas fa-lock"></i>
             </div>
             
             <div class="remember-forgot">
                 <div class="remember-me">
                     <input type="checkbox" id="remember" name="remember">
-                    <label for="remember">Remember me</label>
+                    <label for="remember" id="rememberLabel">Հիշել ինձ</label>
                 </div>
                 <div class="forgot-password">
-                    <a href="#">Forgot password?</a>
+                    <a href="#" id="forgotPasswordLink">Մոռացե՞լ եք գաղտնաբառը</a>
                 </div>
             </div>
             
-            <button type="submit" class="btn">Log In</button>
+            <button type="submit" class="btn" id="loginButton">Մուտք</button>
         </form>
         
-        <div class="divider">or continue with</div>
+        <div class="divider" id="dividerText">կամ շարունակեք հետևյալով</div>
         
         <div class="social-login">
             <div class="social-btn">
@@ -463,8 +559,126 @@
         </div>
         
         <div class="signin">
-            <span>Don't have an account? <a href="/register">Sign up here</a></span>
+            <span id="signupText">Չունե՞ք հաշիվ <a href="#" id="signupLink">Գրանցվել այստեղ</a></span>
         </div>
     </div>
+
+    <script>
+        // Переводы
+        const translations = {
+            hy: {
+                welcome: 'Բարի վերադարձ',
+                instruction: 'Շարունակելու համար մուտքագրեք ձեր տվյալները',
+                username: 'Օգտվողի անուն',
+                password: 'Գաղտնաբառ',
+                remember: 'Հիշել ինձ',
+                forgot: 'Մոռացե՞լ եք գաղտնաբառը',
+                login: 'Մուտք',
+                divider: 'կամ շարունակեք հետևյալով',
+                signup: 'Չունե՞ք հաշիվ ',
+                signupLink: 'Գրանցվել այստեղ'
+            },
+            ru: {
+                welcome: 'Добро пожаловать',
+                instruction: 'Пожалуйста, введите данные для входа',
+                username: 'Имя пользователя',
+                password: 'Пароль',
+                remember: 'Запомнить меня',
+                forgot: 'Забыли пароль?',
+                login: 'Войти',
+                divider: 'или продолжить с помощью',
+                signup: 'Нет аккаунта? ',
+                signupLink: 'Зарегистрироваться'
+            }
+        };
+
+        // Функция переключения языка
+        function switchLanguage(lang) {
+            // Обновляем элементы DOM
+            document.getElementById('welcomeText').textContent = translations[lang].welcome;
+            document.getElementById('instructionText').textContent = translations[lang].instruction;
+            document.getElementById('usernameField').placeholder = translations[lang].username;
+            document.getElementById('passwordField').placeholder = translations[lang].password;
+            document.getElementById('rememberLabel').textContent = translations[lang].remember;
+            document.getElementById('forgotPasswordLink').textContent = translations[lang].forgot;
+            document.getElementById('loginButton').textContent = translations[lang].login;
+            document.getElementById('dividerText').textContent = translations[lang].divider;
+            
+            // Обновляем текст регистрации с ссылкой
+            const signupText = document.getElementById('signupText');
+            signupText.innerHTML = translations[lang].signup + '<a href="#" id="signupLink">' + translations[lang].signupLink + '</a>';
+            
+            // Обновляем атрибут lang в HTML
+            document.documentElement.lang = lang;
+            
+            // Обновляем активные классы кнопок
+            if (lang === 'hy') {
+                document.getElementById('hyBtn').classList.add('active');
+                document.getElementById('ruBtn').classList.remove('active');
+            } else {
+                document.getElementById('hyBtn').classList.remove('active');
+                document.getElementById('ruBtn').classList.add('active');
+            }
+            
+            // Сохраняем выбор в localStorage
+            localStorage.setItem('selectedLanguage', lang);
+        }
+
+        // Инициализация при загрузке
+        document.addEventListener('DOMContentLoaded', function() {
+            // Получаем элементы
+            const menuToggle = document.getElementById('menuToggle');
+            const languageDropdown = document.getElementById('languageDropdown');
+            const hyBtn = document.getElementById('hyBtn');
+            const ruBtn = document.getElementById('ruBtn');
+            
+            // Загружаем сохраненный язык
+            const savedLanguage = localStorage.getItem('selectedLanguage');
+            if (savedLanguage === 'ru') {
+                switchLanguage('ru');
+            }
+            
+            // Переключатель меню языков
+            menuToggle.addEventListener('click', function() {
+                languageDropdown.classList.toggle('active');
+            });
+            
+            // Закрытие меню при клике вне его
+            document.addEventListener('click', function(event) {
+                if (!menuToggle.contains(event.target) && !languageDropdown.contains(event.target)) {
+                    languageDropdown.classList.remove('active');
+                }
+            });
+            
+            // Кнопки выбора языка
+            hyBtn.addEventListener('click', function() {
+                switchLanguage('hy');
+                languageDropdown.classList.remove('active');
+            });
+            
+            ruBtn.addEventListener('click', function() {
+                switchLanguage('ru');
+                languageDropdown.classList.remove('active');
+            });
+            
+            // Эффект наведения на кнопку входа
+            const loginButton = document.getElementById('loginButton');
+            loginButton.addEventListener('mouseenter', function() {
+                this.style.animation = 'buttonGlow 1.5s infinite alternate';
+            });
+            
+            loginButton.addEventListener('mouseleave', function() {
+                this.style.animation = 'none';
+            });
+            
+            // Интерактивность социальных кнопок
+            const socialButtons = document.querySelectorAll('.social-btn');
+            socialButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    console.log('Clicked social button: ' + this.querySelector('i').className);
+                });
+            });
+        });
+    </script>
 </body>
 </html>

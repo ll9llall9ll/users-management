@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hy">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invitation Details</title>
+    <title>Հրավերի մանրամասները | Детали приглашения</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
@@ -22,6 +22,10 @@
             --black: #000000;
             --background: #f8f4ef;
             --card-bg: rgba(255, 255, 255, 0.9);
+            --table-header: rgba(156, 132, 104, 0.9);
+            --table-odd: rgba(255, 255, 255, 0.9);
+            --table-even: rgba(217, 205, 191, 0.4);
+            --table-hover: rgba(156, 132, 104, 0.15);
             --shadow-light: 0 10px 30px rgba(0, 0, 0, 0.08);
             --shadow-medium: 0 15px 35px rgba(0, 0, 0, 0.12);
             --shadow-dark: 0 20px 40px rgba(0, 0, 0, 0.15);
@@ -222,6 +226,219 @@
             opacity: 0.9;
         }
 
+        /* Burger Menu */
+        .menu-toggle {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            cursor: pointer;
+            z-index: 1000;
+            position: absolute;
+            top: 25px;
+            right: 30px;
+        }
+
+        .menu-toggle .bar {
+            width: 100%;
+            height: 3px;
+            background-color: var(--white);
+            border-radius: 3px;
+            transition: var(--transition);
+        }
+
+        .menu-toggle.active .bar:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+
+        .menu-toggle.active .bar:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active .bar:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+
+        /* Side Navigation */
+        .side-nav {
+            position: fixed;
+            top: 0;
+            right: -320px;
+            width: 320px;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: -5px 0 30px rgba(0, 0, 0, 0.1);
+            z-index: 999;
+            transition: right 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .side-nav.active {
+            right: 0;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 998;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .side-nav-header {
+            padding: 30px 25px 20px;
+            border-bottom: 1px solid rgba(156, 132, 104, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .side-nav-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--primary);
+            font-family: 'Cormorant Garamond', serif;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .close-menu-btn {
+            background: none;
+            border: none;
+            color: var(--text-dark);
+            font-size: 20px;
+            cursor: pointer;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .close-menu-btn:hover {
+            background-color: rgba(156, 132, 104, 0.1);
+            color: var(--primary);
+        }
+
+        .nav-items {
+            padding: 20px 25px;
+            flex: 1;
+        }
+
+        .nav-item {
+            margin-bottom: 15px;
+            list-style: none;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            border-radius: var(--radius-small);
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-link:hover {
+            background-color: rgba(156, 132, 104, 0.1);
+            color: var(--primary);
+        }
+
+        .nav-link i {
+            margin-right: 10px;
+            font-size: 18px;
+            width: 22px;
+            text-align: center;
+        }
+
+        .nav-link.logout {
+            color: #d32f2f;
+        }
+
+        .nav-link.logout:hover {
+            background-color: rgba(211, 47, 47, 0.1);
+        }
+
+        .side-nav-footer {
+            display: flex;
+            position: absolute;
+            width: 100%;
+            bottom: 230px;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 25px;
+            border-top: 1px solid rgba(156, 132, 104, 0.2);
+        }
+
+        .copyright {
+            font-size: 12px;
+            color: var(--text-light);
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        /* Language Selector */
+        .language-selector {
+            display: flex;
+            margin-bottom: 15px;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .language-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-medium);
+            margin-bottom: 10px;
+        }
+
+        .language-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .language-btn {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid var(--primary);
+            border-radius: var(--radius-small);
+            background-color: transparent;
+            color: var(--primary);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .language-btn.active {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .language-btn:hover:not(.active) {
+            background-color: rgba(156, 132, 104, 0.1);
+        }
+
         /* Right side content */
         .right {
             flex: 1.1;
@@ -277,7 +494,7 @@
         /* Top navigation */
         .top-nav {
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start;
             margin-bottom: 20px;
         }
 
@@ -317,6 +534,10 @@
 
         .btn-delete {
             background-color: rgba(211, 47, 47, 0.8);
+        }
+
+        .btn-view {
+            background-color: rgba(25, 118, 210, 0.8);
         }
 
         .btn-logout {
@@ -475,6 +696,11 @@
             .right {
                 padding: 25px 20px;
             }
+            
+            .side-nav {
+                width: 280px;
+                right: -280px;
+            }
         }
 
         @media (max-width: 768px) {
@@ -532,10 +758,14 @@
             }
             
             .actions-container .btn {
-                flex: 1 0 calc(50% - 10px);
-                min-width: 100px;
-                max-width: calc(50% - 10px);
-                padding: 8px 15px;
+                width: 100%;
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+            
+            .menu-toggle {
+                top: 15px;
+                right: 15px;
             }
         }
 
@@ -629,6 +859,11 @@
             .detail-label {
                 flex: 0 0 100px;
             }
+            
+            .side-nav {
+                width: 100%;
+                right: -100%;
+            }
         }
 
         @media (orientation: landscape) and (max-width: 900px) {
@@ -718,69 +953,116 @@
                 <div class="logo">
                     <i class="fas fa-envelope-open-text"></i>
                 </div>
-                <h3>Invitation Details</h3>
-                <p>View all details for this invitation including guest responses and comments</p>
+                <h3 id="dashboardTitle">Հրավերի մանրամասներ</h3>
+                <p id="dashboardDesc">Դիտեք այս հրավերի բոլոր մանրամասները, ներառյալ հյուրերի պատասխանները և մեկնաբանությունները</p>
+            </div>
+            <div class="menu-toggle" id="menuToggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+
+        <!-- Overlay -->
+        <div class="overlay" id="overlay"></div>
+
+        <!-- Side Navigation -->
+        <div class="side-nav" id="sideNav">
+            <div class="side-nav-header">
+                <h2 class="side-nav-title" id="menuTitle">Մենյու</h2>
+                <button class="close-menu-btn" id="closeMenuBtn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <ul class="nav-items">
+                <li class="nav-item">
+                    <a href="{{ url_for('view_events') }}" class="nav-link">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span id="eventsNavText">Միջոցառումներ</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('profile') }}" class="nav-link">
+                        <i class="fas fa-user"></i>
+                        <span id="profileText">Պրոֆիլ</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('logout') }}" class="nav-link logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span id="logoutNavText">Դուրս գալ</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="side-nav-footer">
+                <!-- Переключатель языков -->
+                <div class="language-selector">
+                    <h3 class="language-title" id="languageTitle">Լեզու</h3>
+                    <div class="language-buttons">
+                        <button class="language-btn active" id="hyBtn">Հայերեն</button>
+                        <button class="language-btn" id="ruBtn">Русский</button>
+                    </div>
+                </div>
+                <div class="copyright" id="copyrightNav">© 2024 Հրավերների կառավարիչ</div>
             </div>
         </div>
 
         <div class="right">
             <div class="top-nav">
-                <a href="{{ url_for('view_invitation', event_id=event.id) }}" class="btn">
-                    <i class="fas fa-arrow-left"></i> Back to Invitations
-                </a>
-                <a href="{{ url_for('logout') }}" class="btn btn-logout">
-                    <i class="fas fa-sign-out-alt"></i> Logout
+                <a href="{{ url_for('view_invitation', event_id=event.id) }}" class="btn" id="backBtn">
+                    <i class="fas fa-arrow-left"></i> <span id="backText">Վերադառնալ հրավերներին</span>
                 </a>
             </div>
             
             <div class="invitation-header">
-                <h2>{{ invitation.name }}'s Invitation</h2>
+                <h2 id="invitationHeaderText">{{ invitation.name }}-ի հրավերը</h2>
             </div>
             
             <div class="details-container">
                 <!-- Guest Information -->
                 <div class="detail-card">
                     <div class="detail-card-header">
-                        <h3>Guest Information</h3>
+                        <h3 id="guestInfoTitle">Հյուրի տվյալներ</h3>
                     </div>
                     <div class="detail-card-body">
                         <ul class="detail-list">
                             <li class="detail-item">
-                                <div class="detail-label">Name:</div>
+                                <div class="detail-label" id="nameLabel">Անուն:</div>
                                 <div class="detail-value">{{ invitation.name }}</div>
                             </li>
                             <li class="detail-item">
-                                <div class="detail-label">Status:</div>
+                                <div class="detail-label" id="statusLabel">Կարգավիճակ:</div>
                                 <div class="detail-value">
                                     {% if invitation.accepted == True %}
-                                        <span class="badge badge-success">Accepted</span>
+                                        <span class="badge badge-success" id="acceptedText">Ընդունված</span>
                                     {% elif invitation.accepted == False %}
-                                        <span class="badge badge-danger">Declined</span>
+                                        <span class="badge badge-danger" id="declinedText">Մերժված</span>
                                     {% else %}
-                                        <span class="badge badge-warning">Pending</span>
+                                        <span class="badge badge-warning" id="pendingText">Սպասման մեջ</span>
                                     {% endif %}
                                 </div>
                             </li>
                             <li class="detail-item">
-                                <div class="detail-label">With Spouse:</div>
-                                <div class="detail-value">{{ "Yes" if invitation.with_spouse else "No" }}</div>
+                                <div class="detail-label" id="spouseLabel">Ամուսնու հետ:</div>
+                                <div class="detail-value" id="yesNoSpouse">{{ "Այո" if invitation.with_spouse else "Ոչ" }}</div>
                             </li>
                             <li class="detail-item">
-                                <div class="detail-label">Gender:</div>
-                                <div class="detail-value">{{ "Male" if invitation.is_male else "Female" }}</div>
+                                <div class="detail-label" id="genderLabel">Սեռ:</div>
+                                <div class="detail-value" id="genderValue">{{ "Արական" if invitation.is_male else "Իգական" }}</div>
                             </li>
                             <li class="detail-item">
-                                <div class="detail-label">Number of Guests:</div>
+                                <div class="detail-label" id="guestsLabel">Հյուրերի քանակ:</div>
                                 <div class="detail-value">
                                     {% if invitation.attendee_count %}
                                         {{ invitation.attendee_count }}
                                     {% else %}
-                                        <span class="badge badge-warning">Not specified</span>
+                                        <span class="badge badge-warning" id="notSpecifiedText">Նշված չէ</span>
                                     {% endif %}
                                 </div>
                             </li>
                             <li class="detail-item">
-                                <div class="detail-label">Invitation Hash:</div>
+                                <div class="detail-label" id="hashLabel">Հրավերի հաշ:</div>
                                 <div class="detail-value" style="word-break: break-all;">{{ invitation.hash }}</div>
                             </li>
                         </ul>
@@ -790,24 +1072,24 @@
                 <!-- Event Information -->
                 <div class="detail-card">
                     <div class="detail-card-header">
-                        <h3>Event Information</h3>
+                        <h3 id="eventInfoTitle">Միջոցառման տվյալներ</h3>
                     </div>
                     <div class="detail-card-body">
                         <ul class="detail-list">
                             <li class="detail-item">
-                                <div class="detail-label">Event Name:</div>
+                                <div class="detail-label" id="eventNameLabel">Միջոցառման անունը:</div>
                                 <div class="detail-value">{{ event.display_name }}</div>
                             </li>
                             <li class="detail-item">
-                                <div class="detail-label">Date:</div>
+                                <div class="detail-label" id="dateLabel">Ամսաթիվ:</div>
                                 <div class="detail-value">{{ event.date.strftime('%d-%m-%Y %H:%M') }}</div>
                             </li>
                             <li class="detail-item">
-                                <div class="detail-label">Venue:</div>
+                                <div class="detail-label" id="venueLabel">Վայրը:</div>
                                 <div class="detail-value">{{ event.hall_name }}</div>
                             </li>
                             <li class="detail-item">
-                                <div class="detail-label">Location:</div>
+                                <div class="detail-label" id="locationLabel">Հասցե:</div>
                                 <div class="detail-value">{{ event.address_line }}, {{ event.address_city }}, {{ event.address_country }}</div>
                             </li>
                         </ul>
@@ -817,14 +1099,14 @@
                 <!-- Comments Section -->
                 <div class="detail-card">
                     <div class="detail-card-header">
-                        <h3>Guest Comments</h3>
+                        <h3 id="commentsTitle">Հյուրի մեկնաբանություններ</h3>
                     </div>
                     <div class="detail-card-body">
                         <div class="comment-card">
                             {% if invitation.comments %}
                                 <div class="comment-text">{{ invitation.comments }}</div>
                             {% else %}
-                                <div class="no-comments">No comments provided</div>
+                                <div class="no-comments" id="noCommentsText">Մեկնաբանություններ չկան</div>
                             {% endif %}
                         </div>
                     </div>
@@ -833,17 +1115,17 @@
             
             <div class="actions-container">
                 <a href="{{ url_for('edit_invitation', id=invitation.id) }}" class="btn btn-edit">
-                    <i class="fas fa-edit"></i> Edit Invitation
+                    <i class="fas fa-edit"></i> <span id="editText">Խմբագրել հրավերը</span>
                 </a>
                 <a href="{{ url_for('delete_invitation', id=invitation.id) }}" class="btn btn-delete" onclick="return confirm('Are you sure you want to delete this invitation?');">
-                    <i class="fas fa-trash-alt"></i> Delete Invitation
+                    <i class="fas fa-trash-alt"></i> <span id="deleteText">Ջնջել հրավերը</span>
                 </a>
                 <button id="copyLinkBtn" class="btn" data-hash="{{ invitation.hash }}">
-                    <i class="fas fa-copy"></i> Copy Invitation Link
+                    <i class="fas fa-copy"></i> <span id="copyText">Պատճենել հրավերի հղումը</span>
                 </button>
             </div>
             
-            <div class="credit">© 2024 Invitation Manager</div>
+            <!-- <div class="credit" id="copyrightText">© 2024 Հրավերների կառավարիչ</div> -->
         </div>
     </div>
 
@@ -859,7 +1141,10 @@
                 navigator.clipboard.writeText(inviteUrl).then(() => {
                     // Change button text temporarily
                     const originalText = this.innerHTML;
-                    this.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                    const currentLang = currentLanguage === 'hy' ? 
+                          '<i class="fas fa-check"></i> Պատճենված է!' : 
+                          '<i class="fas fa-check"></i> Скопировано!';
+                    this.innerHTML = currentLang;
                     setTimeout(() => {
                         this.innerHTML = originalText;
                     }, 2000);
@@ -867,7 +1152,254 @@
                     console.error('Failed to copy: ', err);
                 });
             });
+            
+            // Mobile menu toggle
+            const menuToggle = document.getElementById('menuToggle');
+            const sideNav = document.getElementById('sideNav');
+            const overlay = document.getElementById('overlay');
+            const closeMenuBtn = document.getElementById('closeMenuBtn');
+        
+            // Language buttons
+            const hyBtn = document.getElementById('hyBtn');
+            const ruBtn = document.getElementById('ruBtn');
+        
+            menuToggle.addEventListener('click', toggleMenu);
+            overlay.addEventListener('click', toggleMenu);
+            closeMenuBtn.addEventListener('click', toggleMenu);
+        
+            function toggleMenu() {
+                menuToggle.classList.toggle('active');
+                sideNav.classList.toggle('active');
+                overlay.classList.toggle('active');
+                document.body.style.overflow = sideNav.classList.contains('active') ? 'hidden' : 'auto';
+            }
+        
+            // Language toggle functionality
+            // Загружаем сохраненный язык из localStorage или устанавливаем армянский по умолчанию
+            let currentLanguage = localStorage.getItem('selectedLanguage') || 'hy';
+        
+            hyBtn.addEventListener('click', function () {
+                if (currentLanguage !== 'hy') {
+                    currentLanguage = 'hy';
+                    updateLanguageButtons();
+                    updateLanguage(currentLanguage);
+                    localStorage.setItem('selectedLanguage', 'hy');
+                }
+            });
+        
+            ruBtn.addEventListener('click', function () {
+                if (currentLanguage !== 'ru') {
+                    currentLanguage = 'ru';
+                    updateLanguageButtons();
+                    updateLanguage(currentLanguage);
+                    localStorage.setItem('selectedLanguage', 'ru');
+                }
+            });
+        
+            function updateLanguageButtons() {
+                if (currentLanguage === 'hy') {
+                    hyBtn.classList.add('active');
+                    ruBtn.classList.remove('active');
+                } else {
+                    hyBtn.classList.remove('active');
+                    ruBtn.classList.add('active');
+                }
+            }
+        
+            // Text content for both languages
+            const translations = {
+                hy: {
+                    dashboardTitle: 'Հրավերի մանրամասներ',
+                    dashboardDesc: 'Դիտեք այս հրավերի բոլոր մանրամասները, ներառյալ հյուրերի պատասխանները և մեկնաբանությունները',
+                    menuTitle: 'Մենյու',
+                    eventsNavText: 'Միջոցառումներ',
+                    profileText: 'Պրոֆիլ',
+                    logoutNavText: 'Դուրս գալ',
+                    backText: 'Վերադառնալ հրավերներին',
+                    invitationHeaderSuffix: '-ի հրավերը',
+                    guestInfoTitle: 'Հյուրի տվյալներ',
+                    nameLabel: 'Անուն:',
+                    statusLabel: 'Կարգավիճակ:',
+                    acceptedText: 'Ընդունված',
+                    declinedText: 'Մերժված',
+                    pendingText: 'Սպասման մեջ',
+                    spouseLabel: 'Ամուսնու հետ:',
+                    yesText: 'Այո',
+                    noText: 'Ոչ',
+                    genderLabel: 'Սեռ:',
+                    maleText: 'Արական',
+                    femaleText: 'Իգական',
+                    guestsLabel: 'Հյուրերի քանակ:',
+                    notSpecifiedText: 'Նշված չէ',
+                    hashLabel: 'Հրավերի հաշ:',
+                    eventInfoTitle: 'Միջոցառման տվյալներ',
+                    eventNameLabel: 'Միջոցառման անունը:',
+                    dateLabel: 'Ամսաթիվ:',
+                    venueLabel: 'Վայրը:',
+                    locationLabel: 'Հասցե:',
+                    commentsTitle: 'Հյուրի մեկնաբանություններ',
+                    noCommentsText: 'Մեկնաբանություններ չկան',
+                    editText: 'Խմբագրել հրավերը',
+                    deleteText: 'Ջնջել հրավերը',
+                    copyText: 'Պատճենել հրավերի հղումը',
+                    copyrightText: '© 2024 Հրավերների կառավարիչ',
+                    copyrightNav: '© 2024 Հրավերների կառավարիչ',
+                    languageTitle: 'Լեզու',
+                    deleteConfirmText: 'Վստա՞հ եք, որ ցանկանում եք ջնջել այս հրավերը:'
+                },
+                ru: {
+                    dashboardTitle: 'Детали приглашения',
+                    dashboardDesc: 'Просмотрите все детали этого приглашения, включая ответы гостей и комментарии',
+                    menuTitle: 'Меню',
+                    eventsNavText: 'События',
+                    profileText: 'Профиль',
+                    logoutNavText: 'Выйти',
+                    backText: 'Вернуться к приглашениям',
+                    invitationHeaderSuffix: '',  // В русском нет суффикса
+                    guestInfoTitle: 'Информация о госте',
+                    nameLabel: 'Имя:',
+                    statusLabel: 'Статус:',
+                    acceptedText: 'Принято',
+                    declinedText: 'Отклонено',
+                    pendingText: 'В ожидании',
+                    spouseLabel: 'С супругом:',
+                    yesText: 'Да',
+                    noText: 'Нет',
+                    genderLabel: 'Пол:',
+                    maleText: 'Мужской',
+                    femaleText: 'Женский',
+                    guestsLabel: 'Количество гостей:',
+                    notSpecifiedText: 'Не указано',
+                    hashLabel: 'Хэш приглашения:',
+                    eventInfoTitle: 'Информация о событии',
+                    eventNameLabel: 'Название события:',
+                    dateLabel: 'Дата:',
+                    venueLabel: 'Место проведения:',
+                    locationLabel: 'Адрес:',
+                    commentsTitle: 'Комментарии гостя',
+                    noCommentsText: 'Комментариев нет',
+                    editText: 'Редактировать приглашение',
+                    deleteText: 'Удалить приглашение',
+                    copyText: 'Копировать ссылку на приглашение',
+                    copyrightText: '© 2024 Менеджер приглашений',
+                    copyrightNav: '© 2024 Менеджер приглашений',
+                    languageTitle: 'Язык',
+                    deleteConfirmText: 'Вы уверены, что хотите удалить это приглашение?'
+                }
+            };
+        
+            // Вспомогательная функция для получения имени гостя из заголовка (для дальнейшего использования)
+            function extractGuestName() {
+                const headerText = document.getElementById('invitationHeaderText').textContent;
+                // В армянском формат "Имя-и храверы", разделяем по "-и "
+                if (headerText.includes('-ի ')) {
+                    return headerText.split('-ի ')[0];
+                }
+                // В русском формат "Приглашение Имя", разделяем по "Приглашение "
+                else if (headerText.includes('Приглашение ')) {
+                    return headerText.split('Приглашение ')[1];
+                }
+                // Если формат неизвестен, возвращаем весь текст
+                return headerText;
+            }
+        
+            // Function to update all text content based on selected language
+            function updateLanguage(lang) {
+                document.getElementById('dashboardTitle').textContent = translations[lang].dashboardTitle;
+                document.getElementById('dashboardDesc').textContent = translations[lang].dashboardDesc;
+                document.getElementById('menuTitle').textContent = translations[lang].menuTitle;
+                document.getElementById('eventsNavText').textContent = translations[lang].eventsNavText;
+                document.getElementById('profileText').textContent = translations[lang].profileText;
+                document.getElementById('logoutNavText').textContent = translations[lang].logoutNavText;
+                document.getElementById('backText').textContent = translations[lang].backText;
+                
+                // Update card titles and labels
+                document.getElementById('guestInfoTitle').textContent = translations[lang].guestInfoTitle;
+                document.getElementById('nameLabel').textContent = translations[lang].nameLabel;
+                document.getElementById('statusLabel').textContent = translations[lang].statusLabel;
+                document.getElementById('spouseLabel').textContent = translations[lang].spouseLabel;
+                document.getElementById('genderLabel').textContent = translations[lang].genderLabel;
+                document.getElementById('guestsLabel').textContent = translations[lang].guestsLabel;
+                document.getElementById('hashLabel').textContent = translations[lang].hashLabel;
+                document.getElementById('eventInfoTitle').textContent = translations[lang].eventInfoTitle;
+                document.getElementById('eventNameLabel').textContent = translations[lang].eventNameLabel;
+                document.getElementById('dateLabel').textContent = translations[lang].dateLabel;
+                document.getElementById('venueLabel').textContent = translations[lang].venueLabel;
+                document.getElementById('locationLabel').textContent = translations[lang].locationLabel;
+                document.getElementById('commentsTitle').textContent = translations[lang].commentsTitle;
+                
+                // Update invitation header (special handling for difference in language structure)
+                const invitationHeader = document.getElementById('invitationHeaderText');
+                const guestName = extractGuestName();
+                if (lang === 'hy') {
+                    invitationHeader.textContent = guestName + translations[lang].invitationHeaderSuffix;
+                } else {
+                    invitationHeader.textContent = 'Приглашение ' + guestName;
+                }
+                
+                // Update status badges
+                const acceptedBadge = document.querySelector('.badge-success');
+                const declinedBadge = document.querySelector('.badge-danger');
+                const pendingBadge = document.querySelector('.badge-warning');
+                
+                if (acceptedBadge) acceptedBadge.textContent = translations[lang].acceptedText;
+                if (declinedBadge) declinedBadge.textContent = translations[lang].declinedText;
+                if (pendingBadge) pendingBadge.textContent = translations[lang].pendingText;
+                
+                // Update yes/no values for spouse
+                const spouseValue = document.getElementById('yesNoSpouse');
+                if (spouseValue) {
+                    // Определяем, есть ли у гостя супруг/а, по текущему значению
+                    const hasSpouse = spouseValue.textContent.trim() === 'Այո' || spouseValue.textContent.trim() === 'Да';
+                    spouseValue.textContent = hasSpouse ? translations[lang].yesText : translations[lang].noText;
+                }
+                
+                // Update gender value
+                const genderValue = document.getElementById('genderValue');
+                if (genderValue) {
+                    // Определяем пол гостя по текущему значению
+                    const isMale = genderValue.textContent.trim() === 'Արական' || genderValue.textContent.trim() === 'Мужской';
+                    genderValue.textContent = isMale ? translations[lang].maleText : translations[lang].femaleText;
+                }
+                
+                // Update button texts
+                document.getElementById('editText').textContent = translations[lang].editText;
+                document.getElementById('deleteText').textContent = translations[lang].deleteText;
+                document.getElementById('copyText').textContent = translations[lang].copyText;
+                
+                // Update footer text
+                document.getElementById('copyrightText').textContent = translations[lang].copyrightText;
+                document.getElementById('copyrightNav').textContent = translations[lang].copyrightNav;
+                document.getElementById('languageTitle').textContent = translations[lang].languageTitle;
+                
+                // Update delete confirmation
+                const deleteBtn = document.querySelector('.btn-delete');
+                if (deleteBtn) {
+                    deleteBtn.setAttribute('onclick', `return confirm('${translations[lang].deleteConfirmText}');`);
+                }
+                
+                // Update "Not specified" text for guests count
+                const notSpecifiedBadge = document.getElementById('notSpecifiedText');
+                if (notSpecifiedBadge) {
+                    notSpecifiedBadge.textContent = translations[lang].notSpecifiedText;
+                }
+                
+                // Update "No comments" text
+                const noCommentsElement = document.getElementById('noCommentsText');
+                if (noCommentsElement) {
+                    noCommentsElement.textContent = translations[lang].noCommentsText;
+                }
+                
+                // Update HTML lang attribute
+                document.documentElement.lang = lang;
+            }
+            
+            // Применяем сохраненный язык при загрузке страницы
+            if (currentLanguage === 'ru') {
+                updateLanguageButtons();
+                updateLanguage('ru');
+            }
         });
-    </script>
+        </script>
 </body>
 </html>
