@@ -118,9 +118,9 @@ def constructInv(dbRes):
     with_spouse = dbRes[3]
     hash_val = dbRes[4]
     accepted = dbRes[5]
-    comments = dbRes[6] if len(dbRes) > 6 else None
-    attendee_count = dbRes[7] if len(dbRes) > 7 and dbRes[7] is not None else 0
-    is_male = dbRes[8] if len(dbRes) > 8 else False
+    comments = dbRes[6]
+    attendee_count = dbRes[7]
+    is_male = dbRes[8]
     
     print(f"Debug - Assigning fields: id={id}, name={name}, comments={comments}, attendee_count={attendee_count}, is_male={is_male}")
     # Создаем объект приглашения с явным указанием всех параметров
