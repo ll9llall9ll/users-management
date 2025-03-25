@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hy">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
+    <title>Գրանցում | Регистрация</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
@@ -218,6 +218,7 @@
             position: relative;
             margin-bottom: 30px;
             z-index: 1;
+            padding-top: 25px; /* Added padding to make room for language toggle */
         }
 
         h2 {
@@ -457,6 +458,82 @@
             width: 100%;
         }
 
+        /* Language Menu Toggle - copied from login page */
+        .menu-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            cursor: pointer;
+            z-index: 1000;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .menu-toggle:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(156, 132, 104, 0.3);
+        }
+
+        /* Language dropdown */
+        .language-dropdown {
+            position: absolute;
+            top: 60px;
+            right: 15px;
+            background-color: white;
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            width: auto;
+            min-width: 120px;
+        }
+
+        .language-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .language-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .language-btn {
+            background-color: transparent;
+            border: 1px solid var(--primary);
+            border-radius: 8px;
+            color: var(--primary);
+            padding: 8px 15px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .language-btn.active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .language-btn:hover:not(.active) {
+            background-color: rgba(156, 132, 104, 0.1);
+        }
+
         /* Responsive styles */
         @media (max-width: 576px) {
             .container {
@@ -527,15 +604,28 @@
     </div>
 
     <div class="container">
-        <div class="auth-header">
-            <h2>Register</h2>
-            <p>Create a new account to get started</p>
+        <!-- Language Menu Toggle -->
+        <div class="menu-toggle" id="menuToggle">
+            <i class="fas fa-globe"></i>
         </div>
         
-        <form method="post" action="{{ url_for('register') }}">
+        <!-- Language selection dropdown -->
+        <div class="language-dropdown" id="languageDropdown">
+            <div class="language-buttons">
+                <button class="language-btn active" id="hyBtn">Հայերեն</button>
+                <button class="language-btn" id="ruBtn">Русский</button>
+            </div>
+        </div>
+
+        <div class="auth-header">
+            <h2 id="welcomeText">Գրանցում</h2>
+            <p id="instructionText">Ստեղծեք նոր հաշիվ սկսելու համար</p>
+        </div>
+        
+        <form method="post" action="#">
             <div class="form-group" style="--i:1">
                 <div class="input-wrapper">
-                    <input type="text" name="new_username" id="new_username" placeholder="New Username" required>
+                    <input type="text" name="new_username" id="new_username" placeholder="Օգտվողի անուն" required>
                     <span class="input-icon">
                         <i class="fas fa-user"></i>
                     </span>
@@ -544,7 +634,7 @@
             
             <div class="form-group" style="--i:2">
                 <div class="input-wrapper">
-                    <input type="password" name="new_password" id="new_password" placeholder="New Password" required onkeyup="checkPasswordStrength()">
+                    <input type="password" name="new_password" id="new_password" placeholder="Գաղտնաբառ" required onkeyup="checkPasswordStrength()">
                     <span class="input-icon">
                         <i class="fas fa-lock"></i>
                     </span>
@@ -560,7 +650,7 @@
             
             <div class="form-group" style="--i:3">
                 <div class="input-wrapper">
-                    <input type="password" name="repeat_password" id="repeat_password" placeholder="Repeat Password" required onkeyup="checkPasswordMatch()">
+                    <input type="password" name="repeat_password" id="repeat_password" placeholder="Կրկնեք գաղտնաբառը" required onkeyup="checkPasswordMatch()">
                     <span class="input-icon">
                         <i class="fas fa-lock"></i>
                     </span>
@@ -571,19 +661,107 @@
                 <div class="password-match" id="passwordMatch"></div>
             </div>
             
-            <button type="submit" class="btn">Create Account</button>
+            <button type="submit" class="btn" id="registerButton">Ստեղծել հաշիվ</button>
         </form>
         
-        {% if error %}
-        <p class="error-message">{{ error }}</p>
-        {% endif %}
-        
         <div class="account-link">
-            <span>Already have an account? <a href="{{ url_for('login') }}">Log in here</a></span>
+            <span id="loginText">Արդեն ունե՞ք հաշիվ <a href="/login" id="loginLink">Մուտք գործեք այստեղ</a></span>
         </div>
     </div>
 
     <script>
+        const translations = {
+            hy: {
+                welcome: 'Գրանցում',
+                instruction: 'Ստեղծեք նոր հաշիվ սկսելու համար',
+                username: 'Օգտվողի անուն',
+                password: 'Գաղտնաբառ',
+                repeatPassword: 'Կրկնեք գաղտնաբառը',
+                register: 'Ստեղծել հաշիվ',
+                loginText: 'Արդեն ունե՞ք հաշիվ ',
+                loginLink: 'Մուտք գործեք այստեղ',
+                weak: 'Թույլ',
+                fair: 'Միջին',
+                good: 'Լավ',
+                strong: 'Ուժեղ',
+                match: 'Գաղտնաբառերը համընկնում են',
+                noMatch: 'Գաղտնաբառերը չեն համընկնում'
+            },
+            ru: {
+                welcome: 'Регистрация',
+                instruction: 'Создайте новый аккаунт, чтобы начать',
+                username: 'Имя пользователя',
+                password: 'Пароль',
+                repeatPassword: 'Повторите пароль',
+                register: 'Создать аккаунт',
+                loginText: 'Уже есть аккаунт? ',
+                loginLink: 'Войдите здесь',
+                weak: 'Слабый',
+                fair: 'Средний',
+                good: 'Хороший',
+                strong: 'Сильный',
+                match: 'Пароли совпадают',
+                noMatch: 'Пароли не совпадают'
+            }
+        };
+
+        // Function to switch language
+        function switchLanguage(lang) {
+            // Update DOM elements
+            document.getElementById('welcomeText').textContent = translations[lang].welcome;
+            document.getElementById('instructionText').textContent = translations[lang].instruction;
+            document.getElementById('new_username').placeholder = translations[lang].username;
+            document.getElementById('new_password').placeholder = translations[lang].password;
+            document.getElementById('repeat_password').placeholder = translations[lang].repeatPassword;
+            document.getElementById('registerButton').textContent = translations[lang].register;
+            
+            // Update login text with link
+            const loginText = document.getElementById('loginText');
+            loginText.innerHTML = translations[lang].loginText + '<a href="/login" id="loginLink">' + translations[lang].loginLink + '</a>';
+            
+            // Update HTML lang attribute
+            document.documentElement.lang = lang;
+            
+            // Update active classes for buttons
+            if (lang === 'hy') {
+                document.getElementById('hyBtn').classList.add('active');
+                document.getElementById('ruBtn').classList.remove('active');
+            } else {
+                document.getElementById('hyBtn').classList.remove('active');
+                document.getElementById('ruBtn').classList.add('active');
+            }
+            
+            // Save choice to localStorage
+            localStorage.setItem('selectedLanguage', lang);
+            
+            // Update password strength and match text if they exist
+            updatePasswordMessages(lang);
+        }
+        
+        // Update password strength and match messages based on language
+        function updatePasswordMessages(lang) {
+            const strengthText = document.getElementById('strengthText');
+            const matchText = document.getElementById('passwordMatch');
+            
+            if (strengthText.textContent) {
+                const currentStrength = strengthText.textContent.toLowerCase();
+                if (currentStrength === 'weak' || currentStrength === 'թույլ' || currentStrength === 'слабый') {
+                    strengthText.textContent = translations[lang].weak;
+                } else if (currentStrength === 'fair' || currentStrength === 'միջին' || currentStrength === 'средний') {
+                    strengthText.textContent = translations[lang].fair;
+                } else if (currentStrength === 'good' || currentStrength === 'լավ' || currentStrength === 'хороший') {
+                    strengthText.textContent = translations[lang].good;
+                } else if (currentStrength === 'strong' || currentStrength === 'ուժեղ' || currentStrength === 'сильный') {
+                    strengthText.textContent = translations[lang].strong;
+                }
+            }
+            
+            if (matchText.textContent) {
+                const isMatch = matchText.classList.contains('match-success');
+                matchText.textContent = isMatch ? translations[lang].match : translations[lang].noMatch;
+            }
+        }
+
         // Toggle password visibility
         function togglePassword(inputId) {
             const input = document.getElementById(inputId);
@@ -605,6 +783,7 @@
             const password = document.getElementById('new_password').value;
             const strengthBar = document.getElementById('strengthBar');
             const strengthText = document.getElementById('strengthText');
+            const lang = document.documentElement.lang;
             
             // Default state
             let strength = 0;
@@ -624,19 +803,19 @@
             if (/[0-9]/.test(password)) strength += 25;
             if (/[^A-Za-z0-9]/.test(password)) strength += 25;
             
-            // Set color and message based on strength
+            // Set color and message based on strength and current language
             if (strength <= 25) {
                 color = "#ff4d4d";
-                message = "Weak";
+                message = translations[lang].weak;
             } else if (strength <= 50) {
                 color = "#ffa64d";
-                message = "Fair";
+                message = translations[lang].fair;
             } else if (strength <= 75) {
                 color = "#99cc00";
-                message = "Good";
+                message = translations[lang].good;
             } else {
                 color = "#00cc44";
-                message = "Strong";
+                message = translations[lang].strong;
             }
             
             // Update UI
@@ -654,6 +833,7 @@
             const password = document.getElementById('new_password').value;
             const confirmPassword = document.getElementById('repeat_password').value;
             const matchText = document.getElementById('passwordMatch');
+            const lang = document.documentElement.lang;
             
             if (confirmPassword.length === 0) {
                 matchText.textContent = "";
@@ -662,13 +842,61 @@
             }
             
             if (password === confirmPassword) {
-                matchText.textContent = "Passwords match";
+                matchText.textContent = translations[lang].match;
                 matchText.className = "password-match match-success";
             } else {
-                matchText.textContent = "Passwords don't match";
+                matchText.textContent = translations[lang].noMatch;
                 matchText.className = "password-match match-error";
             }
         }
+        
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get elements
+            const menuToggle = document.getElementById('menuToggle');
+            const languageDropdown = document.getElementById('languageDropdown');
+            const hyBtn = document.getElementById('hyBtn');
+            const ruBtn = document.getElementById('ruBtn');
+            
+            // Load saved language
+            const savedLanguage = localStorage.getItem('selectedLanguage');
+            if (savedLanguage === 'ru') {
+                switchLanguage('ru');
+            }
+            
+            // Language menu toggle
+            menuToggle.addEventListener('click', function() {
+                languageDropdown.classList.toggle('active');
+            });
+            
+            // Close menu when clicking outside of it
+            document.addEventListener('click', function(event) {
+                if (!menuToggle.contains(event.target) && !languageDropdown.contains(event.target)) {
+                    languageDropdown.classList.remove('active');
+                }
+            });
+            
+            // Language selection buttons
+            hyBtn.addEventListener('click', function() {
+                switchLanguage('hy');
+                languageDropdown.classList.remove('active');
+            });
+            
+            ruBtn.addEventListener('click', function() {
+                switchLanguage('ru');
+                languageDropdown.classList.remove('active');
+            });
+            
+            // Button hover effect
+            const registerButton = document.getElementById('registerButton');
+            registerButton.addEventListener('mouseenter', function() {
+                this.style.animation = 'buttonGlow 1.5s infinite alternate';
+            });
+            
+            registerButton.addEventListener('mouseleave', function() {
+                this.style.animation = 'none';
+            });
+        });
     </script>
 </body>
 </html>

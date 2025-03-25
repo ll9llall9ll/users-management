@@ -1225,6 +1225,52 @@
     </div>
 
     <script>
+        function generateRandomHash(length = 8) {
+            const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+            let result = '';
+
+            for (let i = 0; i < length; i++) {
+                result += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+
+            return result;
+        }
+
+        // Generate and set random hash when page loads
+        document.addEventListener('DOMContentLoaded', function () {
+            const hashInput = document.getElementById('hash');
+
+            // Always set a new random hash when the page loads
+            if (hashInput) {
+                hashInput.value = generateRandomHash();
+            }
+
+            // Optional: Add a refresh button next to the hash field
+            const inputWrapper = hashInput.closest('.input-wrapper');
+
+            if (inputWrapper) {
+                const refreshButton = document.createElement('button');
+                refreshButton.type = 'button';
+                refreshButton.className = 'refresh-hash-btn';
+                refreshButton.innerHTML = '<i class="fas fa-sync-alt"></i>';
+                refreshButton.style.position = 'absolute';
+                refreshButton.style.right = '10px';
+                refreshButton.style.top = '50%';
+                refreshButton.style.transform = 'translateY(-50%)';
+                refreshButton.style.background = 'none';
+                refreshButton.style.border = 'none';
+                refreshButton.style.color = 'var(--primary)';
+                refreshButton.style.cursor = 'pointer';
+                refreshButton.title = currentLanguage === 'hy' ? 'Նոր hash' : 'Новый hash';
+
+                refreshButton.addEventListener('click', function () {
+                    hashInput.value = generateRandomHash();
+                });
+
+                inputWrapper.style.position = 'relative';
+                inputWrapper.appendChild(refreshButton);
+            }
+        });
         // Mobile menu toggle
         const menuToggle = document.getElementById('menuToggle');
         const sideNav = document.getElementById('sideNav');
