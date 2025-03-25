@@ -763,7 +763,7 @@
             <form class="formEvent" method="POST" action="{{ url_for('create_event_by_template_id') }}">
                 <div class="form-row">
                     <div class="form-group" style="--i:1">
-                        <label for="internal_name" id="internalNameLabel">Ներքին անվանում:</label>
+                        <label for="internal_name" id="internalNameLabel">Միջոցառման անվանումը</label>
                         <input type="text" name="internal_name" id="internal_name" value="{{ internal_name or '' }}" required>
                     </div>
                     <div class="form-group" style="--i:2">
@@ -894,7 +894,7 @@
                 document.getElementById('languageTitle').textContent = 'Լեզու';
                 document.getElementById('copyright').textContent = '© 2024 Միջոցառումների Կառավարիչ';
                 document.getElementById('pageTitle').textContent = 'Ստեղծել նոր միջոցառում';
-                document.getElementById('internalNameLabel').textContent = 'Ներքին անվանում:';
+                document.getElementById('internalNameLabel').textContent = 'Միջոցառման անվանումը:';
                 document.getElementById('displayNameLabel').textContent = 'Ցուցադրման անվանում:';
                 document.getElementById('dateLabel').textContent = 'Ամսաթիվ և ժամ:';
                 document.getElementById('countryLabel').textContent = 'Երկիր:';
@@ -918,7 +918,7 @@
                 document.getElementById('languageTitle').textContent = 'Язык';
                 document.getElementById('copyright').textContent = '© 2024 Менеджер событий';
                 document.getElementById('pageTitle').textContent = 'Создать новое событие';
-                document.getElementById('internalNameLabel').textContent = 'Внутреннее название:';
+                document.getElementById('internalNameLabel').textContent = 'Название мероприятие:';
                 document.getElementById('displayNameLabel').textContent = 'Отображаемое название:';
                 document.getElementById('dateLabel').textContent = 'Дата и время:';
                 document.getElementById('countryLabel').textContent = 'Страна:';
