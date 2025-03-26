@@ -701,6 +701,7 @@
             gap: 10px;
             flex-wrap: wrap;
             margin-top: 25px;
+            margin-bottom: 25px;
         }
 
         .actions-container .btn {
@@ -1073,6 +1074,149 @@
                 height: 100vh;
             }
         }
+
+
+        .desktop-only {
+        display: block;
+    }
+    
+    .mobile-only {
+        display: none;
+    }
+    
+    /* Mobile cards styling */
+    .invitations-cards {
+        display: flex;
+        flex-direction: column-reverse;
+        gap: 16px;
+        margin-bottom: 25px;
+    }
+    
+    .invitation-card {
+        background-color: var(--card-bg);
+        border-radius: var(--radius-medium);
+        box-shadow: var(--shadow-light);
+        overflow: hidden;
+        transition: var(--transition);
+        animation: fadeIn 0.4s ease forwards;
+    }
+    
+    .invitation-card:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-medium);
+    }
+    
+    .invitation-card-header {
+        padding: 16px;
+        border-bottom: 1px solid rgba(156, 132, 104, 0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .invitation-name {
+        font-size: 16px;
+        font-weight: 500;
+        margin: 0;
+        flex: 1;
+        margin-right: 10px;
+    }
+    
+    .invitation-card-details {
+        padding: 12px 16px;
+        border-bottom: 1px solid rgba(156, 132, 104, 0.1);
+    }
+    
+    .detail-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+    }
+    
+    .detail-item:last-child {
+        margin-bottom: 0;
+    }
+    
+    .detail-label {
+        font-size: 14px;
+        color: var(--text-medium);
+    }
+    
+    .detail-value {
+        font-weight: 500;
+        font-size: 14px;
+    }
+    
+    .invitation-card-actions {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        padding: 12px;
+    }
+    
+    .card-action-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 8px;
+        border-radius: var(--radius-small);
+        color: white;
+        font-size: 13px;
+        font-weight: 500;
+        text-decoration: none;
+        cursor: pointer;
+        transition: var(--transition);
+        text-align: center;
+    }
+    
+    .card-action-btn i {
+        margin-right: 6px;
+        font-size: 14px;
+    }
+    
+    .card-action-btn.btn-info {
+        background-color: rgba(33, 150, 243, 0.8);
+    }
+    
+    .card-action-btn.btn-edit {
+        background-color: var(--primary);
+    }
+    
+    .card-action-btn.btn-delete {
+        background-color: rgba(211, 47, 47, 0.8);
+    }
+    
+    .card-action-btn.btn-copy {
+        background-color: rgba(0, 150, 136, 0.8);
+        border: none;
+    }
+    
+    /* Media queries for responsive design */
+    @media (max-width: 850px) {
+        .desktop-only {
+            display: none;
+        }
+        
+        .mobile-only {
+            display: block;
+        }
+        
+        .invitations-table {
+            display: none;
+        }
+    }
+    
+    /* Ensuring proper spacing for mobile */
+    @media (max-width: 576px) {
+        .invitation-card-actions {
+            grid-template-columns: 1fr 1fr;
+        }
+        
+        .right {
+            padding-bottom: 70px; /* Добавляем отступ снизу */
+        }
+    }
     </style>
 </head>
 <body>
@@ -1207,69 +1351,70 @@
                 <input type="text" id="searchInput" class="search-box" placeholder="Որոնել հրավերներ..." data-placeholder-hy="Որոնել հրավերներ..." data-placeholder-ru="Поиск приглашений...">
             </div>
             
-            <table class="invitations-table">
-                <thead>
-                    <tr>
-                        <th id="nameColumnHeader">Անուն</th>
-                        <th id="statusColumnHeader">Կարգավիճակ</th>
-                        <th id="attendeesColumnHeader">Մասնակիցներ</th>
-                        <th id="commentsColumnHeader">Մեկնաբանություններ</th>
-                        <th id="actionsColumnHeader">Գործողություններ</th>
-                    </tr>
-                </thead>
-                <tbody id="invitationsTableBody">
-                    {% for invitation in invitations %}
-                    <tr>
-                        <td>{{ invitation.name }}</td>
-                        <td>
-                            {% if invitation.accepted == True %}
-                                <span class="badge badge-success" data-status="accepted">Ընդունված</span>
-                            {% elif invitation.accepted == False %}
-                                <span class="badge badge-danger" data-status="declined">Մերժված</span>
-                            {% else %}
-                                <span class="badge badge-warning" data-status="pending">Սպասվող</span>
-                            {% endif %}
-                        </td>
-                        <td>
-                            {% if invitation.attendee_count %}
-                                {{ invitation.attendee_count }}
-                            {% else %}
-                                <span class="badge badge-light" data-na="true">Հ/Հ</span>
-                            {% endif %}
-                        </td>
-                        <td>
-                            {% if invitation.comments %}
-                                <span class="badge badge-info" data-comments="yes">Այո</span>
-                            {% else %}
-                                <span class="badge badge-light" data-comments="no">Ոչ</span>
-                            {% endif %}
-                        </td>
-                        <td>
-                            <div class="button-row">
-                                <a href="{{ url_for('invitation_details', id=invitation.id) }}" class="btn btn-info">
-                                    <i class="fas fa-eye"></i> <span class="view-text">Դիտել</span>
-                                </a>
-                                <a href="{{ url_for('edit_invitation', id=invitation.id) }}" class="btn btn-edit">
-                                    <i class="fas fa-edit"></i> <span class="edit-text">Խմբագրել</span>
-                                </a>
-                                <a href="{{ url_for('delete_invitation', id=invitation.id) }}" class="btn btn-delete" onclick="return confirm('Դուք վստահ եք, որ ցանկանում եք ջնջել այս հրավերը?');" data-confirm-hy="Դուք վստահ եք, որ ցանկանում եք ջնջել այս հրավերը?" data-confirm-ru="Вы уверены, что хотите удалить это приглашение?">
-                                    <i class="fas fa-trash-alt"></i> <span class="delete-text">Ջնջել</span>
-                                </a>
-                                <button class="btn btn-copy copy-link" data-hash="{{ invitation.hash }}">
-                                    <i class="fas fa-copy"></i> <span class="copy-text">Պատճենել հղումը</span>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-            
             <div class="actions-container">
                 <a href="{{ url_for('create_invitation', event_id=event_id) }}" class="btn">
                     <i class="fas fa-plus"></i> <span id="createInvitationText">Ստեղծել հրավեր</span>
                 </a>
             </div>
+            
+            <!-- Mobile view - карточки -->
+            <div class="invitations-cards mobile-only">
+                {% for invitation in invitations %}
+                <div class="invitation-card">
+                    <div class="invitation-card-header">
+                        <h3 class="invitation-name">{{ invitation.name }}</h3>
+                        {% if invitation.accepted == True %}
+                            <span class="badge badge-success" data-status="accepted">Ընդունված</span>
+                        {% elif invitation.accepted == False %}
+                            <span class="badge badge-danger" data-status="declined">Մերժված</span>
+                        {% else %}
+                            <span class="badge badge-warning" data-status="pending">Սպասվող</span>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="invitation-card-details">
+                        <div class="detail-item">
+                            <span class="detail-label" id="attendeesLabel">Մասնակիցներ:</span>
+                            <span class="detail-value">
+                                {% if invitation.attendee_count %}
+                                    {{ invitation.attendee_count }}
+                                {% else %}
+                                    <span class="badge badge-light" data-na="true">Հ/Հ</span>
+                                {% endif %}
+                            </span>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <span class="detail-label" id="commentsLabel">Մեկնաբանություններ:</span>
+                            <span class="detail-value">
+                                {% if invitation.comments %}
+                                    <span class="badge badge-info" data-comments="yes">Այո</span>
+                                {% else %}
+                                    <span class="badge badge-light" data-comments="no">Ոչ</span>
+                                {% endif %}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="invitation-card-actions">
+                        <a href="{{ url_for('invitation_details', id=invitation.id) }}" class="card-action-btn btn-info">
+                            <i class="fas fa-eye"></i> <span class="view-text">Դիտել</span>
+                        </a>
+                        <a href="{{ url_for('edit_invitation', id=invitation.id) }}" class="card-action-btn btn-edit">
+                            <i class="fas fa-edit"></i> <span class="edit-text">Խմբագրել</span>
+                        </a>
+                        <a href="{{ url_for('delete_invitation', id=invitation.id) }}" class="card-action-btn btn-delete" onclick="return confirm('Դուք վստահ եք, որ ցանկանում եք ջնջել այս հրավերը?');" data-confirm-hy="Դուք վստահ եք, որ ցանկանում եք ջնջել այս հրավերը?" data-confirm-ru="Вы уверены, что хотите удалить это приглашение?">
+                            <i class="fas fa-trash-alt"></i> <span class="delete-text">Ջնջել</span>
+                        </a>
+                        <button class="card-action-btn btn-copy copy-link" data-hash="{{ invitation.hash }}">
+                            <i class="fas fa-copy"></i> <span class="copy-text">Պատճենել</span>
+                        </button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+           
             
             <!-- <div class="credit" id="copyright2">© 2024 Հրավերների Կառավարիչ</div> -->
         </div>
@@ -1531,6 +1676,53 @@
                 });
             });
         });
+
+        document.addEventListener('DOMContentLoaded', function() {
+        // Update detail labels when language changes
+        function updateDetailLabels(lang) {
+            const attendeesLabels = document.querySelectorAll('#attendeesLabel');
+            const commentsLabels = document.querySelectorAll('#commentsLabel');
+            
+            attendeesLabels.forEach(label => {
+                label.textContent = lang === 'hy' ? 'Մասնակիցներ:' : 'Участники:';
+            });
+            
+            commentsLabels.forEach(label => {
+                label.textContent = lang === 'hy' ? 'Մեկնաբանություններ:' : 'Комментарии:';
+            });
+        }
+        
+        // Add this to your existing updateLanguage function:
+        const originalUpdateLanguage = updateLanguage;
+        updateLanguage = function(lang) {
+            originalUpdateLanguage(lang);
+            updateDetailLabels(lang);
+        };
+        
+        // Make sure copy functionality works for mobile cards too
+        document.querySelectorAll('.copy-link').forEach(button => {
+            button.addEventListener('click', function() {
+                const hash = this.getAttribute('data-hash');
+                const inviteUrl = `${window.location.origin}/invite?h=${hash}`;
+                
+                navigator.clipboard.writeText(inviteUrl).then(() => {
+                    // Change button text temporarily
+                    const originalText = this.innerHTML;
+                    const copiedMessage = currentLanguage === 'hy' ? 
+                        translations.hy.copiedMessage : translations.ru.copiedMessage;
+                    this.innerHTML = `<i class="fas fa-check"></i> ${copiedMessage}`;
+                    setTimeout(() => {
+                        this.innerHTML = originalText;
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Failed to copy: ', err);
+                });
+            });
+        });
+        
+        // Apply initial language for detail labels
+        updateDetailLabels(currentLanguage);
+    });
         </script>
 </body>
 </html>

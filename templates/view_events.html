@@ -1457,6 +1457,87 @@
             background-color: rgba(158, 158, 158, 0.1);
             color: #616161;
         }
+
+        .event-card {
+            background-color: var(--card-bg);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-light);
+            margin-bottom: 16px;
+            overflow: hidden;
+            transition: var(--transition);
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        .event-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .event-card-header {
+            padding: 16px;
+            border-bottom: 1px solid rgba(138, 113, 87, 0.1);
+            position: relative;
+        }
+
+        .event-id {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background-color: var(--primary-lighter);
+            color: var(--primary);
+            padding: 4px 8px;
+            border-radius: var(--radius-xs);
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .event-name {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-dark);
+            margin-right: 50px;
+            word-break: break-word;
+        }
+
+        .event-card-actions {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            padding: 16px;
+        }
+
+        .card-btn {
+            padding: 10px 0;
+            justify-content: center;
+            font-size: 13px;
+        }
+
+        /* Responsive display toggle */
+        .desktop-only {
+            display: block;
+        }
+
+        .mobile-only {
+            display: none;
+        }
+
+        @media (max-width: 850px) {
+            .desktop-only {
+                display: none;
+            }
+
+            .mobile-only {
+                display: block;
+            }
+
+            .events-table-container {
+                overflow-x: visible;
+            }
+
+            .events-table {
+                min-width: auto;
+            }
+        }
     </style>
 </head>
 
@@ -1546,10 +1627,6 @@
 
         <div class="content-panel">
             <div class="top-actions">
-                <a href="{{ url_for('profile') }}" class="back-btn">
-                    <i class="fas fa-arrow-left"></i> <span id="backToProfileText"></span>
-                </a>
-
                 <div class="search-container">
                     <input type="text" class="search-input" id="searchInput" placeholder="Որոնել միջոցառումներ...">
                     <i class="fas fa-search search-icon"></i>
@@ -1588,7 +1665,7 @@
                 </div>
             </div>
 
-            <div class="events-table-container">
+            <div class="events-table-container desktop-only">
                 <table class="events-table">
                     <thead>
                         <tr>
@@ -1610,7 +1687,8 @@
                                 </a>
                             </td>
                             <td>
-                                <a href="{{ url_for('delete_event', id=event.id) }}" class="btn btn-delete delete-event-btn" data-id="{{ event.id }}">
+                                <a href="{{ url_for('delete_event', id=event.id) }}"
+                                    class="btn btn-delete delete-event-btn" data-id="{{ event.id }}">
                                     <i class="fas fa-trash-alt"></i> <span class="delete-text">Ջնջել</span>
                                 </a>
                             </td>
@@ -1623,6 +1701,29 @@
                         {% endfor %}
                     </tbody>
                 </table>
+            </div>
+
+            <div class="events-cards-container mobile-only">
+                {% for event in events %}
+                <div class="event-card">
+                    <div class="event-card-header">
+                        <span class="event-id">#{{ event.id }}</span>
+                        <h3 class="event-name">{{ event.internal_name }}</h3>
+                    </div>
+                    <div class="event-card-actions">
+                        <a href="{{ url_for('edit_event', id=event.id) }}" class="btn btn-edit card-btn">
+                            <i class="fas fa-edit"></i> <span class="edit-text">Խմբագրել</span>
+                        </a>
+                        <a href="{{ url_for('delete_event', id=event.id) }}"
+                            class="btn btn-delete delete-event-btn card-btn" data-id="{{ event.id }}">
+                            <i class="fas fa-trash-alt"></i> <span class="delete-text">Ջնջել</span>
+                        </a>
+                        <a href="{{ url_for('view_invitation', event_id=event.id) }}" class="btn btn-view card-btn">
+                            <i class="fas fa-eye"></i> <span class="view-text">Դիտել</span>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
             </div>
 
             <!-- Empty state (shown when no events exist) -->
@@ -1736,7 +1837,6 @@
                 eventsNavText: 'Միջոցառումներ',
                 profileText: 'Պրոֆիլ',
                 logoutNavText: 'Դուրս գալ',
-                backToProfileText: 'Վերադառնալ պրոֆիլ',
                 eventsHeaderText: 'Ձեր ավելացրած միջոցառումները',
                 idColumnText: 'ID',
                 nameColumnText: 'Ներքին անվանում',
@@ -1763,7 +1863,6 @@
                 eventsNavText: 'События',
                 profileText: 'Профиль',
                 logoutNavText: 'Выйти',
-                backToProfileText: 'Вернуться в профиль',
                 eventsHeaderText: 'Ваши добавленные события',
                 idColumnText: 'ID',
                 nameColumnText: 'Внутреннее название',
@@ -1793,7 +1892,6 @@
             document.getElementById('eventsNavText').textContent = translations[lang].eventsNavText;
             document.getElementById('profileText').textContent = translations[lang].profileText;
             document.getElementById('logoutNavText').textContent = translations[lang].logoutNavText;
-            document.getElementById('backToProfileText').textContent = translations[lang].backToProfileText;
             document.getElementById('eventsHeaderText').textContent = translations[lang].eventsHeaderText;
             document.getElementById('idColumnText').textContent = translations[lang].idColumnText;
             document.getElementById('nameColumnText').textContent = translations[lang].nameColumnText;
@@ -1803,7 +1901,7 @@
             document.getElementById('createEventText').textContent = translations[lang].createEventText;
             document.getElementById('copyrightNav').textContent = translations[lang].copyrightNav;
             document.getElementById('languageTitle').textContent = translations[lang].languageTitle;
-            
+
             // Search placeholder
             document.getElementById('searchInput').placeholder = translations[lang].searchPlaceholder;
 
@@ -1838,9 +1936,9 @@
 
         // Обработчики для индивидуальных кнопок удаления
         document.querySelectorAll('.delete-event-btn').forEach(btn => {
-            btn.addEventListener('click', function(e) {
+            btn.addEventListener('click', function (e) {
                 e.preventDefault();
-                
+
                 if (confirm(translations[currentLanguage].confirmDelete)) {
                     window.location.href = this.getAttribute('href');
                 }
@@ -1868,11 +1966,32 @@
             // If we have events, simulate loading for a short time
             if (document.querySelectorAll('.events-table tbody tr').length > 0) {
                 loadingTable.style.display = 'block';
+
+                // Скрываем оба контейнера во время загрузки
                 document.querySelector('.events-table-container').style.display = 'none';
+
+                // Проверяем существует ли мобильный контейнер перед обращением к нему
+                const mobileContainer = document.querySelector('.events-cards-container');
+                if (mobileContainer) {
+                    mobileContainer.style.display = 'none';
+                }
 
                 setTimeout(() => {
                     loadingTable.style.display = 'none';
-                    document.querySelector('.events-table-container').style.display = 'block';
+
+                    // Отображаем контейнеры в зависимости от размера экрана
+                    const eventsTableContainer = document.querySelector('.events-table-container');
+                    const eventsCardsContainer = document.querySelector('.events-cards-container');
+
+                    if (window.innerWidth <= 850) {
+                        // Мобильная версия
+                        if (eventsCardsContainer) eventsCardsContainer.style.display = 'block';
+                        if (eventsTableContainer) eventsTableContainer.style.display = 'none';
+                    } else {
+                        // Десктопная версия
+                        if (eventsTableContainer) eventsTableContainer.style.display = 'block';
+                        if (eventsCardsContainer) eventsCardsContainer.style.display = 'none';
+                    }
                 }, 800);
             }
 
@@ -1907,7 +2026,46 @@
                 toast.classList.remove('show');
             }, 3000);
         }
+
+        function switchViewBasedOnScreenSize() {
+            // Для страницы мероприятий
+            const eventsTableContainer = document.querySelector('.events-table-container');
+            const eventsCardsContainer = document.querySelector('.events-cards-container');
+
+            // Для страницы приглашений
+            const invitationsTableContainer = document.querySelector('.invitations-table-container');
+            const invitationsCards = document.querySelector('.invitations-cards');
+
+            if (window.innerWidth <= 850) {
+                // Мобильная версия
+                if (eventsCardsContainer) eventsCardsContainer.style.display = 'block';
+                if (eventsTableContainer) eventsTableContainer.style.display = 'none';
+
+                if (invitationsCards) invitationsCards.style.display = 'block';
+                if (invitationsTableContainer) invitationsTableContainer.style.display = 'none';
+            } else {
+                // Десктопная версия
+                if (eventsTableContainer) eventsTableContainer.style.display = 'block';
+                if (eventsCardsContainer) eventsCardsContainer.style.display = 'none';
+
+                if (invitationsTableContainer) invitationsTableContainer.style.display = 'block';
+                if (invitationsCards) invitationsCards.style.display = 'none';
+            }
+        }
+
+        // Добавляем обработчик изменения размера окна
+        window.addEventListener('resize', switchViewBasedOnScreenSize);
+
+        // Вызываем функцию при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function () {
+            // Существующий код загрузки...
+
+            // Выполняем начальное переключение вида в зависимости от текущего размера экрана
+            switchViewBasedOnScreenSize();
+        });
     </script>
 </body>
+
 </html>
+
 </html>

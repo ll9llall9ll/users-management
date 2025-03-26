@@ -257,7 +257,7 @@ def login():
             active_sessions.add(session_id)
             
             # Set cookies
-            response = make_response(redirect(url_for('profile')))
+            response = make_response(redirect(url_for('view_events')))
             response.set_cookie('session_id', session_id, httponly=True, max_age=86400)  # 1 day
             response.set_cookie('user_id', str(user.id), httponly=True, max_age=86400)
             
@@ -268,7 +268,7 @@ def login():
     # Check if user is already logged in
     session_id = request.cookies.get('session_id')
     if session_id and session_id in active_sessions:
-        return redirect(url_for('profile'))
+        return redirect(url_for('view_events'))
         
     return render_template('login.html', error=error)
 
@@ -640,4 +640,4 @@ except Exception as e:
     
 
 upgrade_passwords_to_sha256()
-app.run(debug=False)
+app.run(host='0.0.0.0', port=5000 , debug=False)

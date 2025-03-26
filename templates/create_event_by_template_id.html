@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="hy">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -66,7 +67,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: 
+            background:
                 radial-gradient(circle at 30% 40%, rgba(156, 132, 104, 0.08) 0%, transparent 30%),
                 radial-gradient(circle at 70% 60%, rgba(156, 132, 104, 0.1) 0%, transparent 30%);
             z-index: -1;
@@ -78,7 +79,7 @@
             position: fixed;
             width: 200vw;
             height: 200vh;
-            background: radial-gradient(circle, rgba(255,255,255,0.6) 10%, transparent 80%);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.6) 10%, transparent 80%);
             animation: shimmer 40s infinite linear;
             top: -50vh;
             left: -50vw;
@@ -86,10 +87,15 @@
         }
 
         @keyframes shimmer {
-            0% { transform: translate(-50%, -50%) rotate(0deg); }
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
         }
-        
+
         /* Floating particles */
         .particles {
             position: fixed;
@@ -112,18 +118,64 @@
         }
 
         @keyframes particleMove {
-            0% { transform: translateY(0) translateX(0); opacity: 1; }
-            100% { transform: translateY(800px) translateX(-200px); opacity: 0; }
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(800px) translateX(-200px);
+                opacity: 0;
+            }
         }
 
-        .particles span:nth-child(1) { top: 12%; left: 18%; animation-duration: 18s; }
-        .particles span:nth-child(2) { top: 22%; left: 65%; animation-duration: 22s; }
-        .particles span:nth-child(3) { top: 35%; left: 42%; animation-duration: 25s; }
-        .particles span:nth-child(4) { top: 55%; left: 78%; animation-duration: 20s; }
-        .particles span:nth-child(5) { top: 75%; left: 25%; animation-duration: 16s; }
-        .particles span:nth-child(6) { top: 15%; left: 85%; animation-duration: 19s; }
-        .particles span:nth-child(7) { top: 45%; left: 15%; animation-duration: 21s; }
-        .particles span:nth-child(8) { top: 65%; left: 60%; animation-duration: 24s; }
+        .particles span:nth-child(1) {
+            top: 12%;
+            left: 18%;
+            animation-duration: 18s;
+        }
+
+        .particles span:nth-child(2) {
+            top: 22%;
+            left: 65%;
+            animation-duration: 22s;
+        }
+
+        .particles span:nth-child(3) {
+            top: 35%;
+            left: 42%;
+            animation-duration: 25s;
+        }
+
+        .particles span:nth-child(4) {
+            top: 55%;
+            left: 78%;
+            animation-duration: 20s;
+        }
+
+        .particles span:nth-child(5) {
+            top: 75%;
+            left: 25%;
+            animation-duration: 16s;
+        }
+
+        .particles span:nth-child(6) {
+            top: 15%;
+            left: 85%;
+            animation-duration: 19s;
+        }
+
+        .particles span:nth-child(7) {
+            top: 45%;
+            left: 15%;
+            animation-duration: 21s;
+        }
+
+        .particles span:nth-child(8) {
+            top: 65%;
+            left: 60%;
+            animation-duration: 24s;
+        }
 
         /* Header */
         .header {
@@ -176,8 +228,8 @@
             background-color: var(--primary);
             border-radius: 2px;
             transition: transform 0.3s cubic-bezier(0.68, -0.6, 0.32, 1.6),
-                        opacity 0.25s ease,
-                        width 0.25s ease;
+                opacity 0.25s ease,
+                width 0.25s ease;
         }
 
         .menu-toggle .bar:nth-child(2) {
@@ -192,12 +244,12 @@
         .menu-toggle.active .bar:nth-child(1) {
             transform: translateY(9px) rotate(45deg);
         }
-        
+
         .menu-toggle.active .bar:nth-child(2) {
             opacity: 0;
             width: 100%;
         }
-        
+
         .menu-toggle.active .bar:nth-child(3) {
             transform: translateY(-9px) rotate(-45deg);
         }
@@ -425,12 +477,12 @@
             padding: 8px 12px;
             border-radius: var(--radius-small);
         }
-        
+
         .back-link:hover {
             background-color: rgba(156, 132, 104, 0.1);
             transform: translateX(-3px);
         }
-        
+
         .back-link i {
             margin-right: 8px;
         }
@@ -462,8 +514,15 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .container h1 {
@@ -574,17 +633,22 @@
             transform: translate(-50%, -50%) scale(1);
             opacity: 1;
         }
-        
+
         .btn:hover {
             background-color: var(--primary-dark);
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(156, 132, 104, 0.4);
             animation: buttonGlow 1.5s infinite alternate;
         }
-        
+
         @keyframes buttonGlow {
-            0% { box-shadow: 0 5px 15px rgba(156, 132, 104, 0.3); }
-            100% { box-shadow: 0 8px 25px rgba(156, 132, 104, 0.6); }
+            0% {
+                box-shadow: 0 5px 15px rgba(156, 132, 104, 0.3);
+            }
+
+            100% {
+                box-shadow: 0 8px 25px rgba(156, 132, 104, 0.6);
+            }
         }
 
         .error-message {
@@ -604,7 +668,7 @@
                 flex-direction: column;
                 gap: 0;
             }
-            
+
             .container {
                 padding: 30px;
             }
@@ -618,11 +682,11 @@
             .header {
                 padding: 15px 20px;
             }
-            
+
             .container {
                 padding: 25px 20px;
             }
-            
+
             .container h1 {
                 font-size: 26px;
             }
@@ -630,7 +694,7 @@
             .side-nav {
                 width: 300px;
             }
-            
+
             .side-nav.active {
                 transform: translateX(-300px);
             }
@@ -641,30 +705,30 @@
                 padding: 20px 15px;
                 border-radius: var(--radius-medium);
             }
-            
+
             .container h1 {
                 font-size: 24px;
                 margin-bottom: 20px;
             }
-            
+
             .container h1::after {
                 margin: 10px auto 0;
             }
-            
+
             .form-group {
                 margin-bottom: 15px;
             }
-            
+
             .form-group label {
                 margin-bottom: 6px;
                 font-size: 13px;
             }
-            
+
             .form-group input {
                 padding: 10px 12px;
                 font-size: 14px;
             }
-            
+
             .btn {
                 padding: 12px;
                 margin-top: 20px;
@@ -673,7 +737,7 @@
             .side-nav {
                 width: 85%;
             }
-            
+
             .side-nav.active {
                 transform: translateX(-100%);
             }
@@ -683,7 +747,7 @@
 
 <body>
     <div class="bg-shimmer"></div>
-    
+
     <div class="particles">
         <span></span>
         <span></span>
@@ -697,14 +761,15 @@
 
     <header class="header">
         <div class="logo">
-            <a href="{{ url_for('view_events') }}" class="back-link">
+            <a href="{{ url_for('create_event') }}" class="back-link">
                 <i class="fas fa-arrow-left"></i>
                 <!-- <span id="backLinkText"></span> -->
             </a>
             <i class="fas fa-calendar-check"></i>
             <span id="logoText">Միջոցառումների կառավարիչ</span>
         </div>
-        <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="sideNav" aria-label="Open menu">
+        <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="sideNav"
+            aria-label="Open menu">
             <span class="bar"></span>
             <span class="bar"></span>
             <span class="bar"></span>
@@ -759,42 +824,46 @@
     <div class="main-content">
         <div class="container">
             <h1 id="pageTitle">Ստեղծել նոր միջոցառում</h1>
-            
+
             <form class="formEvent" method="POST" action="{{ url_for('create_event_by_template_id') }}">
                 <div class="form-row">
                     <div class="form-group" style="--i:1">
                         <label for="internal_name" id="internalNameLabel">Միջոցառման անվանումը</label>
-                        <input type="text" name="internal_name" id="internal_name" value="{{ internal_name or '' }}" required>
+                        <input type="text" name="internal_name" id="internal_name" value="{{ internal_name or '' }}"
+                            required>
                     </div>
                     <div class="form-group" style="--i:2">
                         <label for="display_name" id="displayNameLabel">Ցուցադրման անվանում:</label>
-                        <input type="text" name="display_name" id="display_name" value="{{ display_name or '' }}" required>
+                        <input type="text" name="display_name" id="display_name" value="{{ display_name or '' }}"
+                            required>
                     </div>
                 </div>
-                
+
                 <input type="number" name="template_id" value="{{ template_id or '' }}" required hidden>
-                
+
                 <div class="form-group" style="--i:3">
                     <label for="date" id="dateLabel">Ամսաթիվ և ժամ:</label>
                     <input type="datetime-local" name="date" id="date" value="{{ date or '' }}" required>
                 </div>
-                
+
                 <div class="form-row">
                     <div class="form-group" style="--i:4">
                         <label for="address_country" id="countryLabel">Երկիր:</label>
-                        <input type="text" name="address_country" id="address_country" value="{{ address_country or '' }}" required>
+                        <input type="text" name="address_country" id="address_country"
+                            value="{{ address_country or '' }}" required>
                     </div>
                     <div class="form-group" style="--i:5">
                         <label for="address_city" id="cityLabel">Քաղաք:</label>
-                        <input type="text" name="address_city" id="address_city" value="{{ address_city or '' }}" required>
+                        <input type="text" name="address_city" id="address_city" value="{{ address_city or '' }}"
+                            required>
                     </div>
                 </div>
-                
+
                 <div class="form-group" style="--i:6">
                     <label for="address_line" id="addressLabel">Հասցե:</label>
                     <input type="text" name="address_line" id="address_line" value="{{ address_line or '' }}" required>
                 </div>
-                
+
                 <div class="form-row">
                     <div class="form-group" style="--i:7">
                         <label for="hall_name" id="hallNameLabel">Դահլիճի անվանում:</label>
@@ -802,13 +871,14 @@
                     </div>
                     <div class="form-group" style="--i:8">
                         <label for="unique_domain" id="domainLabel">Եզակի դոմեն:</label>
-                        <input type="text" name="unique_domain" id="unique_domain" value="{{ unique_domain or '' }}" required>
+                        <input type="text" name="unique_domain" id="unique_domain" value="{{ unique_domain or '' }}"
+                            required>
                     </div>
                 </div>
-                
+
                 <button type="submit" class="btn" id="submitBtn">Ստեղծել միջոցառում</button>
             </form>
-            
+
             {% if error %}
             <p class="error-message">{{ error }}</p>
             {% endif %}
@@ -816,152 +886,154 @@
     </div>
 
     <script>
-        // Enhanced Mobile menu toggle functionality
-        const menuToggle = document.getElementById('menuToggle');
-        const sideNav = document.getElementById('sideNav');
-        const overlay = document.getElementById('overlay');
-        const closeMenuBtn = document.getElementById('closeMenuBtn');
-        const focusableElements = sideNav.querySelectorAll('a, button, input, select, textarea, [tabindex]:not([tabindex="-1"])');
-        const firstFocusableElement = focusableElements[0];
-        const lastFocusableElement = focusableElements[focusableElements.length - 1];
-        
-        // Language buttons
-        const hyBtn = document.getElementById('hyBtn');
-        const ruBtn = document.getElementById('ruBtn');
-        
-        // Open and close menu functions
-        function openMenu() {
-            menuToggle.classList.add('active');
-            sideNav.classList.add('active');
-            overlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            menuToggle.setAttribute('aria-expanded', 'true');
-            
-            // Focus trap
-            document.addEventListener('keydown', trapTabKey);
-            
-            // Focus first element
-            setTimeout(() => {
-                firstFocusableElement.focus();
-            }, 100);
-        }
+    // Enhanced Mobile menu toggle functionality
+const menuToggle = document.getElementById('menuToggle');
+const sideNav = document.getElementById('sideNav');
+const overlay = document.getElementById('overlay');
+const closeMenuBtn = document.getElementById('closeMenuBtn');
+const focusableElements = sideNav.querySelectorAll('a, button, input, select, textarea, [tabindex]:not([tabindex="-1"])');
+const firstFocusableElement = focusableElements[0];
+const lastFocusableElement = focusableElements[focusableElements.length - 1];
 
-        function closeMenu() {
-            menuToggle.classList.remove('active');
-            sideNav.classList.remove('active');
-            overlay.classList.remove('active');
-            document.body.style.overflow = 'auto';
-            menuToggle.setAttribute('aria-expanded', 'false');
-            
-            // Remove focus trap
-            document.removeEventListener('keydown', trapTabKey);
-            
-            // Return focus to menu button
-            menuToggle.focus();
-        }
+// Language buttons
+const hyBtn = document.getElementById('hyBtn');
+const ruBtn = document.getElementById('ruBtn');
 
-        function trapTabKey(e) {
-            if (e.key === 'Tab') {
-                if (e.shiftKey && document.activeElement === firstFocusableElement) {
-                    e.preventDefault();
-                    lastFocusableElement.focus();
-                } else if (!e.shiftKey && document.activeElement === lastFocusableElement) {
-                    e.preventDefault();
-                    firstFocusableElement.focus();
-                }
-            }
-            
-            if (e.key === 'Escape') {
-                closeMenu();
-            }
+// Get saved language or default to Armenian
+let currentLanguage = localStorage.getItem('selectedLanguage') || 'hy';
+
+// Language translations
+const translations = {
+    hy: {
+        logoText: 'Միջոցառումների կառավարիչ',
+        menuTitle: 'Մենյու',
+        eventsText: 'Միջոցառումներ',
+        profileText: 'Պրոֆիլ',
+        logoutText: 'Դուրս գալ',
+        languageTitle: 'Լեզու',
+        copyright: '© 2024 Միջոցառումների Կառավարիչ',
+        pageTitle: 'Ստեղծել նոր միջոցառում',
+        internalNameLabel: 'Միջոցառման անվանումը:',
+        displayNameLabel: 'Ցուցադրման անվանում:',
+        dateLabel: 'Ամսաթիվ և ժամ:',
+        countryLabel: 'Երկիր:',
+        cityLabel: 'Քաղաք:',
+        addressLabel: 'Հասցե:',
+        hallNameLabel: 'Դահլիճի անվանում:',
+        domainLabel: 'Եզակի դոմեն:',
+        submitBtn: 'Ստեղծել միջոցառում',
+        domainError: 'Դոմենը պետք է պարունակի միայն փոքրատառեր, թվեր և գծիկներ:'
+    },
+    ru: {
+        logoText: 'Менеджер событий',
+        menuTitle: 'Меню',
+        eventsText: 'События',
+        profileText: 'Профиль',
+        logoutText: 'Выйти',
+        languageTitle: 'Язык',
+        copyright: '© 2024 Менеджер событий',
+        pageTitle: 'Создать новое событие',
+        internalNameLabel: 'Название мероприятия:',
+        displayNameLabel: 'Отображаемое название:',
+        dateLabel: 'Дата и время:',
+        countryLabel: 'Страна:',
+        cityLabel: 'Город:',
+        addressLabel: 'Адрес:',
+        hallNameLabel: 'Название зала:',
+        domainLabel: 'Уникальный домен:',
+        submitBtn: 'Создать событие',
+        domainError: 'Домен должен содержать только строчные буквы, цифры и дефисы:'
+    }
+};
+
+// Open and close menu functions
+function openMenu() {
+    menuToggle.classList.add('active');
+    sideNav.classList.add('active');
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    menuToggle.setAttribute('aria-expanded', 'true');
+    
+    // Focus trap
+    document.addEventListener('keydown', trapTabKey);
+    
+    // Focus first element
+    setTimeout(() => {
+        firstFocusableElement.focus();
+    }, 100);
+}
+
+function closeMenu() {
+    menuToggle.classList.remove('active');
+    sideNav.classList.remove('active');
+    overlay.classList.remove('active');
+    document.body.style.overflow = 'auto';
+    menuToggle.setAttribute('aria-expanded', 'false');
+    
+    // Remove focus trap
+    document.removeEventListener('keydown', trapTabKey);
+    
+    // Return focus to menu button
+    menuToggle.focus();
+}
+
+function trapTabKey(e) {
+    if (e.key === 'Tab') {
+        if (e.shiftKey && document.activeElement === firstFocusableElement) {
+            e.preventDefault();
+            lastFocusableElement.focus();
+        } else if (!e.shiftKey && document.activeElement === lastFocusableElement) {
+            e.preventDefault();
+            firstFocusableElement.focus();
         }
-        
-        // Event Listeners
-        menuToggle.addEventListener('click', openMenu);
-        closeMenuBtn.addEventListener('click', closeMenu);
-        overlay.addEventListener('click', closeMenu);
-        
-        // Language switcher functionality
-        function setLanguage(lang) {
-            if (lang === 'hy') {
-                // Armenian translations
-                document.getElementById('backLinkText').textContent = 'Վերադառնալ';
-                document.getElementById('logoText').textContent = 'Միջոցառումների կառավարիչ';
-                document.getElementById('menuTitle').textContent = 'Մենյու';
-                document.getElementById('eventsText').textContent = 'Միջոցառումներ';
-                document.getElementById('profileText').textContent = 'Պրոֆիլ';
-                document.getElementById('logoutText').textContent = 'Դուրս գալ';
-                document.getElementById('languageTitle').textContent = 'Լեզու';
-                document.getElementById('copyright').textContent = '© 2024 Միջոցառումների Կառավարիչ';
-                document.getElementById('pageTitle').textContent = 'Ստեղծել նոր միջոցառում';
-                document.getElementById('internalNameLabel').textContent = 'Միջոցառման անվանումը:';
-                document.getElementById('displayNameLabel').textContent = 'Ցուցադրման անվանում:';
-                document.getElementById('dateLabel').textContent = 'Ամսաթիվ և ժամ:';
-                document.getElementById('countryLabel').textContent = 'Երկիր:';
-                document.getElementById('cityLabel').textContent = 'Քաղաք:';
-                document.getElementById('addressLabel').textContent = 'Հասցե:';
-                document.getElementById('hallNameLabel').textContent = 'Դահլիճի անվանում:';
-                document.getElementById('domainLabel').textContent = 'Եզակի դոմեն:';
-                document.getElementById('submitBtn').textContent = 'Ստեղծել միջոցառում';
-                
-                hyBtn.classList.add('active');
-                ruBtn.classList.remove('active');
-                document.documentElement.lang = 'hy';
-            } else if (lang === 'ru') {
-                // Russian translations
-                document.getElementById('backLinkText').textContent = 'Вернуться';
-                document.getElementById('logoText').textContent = 'Менеджер событий';
-                document.getElementById('menuTitle').textContent = 'Меню';
-                document.getElementById('eventsText').textContent = 'События';
-                document.getElementById('profileText').textContent = 'Профиль';
-                document.getElementById('logoutText').textContent = 'Выйти';
-                document.getElementById('languageTitle').textContent = 'Язык';
-                document.getElementById('copyright').textContent = '© 2024 Менеджер событий';
-                document.getElementById('pageTitle').textContent = 'Создать новое событие';
-                document.getElementById('internalNameLabel').textContent = 'Название мероприятие:';
-                document.getElementById('displayNameLabel').textContent = 'Отображаемое название:';
-                document.getElementById('dateLabel').textContent = 'Дата и время:';
-                document.getElementById('countryLabel').textContent = 'Страна:';
-                document.getElementById('cityLabel').textContent = 'Город:';
-                document.getElementById('addressLabel').textContent = 'Адрес:';
-                document.getElementById('hallNameLabel').textContent = 'Название зала:';
-                document.getElementById('domainLabel').textContent = 'Уникальный домен:';
-                document.getElementById('submitBtn').textContent = 'Создать событие';
-                
-                hyBtn.classList.remove('active');
-                ruBtn.classList.add('active');
-                document.documentElement.lang = 'ru';
-            }
-        }
-        
-        // Event listeners for language buttons
-        hyBtn.addEventListener('click', () => setLanguage('hy'));
-        ruBtn.addEventListener('click', () => setLanguage('ru'));
-        
-        // Check browser language preference or use stored preference
-        const savedLang = localStorage.getItem('preferredLanguage');
-        if (savedLang) {
-            setLanguage(savedLang);
-        } else {
-            const browserLang = navigator.language.substring(0, 2);
-            if (browserLang === 'ru') {
-                setLanguage('ru');
-            } else {
-                setLanguage('hy'); // Default to Armenian
-            }
-        }
-        
-        // Save language preference when changed
-        hyBtn.addEventListener('click', () => {
-            localStorage.setItem('preferredLanguage', 'hy');
-        });
-        
-        ruBtn.addEventListener('click', () => {
-            localStorage.setItem('preferredLanguage', 'ru');
-        });
-        
-        // Form validation
-        const form = document.querySelector('.formEvent');
+    }
+    
+    if (e.key === 'Escape') {
+        closeMenu();
+    }
+}
+
+// Update language buttons based on current language
+function updateLanguageButtons() {
+    if (currentLanguage === 'hy') {
+        hyBtn.classList.add('active');
+        ruBtn.classList.remove('active');
+    } else {
+        hyBtn.classList.remove('active');
+        ruBtn.classList.add('active');
+    }
+}
+
+// Update all text content based on selected language
+function updateLanguage(lang) {
+    document.getElementById('logoText').textContent = translations[lang].logoText;
+    document.getElementById('menuTitle').textContent = translations[lang].menuTitle;
+    document.getElementById('eventsText').textContent = translations[lang].eventsText;
+    document.getElementById('profileText').textContent = translations[lang].profileText;
+    document.getElementById('logoutText').textContent = translations[lang].logoutText;
+    document.getElementById('languageTitle').textContent = translations[lang].languageTitle;
+    document.getElementById('copyright').textContent = translations[lang].copyright;
+    document.getElementById('pageTitle').textContent = translations[lang].pageTitle;
+    document.getElementById('internalNameLabel').textContent = translations[lang].internalNameLabel;
+    document.getElementById('displayNameLabel').textContent = translations[lang].displayNameLabel;
+    document.getElementById('dateLabel').textContent = translations[lang].dateLabel;
+    document.getElementById('countryLabel').textContent = translations[lang].countryLabel;
+    document.getElementById('cityLabel').textContent = translations[lang].cityLabel;
+    document.getElementById('addressLabel').textContent = translations[lang].addressLabel;
+    document.getElementById('hallNameLabel').textContent = translations[lang].hallNameLabel;
+    document.getElementById('domainLabel').textContent = translations[lang].domainLabel;
+    document.getElementById('submitBtn').textContent = translations[lang].submitBtn;
+    
+    // Update HTML lang attribute
+    document.documentElement.lang = lang;
+    
+    console.log('Language updated to:', lang);
+}
+
+// Form validation
+function setupFormValidation() {
+    const form = document.querySelector('.formEvent');
+    if (form) {
         form.addEventListener('submit', function(event) {
             const requiredFields = form.querySelectorAll('[required]');
             let isValid = true;
@@ -977,21 +1049,21 @@
             
             // Domain validation - only allow letters, numbers, and hyphens
             const domainField = document.getElementById('unique_domain');
-            const domainPattern = /^[a-z0-9-]+$/;
-            if (domainField.value && !domainPattern.test(domainField.value)) {
-                isValid = false;
-                domainField.style.borderColor = '#d32f2f';
-                
-                // Show error message
-                event.preventDefault();
-                const errorMessage = document.querySelector('.error-message') || document.createElement('p');
-                errorMessage.className = 'error-message';
-                errorMessage.textContent = document.documentElement.lang === 'hy' ? 
-                    'Դոմենը պետք է պարունակի միայն փոքրատառեր, թվեր և գծիկներ:' : 
-                    'Домен должен содержать только строчные буквы, цифры и дефисы:';
-                
-                if (!document.querySelector('.error-message')) {
-                    form.appendChild(errorMessage);
+            if (domainField && domainField.value) {
+                const domainPattern = /^[a-z0-9-]+$/;
+                if (!domainPattern.test(domainField.value)) {
+                    isValid = false;
+                    domainField.style.borderColor = '#d32f2f';
+                    
+                    // Show error message
+                    event.preventDefault();
+                    const errorMessage = document.querySelector('.error-message') || document.createElement('p');
+                    errorMessage.className = 'error-message';
+                    errorMessage.textContent = translations[currentLanguage].domainError;
+                    
+                    if (!document.querySelector('.error-message')) {
+                        form.appendChild(errorMessage);
+                    }
                 }
             }
             
@@ -999,7 +1071,7 @@
                 event.preventDefault();
             }
         });
-        
+
         // Reset field styling on input
         const inputs = document.querySelectorAll('input');
         inputs.forEach(input => {
@@ -1011,6 +1083,48 @@
                 }
             });
         });
+    }
+}
+
+// Add language button event listeners
+hyBtn.addEventListener('click', function() {
+    if (currentLanguage !== 'hy') {
+        currentLanguage = 'hy';
+        updateLanguageButtons();
+        updateLanguage(currentLanguage);
+        localStorage.setItem('selectedLanguage', 'hy');
+        console.log('Language set to Armenian, saved to localStorage');
+    }
+});
+
+ruBtn.addEventListener('click', function() {
+    if (currentLanguage !== 'ru') {
+        currentLanguage = 'ru';
+        updateLanguageButtons();
+        updateLanguage(currentLanguage);
+        localStorage.setItem('selectedLanguage', 'ru');
+        console.log('Language set to Russian, saved to localStorage');
+    }
+});
+
+// Event Listeners for menu
+menuToggle.addEventListener('click', openMenu);
+closeMenuBtn.addEventListener('click', closeMenu);
+overlay.addEventListener('click', closeMenu);
+
+// Initialize everything when the DOM is fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM fully loaded');
+    
+    // Setup form validation
+    setupFormValidation();
+    
+    // Apply saved language
+    console.log('Current language from localStorage:', currentLanguage);
+    updateLanguageButtons();
+    updateLanguage(currentLanguage);
+});
     </script>
 </body>
+
 </html>
