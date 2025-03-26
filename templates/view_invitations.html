@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="hy">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -68,7 +69,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: 
+            background:
                 radial-gradient(circle at 30% 40%, rgba(156, 132, 104, 0.08) 0%, transparent 30%),
                 radial-gradient(circle at 70% 60%, rgba(156, 132, 104, 0.1) 0%, transparent 30%);
             z-index: -1;
@@ -80,7 +81,7 @@
             position: fixed;
             width: 200vw;
             height: 200vh;
-            background: radial-gradient(circle, rgba(255,255,255,0.6) 10%, transparent 80%);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.6) 10%, transparent 80%);
             animation: shimmer 40s infinite linear;
             top: -50vh;
             left: -50vw;
@@ -88,10 +89,15 @@
         }
 
         @keyframes shimmer {
-            0% { transform: translate(-50%, -50%) rotate(0deg); }
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
         }
-        
+
         /* Floating particles */
         .particles {
             position: fixed;
@@ -114,18 +120,64 @@
         }
 
         @keyframes particleMove {
-            0% { transform: translateY(0) translateX(0); opacity: 1; }
-            100% { transform: translateY(800px) translateX(-200px); opacity: 0; }
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(800px) translateX(-200px);
+                opacity: 0;
+            }
         }
 
-        .particles span:nth-child(1) { top: 12%; left: 18%; animation-duration: 18s; }
-        .particles span:nth-child(2) { top: 22%; left: 65%; animation-duration: 22s; }
-        .particles span:nth-child(3) { top: 35%; left: 42%; animation-duration: 25s; }
-        .particles span:nth-child(4) { top: 55%; left: 78%; animation-duration: 20s; }
-        .particles span:nth-child(5) { top: 75%; left: 25%; animation-duration: 16s; }
-        .particles span:nth-child(6) { top: 15%; left: 85%; animation-duration: 19s; }
-        .particles span:nth-child(7) { top: 45%; left: 15%; animation-duration: 21s; }
-        .particles span:nth-child(8) { top: 65%; left: 60%; animation-duration: 24s; }
+        .particles span:nth-child(1) {
+            top: 12%;
+            left: 18%;
+            animation-duration: 18s;
+        }
+
+        .particles span:nth-child(2) {
+            top: 22%;
+            left: 65%;
+            animation-duration: 22s;
+        }
+
+        .particles span:nth-child(3) {
+            top: 35%;
+            left: 42%;
+            animation-duration: 25s;
+        }
+
+        .particles span:nth-child(4) {
+            top: 55%;
+            left: 78%;
+            animation-duration: 20s;
+        }
+
+        .particles span:nth-child(5) {
+            top: 75%;
+            left: 25%;
+            animation-duration: 16s;
+        }
+
+        .particles span:nth-child(6) {
+            top: 15%;
+            left: 85%;
+            animation-duration: 19s;
+        }
+
+        .particles span:nth-child(7) {
+            top: 45%;
+            left: 15%;
+            animation-duration: 21s;
+        }
+
+        .particles span:nth-child(8) {
+            top: 65%;
+            left: 60%;
+            animation-duration: 24s;
+        }
 
         /* Main container */
         .container {
@@ -161,11 +213,9 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(
-                135deg, 
-                rgba(156, 132, 104, 0.85) 0%,
-                rgba(138, 117, 89, 0.75) 100%
-            );
+            background: linear-gradient(135deg,
+                    rgba(156, 132, 104, 0.85) 0%,
+                    rgba(138, 117, 89, 0.75) 100%);
             backdrop-filter: blur(2px);
             z-index: 1;
         }
@@ -251,11 +301,11 @@
         .menu-toggle.active .bar:nth-child(1) {
             transform: translateY(9px) rotate(45deg);
         }
-        
+
         .menu-toggle.active .bar:nth-child(2) {
             opacity: 0;
         }
-        
+
         .menu-toggle.active .bar:nth-child(3) {
             transform: translateY(-9px) rotate(-45deg);
         }
@@ -500,11 +550,11 @@
             padding: 8px 12px;
             border-radius: var(--radius-small);
         }
-        
+
         .back-link:hover {
             background-color: rgba(156, 132, 104, 0.1);
         }
-        
+
         .back-link i {
             margin-right: 8px;
         }
@@ -542,56 +592,176 @@
 
         /* Stats Cards */
         .stats-container {
-            display: flex;
-            justify-content: space-between;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
 
-        .stat-card {
-            flex: 1;
-            background: rgba(255, 255, 255, 0.7);
-            padding: 15px;
-            border-radius: var(--radius-small);
-            box-shadow: var(--shadow-light);
-            text-align: center;
-            transition: var(--transition);
-        }
+.stat-card {
+    flex: 1;
+    min-width: 130px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 14px 12px;
+    border-radius: var(--radius-small);
+    box-shadow: var(--shadow-light);
+    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
 
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-medium);
-        }
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.4s ease;
+}
 
-        .stat-card-primary {
-            border-left: 4px solid var(--primary);
-        }
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-medium);
+}
 
-        .stat-card-success {
-            border-left: 4px solid #4caf50;
-        }
+.stat-card:hover::before {
+    opacity: 0.08;
+}
 
-        .stat-card-warning {
-            border-left: 4px solid #ff9800;
-        }
+.stat-card-primary {
+    border-left: 4px solid var(--primary);
+}
 
-        .stat-card-info {
-            border-left: 4px solid #2196f3;
-        }
+.stat-card-primary::before {
+    background: linear-gradient(135deg, var(--primary) 0%, transparent 70%);
+}
 
-        .stat-card h3 {
-            font-size: 14px;
-            color: var(--text-medium);
-            margin-bottom: 5px;
-            font-weight: 500;
-        }
+.stat-card-success {
+    border-left: 4px solid #4caf50;
+}
 
-        .stat-card .stat-value {
-            font-size: 28px;
-            font-weight: 600;
-            color: var(--text-dark);
-            font-family: 'Cormorant Garamond', serif;
-        }
+.stat-card-success::before {
+    background: linear-gradient(135deg, #4caf50 0%, transparent 70%);
+}
+
+.stat-card-warning {
+    border-left: 4px solid #ff9800;
+}
+
+.stat-card-warning::before {
+    background: linear-gradient(135deg, #ff9800 0%, transparent 70%);
+}
+
+.stat-card-info {
+    border-left: 4px solid #2196f3;
+}
+
+.stat-card-info::before {
+    background: linear-gradient(135deg, #2196f3 0%, transparent 70%);
+}
+
+.stat-card-danger {
+    border-left: 4px solid #d32f2f;
+}
+
+.stat-card-danger::before {
+    background: linear-gradient(135deg, #d32f2f 0%, transparent 70%);
+}
+
+.stat-card h3 {
+    font-size: 14px;
+    color: var(--text-medium);
+    margin-bottom: 6px;
+    font-weight: 500;
+}
+
+.stat-card .stat-value {
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--text-dark);
+    font-family: 'Cormorant Garamond', serif;
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover .stat-value {
+    transform: scale(1.05);
+}
+
+/* Иконки для карточек (уменьшенные) */
+.stat-card::after {
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    position: absolute;
+    bottom: -5px;
+    right: 8px;
+    font-size: 34px;
+    opacity: 0.05;
+    transition: all 0.3s ease;
+}
+
+.stat-card-primary::after {
+    content: '\f500'; /* fa-user-friends */
+}
+
+.stat-card-success::after {
+    content: '\f058'; /* fa-check-circle */
+}
+
+.stat-card-danger::after {
+    content: '\f057'; /* fa-times-circle */
+}
+
+.stat-card-warning::after {
+    content: '\f017'; /* fa-clock */
+}
+
+.stat-card-info::after {
+    content: '\f0c0'; /* fa-users */
+}
+
+.stat-card:hover::after {
+    opacity: 0.08;
+    transform: translateY(-3px);
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 992px) {
+    .stats-container {
+        gap: 10px;
+    }
+    
+    .stat-card {
+        padding: 12px 8px;
+        min-width: 120px;
+    }
+    
+    .stat-card .stat-value {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 768px) {
+    .stats-container {
+        flex-wrap: wrap;
+    }
+    
+    .stat-card {
+        flex: 1 0 45%;
+        margin-bottom: 10px;
+    }
+}
+
+@media (max-width: 576px) {
+    .stat-card {
+        flex: 1 0 100%;
+    }
+}
 
         /* Table styles */
         .invitations-table {
@@ -708,7 +878,7 @@
             padding: 10px 18px;
             font-size: 14px;
         }
-        
+
         .credit {
             position: absolute;
             bottom: 15px;
@@ -773,32 +943,53 @@
 
         /* Animation */
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-        
+
         @keyframes fadeInRight {
-            from { opacity: 0; transform: translateX(30px); }
-            to { opacity: 1; transform: translateX(0); }
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
-        
+
         @keyframes fadeInLeft {
-            from { opacity: 0; transform: translateX(-30px); }
-            to { opacity: 1; transform: translateX(0); }
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
 
         .container {
             animation: fadeIn 0.8s ease forwards;
         }
-        
+
         .side-image {
             animation: fadeInLeft 1s ease forwards;
         }
-        
+
         .right {
             animation: fadeInRight 1s ease forwards;
         }
-        
+
         .invitations-table {
             animation: fadeIn 0.6s ease forwards;
             animation-delay: 0.2s;
@@ -817,7 +1008,7 @@
                 width: 95%;
                 height: 85vh;
             }
-            
+
             .invitations-header h2 {
                 font-size: 28px;
             }
@@ -830,19 +1021,19 @@
                 flex: 1 0 45%;
             }
         }
-        
+
         @media (max-width: 992px) {
             .container {
                 height: auto;
                 min-height: 600px;
                 max-height: 90vh;
             }
-            
+
             .right {
                 padding: 25px 20px;
             }
-            
-            .invitations-table th, 
+
+            .invitations-table th,
             .invitations-table td {
                 padding: 10px 12px;
                 font-size: 13px;
@@ -864,12 +1055,12 @@
                 overflow-x: auto;
                 white-space: nowrap;
             }
-            
+
             .btn {
                 padding: 6px 10px;
                 font-size: 12px;
             }
-            
+
             .btn i {
                 margin-right: 4px;
                 font-size: 12px;
@@ -914,22 +1105,22 @@
             .side-image .logo i {
                 font-size: 22px;
             }
-            
+
             .top-nav {
                 margin-bottom: 15px;
             }
-            
+
             .top-nav .btn {
                 padding: 8px 15px;
                 font-size: 13px;
             }
-            
+
             .actions-container {
                 flex-wrap: wrap;
                 justify-content: center;
                 gap: 10px;
             }
-            
+
             .actions-container .btn {
                 flex: 1 0 calc(50% - 10px);
                 min-width: 100px;
@@ -957,7 +1148,7 @@
             body {
                 padding: 0;
             }
-            
+
             .container {
                 width: 100%;
                 height: 100vh;
@@ -966,55 +1157,55 @@
                 flex-direction: column;
                 overflow-y: auto;
             }
-            
+
             .side-image {
                 min-height: 120px;
                 max-height: 120px;
             }
-            
+
             .side-image .text {
                 padding: 10px;
             }
-            
+
             .side-image .text h3 {
                 font-size: 20px;
                 margin-bottom: 5px;
             }
-            
+
             .side-image .text p {
                 font-size: 13px;
                 line-height: 1.3;
             }
-            
+
             .side-image .logo {
                 width: 40px;
                 height: 40px;
                 margin-bottom: 5px;
             }
-            
+
             .side-image .logo i {
                 font-size: 20px;
             }
-            
+
             .right {
                 padding: 15px 12px;
                 flex: 1;
             }
-            
+
             .top-nav {
                 flex-direction: row;
                 margin-bottom: 15px;
             }
-            
+
             .top-nav .btn {
                 padding: 8px 12px;
                 font-size: 12px;
             }
-            
+
             .invitations-header h2 {
                 font-size: 24px;
             }
-            
+
             .invitations-header::after {
                 margin: 8px auto 0;
             }
@@ -1024,16 +1215,17 @@
                 gap: 8px;
                 margin-top: 15px;
             }
-            
+
             .actions-container .btn {
                 width: 100%;
                 max-width: 100%;
                 padding: 10px;
             }
-            
+
             .credit {
                 font-size: 10px;
-                margin-top: 10px;position: relative;
+                margin-top: 10px;
+                position: relative;
                 text-align: center;
                 bottom: auto;
                 right: auto;
@@ -1062,13 +1254,13 @@
                 width: 100%;
                 border-radius: 0;
             }
-            
+
             .side-image {
                 max-width: 250px;
                 height: 100%;
                 max-height: none;
             }
-            
+
             .right {
                 overflow-y: auto;
                 height: 100vh;
@@ -1077,151 +1269,153 @@
 
 
         .desktop-only {
-        display: block;
-    }
-    
-    .mobile-only {
-        display: none;
-    }
-    
-    /* Mobile cards styling */
-    .invitations-cards {
-        display: flex;
-        flex-direction: column-reverse;
-        gap: 16px;
-        margin-bottom: 25px;
-    }
-    
-    .invitation-card {
-        background-color: var(--card-bg);
-        border-radius: var(--radius-medium);
-        box-shadow: var(--shadow-light);
-        overflow: hidden;
-        transition: var(--transition);
-        animation: fadeIn 0.4s ease forwards;
-    }
-    
-    .invitation-card:hover {
-        transform: translateY(-3px);
-        box-shadow: var(--shadow-medium);
-    }
-    
-    .invitation-card-header {
-        padding: 16px;
-        border-bottom: 1px solid rgba(156, 132, 104, 0.1);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    
-    .invitation-name {
-        font-size: 16px;
-        font-weight: 500;
-        margin: 0;
-        flex: 1;
-        margin-right: 10px;
-    }
-    
-    .invitation-card-details {
-        padding: 12px 16px;
-        border-bottom: 1px solid rgba(156, 132, 104, 0.1);
-    }
-    
-    .detail-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 8px;
-    }
-    
-    .detail-item:last-child {
-        margin-bottom: 0;
-    }
-    
-    .detail-label {
-        font-size: 14px;
-        color: var(--text-medium);
-    }
-    
-    .detail-value {
-        font-weight: 500;
-        font-size: 14px;
-    }
-    
-    .invitation-card-actions {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 8px;
-        padding: 12px;
-    }
-    
-    .card-action-btn {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 10px 8px;
-        border-radius: var(--radius-small);
-        color: white;
-        font-size: 13px;
-        font-weight: 500;
-        text-decoration: none;
-        cursor: pointer;
-        transition: var(--transition);
-        text-align: center;
-    }
-    
-    .card-action-btn i {
-        margin-right: 6px;
-        font-size: 14px;
-    }
-    
-    .card-action-btn.btn-info {
-        background-color: rgba(33, 150, 243, 0.8);
-    }
-    
-    .card-action-btn.btn-edit {
-        background-color: var(--primary);
-    }
-    
-    .card-action-btn.btn-delete {
-        background-color: rgba(211, 47, 47, 0.8);
-    }
-    
-    .card-action-btn.btn-copy {
-        background-color: rgba(0, 150, 136, 0.8);
-        border: none;
-    }
-    
-    /* Media queries for responsive design */
-    @media (max-width: 850px) {
-        .desktop-only {
-            display: none;
-        }
-        
-        .mobile-only {
             display: block;
         }
-        
-        .invitations-table {
+
+        .mobile-only {
             display: none;
         }
-    }
-    
-    /* Ensuring proper spacing for mobile */
-    @media (max-width: 576px) {
+
+        /* Mobile cards styling */
+        .invitations-cards {
+            display: flex;
+            flex-direction: column-reverse;
+            gap: 16px;
+            margin-bottom: 25px;
+        }
+
+        .invitation-card {
+            background-color: var(--card-bg);
+            border-radius: var(--radius-medium);
+            box-shadow: var(--shadow-light);
+            overflow: hidden;
+            transition: var(--transition);
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        .invitation-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .invitation-card-header {
+            padding: 16px;
+            border-bottom: 1px solid rgba(156, 132, 104, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .invitation-name {
+            font-size: 16px;
+            font-weight: 500;
+            margin: 0;
+            flex: 1;
+            margin-right: 10px;
+        }
+
+        .invitation-card-details {
+            padding: 12px 16px;
+            border-bottom: 1px solid rgba(156, 132, 104, 0.1);
+        }
+
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .detail-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .detail-label {
+            font-size: 14px;
+            color: var(--text-medium);
+        }
+
+        .detail-value {
+            font-weight: 500;
+            font-size: 14px;
+        }
+
         .invitation-card-actions {
-            grid-template-columns: 1fr 1fr;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            padding: 12px;
         }
-        
-        .right {
-            padding-bottom: 70px; /* Добавляем отступ снизу */
+
+        .card-action-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 8px;
+            border-radius: var(--radius-small);
+            color: white;
+            font-size: 13px;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
         }
-    }
+
+        .card-action-btn i {
+            margin-right: 6px;
+            font-size: 14px;
+        }
+
+        .card-action-btn.btn-info {
+            background-color: rgba(33, 150, 243, 0.8);
+        }
+
+        .card-action-btn.btn-edit {
+            background-color: var(--primary);
+        }
+
+        .card-action-btn.btn-delete {
+            background-color: rgba(211, 47, 47, 0.8);
+        }
+
+        .card-action-btn.btn-copy {
+            background-color: rgba(0, 150, 136, 0.8);
+            border: none;
+        }
+
+        /* Media queries for responsive design */
+        @media (max-width: 850px) {
+            .desktop-only {
+                display: none;
+            }
+
+            .mobile-only {
+                display: block;
+            }
+
+            .invitations-table {
+                display: none;
+            }
+        }
+
+        /* Ensuring proper spacing for mobile */
+        @media (max-width: 576px) {
+            .invitation-card-actions {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .right {
+                padding-bottom: 70px;
+                /* Добавляем отступ снизу */
+            }
+        }
     </style>
 </head>
+
 <body>
     <div class="bg-shimmer"></div>
-    
+
     <div class="particles">
         <span></span>
         <span></span>
@@ -1232,7 +1426,7 @@
         <span></span>
         <span></span>
     </div>
-    
+
     <div class="container">
         <div class="side-image">
             <div class="side-image-bg"></div>
@@ -1289,9 +1483,9 @@
                     </div>
                 </div>
             </ul>
-         
+
             <div class="side-nav-footer">
-         
+
                 <div class="copyright" id="copyright">© 2024 Հրավերների Կառավարիչ</div>
             </div>
         </div>
@@ -1303,11 +1497,11 @@
                     <span id="backLinkText">Վերադառնալ միջոցառումներին</span>
                 </a>
             </div>
-            
+
             <div class="invitations-header">
                 <h2 id="pageTitle">Բոլոր հրավերները</h2>
             </div>
-            
+
             <!-- Stats Cards -->
             <div class="stats-container">
                 <div class="stat-card stat-card-primary">
@@ -1316,47 +1510,43 @@
                 </div>
                 <div class="stat-card stat-card-success">
                     <h3 id="acceptedLabel">Ընդունված</h3>
-                    {% set accepted_count = 0 %}
-                    {% for invitation in invitations %}
-                        {% if invitation.accepted == True %}
-                            {% set accepted_count = accepted_count + 1 %}
-                        {% endif %}
-                    {% endfor %}
-                    <div class="stat-value">{{ accepted_count }}</div>
+                    <div class="stat-value">
+                        {{ invitations | selectattr("accepted", "equalto", True) | list | length }}
+                    </div>
+                </div>
+                <div class="stat-card stat-card-danger">
+                    <h3 id="declinedLabel">Մերժված</h3>
+                    <div class="stat-value">
+                        {{ invitations | selectattr("accepted", "equalto", False) | list | length }}
+                    </div>
                 </div>
                 <div class="stat-card stat-card-warning">
                     <h3 id="pendingLabel">Սպասվող</h3>
-                    {% set pending_count = 0 %}
-                    {% for invitation in invitations %}
-                        {% if invitation.accepted is none %}
-                            {% set pending_count = pending_count + 1 %}
-                        {% endif %}
-                    {% endfor %}
-                    <div class="stat-value">{{ pending_count }}</div>
+                    <div class="stat-value">
+                        {{ invitations | selectattr("accepted", "none") | list | length }}
+                    </div>
                 </div>
                 <div class="stat-card stat-card-info">
                     <h3 id="totalAttendeesLabel">Ընդհանուր մասնակիցներ</h3>
-                    {% set total_attendees = 0 %}
-                    {% for invitation in invitations %}
-                        {% if invitation.accepted == True %}
-                            {% set total_attendees = total_attendees + (invitation.attendee_count if invitation.attendee_count else 1) %}
-                        {% endif %}
-                    {% endfor %}
-                    <div class="stat-value">{{ total_attendees }}</div>
+                    <div class="stat-value">
+                        {{ invitations | selectattr("accepted", "equalto", True) | map(attribute="attendee_count") | sum
+                        }}
+                    </div>
                 </div>
             </div>
-            
+
             <div class="search-container">
                 <i class="fas fa-search search-icon"></i>
-                <input type="text" id="searchInput" class="search-box" placeholder="Որոնել հրավերներ..." data-placeholder-hy="Որոնել հրավերներ..." data-placeholder-ru="Поиск приглашений...">
+                <input type="text" id="searchInput" class="search-box" placeholder="Որոնել հրավերներ..."
+                    data-placeholder-hy="Որոնել հրավերներ..." data-placeholder-ru="Поиск приглашений...">
             </div>
-            
+
             <div class="actions-container">
                 <a href="{{ url_for('create_invitation', event_id=event_id) }}" class="btn">
                     <i class="fas fa-plus"></i> <span id="createInvitationText">Ստեղծել հրավեր</span>
                 </a>
             </div>
-            
+
             <!-- Mobile view - карточки -->
             <div class="invitations-cards mobile-only">
                 {% for invitation in invitations %}
@@ -1364,46 +1554,51 @@
                     <div class="invitation-card-header">
                         <h3 class="invitation-name">{{ invitation.name }}</h3>
                         {% if invitation.accepted == True %}
-                            <span class="badge badge-success" data-status="accepted">Ընդունված</span>
+                        <span class="badge badge-success" data-status="accepted">Ընդունված</span>
                         {% elif invitation.accepted == False %}
-                            <span class="badge badge-danger" data-status="declined">Մերժված</span>
+                        <span class="badge badge-danger" data-status="declined">Մերժված</span>
                         {% else %}
-                            <span class="badge badge-warning" data-status="pending">Սպասվող</span>
+                        <span class="badge badge-warning" data-status="pending">Սպասվող</span>
                         {% endif %}
                     </div>
-                    
+
                     <div class="invitation-card-details">
                         <div class="detail-item">
                             <span class="detail-label" id="attendeesLabel">Մասնակիցներ:</span>
                             <span class="detail-value">
                                 {% if invitation.attendee_count %}
-                                    {{ invitation.attendee_count }}
+                                {{ invitation.attendee_count }}
                                 {% else %}
-                                    <span class="badge badge-light" data-na="true">Հ/Հ</span>
+                                <span class="badge badge-light" data-na="true">Հ/Հ</span>
                                 {% endif %}
                             </span>
                         </div>
-                        
+
                         <div class="detail-item">
                             <span class="detail-label" id="commentsLabel">Մեկնաբանություններ:</span>
                             <span class="detail-value">
                                 {% if invitation.comments %}
-                                    <span class="badge badge-info" data-comments="yes">Այո</span>
+                                <span class="badge badge-info" data-comments="yes">Այո</span>
                                 {% else %}
-                                    <span class="badge badge-light" data-comments="no">Ոչ</span>
+                                <span class="badge badge-light" data-comments="no">Ոչ</span>
                                 {% endif %}
                             </span>
                         </div>
                     </div>
-                    
+
                     <div class="invitation-card-actions">
-                        <a href="{{ url_for('invitation_details', id=invitation.id) }}" class="card-action-btn btn-info">
+                        <a href="{{ url_for('invitation_details', id=invitation.id) }}"
+                            class="card-action-btn btn-info">
                             <i class="fas fa-eye"></i> <span class="view-text">Դիտել</span>
                         </a>
                         <a href="{{ url_for('edit_invitation', id=invitation.id) }}" class="card-action-btn btn-edit">
                             <i class="fas fa-edit"></i> <span class="edit-text">Խմբագրել</span>
                         </a>
-                        <a href="{{ url_for('delete_invitation', id=invitation.id) }}" class="card-action-btn btn-delete" onclick="return confirm('Դուք վստահ եք, որ ցանկանում եք ջնջել այս հրավերը?');" data-confirm-hy="Դուք վստահ եք, որ ցանկանում եք ջնջել այս հրավերը?" data-confirm-ru="Вы уверены, что хотите удалить это приглашение?">
+                        <a href="{{ url_for('delete_invitation', id=invitation.id) }}"
+                            class="card-action-btn btn-delete"
+                            onclick="return confirm('Դուք վստահ եք, որ ցանկանում եք ջնջել այս հրավերը?');"
+                            data-confirm-hy="Դուք վստահ եք, որ ցանկանում եք ջնջել այս հրավերը?"
+                            data-confirm-ru="Вы уверены, что хотите удалить это приглашение?">
                             <i class="fas fa-trash-alt"></i> <span class="delete-text">Ջնջել</span>
                         </a>
                         <button class="card-action-btn btn-copy copy-link" data-hash="{{ invitation.hash }}">
@@ -1413,9 +1608,9 @@
                 </div>
                 {% endfor %}
             </div>
-            
-           
-            
+
+
+
             <!-- <div class="credit" id="copyright2">© 2024 Հրավերների Կառավարիչ</div> -->
         </div>
     </div>
@@ -1426,27 +1621,27 @@
         const sideNav = document.getElementById('sideNav');
         const overlay = document.getElementById('overlay');
         const closeMenuBtn = document.getElementById('closeMenuBtn');
-        
+
         // Language buttons
         const hyBtn = document.getElementById('hyBtn');
         const ruBtn = document.getElementById('ruBtn');
-        
+
         menuToggle.addEventListener('click', toggleMenu);
         overlay.addEventListener('click', toggleMenu);
         closeMenuBtn.addEventListener('click', toggleMenu);
-        
+
         function toggleMenu() {
             menuToggle.classList.toggle('active');
             sideNav.classList.toggle('active');
             overlay.classList.toggle('active');
             document.body.style.overflow = sideNav.classList.contains('active') ? 'hidden' : 'auto';
         }
-        
+
         // Language toggle functionality
         // Загружаем сохраненный язык из localStorage или устанавливаем армянский по умолчанию
         let currentLanguage = localStorage.getItem('selectedLanguage') || 'hy';
-        
-        hyBtn.addEventListener('click', function() {
+
+        hyBtn.addEventListener('click', function () {
             if (currentLanguage !== 'hy') {
                 currentLanguage = 'hy';
                 updateLanguageButtons();
@@ -1454,8 +1649,8 @@
                 localStorage.setItem('selectedLanguage', 'hy');
             }
         });
-        
-        ruBtn.addEventListener('click', function() {
+
+        ruBtn.addEventListener('click', function () {
             if (currentLanguage !== 'ru') {
                 currentLanguage = 'ru';
                 updateLanguageButtons();
@@ -1463,7 +1658,7 @@
                 localStorage.setItem('selectedLanguage', 'ru');
             }
         });
-        
+
         function updateLanguageButtons() {
             if (currentLanguage === 'hy') {
                 hyBtn.classList.add('active');
@@ -1473,7 +1668,7 @@
                 ruBtn.classList.add('active');
             }
         }
-        
+
         // Text content for both languages
         const translations = {
             hy: {
@@ -1489,6 +1684,7 @@
                 backLinkText: 'Վերադառնալ միջոցառումներին',
                 totalInvitedLabel: 'Ընդհանուր հրավիրված',
                 acceptedLabel: 'Ընդունված',
+                declinedLabel: 'Մերժված',  // Добавлено поле для отклоненных
                 pendingLabel: 'Սպասվող',
                 totalAttendeesLabel: 'Ընդհանուր մասնակիցներ',
                 nameColumnHeader: 'Անուն',
@@ -1505,11 +1701,13 @@
                 viewText: 'Դիտել',
                 editText: 'Խմբագրել',
                 deleteText: 'Ջնջել',
-                copyText: 'Պատճենել հղումը',
+                copyText: 'Պատճենել',
                 createInvitationText: 'Ստեղծել հրավեր',
                 searchPlaceholder: 'Որոնել հրավերներ...',
                 deleteConfirmation: 'Դուք վստահ եք, որ ցանկանում եք ջնջել այս հրավերը?',
-                copiedMessage: 'Պատճենված!'
+                copiedMessage: 'Պատճենված!',
+                attendeesLabel: 'Մասնակիցներ:',
+                commentsLabel: 'Մեկնաբանություններ:'
             },
             ru: {
                 sideTitle: 'Менеджер приглашений',
@@ -1524,6 +1722,7 @@
                 backLinkText: 'Вернуться к событиям',
                 totalInvitedLabel: 'Всего приглашено',
                 acceptedLabel: 'Принято',
+                declinedLabel: 'Отклонено',  // Добавлено поле для отклоненных
                 pendingLabel: 'В ожидании',
                 totalAttendeesLabel: 'Всего участников',
                 nameColumnHeader: 'Имя',
@@ -1540,16 +1739,18 @@
                 viewText: 'Просмотр',
                 editText: 'Изменить',
                 deleteText: 'Удалить',
-                copyText: 'Копировать ссылку',
+                copyText: 'Копировать',
                 createInvitationText: 'Создать приглашение',
                 searchPlaceholder: 'Поиск приглашений...',
                 deleteConfirmation: 'Вы уверены, что хотите удалить это приглашение?',
-                copiedMessage: 'Скопировано!'
+                copiedMessage: 'Скопировано!',
+                attendeesLabel: 'Участники:',
+                commentsLabel: 'Комментарии:'
             }
         };
-        
         // Function to update all text content based on selected language
         function updateLanguage(lang) {
+            // Обновление основных элементов интерфейса
             document.getElementById('sideTitle').textContent = translations[lang].sideTitle;
             document.getElementById('sideDescription').textContent = translations[lang].sideDescription;
             document.getElementById('menuTitle').textContent = translations[lang].menuTitle;
@@ -1559,26 +1760,45 @@
             document.getElementById('logoutText').textContent = translations[lang].logoutText;
             document.getElementById('languageTitle').textContent = translations[lang].languageTitle;
             document.getElementById('copyright').textContent = translations[lang].copyright;
-            
-            // Проверяем, существует ли элемент copyright2
-            const copyright2Element = document.getElementById('copyright2');
-            if (copyright2Element) {
-                copyright2Element.textContent = translations[lang].copyright;
-            }
-            
             document.getElementById('backLinkText').textContent = translations[lang].backLinkText;
+
+            // Обновление заголовков статистики
             document.getElementById('totalInvitedLabel').textContent = translations[lang].totalInvitedLabel;
             document.getElementById('acceptedLabel').textContent = translations[lang].acceptedLabel;
+            document.getElementById('declinedLabel').textContent = translations[lang].declinedLabel;
             document.getElementById('pendingLabel').textContent = translations[lang].pendingLabel;
             document.getElementById('totalAttendeesLabel').textContent = translations[lang].totalAttendeesLabel;
-            document.getElementById('nameColumnHeader').textContent = translations[lang].nameColumnHeader;
-            document.getElementById('statusColumnHeader').textContent = translations[lang].statusColumnHeader;
-            document.getElementById('attendeesColumnHeader').textContent = translations[lang].attendeesColumnHeader;
-            document.getElementById('commentsColumnHeader').textContent = translations[lang].commentsColumnHeader;
-            document.getElementById('actionsColumnHeader').textContent = translations[lang].actionsColumnHeader;
+
+            // Обновление заголовков таблицы (если они существуют)
+            const nameColumnHeader = document.getElementById('nameColumnHeader');
+            const statusColumnHeader = document.getElementById('statusColumnHeader');
+            const attendeesColumnHeader = document.getElementById('attendeesColumnHeader');
+            const commentsColumnHeader = document.getElementById('commentsColumnHeader');
+            const actionsColumnHeader = document.getElementById('actionsColumnHeader');
+
+            if (nameColumnHeader) nameColumnHeader.textContent = translations[lang].nameColumnHeader;
+            if (statusColumnHeader) statusColumnHeader.textContent = translations[lang].statusColumnHeader;
+            if (attendeesColumnHeader) attendeesColumnHeader.textContent = translations[lang].attendeesColumnHeader;
+            if (commentsColumnHeader) commentsColumnHeader.textContent = translations[lang].commentsColumnHeader;
+            if (actionsColumnHeader) actionsColumnHeader.textContent = translations[lang].actionsColumnHeader;
+
+            // Обновление текста кнопки создания
             document.getElementById('createInvitationText').textContent = translations[lang].createInvitationText;
-            
-            // Update status badges text
+
+            // Обновление плейсхолдера поиска
+            document.getElementById('searchInput').placeholder = translations[lang].searchPlaceholder;
+
+            // Обновление меток в мобильных карточках
+            document.querySelectorAll('.detail-label').forEach(label => {
+                if (label.textContent.includes('Մասնակիցներ') || label.textContent.includes('Участники')) {
+                    label.textContent = translations[lang].attendeesLabel;
+                }
+                if (label.textContent.includes('Մեկնաբանություններ') || label.textContent.includes('Комментарии')) {
+                    label.textContent = translations[lang].commentsLabel;
+                }
+            });
+
+            // Обновление статусов приглашений
             document.querySelectorAll('[data-status="accepted"]').forEach(badge => {
                 badge.textContent = translations[lang].acceptedStatus;
             });
@@ -1588,8 +1808,8 @@
             document.querySelectorAll('[data-status="pending"]').forEach(badge => {
                 badge.textContent = translations[lang].pendingStatus;
             });
-            
-            // Update N/A and Yes/No badges
+
+            // Обновление значков Н/Д и Да/Нет
             document.querySelectorAll('[data-na="true"]').forEach(badge => {
                 badge.textContent = translations[lang].naText;
             });
@@ -1599,8 +1819,8 @@
             document.querySelectorAll('[data-comments="no"]').forEach(badge => {
                 badge.textContent = translations[lang].noText;
             });
-            
-            // Update action button texts
+
+            // Обновление текста действий
             document.querySelectorAll('.view-text').forEach(text => {
                 text.textContent = translations[lang].viewText;
             });
@@ -1613,58 +1833,72 @@
             document.querySelectorAll('.copy-text').forEach(text => {
                 text.textContent = translations[lang].copyText;
             });
-            
-            // Update search placeholder
-            document.getElementById('searchInput').placeholder = translations[lang].searchPlaceholder;
-            
-            // Update delete confirmation
+
+            // Обновление текста подтверждения удаления
             document.querySelectorAll('.btn-delete').forEach(btn => {
                 btn.setAttribute('onclick', `return confirm('${translations[lang].deleteConfirmation}');`);
             });
-            
-            // Update HTML lang attribute
+
+            // Обновление атрибута lang документа
             document.documentElement.lang = lang;
         }
-        
+
         // Применяем сохраненный язык при загрузке страницы
-        document.addEventListener('DOMContentLoaded', function() {
-            // Если сохранен русский язык, применяем его
-            if (currentLanguage === 'ru') {
-                updateLanguageButtons();
-                updateLanguage('ru');
-            }
-            
-            // Simple search functionality
+        document.addEventListener('DOMContentLoaded', function () {
+            // Применяем текущий язык
+            updateLanguageButtons();
+            updateLanguage(currentLanguage);
+
+            // Настройка функциональности поиска
             const searchInput = document.getElementById('searchInput');
             const tableBody = document.getElementById('invitationsTableBody');
-            const rows = tableBody.querySelectorAll('tr');
-            
-            searchInput.addEventListener('keyup', function() {
+
+            if (tableBody) {
+                const rows = tableBody.querySelectorAll('tr');
+
+                searchInput.addEventListener('keyup', function () {
+                    const searchTerm = this.value.toLowerCase();
+
+                    rows.forEach(row => {
+                        const name = row.cells[0].textContent.toLowerCase();
+                        const status = row.cells[1].textContent.toLowerCase();
+
+                        if (name.includes(searchTerm) || status.includes(searchTerm)) {
+                            row.style.display = '';
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    });
+                });
+            }
+
+            // Поиск для мобильных карточек
+            searchInput.addEventListener('keyup', function () {
                 const searchTerm = this.value.toLowerCase();
-                
-                rows.forEach(row => {
-                    const name = row.cells[0].textContent.toLowerCase();
-                    const status = row.cells[1].textContent.toLowerCase();
-                    
+                const cards = document.querySelectorAll('.invitation-card');
+
+                cards.forEach(card => {
+                    const name = card.querySelector('.invitation-name').textContent.toLowerCase();
+                    const status = card.querySelector('.badge').textContent.toLowerCase();
+
                     if (name.includes(searchTerm) || status.includes(searchTerm)) {
-                        row.style.display = '';
+                        card.style.display = '';
                     } else {
-                        row.style.display = 'none';
+                        card.style.display = 'none';
                     }
                 });
             });
-            
-            // Copy invitation links
-            const copyButtons = document.querySelectorAll('.copy-link');
-            copyButtons.forEach(button => {
-                button.addEventListener('click', function() {
+
+            // Функциональность копирования ссылок
+            document.querySelectorAll('.copy-link').forEach(button => {
+                button.addEventListener('click', function () {
                     const hash = this.getAttribute('data-hash');
                     const inviteUrl = `${window.location.origin}/invite?h=${hash}`;
-                    
+
                     navigator.clipboard.writeText(inviteUrl).then(() => {
-                        // Change button text temporarily
+                        // Временно меняем текст кнопки
                         const originalText = this.innerHTML;
-                        const copiedMessage = currentLanguage === 'hy' ? 
+                        const copiedMessage = currentLanguage === 'hy' ?
                             translations.hy.copiedMessage : translations.ru.copiedMessage;
                         this.innerHTML = `<i class="fas fa-check"></i> ${copiedMessage}`;
                         setTimeout(() => {
@@ -1676,53 +1910,7 @@
                 });
             });
         });
-
-        document.addEventListener('DOMContentLoaded', function() {
-        // Update detail labels when language changes
-        function updateDetailLabels(lang) {
-            const attendeesLabels = document.querySelectorAll('#attendeesLabel');
-            const commentsLabels = document.querySelectorAll('#commentsLabel');
-            
-            attendeesLabels.forEach(label => {
-                label.textContent = lang === 'hy' ? 'Մասնակիցներ:' : 'Участники:';
-            });
-            
-            commentsLabels.forEach(label => {
-                label.textContent = lang === 'hy' ? 'Մեկնաբանություններ:' : 'Комментарии:';
-            });
-        }
-        
-        // Add this to your existing updateLanguage function:
-        const originalUpdateLanguage = updateLanguage;
-        updateLanguage = function(lang) {
-            originalUpdateLanguage(lang);
-            updateDetailLabels(lang);
-        };
-        
-        // Make sure copy functionality works for mobile cards too
-        document.querySelectorAll('.copy-link').forEach(button => {
-            button.addEventListener('click', function() {
-                const hash = this.getAttribute('data-hash');
-                const inviteUrl = `${window.location.origin}/invite?h=${hash}`;
-                
-                navigator.clipboard.writeText(inviteUrl).then(() => {
-                    // Change button text temporarily
-                    const originalText = this.innerHTML;
-                    const copiedMessage = currentLanguage === 'hy' ? 
-                        translations.hy.copiedMessage : translations.ru.copiedMessage;
-                    this.innerHTML = `<i class="fas fa-check"></i> ${copiedMessage}`;
-                    setTimeout(() => {
-                        this.innerHTML = originalText;
-                    }, 2000);
-                }).catch(err => {
-                    console.error('Failed to copy: ', err);
-                });
-            });
-        });
-        
-        // Apply initial language for detail labels
-        updateDetailLabels(currentLanguage);
-    });
-        </script>
+    </script>
 </body>
+
 </html>
