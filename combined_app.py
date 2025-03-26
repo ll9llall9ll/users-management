@@ -562,6 +562,40 @@ def create_invitation():
         traceback.print_exc()
         return f"An error occurred: {str(e)}", 500
 
+@app.route('/bulk-delete-invitations', methods=['POST'])
+def bulk_delete_invitations():
+    user_id = request.cookies.get('user_id')
+    if not user_id:
+        return redirect(url_for('login'))
+    
+    # Получаем список ID приглашений для удаления
+    invitation_ids = request.form.getlist('ids[]')
+    event_id = request.form.get('event_id')
+    
+    if not invitation_ids:
+        # Если не выбрано ни одного приглашения, возвращаемся на страницу
+        return redirect(url_for('view_invitation', event_id=event_id))
+    
+    try:
+        # Удаление выбранных приглашений
+        for invitation_id in invitation_ids:
+            # Получаем приглашение перед удалением
+            invitation = getInvitationById(invitation_id)
+            # Проверяем, что приглашение существует и принадлежит текущему событию
+            if invitation and str(invitation.event_id) == str(event_id):
+                deleteInvitation(invitation_id)
+        
+        # Можно здесь добавить сообщение о успешном удалении, если ваше приложение поддерживает flash-сообщения
+        # flash(f'Успешно удалено {len(invitation_ids)} приглашений', 'success')
+    except Exception as e:
+        print(f"Error in bulk_delete_invitations: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        # Можно добавить сообщение об ошибке, если поддерживаются flash-сообщения
+        # flash(f'Ошибка при удалении приглашений: {str(e)}', 'error')
+    
+    # Перенаправление обратно на страницу приглашений
+    return redirect(url_for('view_invitation', event_id=event_id))
 
 
 
