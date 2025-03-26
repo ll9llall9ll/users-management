@@ -592,176 +592,181 @@
 
         /* Stats Cards */
         .stats-container {
-    display: flex;
-    justify-content: space-between;
-    gap: 12px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-}
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
 
-.stat-card {
-    flex: 1;
-    min-width: 130px;
-    background: rgba(255, 255, 255, 0.8);
-    padding: 14px 12px;
-    border-radius: var(--radius-small);
-    box-shadow: var(--shadow-light);
-    text-align: center;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-    z-index: 1;
-}
+        .stat-card {
+            flex: 1;
+            min-width: 130px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 14px 12px;
+            border-radius: var(--radius-small);
+            box-shadow: var(--shadow-light);
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
 
-.stat-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    z-index: -1;
-    transition: opacity 0.4s ease;
-}
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.4s ease;
+        }
 
-.stat-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-medium);
-}
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-medium);
+        }
 
-.stat-card:hover::before {
-    opacity: 0.08;
-}
+        .stat-card:hover::before {
+            opacity: 0.08;
+        }
 
-.stat-card-primary {
-    border-left: 4px solid var(--primary);
-}
+        .stat-card-primary {
+            border-left: 4px solid var(--primary);
+        }
 
-.stat-card-primary::before {
-    background: linear-gradient(135deg, var(--primary) 0%, transparent 70%);
-}
+        .stat-card-primary::before {
+            background: linear-gradient(135deg, var(--primary) 0%, transparent 70%);
+        }
 
-.stat-card-success {
-    border-left: 4px solid #4caf50;
-}
+        .stat-card-success {
+            border-left: 4px solid #4caf50;
+        }
 
-.stat-card-success::before {
-    background: linear-gradient(135deg, #4caf50 0%, transparent 70%);
-}
+        .stat-card-success::before {
+            background: linear-gradient(135deg, #4caf50 0%, transparent 70%);
+        }
 
-.stat-card-warning {
-    border-left: 4px solid #ff9800;
-}
+        .stat-card-warning {
+            border-left: 4px solid #ff9800;
+        }
 
-.stat-card-warning::before {
-    background: linear-gradient(135deg, #ff9800 0%, transparent 70%);
-}
+        .stat-card-warning::before {
+            background: linear-gradient(135deg, #ff9800 0%, transparent 70%);
+        }
 
-.stat-card-info {
-    border-left: 4px solid #2196f3;
-}
+        .stat-card-info {
+            border-left: 4px solid #2196f3;
+        }
 
-.stat-card-info::before {
-    background: linear-gradient(135deg, #2196f3 0%, transparent 70%);
-}
+        .stat-card-info::before {
+            background: linear-gradient(135deg, #2196f3 0%, transparent 70%);
+        }
 
-.stat-card-danger {
-    border-left: 4px solid #d32f2f;
-}
+        .stat-card-danger {
+            border-left: 4px solid #d32f2f;
+        }
 
-.stat-card-danger::before {
-    background: linear-gradient(135deg, #d32f2f 0%, transparent 70%);
-}
+        .stat-card-danger::before {
+            background: linear-gradient(135deg, #d32f2f 0%, transparent 70%);
+        }
 
-.stat-card h3 {
-    font-size: 14px;
-    color: var(--text-medium);
-    margin-bottom: 6px;
-    font-weight: 500;
-}
+        .stat-card h3 {
+            font-size: 14px;
+            color: var(--text-medium);
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
 
-.stat-card .stat-value {
-    font-size: 26px;
-    font-weight: 600;
-    color: var(--text-dark);
-    font-family: 'Cormorant Garamond', serif;
-    transition: all 0.3s ease;
-}
+        .stat-card .stat-value {
+            font-size: 26px;
+            font-weight: 600;
+            color: var(--text-dark);
+            font-family: 'Cormorant Garamond', serif;
+            transition: all 0.3s ease;
+        }
 
-.stat-card:hover .stat-value {
-    transform: scale(1.05);
-}
+        .stat-card:hover .stat-value {
+            transform: scale(1.05);
+        }
 
-/* Иконки для карточек (уменьшенные) */
-.stat-card::after {
-    font-family: 'Font Awesome 5 Free';
-    font-weight: 900;
-    position: absolute;
-    bottom: -5px;
-    right: 8px;
-    font-size: 34px;
-    opacity: 0.05;
-    transition: all 0.3s ease;
-}
+        /* Иконки для карточек (уменьшенные) */
+        .stat-card::after {
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            position: absolute;
+            bottom: -5px;
+            right: 8px;
+            font-size: 34px;
+            opacity: 0.05;
+            transition: all 0.3s ease;
+        }
 
-.stat-card-primary::after {
-    content: '\f500'; /* fa-user-friends */
-}
+        .stat-card-primary::after {
+            content: '\f500';
+            /* fa-user-friends */
+        }
 
-.stat-card-success::after {
-    content: '\f058'; /* fa-check-circle */
-}
+        .stat-card-success::after {
+            content: '\f058';
+            /* fa-check-circle */
+        }
 
-.stat-card-danger::after {
-    content: '\f057'; /* fa-times-circle */
-}
+        .stat-card-danger::after {
+            content: '\f057';
+            /* fa-times-circle */
+        }
 
-.stat-card-warning::after {
-    content: '\f017'; /* fa-clock */
-}
+        .stat-card-warning::after {
+            content: '\f017';
+            /* fa-clock */
+        }
 
-.stat-card-info::after {
-    content: '\f0c0'; /* fa-users */
-}
+        .stat-card-info::after {
+            content: '\f0c0';
+            /* fa-users */
+        }
 
-.stat-card:hover::after {
-    opacity: 0.08;
-    transform: translateY(-3px);
-}
+        .stat-card:hover::after {
+            opacity: 0.08;
+            transform: translateY(-3px);
+        }
 
-/* Адаптивность для мобильных устройств */
-@media (max-width: 992px) {
-    .stats-container {
-        gap: 10px;
-    }
-    
-    .stat-card {
-        padding: 12px 8px;
-        min-width: 120px;
-    }
-    
-    .stat-card .stat-value {
-        font-size: 24px;
-    }
-}
+        /* Адаптивность для мобильных устройств */
+        @media (max-width: 992px) {
+            .stats-container {
+                gap: 10px;
+            }
 
-@media (max-width: 768px) {
-    .stats-container {
-        flex-wrap: wrap;
-    }
-    
-    .stat-card {
-        flex: 1 0 45%;
-        margin-bottom: 10px;
-    }
-}
+            .stat-card {
+                padding: 12px 8px;
+                min-width: 120px;
+            }
 
-@media (max-width: 576px) {
-    .stat-card {
-        flex: 1 0 100%;
-    }
-}
+            .stat-card .stat-value {
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .stats-container {
+                flex-wrap: wrap;
+            }
+
+            .stat-card {
+                flex: 1 0 45%;
+                margin-bottom: 10px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .stat-card {
+                flex: 1 0 100%;
+            }
+        }
 
         /* Table styles */
         .invitations-table {
@@ -1410,6 +1415,79 @@
                 /* Добавляем отступ снизу */
             }
         }
+
+        /* Стили для фильтра и кнопки обновления */
+        .filter-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .filter-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-medium);
+            margin-right: 10px;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            flex: 1;
+        }
+
+        .filter-btn {
+            padding: 6px 12px;
+            border: 1px solid var(--primary-light);
+            background-color: rgba(255, 255, 255, 0.8);
+            color: var(--text-medium);
+            font-size: 13px;
+            border-radius: var(--radius-small);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .filter-btn:hover {
+            background-color: rgba(156, 132, 104, 0.1);
+            border-color: var(--primary);
+        }
+
+        .filter-btn.active {
+            background-color: var(--primary);
+            color: var(--white);
+            border-color: var(--primary);
+        }
+
+        .refresh-btn {
+            display: flex;
+            align-items: center;
+            padding: 6px 12px;
+            border: none;
+            background-color: rgba(33, 150, 243, 0.8);
+            color: white;
+            font-size: 13px;
+            border-radius: var(--radius-small);
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .refresh-btn i {
+            margin-right: 5px;
+        }
+
+        .refresh-btn:hover {
+            background-color: rgba(33, 150, 243, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .refresh-btn:active {
+            transform: translateY(0);
+        }
     </style>
 </head>
 
@@ -1541,6 +1619,19 @@
                     data-placeholder-hy="Որոնել հրավերներ..." data-placeholder-ru="Поиск приглашений...">
             </div>
 
+            <div class="filter-container">
+                <div class="filter-title" id="filterTitle">Фильтр:</div>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all" id="filterAll">Все</button>
+                    <button class="filter-btn" data-filter="accepted" id="filterAccepted">Принятые</button>
+                    <button class="filter-btn" data-filter="declined" id="filterDeclined">Отклоненные</button>
+                    <button class="filter-btn" data-filter="pending" id="filterPending">Ожидающие</button>
+                </div>
+                <button class="refresh-btn" id="refreshBtn">
+                    <i class="fas fa-sync-alt"></i>
+                    <span id="refreshText">Обновить</span>
+                </button>
+            </div>
             <div class="actions-container">
                 <a href="{{ url_for('create_invitation', event_id=event_id) }}" class="btn">
                     <i class="fas fa-plus"></i> <span id="createInvitationText">Ստեղծել հրավեր</span>
@@ -1621,27 +1712,27 @@
         const sideNav = document.getElementById('sideNav');
         const overlay = document.getElementById('overlay');
         const closeMenuBtn = document.getElementById('closeMenuBtn');
-
+        
         // Language buttons
         const hyBtn = document.getElementById('hyBtn');
         const ruBtn = document.getElementById('ruBtn');
-
+        
         menuToggle.addEventListener('click', toggleMenu);
         overlay.addEventListener('click', toggleMenu);
         closeMenuBtn.addEventListener('click', toggleMenu);
-
+        
         function toggleMenu() {
             menuToggle.classList.toggle('active');
             sideNav.classList.toggle('active');
             overlay.classList.toggle('active');
             document.body.style.overflow = sideNav.classList.contains('active') ? 'hidden' : 'auto';
         }
-
+        
         // Language toggle functionality
         // Загружаем сохраненный язык из localStorage или устанавливаем армянский по умолчанию
         let currentLanguage = localStorage.getItem('selectedLanguage') || 'hy';
-
-        hyBtn.addEventListener('click', function () {
+        
+        hyBtn.addEventListener('click', function() {
             if (currentLanguage !== 'hy') {
                 currentLanguage = 'hy';
                 updateLanguageButtons();
@@ -1649,8 +1740,8 @@
                 localStorage.setItem('selectedLanguage', 'hy');
             }
         });
-
-        ruBtn.addEventListener('click', function () {
+        
+        ruBtn.addEventListener('click', function() {
             if (currentLanguage !== 'ru') {
                 currentLanguage = 'ru';
                 updateLanguageButtons();
@@ -1658,7 +1749,7 @@
                 localStorage.setItem('selectedLanguage', 'ru');
             }
         });
-
+        
         function updateLanguageButtons() {
             if (currentLanguage === 'hy') {
                 hyBtn.classList.add('active');
@@ -1668,7 +1759,7 @@
                 ruBtn.classList.add('active');
             }
         }
-
+        
         // Text content for both languages
         const translations = {
             hy: {
@@ -1684,7 +1775,7 @@
                 backLinkText: 'Վերադառնալ միջոցառումներին',
                 totalInvitedLabel: 'Ընդհանուր հրավիրված',
                 acceptedLabel: 'Ընդունված',
-                declinedLabel: 'Մերժված',  // Добавлено поле для отклоненных
+                declinedLabel: 'Մերժված',
                 pendingLabel: 'Սպասվող',
                 totalAttendeesLabel: 'Ընդհանուր մասնակիցներ',
                 nameColumnHeader: 'Անուն',
@@ -1707,7 +1798,13 @@
                 deleteConfirmation: 'Դուք վստահ եք, որ ցանկանում եք ջնջել այս հրավերը?',
                 copiedMessage: 'Պատճենված!',
                 attendeesLabel: 'Մասնակիցներ:',
-                commentsLabel: 'Մեկնաբանություններ:'
+                commentsLabel: 'Մեկնաբանություններ:',
+                filterTitle: 'Զտիչ:',
+                filterAll: 'Բոլորը',
+                filterAccepted: 'Ընդունվածներ',
+                filterDeclined: 'Մերժվածներ',
+                filterPending: 'Սպասվող',
+                refreshText: 'Թարմացնել'
             },
             ru: {
                 sideTitle: 'Менеджер приглашений',
@@ -1722,7 +1819,7 @@
                 backLinkText: 'Вернуться к событиям',
                 totalInvitedLabel: 'Всего приглашено',
                 acceptedLabel: 'Принято',
-                declinedLabel: 'Отклонено',  // Добавлено поле для отклоненных
+                declinedLabel: 'Отклонено',
                 pendingLabel: 'В ожидании',
                 totalAttendeesLabel: 'Всего участников',
                 nameColumnHeader: 'Имя',
@@ -1745,9 +1842,16 @@
                 deleteConfirmation: 'Вы уверены, что хотите удалить это приглашение?',
                 copiedMessage: 'Скопировано!',
                 attendeesLabel: 'Участники:',
-                commentsLabel: 'Комментарии:'
+                commentsLabel: 'Комментарии:',
+                filterTitle: 'Фильтр:',
+                filterAll: 'Все',
+                filterAccepted: 'Принятые',
+                filterDeclined: 'Отклоненные',
+                filterPending: 'Ожидающие',
+                refreshText: 'Обновить'
             }
         };
+        
         // Function to update all text content based on selected language
         function updateLanguage(lang) {
             // Обновление основных элементов интерфейса
@@ -1761,33 +1865,33 @@
             document.getElementById('languageTitle').textContent = translations[lang].languageTitle;
             document.getElementById('copyright').textContent = translations[lang].copyright;
             document.getElementById('backLinkText').textContent = translations[lang].backLinkText;
-
+            
             // Обновление заголовков статистики
             document.getElementById('totalInvitedLabel').textContent = translations[lang].totalInvitedLabel;
             document.getElementById('acceptedLabel').textContent = translations[lang].acceptedLabel;
             document.getElementById('declinedLabel').textContent = translations[lang].declinedLabel;
             document.getElementById('pendingLabel').textContent = translations[lang].pendingLabel;
             document.getElementById('totalAttendeesLabel').textContent = translations[lang].totalAttendeesLabel;
-
+            
             // Обновление заголовков таблицы (если они существуют)
             const nameColumnHeader = document.getElementById('nameColumnHeader');
             const statusColumnHeader = document.getElementById('statusColumnHeader');
             const attendeesColumnHeader = document.getElementById('attendeesColumnHeader');
             const commentsColumnHeader = document.getElementById('commentsColumnHeader');
             const actionsColumnHeader = document.getElementById('actionsColumnHeader');
-
+            
             if (nameColumnHeader) nameColumnHeader.textContent = translations[lang].nameColumnHeader;
             if (statusColumnHeader) statusColumnHeader.textContent = translations[lang].statusColumnHeader;
             if (attendeesColumnHeader) attendeesColumnHeader.textContent = translations[lang].attendeesColumnHeader;
             if (commentsColumnHeader) commentsColumnHeader.textContent = translations[lang].commentsColumnHeader;
             if (actionsColumnHeader) actionsColumnHeader.textContent = translations[lang].actionsColumnHeader;
-
+            
             // Обновление текста кнопки создания
             document.getElementById('createInvitationText').textContent = translations[lang].createInvitationText;
-
+            
             // Обновление плейсхолдера поиска
             document.getElementById('searchInput').placeholder = translations[lang].searchPlaceholder;
-
+            
             // Обновление меток в мобильных карточках
             document.querySelectorAll('.detail-label').forEach(label => {
                 if (label.textContent.includes('Մասնակիցներ') || label.textContent.includes('Участники')) {
@@ -1797,7 +1901,7 @@
                     label.textContent = translations[lang].commentsLabel;
                 }
             });
-
+            
             // Обновление статусов приглашений
             document.querySelectorAll('[data-status="accepted"]').forEach(badge => {
                 badge.textContent = translations[lang].acceptedStatus;
@@ -1808,7 +1912,7 @@
             document.querySelectorAll('[data-status="pending"]').forEach(badge => {
                 badge.textContent = translations[lang].pendingStatus;
             });
-
+            
             // Обновление значков Н/Д и Да/Нет
             document.querySelectorAll('[data-na="true"]').forEach(badge => {
                 badge.textContent = translations[lang].naText;
@@ -1819,7 +1923,7 @@
             document.querySelectorAll('[data-comments="no"]').forEach(badge => {
                 badge.textContent = translations[lang].noText;
             });
-
+            
             // Обновление текста действий
             document.querySelectorAll('.view-text').forEach(text => {
                 text.textContent = translations[lang].viewText;
@@ -1833,36 +1937,57 @@
             document.querySelectorAll('.copy-text').forEach(text => {
                 text.textContent = translations[lang].copyText;
             });
-
+            
             // Обновление текста подтверждения удаления
             document.querySelectorAll('.btn-delete').forEach(btn => {
                 btn.setAttribute('onclick', `return confirm('${translations[lang].deleteConfirmation}');`);
             });
-
+            
+            // Обновление элементов фильтрации и обновления
+            updateFilterElements(lang);
+            
             // Обновление атрибута lang документа
             document.documentElement.lang = lang;
         }
-
+        
+        // Функция обновления элементов фильтрации и кнопки обновления
+        function updateFilterElements(lang) {
+            // Проверяем существование элементов перед обновлением
+            const filterTitle = document.getElementById('filterTitle');
+            const filterAll = document.getElementById('filterAll');
+            const filterAccepted = document.getElementById('filterAccepted');
+            const filterDeclined = document.getElementById('filterDeclined');
+            const filterPending = document.getElementById('filterPending');
+            const refreshText = document.getElementById('refreshText');
+            
+            if (filterTitle) filterTitle.textContent = translations[lang].filterTitle;
+            if (filterAll) filterAll.textContent = translations[lang].filterAll;
+            if (filterAccepted) filterAccepted.textContent = translations[lang].filterAccepted;
+            if (filterDeclined) filterDeclined.textContent = translations[lang].filterDeclined;
+            if (filterPending) filterPending.textContent = translations[lang].filterPending;
+            if (refreshText) refreshText.textContent = translations[lang].refreshText;
+        }
+        
         // Применяем сохраненный язык при загрузке страницы
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             // Применяем текущий язык
             updateLanguageButtons();
             updateLanguage(currentLanguage);
-
+            
             // Настройка функциональности поиска
             const searchInput = document.getElementById('searchInput');
             const tableBody = document.getElementById('invitationsTableBody');
-
+            
             if (tableBody) {
                 const rows = tableBody.querySelectorAll('tr');
-
-                searchInput.addEventListener('keyup', function () {
+                
+                searchInput.addEventListener('keyup', function() {
                     const searchTerm = this.value.toLowerCase();
-
+                    
                     rows.forEach(row => {
                         const name = row.cells[0].textContent.toLowerCase();
                         const status = row.cells[1].textContent.toLowerCase();
-
+                        
                         if (name.includes(searchTerm) || status.includes(searchTerm)) {
                             row.style.display = '';
                         } else {
@@ -1871,46 +1996,114 @@
                     });
                 });
             }
-
+            
             // Поиск для мобильных карточек
-            searchInput.addEventListener('keyup', function () {
+            searchInput.addEventListener('keyup', function() {
                 const searchTerm = this.value.toLowerCase();
-                const cards = document.querySelectorAll('.invitation-card');
-
-                cards.forEach(card => {
-                    const name = card.querySelector('.invitation-name').textContent.toLowerCase();
-                    const status = card.querySelector('.badge').textContent.toLowerCase();
-
-                    if (name.includes(searchTerm) || status.includes(searchTerm)) {
+            const cards = document.querySelectorAll('.invitation-card');
+            
+            cards.forEach(card => {
+                const name = card.querySelector('.invitation-name').textContent.toLowerCase();
+                const status = card.querySelector('.badge').textContent.toLowerCase();
+                
+                if (name.includes(searchTerm) || status.includes(searchTerm)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+        
+        // Функциональность копирования ссылок
+        document.querySelectorAll('.copy-link').forEach(button => {
+            button.addEventListener('click', function() {
+                const hash = this.getAttribute('data-hash');
+                const inviteUrl = `${window.location.origin}/invite?h=${hash}`;
+                
+                navigator.clipboard.writeText(inviteUrl).then(() => {
+                    // Временно меняем текст кнопки
+                    const originalText = this.innerHTML;
+                    const copiedMessage = currentLanguage === 'hy' ? 
+                        translations.hy.copiedMessage : translations.ru.copiedMessage;
+                    this.innerHTML = `<i class="fas fa-check"></i> ${copiedMessage}`;
+                    setTimeout(() => {
+                        this.innerHTML = originalText;
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Failed to copy: ', err);
+                });
+            });
+        });
+        
+        // Функциональность фильтрации
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const invitationCards = document.querySelectorAll('.invitation-card');
+        const invitationRows = tableBody ? tableBody.querySelectorAll('tr') : [];
+        const refreshBtn = document.getElementById('refreshBtn');
+        
+        if (filterButtons.length > 0) {
+            // Функция фильтрации элементов
+            function filterInvitations(filterValue) {
+                // Фильтрация для мобильных карточек
+                invitationCards.forEach(card => {
+                    const statusBadge = card.querySelector('.badge');
+                    const status = statusBadge.getAttribute('data-status');
+                    
+                    if (filterValue === 'all' || status === filterValue) {
                         card.style.display = '';
                     } else {
                         card.style.display = 'none';
                     }
                 });
-            });
-
-            // Функциональность копирования ссылок
-            document.querySelectorAll('.copy-link').forEach(button => {
-                button.addEventListener('click', function () {
-                    const hash = this.getAttribute('data-hash');
-                    const inviteUrl = `${window.location.origin}/invite?h=${hash}`;
-
-                    navigator.clipboard.writeText(inviteUrl).then(() => {
-                        // Временно меняем текст кнопки
-                        const originalText = this.innerHTML;
-                        const copiedMessage = currentLanguage === 'hy' ?
-                            translations.hy.copiedMessage : translations.ru.copiedMessage;
-                        this.innerHTML = `<i class="fas fa-check"></i> ${copiedMessage}`;
-                        setTimeout(() => {
-                            this.innerHTML = originalText;
-                        }, 2000);
-                    }).catch(err => {
-                        console.error('Failed to copy: ', err);
+                
+                // Фильтрация для строк таблицы (если они есть)
+                if (invitationRows.length > 0) {
+                    invitationRows.forEach(row => {
+                        const statusCell = row.querySelector('[data-status]');
+                        if (statusCell) {
+                            const status = statusCell.getAttribute('data-status');
+                            
+                            if (filterValue === 'all' || status === filterValue) {
+                                row.style.display = '';
+                            } else {
+                                row.style.display = 'none';
+                            }
+                        }
                     });
+                }
+            }
+            
+            // Обработчики кнопок фильтрации
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Удаляем активный класс у всех кнопок
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Добавляем активный класс нажатой кнопке
+                    this.classList.add('active');
+                    
+                    // Фильтруем элементы
+                    const filterValue = this.getAttribute('data-filter');
+                    filterInvitations(filterValue);
                 });
             });
-        });
-    </script>
-</body>
+        }
+        
+        // Обработчик кнопки обновления
+        if (refreshBtn) {
+            refreshBtn.addEventListener('click', function() {
+                // Добавляем класс для анимации
+                this.classList.add('refreshing');
+                
+                // Имитируем загрузку данных (в реальном приложении здесь будет AJAX-запрос)
+                setTimeout(() => {
+                    // Перезагружаем страницу
+                    window.location.reload();
+                }, 800);
+            });
+        }
+    });
+</script>
 
+</body>
 </html>
