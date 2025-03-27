@@ -2061,58 +2061,56 @@
 
         // Обработка распознанного текста и выделение имен
         function processTranscript(transcript) {
-            console.log('Распознанный текст:', transcript);
+    console.log('Распознанный текст:', transcript);
 
-            // Очистка и нормализация текста
-            transcript = transcript.trim()
-                .replace(/\s+/g, ' ')  // Удаление лишних пробелов
-                .replace(/[,.!?;:]/g, ','); // Заменяем все знаки препинания на запятые
+    // Очистка и нормализация текста
+    transcript = transcript.trim()
+        .replace(/\s+/g, ' ')  // Удаление лишних пробелов
+        .replace(/[,.!?;:]/g, ','); // Заменяем все знаки препинания на запятые
 
-            // Разделение текста по запятым, союзам и пробелам
-            const separators = currentLanguage === 'hy' ?
-                /,|\sև\s|\sեվ\s|\s/ :
-                /,|\sи\s|\s/;
+    // Разделение текста по запятым, союзам и пробелам
+    const separators = currentLanguage === 'hy' ?
+        /,|\sև\s|\sեվ\s|\s/ :
+        /,|\sи\s|\s/;
 
-            let words = transcript.split(separators);
+    let words = transcript.split(separators);
 
-            // Дополнительная обработка для увеличения чувствительности
-            words.forEach(word => {
-                word = word.trim();
+    // Дополнительная обработка для увеличения чувствительности
+    words.forEach(word => {
+        word = word.trim();
 
-                // Пропускаем короткие слова (предлоги, союзы и т.д.)
-                if (word && word.length > 1) {
-                    // Нормализация имени - первая буква заглавная, остальные строчные
-                    const normalizedWord = word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+        // Пропускаем короткие слова (предлоги, союзы и т.д.)
+        if (word && word.length > 1) {
+            // Нормализация имени - первая буква заглавная, остальные строчные
+            const normalizedWord = word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
 
-                    // Улучшенная проверка на имя
-                    // Менее строгая проверка для повышения чувствительности
-                    // Проверяем, что первая буква заглавная и нет цифр
-                    if (/^[А-ЯЁԱ-Ֆ]/.test(normalizedWord) &&
-                        !/\d/.test(normalizedWord) &&
-                        !isCommonWord(normalizedWord) &&
-                        !recognizedNames.includes(normalizedWord)) {
+            // Улучшенная проверка на имя
+            // Менее строгая проверка для повышения чувствительности
+            // Проверяем, что первая буква заглавная и нет цифр
+            if (/^[А-ЯЁԱ-Ֆ]/.test(normalizedWord) &&
+                !/\d/.test(normalizedWord) &&
+                !isCommonWord(normalizedWord)) {
 
-                        recognizedNames.push(normalizedWord);
-                        addNameToList(normalizedWord);
+                // Прямо добавляем имя в список, даже если оно уже есть
+                recognizedNames.push(normalizedWord);
+                addNameToList(normalizedWord);
 
-                        // Показать действия с именами, если список не пуст
-                        if (recognizedNames.length > 0) {
-                            namesActions.style.display = 'flex';
-                        }
-                    }
+                // Показать действия с именами, если список не пуст
+                if (recognizedNames.length > 0) {
+                    namesActions.style.display = 'flex';
                 }
-            });
+            }
+        }
+    });
 
             // Дополнительно ищем составные имена (имя отчество или имя фамилия)
             const possibleFullNames = findFullNames(transcript);
-            possibleFullNames.forEach(name => {
-                if (!recognizedNames.includes(name)) {
-                    recognizedNames.push(name);
-                    addNameToList(name);
-                    namesActions.style.display = 'flex';
-                }
-            });
-        }
+    possibleFullNames.forEach(name => {
+        recognizedNames.push(name);
+        addNameToList(name);
+        namesActions.style.display = 'flex';
+    });
+}
 
         // Функция для поиска составных имен
         function findFullNames(text) {

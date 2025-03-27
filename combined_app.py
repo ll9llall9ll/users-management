@@ -70,7 +70,7 @@ appData = AppData()
 
 
 # Настройка клиента OpenAI с ключом API
-client = OpenAI(api_key="YOUR_API")
+client = OpenAI(api_key="API_KEY")
 
 @app.route('/api/transcribe', methods=['POST'])
 def transcribe_audio():
