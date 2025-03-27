@@ -8,7 +8,12 @@ from invitation_db import Invitation, createInvitation, getInvitationByHash, get
 import hashlib
 import secrets
 import uuid
-
+import openai
+from openai import OpenAI
+import os
+import tempfile
+from flask import jsonify, request
+from pydub import AudioSegment
 # In-memory session storage
 active_sessions = set()
 
@@ -60,6 +65,70 @@ def date(d):
 app.add_template_filter(date)
 
 appData = AppData()
+
+
+
+
+# Настройка клиента OpenAI с ключом API
+client = OpenAI(api_key="YOUR_API")
+
+@app.route('/api/transcribe', methods=['POST'])
+def transcribe_audio():
+    try:
+        print("Transcribe API endpoint called")
+
+        if 'audio' not in request.files:
+            print("No audio file in request")
+            return jsonify({'success': False, 'error': 'Аудиофайл не предоставлен'}), 400
+
+        audio_file = request.files['audio']
+
+        if audio_file.filename == '':
+            print("Empty audio filename")
+            return jsonify({'success': False, 'error': 'Выбран пустой аудиофайл'}), 400
+
+        print(f"Received audio file: {audio_file.filename}, Content-Type: {audio_file.content_type}")
+
+        language = request.form.get('language', None)  # None = автоопределение
+        print(f"Requested language: {language}")
+
+        # Сохранение во временный файл
+        with tempfile.NamedTemporaryFile(delete=False, suffix='.webm') as temp_file:
+            audio_file.save(temp_file.name)
+            temp_filename = temp_file.name
+
+        try:
+            # Отправляем файл в OpenAI API через новый интерфейс
+            with open(temp_filename, 'rb') as f:
+                print("Sending file to OpenAI API")
+                transcription = client.audio.transcriptions.create(
+                    model="gpt-4o-transcribe",
+                    file=f,    
+                    language= language,
+                   response_format="json"
+                )
+
+            print(f"Transcription successful. Text: {transcription.text[:50]}...")
+
+            return jsonify({'success': True, 'text': transcription.text, 'language': language or 'auto'})
+
+        except Exception as api_error:
+            print(f"API Error: {api_error}")
+            return jsonify({'success': False, 'error': str(api_error)}), 500
+
+        finally:
+            # Удаляем временный файл
+            if os.path.exists(temp_filename):
+                os.unlink(temp_filename)
+
+    except Exception as e:
+        print(f"Error in transcribe_audio: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+
+
 
 # Authentication middleware
 @app.before_request

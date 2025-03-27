@@ -184,7 +184,8 @@
             max-width: 1000px;
             width: 95%;
             min-height: 90vh;
-            max-height: 800px; /* Increased max-height */
+            max-height: 800px;
+            /* Increased max-height */
             background: var(--card-bg);
             position: relative;
             backdrop-filter: blur(12px);
@@ -386,7 +387,6 @@
 
         .nav-items {
             padding: 20px 25px;
-            flex: 1;
         }
 
         .nav-item {
@@ -483,13 +483,15 @@
             z-index: 1;
             display: flex;
             flex-direction: column;
-            overflow-y: auto; /* Added scroll for content overflow */
+            overflow-y: auto;
+            /* Added scroll for content overflow */
         }
 
         .invitation-header {
             text-align: center;
             position: relative;
-            margin-bottom: 20px; /* Reduced margin */
+            margin-bottom: 20px;
+            /* Reduced margin */
         }
 
         .invitation-header h2 {
@@ -516,11 +518,13 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            overflow-y: auto; /* Added scroll capability */
+            overflow-y: auto;
+            /* Added scroll capability */
         }
 
         .form-group {
-            margin-bottom: 15px; /* Reduced margin */
+            margin-bottom: 15px;
+            /* Reduced margin */
             position: relative;
             animation: fadeIn 0.5s ease forwards;
             animation-delay: calc(0.1s * var(--i, 1));
@@ -756,7 +760,8 @@
         .bottom-links {
             display: flex;
             gap: 15px;
-            margin-top: 20px; /* Reduced margin */
+            margin-top: 20px;
+            /* Reduced margin */
             justify-content: center;
         }
 
@@ -890,8 +895,10 @@
 
         /* Voice input styles */
         .voice-input-container {
-            margin-bottom: 15px; /* Reduced margin */
-            padding: 10px; /* Reduced padding */
+            margin-bottom: 15px;
+            /* Reduced margin */
+            padding: 10px;
+            /* Reduced padding */
             border: 1px solid var(--primary-light);
             border-radius: var(--radius-medium);
             background-color: rgba(156, 132, 104, 0.05);
@@ -905,7 +912,8 @@
 
         .voice-btn {
             flex: 1;
-            padding: 10px; /* Reduced padding */
+            padding: 10px;
+            /* Reduced padding */
             background: var(--primary);
             color: var(--white);
             border: none;
@@ -952,9 +960,11 @@
             0% {
                 opacity: 1;
             }
+
             50% {
                 opacity: 0.5;
             }
+
             100% {
                 opacity: 1;
             }
@@ -962,11 +972,13 @@
 
         .recognized-names-container {
             margin-top: 10px;
-            padding: 10px; /* Reduced padding */
+            padding: 10px;
+            /* Reduced padding */
             border: 1px solid var(--primary-light);
             border-radius: var(--radius-small);
             background-color: rgba(255, 255, 255, 0.8);
-            max-height: 180px; /* Reduced height */
+            max-height: 180px;
+            /* Reduced height */
             overflow-y: auto;
         }
 
@@ -1057,6 +1069,7 @@
                 transform: translateY(-30px);
                 opacity: 0;
             }
+
             to {
                 transform: translateY(0);
                 opacity: 1;
@@ -1219,7 +1232,7 @@
                 top: 15px;
                 right: 15px;
             }
-            
+
             .voice-control {
                 flex-direction: column;
             }
@@ -1323,10 +1336,33 @@
             }
         }
 
-        </style>
-    </head>
+        .transcription-loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            margin: 10px 0;
+        }
 
-    <body>
+        .spinner {
+            width: 30px;
+            height: 30px;
+            border: 3px solid rgba(156, 132, 104, 0.2);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 5px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
     <div class="bg-shimmer"></div>
 
     <div class="particles">
@@ -1555,712 +1591,800 @@
         </div>
     </div>
     <script>
-      function generateRandomHash(length = 8) {
-    const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
-    let result = '';
+        function generateRandomHash(length = 8) {
+            const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+            let result = '';
 
-    for (let i = 0; i < length; i++) {
-        result += characters.charAt(Math.floor(Math.random() * characters.length));
-    }
+            for (let i = 0; i < length; i++) {
+                result += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
 
-    return result;
-}
+            return result;
+        }
 
-// Generate and set random hash when page loads
-document.addEventListener('DOMContentLoaded', function () {
-    const hashInput = document.getElementById('hash');
+        // Generate and set random hash when page loads
+        document.addEventListener('DOMContentLoaded', function () {
+            const hashInput = document.getElementById('hash');
 
-    // Always set a new random hash when the page loads
-    if (hashInput) {
-        hashInput.value = generateRandomHash();
-    }
+            // Always set a new random hash when the page loads
+            if (hashInput) {
+                hashInput.value = generateRandomHash();
+            }
 
-    // Optional: Add a refresh button next to the hash field
-    const inputWrapper = hashInput.closest('.input-wrapper');
+            // Optional: Add a refresh button next to the hash field
+            const inputWrapper = hashInput.closest('.input-wrapper');
 
-    if (inputWrapper) {
-        const refreshButton = document.createElement('button');
-        refreshButton.type = 'button';
-        refreshButton.className = 'refresh-hash-btn';
-        refreshButton.innerHTML = '<i class="fas fa-sync-alt"></i>';
-        refreshButton.style.position = 'absolute';
-        refreshButton.style.right = '10px';
-        refreshButton.style.top = '50%';
-        refreshButton.style.transform = 'translateY(-50%)';
-        refreshButton.style.background = 'none';
-        refreshButton.style.border = 'none';
-        refreshButton.style.color = 'var(--primary)';
-        refreshButton.style.cursor = 'pointer';
-        refreshButton.title = currentLanguage === 'hy' ? 'Նոր hash' : 'Новый hash';
+            if (inputWrapper) {
+                const refreshButton = document.createElement('button');
+                refreshButton.type = 'button';
+                refreshButton.className = 'refresh-hash-btn';
+                refreshButton.innerHTML = '<i class="fas fa-sync-alt"></i>';
+                refreshButton.style.position = 'absolute';
+                refreshButton.style.right = '10px';
+                refreshButton.style.top = '50%';
+                refreshButton.style.transform = 'translateY(-50%)';
+                refreshButton.style.background = 'none';
+                refreshButton.style.border = 'none';
+                refreshButton.style.color = 'var(--primary)';
+                refreshButton.style.cursor = 'pointer';
+                refreshButton.title = currentLanguage === 'hy' ? 'Նոր hash' : 'Новый hash';
 
-        refreshButton.addEventListener('click', function () {
-            hashInput.value = generateRandomHash();
+                refreshButton.addEventListener('click', function () {
+                    hashInput.value = generateRandomHash();
+                });
+
+                inputWrapper.style.position = 'relative';
+                inputWrapper.appendChild(refreshButton);
+            }
+
+            // Загружаем сохраненный язык
+            loadSavedLanguage();
         });
 
-        inputWrapper.style.position = 'relative';
-        inputWrapper.appendChild(refreshButton);
-    }
-});
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const sideNav = document.getElementById('sideNav');
+        const overlay = document.getElementById('overlay');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
 
-// Mobile menu toggle
-const menuToggle = document.getElementById('menuToggle');
-const sideNav = document.getElementById('sideNav');
-const overlay = document.getElementById('overlay');
-const closeMenuBtn = document.getElementById('closeMenuBtn');
+        // Language buttons
+        const hyBtn = document.getElementById('hyBtn');
+        const ruBtn = document.getElementById('ruBtn');
+        const mainHyBtn = document.getElementById('mainHyBtn');
+        const mainRuBtn = document.getElementById('mainRuBtn');
 
-// Language buttons
-const hyBtn = document.getElementById('hyBtn');
-const ruBtn = document.getElementById('ruBtn');
+        menuToggle.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu);
+        closeMenuBtn.addEventListener('click', toggleMenu);
 
-menuToggle.addEventListener('click', toggleMenu);
-overlay.addEventListener('click', toggleMenu);
-closeMenuBtn.addEventListener('click', toggleMenu);
-
-function toggleMenu() {
-    menuToggle.classList.toggle('active');
-    sideNav.classList.toggle('active');
-    overlay.classList.toggle('active');
-    document.body.style.overflow = sideNav.classList.contains('active') ? 'hidden' : 'auto';
-}
-
-// Language toggle functionality
-let currentLanguage = 'hy'; // Default to Armenian
-
-hyBtn.addEventListener('click', function () {
-    if (currentLanguage !== 'hy') {
-        currentLanguage = 'hy';
-        updateLanguageButtons();
-        updateLanguage(currentLanguage);
-    }
-});
-
-ruBtn.addEventListener('click', function () {
-    if (currentLanguage !== 'ru') {
-        currentLanguage = 'ru';
-        updateLanguageButtons();
-        updateLanguage(currentLanguage);
-    }
-});
-
-function updateLanguageButtons() {
-    if (currentLanguage === 'hy') {
-        hyBtn.classList.add('active');
-        ruBtn.classList.remove('active');
-    } else {
-        hyBtn.classList.remove('active');
-        ruBtn.classList.add('active');
-    }
-}
-
-// Добавляем обработчики для основных кнопок языка на странице
-const mainHyBtn = document.getElementById('mainHyBtn');
-const mainRuBtn = document.getElementById('mainRuBtn');
-
-if (mainHyBtn && mainRuBtn) {
-    mainHyBtn.addEventListener('click', function () {
-        if (currentLanguage !== 'hy') {
-            currentLanguage = 'hy';
-            updateAllLanguageButtons();
-            updateLanguage(currentLanguage);
+        function toggleMenu() {
+            menuToggle.classList.toggle('active');
+            sideNav.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.style.overflow = sideNav.classList.contains('active') ? 'hidden' : 'auto';
         }
-    });
 
-    mainRuBtn.addEventListener('click', function () {
-        if (currentLanguage !== 'ru') {
-            currentLanguage = 'ru';
-            updateAllLanguageButtons();
-            updateLanguage(currentLanguage);
-        }
-    });
+        // Language toggle functionality - Определяем переменную языка раньше
+        let currentLanguage = 'hy'; // Default to Armenian
 
-    function updateAllLanguageButtons() {
-        if (currentLanguage === 'hy') {
-            hyBtn.classList.add('active');
-            ruBtn.classList.remove('active');
-            mainHyBtn.classList.add('active');
-            mainRuBtn.classList.remove('active');
-        } else {
-            hyBtn.classList.remove('active');
-            ruBtn.classList.add('active');
-            mainHyBtn.classList.remove('active');
-            mainRuBtn.classList.add('active');
-        }
-    }
-}
-
-// Text content for both languages
-const translations = {
-    hy: {
-        sideTitle: 'Ստեղծել հրավեր',
-        sideDescription: 'Ուղարկեք անձնական հրավերներ ձեր հյուրերին առաջիկա միջոցառման համար',
-        menuTitle: 'Մենյու',
-        pageTitle: 'Նոր հրավեր',
-        invitationsText: 'Հրավերներ',
-        eventsText: 'Միջոցառումներ',
-        profileText: 'Պրոֆիլ',
-        logoutText: 'Դուրս գալ',
-        languageTitle: 'Լեզու',
-        guestNameLabel: 'Հյուրի անունը',
-        hashLabel: 'Եզակի նույնացուցիչ (Hash)',
-        withSpouseLabel: 'Զուգընկերոջ հետ',
-        genderLabel: 'Սեռ',
-        yesOption: 'Այո',
-        noOption: 'Ոչ',
-        maleOption: 'Արական',
-        femaleOption: 'Իգական',
-        createButtonText: 'Ստեղծել հրավեր',
-        backToInvitationsText: 'Վերադառնալ հրավերներին',
-        backToProfileText: 'Վերադառնալ պրոֆիլ',
-        logoutButtonText: 'Դուրս գալ',
-        copyright: '© 2024 Հրավերների Կառավարիչ',
-        voiceInputLabel: 'Ձայնային մուտքագրում',
-        microphoneText: 'Սկսել ձայնագրությունը',
-        stopRecordingText: 'Դադարեցնել ձայնագրությունը',
-        statusText: 'Պատրաստ է ձայնագրման',
-        recognizedNamesLabel: 'Ճանաչված անուններ',
-        generateAllText: 'Ստեղծել բոլոր հրավերները',
-        clearNamesText: 'Մաքրել ցուցակը',
-        generationModalTitle: 'Ստեղծում հրավերները'
-    },
-    ru: {
-        sideTitle: 'Создать приглашение',
-        sideDescription: 'Отправляйте персональные приглашения вашим гостям на предстоящее событие',
-        menuTitle: 'Меню',
-        pageTitle: 'Новое приглашение',
-        invitationsText: 'Приглашения',
-        eventsText: 'События',
-        profileText: 'Профиль',
-        logoutText: 'Выйти',
-        languageTitle: 'Язык',
-        guestNameLabel: 'Имя гостя',
-        hashLabel: 'Уникальный идентификатор (Hash)',
-        withSpouseLabel: 'С партнером',
-        genderLabel: 'Пол',
-        yesOption: 'Да',
-        noOption: 'Нет',
-        maleOption: 'Мужской',
-        femaleOption: 'Женский',
-        createButtonText: 'Создать приглашение',
-        backToInvitationsText: 'Вернуться к приглашениям',
-        backToProfileText: 'Вернуться в профиль',
-        logoutButtonText: 'Выйти',
-        copyright: '© 2024 Менеджер Приглашений',
-        voiceInputLabel: 'Голосовой ввод',
-        microphoneText: 'Начать запись',
-        stopRecordingText: 'Остановить запись',
-        statusText: 'Готов к записи',
-        recognizedNamesLabel: 'Распознанные имена',
-        generateAllText: 'Создать все приглашения',
-        clearNamesText: 'Очистить список',
-        generationModalTitle: 'Создание приглашений'
-    }
-};
-
-// Function to update all text content based on selected language
-function updateLanguage(lang) {
-    document.getElementById('sideTitle').textContent = translations[lang].sideTitle;
-    document.getElementById('sideDescription').textContent = translations[lang].sideDescription;
-    document.getElementById('menuTitle').textContent = translations[lang].menuTitle;
-    document.getElementById('pageTitle').textContent = translations[lang].pageTitle;
-    document.getElementById('invitationsText').textContent = translations[lang].invitationsText;
-    document.getElementById('eventsText').textContent = translations[lang].eventsText;
-    document.getElementById('profileText').textContent = translations[lang].profileText;
-    document.getElementById('logoutText').textContent = translations[lang].logoutText;
-    document.getElementById('languageTitle').textContent = translations[lang].languageTitle;
-    document.getElementById('guestNameLabel').textContent = translations[lang].guestNameLabel;
-    document.getElementById('hashLabel').textContent = translations[lang].hashLabel;
-    document.getElementById('withSpouseLabel').textContent = translations[lang].withSpouseLabel;
-    document.getElementById('genderLabel').textContent = translations[lang].genderLabel;
-    document.getElementById('yesOption').textContent = translations[lang].yesOption;
-    document.getElementById('noOption').textContent = translations[lang].noOption;
-    document.getElementById('maleOption').textContent = translations[lang].maleOption;
-    document.getElementById('femaleOption').textContent = translations[lang].femaleOption;
-    document.getElementById('createButtonText').textContent = translations[lang].createButtonText;
-    document.getElementById('backToInvitationsText').textContent = translations[lang].backToInvitationsText;
-    document.getElementById('backToProfileText').textContent = translations[lang].backToProfileText;
-    document.getElementById('logoutButtonText').textContent = translations[lang].logoutButtonText;
-    document.getElementById('copyright').textContent = translations[lang].copyright;
-    
-    // Voice UI elements
-    document.getElementById('voiceInputLabel').textContent = translations[lang].voiceInputLabel;
-    document.getElementById('microphoneText').textContent = translations[lang].microphoneText;
-    document.getElementById('stopRecordingText').textContent = translations[lang].stopRecordingText;
-    document.getElementById('statusText').textContent = translations[lang].statusText;
-    document.getElementById('recognizedNamesLabel').textContent = translations[lang].recognizedNamesLabel;
-    document.getElementById('generateAllText').textContent = translations[lang].generateAllText;
-    document.getElementById('clearNamesText').textContent = translations[lang].clearNamesText;
-    document.getElementById('generationModalTitle').textContent = translations[lang].generationModalTitle;
-
-    // Update HTML lang attribute
-    document.documentElement.lang = lang;
-    
-    // Update speech recognition language if it exists
-    if (window.recognition) {
-        window.recognition.lang = lang === 'hy' ? 'hy-AM' : 'ru-RU';
-    }
-}
-
-// Элементы интерфейса для голосового управления
-const startVoiceBtn = document.getElementById('startVoiceBtn');
-const stopVoiceBtn = document.getElementById('stopVoiceBtn');
-const recordingStatus = document.getElementById('recording-status');
-const statusText = document.getElementById('statusText');
-const recordingTime = document.getElementById('recordingTime');
-const namesList = document.getElementById('names-list');
-const namesActions = document.getElementById('names-actions');
-const generateAllBtn = document.getElementById('generate-all-btn');
-const clearNamesBtn = document.getElementById('clear-names-btn');
-
-// Модальное окно генерации
-const generationModal = document.getElementById('generationModal');
-const closeModalBtns = document.querySelectorAll('.close-modal-btn');
-const generationProgress = document.getElementById('generationProgress');
-const currentProgress = document.getElementById('currentProgress');
-const totalNames = document.getElementById('totalNames');
-const generationLogList = document.getElementById('generation-log-list');
-
-// Переменные для распознавания речи
-let recognition;
-let isRecording = false;
-let recordingStartTime;
-let recordingTimer;
-let recognizedNames = [];
-
-// Инициализация Web Speech API
-function initSpeechRecognition() {
-    window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    
-    if (window.SpeechRecognition) {
-        recognition = new SpeechRecognition();
-        recognition.continuous = true;
-        recognition.interimResults = true;
-        recognition.lang = currentLanguage === 'hy' ? 'hy-AM' : 'ru-RU';
-        
-        recognition.onstart = function() {
-            isRecording = true;
-            recordingStatus.classList.add('recording-active');
-            statusText.textContent = currentLanguage === 'hy' ? 'Ձայնագրում...' : 'Запись...';
-            startVoiceBtn.style.display = 'none';
-            stopVoiceBtn.style.display = 'flex';
-            
-            recordingStartTime = Date.now();
-            updateRecordingTime();
-            recordingTimer = setInterval(updateRecordingTime, 1000);
-        };
-        
-        recognition.onresult = function(event) {
-            let finalTranscript = '';
-            
-            for (let i = event.resultIndex; i < event.results.length; i++) {
-                if (event.results[i].isFinal) {
-                    finalTranscript += event.results[i][0].transcript;
+        // Функция для загрузки сохраненного языка
+        function loadSavedLanguage() {
+            const savedLanguage = localStorage.getItem('selectedLanguage');
+            if (savedLanguage && (savedLanguage === 'hy' || savedLanguage === 'ru')) {
+                currentLanguage = savedLanguage;
+                updateLanguageButtons();
+                updateLanguage(currentLanguage);
+                if (mainHyBtn && mainRuBtn) {
+                    updateAllLanguageButtons();
                 }
             }
-            
-            if (finalTranscript) {
-                processTranscript(finalTranscript);
+
+            // Инициализация элементов голосового интерфейса
+            if (document.getElementById('startVoiceBtn')) {
+                initAudioRecording();
+            }
+        }
+
+        // Функция для переключения языка с сохранением в localStorage
+        function switchLanguage(lang) {
+            if (currentLanguage !== lang) {
+                currentLanguage = lang;
+                console.log(lang)
+                // Сохраняем выбор в localStorage
+                localStorage.setItem('selectedLanguage', lang);
+
+                // Обновляем интерфейс
+                updateLanguageButtons();
+                updateLanguage(currentLanguage);
+
+                return true;
+            }
+            return false;
+        }
+
+        // Обработчики кнопок языка
+        hyBtn.addEventListener('click', function () {
+            switchLanguage('hy');
+        });
+
+        ruBtn.addEventListener('click', function () {
+            switchLanguage('ru');
+        });
+
+        // Для основных кнопок языка (если они существуют)
+        if (mainHyBtn && mainRuBtn) {
+            mainHyBtn.addEventListener('click', function () {
+                switchLanguage('hy');
+                updateAllLanguageButtons();
+            });
+
+            mainRuBtn.addEventListener('click', function () {
+                switchLanguage('ru');
+                updateAllLanguageButtons();
+            });
+        }
+
+        function updateLanguageButtons() {
+            if (currentLanguage === 'hy') {
+                hyBtn.classList.add('active');
+                ruBtn.classList.remove('active');
+            } else {
+                hyBtn.classList.remove('active');
+                ruBtn.classList.add('active');
+            }
+        }
+
+        function updateAllLanguageButtons() {
+            if (currentLanguage === 'hy') {
+                hyBtn.classList.add('active');
+                ruBtn.classList.remove('active');
+                mainHyBtn.classList.add('active');
+                mainRuBtn.classList.remove('active');
+            } else {
+                hyBtn.classList.remove('active');
+                ruBtn.classList.add('active');
+                mainHyBtn.classList.remove('active');
+                mainRuBtn.classList.add('active');
+            }
+        }
+
+        // Text content for both languages
+        const translations = {
+            hy: {
+                sideTitle: 'Ստեղծել հրավեր',
+                sideDescription: 'Ուղարկեք անձնական հրավերներ ձեր հյուրերին առաջիկա միջոցառման համար',
+                menuTitle: 'Մենյու',
+                pageTitle: 'Նոր հրավեր',
+                invitationsText: 'Հրավերներ',
+                eventsText: 'Միջոցառումներ',
+                profileText: 'Պրոֆիլ',
+                logoutText: 'Դուրս գալ',
+                languageTitle: 'Լեզու',
+                guestNameLabel: 'Հյուրի անունը',
+                hashLabel: 'Եզակի նույնացուցիչ (Hash)',
+                withSpouseLabel: 'Զուգընկերոջ հետ',
+                genderLabel: 'Սեռ',
+                yesOption: 'Այո',
+                noOption: 'Ոչ',
+                maleOption: 'Արական',
+                femaleOption: 'Իգական',
+                createButtonText: 'Ստեղծել հրավեր',
+                backToInvitationsText: 'Վերադառնալ հրավերներին',
+                backToProfileText: 'Վերադառնալ պրոֆիլ',
+                logoutButtonText: 'Դուրս գալ',
+                copyright: '© 2024 Հրավերների Կառավարիչ',
+                voiceInputLabel: 'Ձայնային մուտքագրում',
+                microphoneText: 'Սկսել ձայնագրությունը',
+                stopRecordingText: 'Դադարեցնել ձայնագրությունը',
+                statusText: 'Պատրաստ է ձայնագրման',
+                recognizedNamesLabel: 'Ճանաչված անուններ',
+                generateAllText: 'Ստեղծել բոլոր հրավերները',
+                clearNamesText: 'Մաքրել ցուցակը',
+                generationModalTitle: 'Ստեղծում հրավերները'
+            },
+            ru: {
+                sideTitle: 'Создать приглашение',
+                sideDescription: 'Отправляйте персональные приглашения вашим гостям на предстоящее событие',
+                menuTitle: 'Меню',
+                pageTitle: 'Новое приглашение',
+                invitationsText: 'Приглашения',
+                eventsText: 'События',
+                profileText: 'Профиль',
+                logoutText: 'Выйти',
+                languageTitle: 'Язык',
+                guestNameLabel: 'Имя гостя',
+                hashLabel: 'Уникальный идентификатор (Hash)',
+                withSpouseLabel: 'С партнером',
+                genderLabel: 'Пол',
+                yesOption: 'Да',
+                noOption: 'Нет',
+                maleOption: 'Мужской',
+                femaleOption: 'Женский',
+                createButtonText: 'Создать приглашение',
+                backToInvitationsText: 'Вернуться к приглашениям',
+                backToProfileText: 'Вернуться в профиль',
+                logoutButtonText: 'Выйти',
+                copyright: '© 2024 Менеджер Приглашений',
+                voiceInputLabel: 'Голосовой ввод',
+                microphoneText: 'Начать запись',
+                stopRecordingText: 'Остановить запись',
+                statusText: 'Готов к записи',
+                recognizedNamesLabel: 'Распознанные имена',
+                generateAllText: 'Создать все приглашения',
+                clearNamesText: 'Очистить список',
+                generationModalTitle: 'Создание приглашений'
             }
         };
-        
-        recognition.onerror = function(event) {
-            console.error('Speech recognition error', event.error);
-            stopRecording();
-            
-            statusText.textContent = currentLanguage === 'hy' ? 
-                'Սխալ: ' + event.error : 
-                'Ошибка: ' + event.error;
-        };
-        
-        recognition.onend = function() {
-            stopRecording();
-        };
-    } else {
-        startVoiceBtn.disabled = true;
-        statusText.textContent = currentLanguage === 'hy' ? 
-            'Ձայնի ճանաչումը չի աջակցվում այս բրաուզերում' : 
-            'Распознавание речи не поддерживается в этом браузере';
-    }
-}
 
-// Обработка распознанного текста и выделение имен
-function processTranscript(transcript) {
-    console.log('Распознанный текст:', transcript);
-    
-    // Очистка и нормализация текста
-    transcript = transcript.trim()
-        .replace(/\s+/g, ' ')  // Удаление лишних пробелов
-        .replace(/[,.!?;:]/g, ','); // Заменяем все знаки препинания на запятые
-    
-    // Разделение текста по запятым, союзам и пробелам
-    const separators = currentLanguage === 'hy' ? 
-        /,|\sև\s|\sեվ\s|\s/ : 
-        /,|\sи\s|\s/;
-        
-    let words = transcript.split(separators);
-    
-    // Дополнительная обработка для увеличения чувствительности
-    words.forEach(word => {
-        word = word.trim();
-        
-        // Пропускаем короткие слова (предлоги, союзы и т.д.)
-        if (word && word.length > 1) {
-            // Нормализация имени - первая буква заглавная, остальные строчные
-            const normalizedWord = word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-            
-            // Улучшенная проверка на имя
-            // Менее строгая проверка для повышения чувствительности
-            // Проверяем, что первая буква заглавная и нет цифр
-            if (/^[А-ЯЁԱ-Ֆ]/.test(normalizedWord) && 
-                !/\d/.test(normalizedWord) && 
-                !isCommonWord(normalizedWord) && 
-                !recognizedNames.includes(normalizedWord)) {
-                    
-                recognizedNames.push(normalizedWord);
-                addNameToList(normalizedWord);
-                
-                // Показать действия с именами, если список не пуст
-                if (recognizedNames.length > 0) {
+        // Function to update all text content based on selected language
+        function updateLanguage(lang) {
+            document.getElementById('sideTitle').textContent = translations[lang].sideTitle;
+            document.getElementById('sideDescription').textContent = translations[lang].sideDescription;
+            document.getElementById('menuTitle').textContent = translations[lang].menuTitle;
+            document.getElementById('pageTitle').textContent = translations[lang].pageTitle;
+            document.getElementById('invitationsText').textContent = translations[lang].invitationsText;
+            document.getElementById('eventsText').textContent = translations[lang].eventsText;
+            document.getElementById('profileText').textContent = translations[lang].profileText;
+            document.getElementById('logoutText').textContent = translations[lang].logoutText;
+            document.getElementById('languageTitle').textContent = translations[lang].languageTitle;
+            document.getElementById('guestNameLabel').textContent = translations[lang].guestNameLabel;
+            document.getElementById('hashLabel').textContent = translations[lang].hashLabel;
+            document.getElementById('withSpouseLabel').textContent = translations[lang].withSpouseLabel;
+            document.getElementById('genderLabel').textContent = translations[lang].genderLabel;
+            document.getElementById('yesOption').textContent = translations[lang].yesOption;
+            document.getElementById('noOption').textContent = translations[lang].noOption;
+            document.getElementById('maleOption').textContent = translations[lang].maleOption;
+            document.getElementById('femaleOption').textContent = translations[lang].femaleOption;
+            document.getElementById('createButtonText').textContent = translations[lang].createButtonText;
+            document.getElementById('backToInvitationsText').textContent = translations[lang].backToInvitationsText;
+            document.getElementById('backToProfileText').textContent = translations[lang].backToProfileText;
+            document.getElementById('logoutButtonText').textContent = translations[lang].logoutButtonText;
+            document.getElementById('copyright').textContent = translations[lang].copyright;
+
+            // Voice UI elements
+            document.getElementById('voiceInputLabel').textContent = translations[lang].voiceInputLabel;
+            document.getElementById('microphoneText').textContent = translations[lang].microphoneText;
+            document.getElementById('stopRecordingText').textContent = translations[lang].stopRecordingText;
+            document.getElementById('statusText').textContent = translations[lang].statusText;
+            document.getElementById('recognizedNamesLabel').textContent = translations[lang].recognizedNamesLabel;
+            document.getElementById('generateAllText').textContent = translations[lang].generateAllText;
+            document.getElementById('clearNamesText').textContent = translations[lang].clearNamesText;
+            document.getElementById('generationModalTitle').textContent = translations[lang].generationModalTitle;
+
+            // Update HTML lang attribute
+            document.documentElement.lang = lang;
+        }
+
+        // Элементы интерфейса для голосового управления
+        const startVoiceBtn = document.getElementById('startVoiceBtn');
+        const stopVoiceBtn = document.getElementById('stopVoiceBtn');
+        const recordingStatus = document.getElementById('recording-status');
+        const statusText = document.getElementById('statusText');
+        const recordingTime = document.getElementById('recordingTime');
+        const namesList = document.getElementById('names-list');
+        const namesActions = document.getElementById('names-actions');
+        const generateAllBtn = document.getElementById('generate-all-btn');
+        const clearNamesBtn = document.getElementById('clear-names-btn');
+
+        // Модальное окно генерации
+        const generationModal = document.getElementById('generationModal');
+        const closeModalBtns = document.querySelectorAll('.close-modal-btn');
+        const generationProgress = document.getElementById('generationProgress');
+        const currentProgress = document.getElementById('currentProgress');
+        const totalNames = document.getElementById('totalNames');
+        const generationLogList = document.getElementById('generation-log-list');
+
+        // Переменные для голосового ввода
+        let isRecording = false;
+        let recordingStartTime;
+        let recordingTimer;
+        let recognizedNames = [];
+
+        // Глобальные переменные для работы с аудио
+        let mediaRecorder;
+        let audioChunks = [];
+
+        // Инициализация записи аудио с интеграцией OpenAI
+        function initAudioRecording() {
+            // Проверка поддержки браузером
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                console.error("Media Devices API не поддерживается в этом браузере.");
+                statusText.textContent = currentLanguage === 'hy' ?
+                    'Ձայնագրությունը չի աջակցվում այս բրաուզերում' :
+                    'Запись не поддерживается в этом браузере';
+                startVoiceBtn.disabled = true;
+                return;
+            }
+
+            // Запрос на доступ к микрофону
+            navigator.mediaDevices.getUserMedia({ audio: true })
+                .then(stream => {
+                    // Создаем MediaRecorder с оптимальными настройками для API
+                    mediaRecorder = new MediaRecorder(stream, {
+                        mimeType: 'audio/webm', // Формат, поддерживаемый OpenAI API
+                        audioBitsPerSecond: 128000
+                    });
+
+                    // Обработчик для сбора данных
+                    mediaRecorder.ondataavailable = event => {
+                        if (event.data.size > 0) {
+                            audioChunks.push(event.data);
+                        }
+                    };
+
+                    // Обработчик окончания записи
+                    mediaRecorder.onstop = () => {
+                        // Создаем Blob из собранных чанков
+                        const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+
+                        // Индикатор загрузки
+                        statusText.textContent = currentLanguage === 'hy' ?
+                            'Վերլուծվում է...' :
+                            'Анализируется...';
+
+                        // Отправляем файл на сервер для распознавания
+                        sendAudioToServer(audioBlob);
+
+                        // Сбрасываем состояние
+                        audioChunks = [];
+                    };
+
+                    // Готово к записи
+                    startVoiceBtn.disabled = false;
+                    statusText.textContent = currentLanguage === 'hy' ?
+                        'Պատրաստ է ձայնագրման' :
+                        'Готов к записи';
+                })
+                .catch(error => {
+                    console.error("Ошибка доступа к микрофону:", error);
+                    statusText.textContent = currentLanguage === 'hy' ?
+                        'Սխալ՝ միացրեք միկրոֆոնը' :
+                        'Ошибка: включите микрофон';
+                    startVoiceBtn.disabled = true;
+                });
+        }
+
+        // Начало записи
+        function startRecording() {
+            if (!mediaRecorder) {
+                initAudioRecording();
+                return;
+            }
+
+            if (mediaRecorder.state === 'inactive') {
+                isRecording = true;
+                recordingStatus.classList.add('recording-active');
+                statusText.textContent = currentLanguage === 'hy' ? 'Ձայնագրում...' : 'Запись...';
+                startVoiceBtn.style.display = 'none';
+                stopVoiceBtn.style.display = 'flex';
+
+                recordingStartTime = Date.now();
+                updateRecordingTime();
+                recordingTimer = setInterval(updateRecordingTime, 1000);
+
+                // Начинаем запись
+                audioChunks = [];
+                mediaRecorder.start();
+            }
+        }
+
+        // Остановка записи
+        function stopRecording() {
+            if (!isRecording) return;
+
+            // Добавляем небольшую задержку перед остановкой записи
+            statusText.textContent = currentLanguage === 'hy' ?
+                'Завершение записи...' :
+                'Завершение записи...';
+
+            setTimeout(() => {
+                clearInterval(recordingTimer);
+                isRecording = false;
+
+                if (mediaRecorder && mediaRecorder.state === 'recording') {
+                    mediaRecorder.stop();
+                }
+
+                recordingStatus.classList.remove('recording-active');
+                statusText.textContent = currentLanguage === 'hy' ? 'Վերլուծվում է...' : 'Анализируется...';
+            }, 750); // 750мс задержка перед остановкой записи
+        }
+
+        // Отправка аудио на сервер
+        function sendAudioToServer(audioBlob) {
+            const formData = new FormData();
+            formData.append('audio', audioBlob, 'speech.webm');
+            formData.append('language', currentLanguage === 'hy' ? 'hy' : 'ru');
+
+            // Визуальный индикатор для пользователя
+            const loadingElement = document.createElement('div');
+            loadingElement.className = 'transcription-loading';
+            loadingElement.innerHTML = `
+<div class="spinner"></div>
+<p>${currentLanguage === 'hy' ? 'Տեքստի վերլուծում...' : 'Анализ текста...'}</p>
+`;
+            recordingStatus.appendChild(loadingElement);
+
+            fetch('/api/transcribe', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // Удаляем индикатор загрузки
+                    if (loadingElement) {
+                        loadingElement.remove();
+                    }
+
+                    if (data.success) {
+                        // Показываем кнопку для начала новой записи
+                        startVoiceBtn.style.display = 'flex';
+                        stopVoiceBtn.style.display = 'none';
+
+                        // Обновляем статус
+                        statusText.textContent = currentLanguage === 'hy' ?
+                            'Պատրաստ է ձայնագրման' :
+                            'Готов к записи';
+
+                        // Обрабатываем распознанный текст
+                        if (data.text) {
+                            processTranscript(data.text);
+                        }
+                    } else {
+                        // Обработка ошибки
+                        console.error('Error in transcription:', data.error);
+                        statusText.textContent = currentLanguage === 'hy' ?
+                            'Սխալ: չհաջողվեց վերլուծել' :
+                            'Ошибка: не удалось проанализировать';
+
+                        // Показываем кнопку для начала новой записи
+                        startVoiceBtn.style.display = 'flex';
+                        stopVoiceBtn.style.display = 'none';
+                    }
+                })
+                .catch(error => {
+                    // Удаляем индикатор загрузки
+                    if (loadingElement) {
+                        loadingElement.remove();
+                    }
+
+                    console.error('Error sending audio to server:', error);
+                    statusText.textContent = currentLanguage === 'hy' ?
+                        'Սխալ: сервер չի պատասխանում' :
+                        'Ошибка: сервер не отвечает';
+
+                    // Показываем кнопку для начала новой записи
+                    startVoiceBtn.style.display = 'flex';
+                    stopVoiceBtn.style.display = 'none';
+                });
+        }
+
+        // Обработка распознанного текста и выделение имен
+        function processTranscript(transcript) {
+            console.log('Распознанный текст:', transcript);
+
+            // Очистка и нормализация текста
+            transcript = transcript.trim()
+                .replace(/\s+/g, ' ')  // Удаление лишних пробелов
+                .replace(/[,.!?;:]/g, ','); // Заменяем все знаки препинания на запятые
+
+            // Разделение текста по запятым, союзам и пробелам
+            const separators = currentLanguage === 'hy' ?
+                /,|\sև\s|\sեվ\s|\s/ :
+                /,|\sи\s|\s/;
+
+            let words = transcript.split(separators);
+
+            // Дополнительная обработка для увеличения чувствительности
+            words.forEach(word => {
+                word = word.trim();
+
+                // Пропускаем короткие слова (предлоги, союзы и т.д.)
+                if (word && word.length > 1) {
+                    // Нормализация имени - первая буква заглавная, остальные строчные
+                    const normalizedWord = word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+
+                    // Улучшенная проверка на имя
+                    // Менее строгая проверка для повышения чувствительности
+                    // Проверяем, что первая буква заглавная и нет цифр
+                    if (/^[А-ЯЁԱ-Ֆ]/.test(normalizedWord) &&
+                        !/\d/.test(normalizedWord) &&
+                        !isCommonWord(normalizedWord) &&
+                        !recognizedNames.includes(normalizedWord)) {
+
+                        recognizedNames.push(normalizedWord);
+                        addNameToList(normalizedWord);
+
+                        // Показать действия с именами, если список не пуст
+                        if (recognizedNames.length > 0) {
+                            namesActions.style.display = 'flex';
+                        }
+                    }
+                }
+            });
+
+            // Дополнительно ищем составные имена (имя отчество или имя фамилия)
+            const possibleFullNames = findFullNames(transcript);
+            possibleFullNames.forEach(name => {
+                if (!recognizedNames.includes(name)) {
+                    recognizedNames.push(name);
+                    addNameToList(name);
                     namesActions.style.display = 'flex';
                 }
-            }
+            });
         }
-    });
-    
-    // Дополнительно ищем составные имена (имя отчество или имя фамилия)
-    const possibleFullNames = findFullNames(transcript);
-    possibleFullNames.forEach(name => {
-        if (!recognizedNames.includes(name)) {
-            recognizedNames.push(name);
-            addNameToList(name);
-            namesActions.style.display = 'flex';
-        }
-    });
-}
 
-// Функция для поиска составных имен
-function findFullNames(text) {
-    const fullNames = [];
-    
-    // Регулярное выражение для поиска двух слов, начинающихся с заглавной буквы
-    const fullNamePattern = currentLanguage === 'hy' ?
-        /[Ա-Ֆ][ա-ևА-Я][ա-և]+ [Ա-Ֆ][ա-ևА-Я][ա-և]+/g :
-        /[А-ЯЁ][а-яё]+ [А-ЯЁ][а-яё]+/g;
-    
-    const matches = text.match(fullNamePattern);
-    
-    if (matches) {
-        matches.forEach(match => {
-            // Проверяем, что это не содержит распространенных слов
-            const parts = match.split(' ');
-            if (!isCommonWord(parts[0]) && !isCommonWord(parts[1])) {
-                fullNames.push(match);
-            }
-        });
-    }
-    
-    return fullNames;
-}
+        // Функция для поиска составных имен
+        function findFullNames(text) {
+            const fullNames = [];
 
-// Улучшенная проверка на распространенные слова
-function isCommonWord(word) {
-    word = word.toLowerCase();
-    
-    // Расширенный список распространенных слов
-    const commonWordsHy = ['և', 'եվ', 'իսկ', 'բայց', 'որ', 'ինչպես', 'որպեսզի', 'ինչու', 'մեկ', 'երկու', 'ով', 'ինչ', 'ուրեմն', 'նա', 'այս', 'այդ', 'այն'];
-    
-    const commonWordsRu = ['и', 'а', 'но', 'что', 'как', 'чтобы', 'потому', 'почему', 'один', 'два', 'три', 'кто', 'это', 'тот', 'этот', 'там', 'тут', 'вот', 'где', 'когда'];
-    
-    // Проверка на короткие служебные слова
-    if (word.length <= 2) return true;
-    
-    return currentLanguage === 'hy' ? 
-        commonWordsHy.includes(word) : 
-        commonWordsRu.includes(word);
-}
-// Добавление имени в визуальный список
-function addNameToList(name) {
-    const li = document.createElement('li');
-    li.innerHTML = `
-        <span class="name-text">${name}</span>
-        <div class="name-actions">
-            <button class="edit-btn" title="${currentLanguage === 'hy' ? 'Խմբագրել' : 'Редактировать'}">
-                <i class="fas fa-edit"></i>
-            </button>
-            <button class="generate-btn" title="${currentLanguage === 'hy' ? 'Ստեղծել հրավեր' : 'Создать приглашение'}">
-                <i class="fas fa-paper-plane"></i>
-            </button>
-            <button class="remove-btn" title="${currentLanguage === 'hy' ? 'Հեռացնել' : 'Удалить'}">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-    `;
-    
-    namesList.appendChild(li);
-    
-    // Обработчики событий для кнопок
-    const editBtn = li.querySelector('.edit-btn');
-    const generateBtn = li.querySelector('.generate-btn');
-    const removeBtn = li.querySelector('.remove-btn');
-    
-    editBtn.addEventListener('click', function() {
-        const nameText = li.querySelector('.name-text');
-        const currentName = nameText.textContent;
-        const newName = prompt(
-            currentLanguage === 'hy' ? 
-                'Խմբագրել անունը' : 
-                'Редактировать имя', 
-            currentName
-        );
-        
-        if (newName && newName.trim() !== '') {
-            const index = recognizedNames.indexOf(currentName);
-            if (index !== -1) {
-                recognizedNames[index] = newName;
-                nameText.textContent = newName;
+            // Регулярное выражение для поиска двух слов, начинающихся с заглавной буквы
+            const fullNamePattern = currentLanguage === 'hy' ?
+                /[Ա-Ֆ][ա-ևА-Я][ա-և]+ [Ա-Ֆ][ա-ևА-Я][ա-և]+/g :
+                /[А-ЯЁ][а-яё]+ [А-ЯЁ][а-яё]+/g;
+
+            const matches = text.match(fullNamePattern);
+
+            if (matches) {
+                matches.forEach(match => {
+                    // Проверяем, что это не содержит распространенных слов
+                    const parts = match.split(' ');
+                    if (!isCommonWord(parts[0]) && !isCommonWord(parts[1])) {
+                        fullNames.push(match);
+                    }
+                });
+            }
+
+            return fullNames;
+        }
+
+        // Улучшенная проверка на распространенные слова
+        function isCommonWord(word) {
+            word = word.toLowerCase();
+
+            // Расширенный список распространенных слов
+            const commonWordsHy = ['և', 'եվ', 'իսկ', 'բայց', 'որ', 'ինչպես', 'որպեսզի', 'ինչու', 'մեկ', 'երկու', 'ով', 'ինչ', 'ուրեմն', 'նա', 'այս', 'այդ', 'այն'];
+
+            const commonWordsRu = ['и', 'а', 'но', 'что', 'как', 'чтобы', 'потому', 'почему', 'один', 'два', 'три', 'кто', 'это', 'тот', 'этот', 'там', 'тут', 'вот', 'где', 'когда'];
+
+            // Проверка на короткие служебные слова
+            if (word.length <= 2) return true;
+
+            return currentLanguage === 'hy' ?
+                commonWordsHy.includes(word) :
+                commonWordsRu.includes(word);
+        }
+
+        // Добавление имени в визуальный список
+        function addNameToList(name) {
+            const li = document.createElement('li');
+            li.innerHTML = `
+<span class="name-text">${name}</span>
+<div class="name-actions">
+    <button class="edit-btn" title="${currentLanguage === 'hy' ? 'Խմբագրել' : 'Редактировать'}">
+        <i class="fas fa-edit"></i>
+    </button>
+    <button class="generate-btn" title="${currentLanguage === 'hy' ? 'Ստեղծել հրավեր' : 'Создать приглашение'}">
+        <i class="fas fa-paper-plane"></i>
+    </button>
+    <button class="remove-btn" title="${currentLanguage === 'hy' ? 'Հեռացնել' : 'Удалить'}">
+        <i class="fas fa-times"></i>
+    </button>
+</div>
+`;
+
+            namesList.appendChild(li);
+
+            // Обработчики событий для кнопок
+            const editBtn = li.querySelector('.edit-btn');
+            const generateBtn = li.querySelector('.generate-btn');
+            const removeBtn = li.querySelector('.remove-btn');
+
+            editBtn.addEventListener('click', function () {
+                const nameText = li.querySelector('.name-text');
+                const currentName = nameText.textContent;
+                const newName = prompt(
+                    currentLanguage === 'hy' ?
+                        'Խմբագրել անունը' :
+                        'Редактировать имя',
+                    currentName
+                );
+
+                if (newName && newName.trim() !== '') {
+                    const index = recognizedNames.indexOf(currentName);
+                    if (index !== -1) {
+                        recognizedNames[index] = newName;
+                        nameText.textContent = newName;
+                    }
+                }
+            });
+
+            generateBtn.addEventListener('click', function () {
+                const name = li.querySelector('.name-text').textContent;
+                generateInvitation(name);
+            });
+
+            removeBtn.addEventListener('click', function () {
+                const name = li.querySelector('.name-text').textContent;
+                const index = recognizedNames.indexOf(name);
+
+                if (index !== -1) {
+                    recognizedNames.splice(index, 1);
+                    li.remove();
+
+                    // Скрыть действия, если список пуст
+                    if (recognizedNames.length === 0) {
+                        namesActions.style.display = 'none';
+                    }
+                }
+            });
+        }
+
+        // Обновление времени записи
+        function updateRecordingTime() {
+            if (!isRecording) return;
+
+            const elapsed = Math.floor((Date.now() - recordingStartTime) / 1000);
+            const minutes = Math.floor(elapsed / 60);
+            const seconds = elapsed % 60;
+
+            recordingTime.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        // Генерация приглашения для одного имени
+        function generateInvitation(name) {
+            // Заполнение формы
+            const nameInput = document.getElementById('name');
+            const hashInput = document.getElementById('hash');
+            const withSpouseSelect = document.getElementById('with_spouse');
+            const isMaleSelect = document.getElementById('is_male');
+
+            nameInput.value = name;
+            hashInput.value = generateRandomHash(); // Используем существующую функцию
+
+            // Автоматическое определение пола по имени (простая эвристика)
+            const isMale = guessGenderByName(name);
+            isMaleSelect.value = isMale ? 'True' : 'False';
+
+            // Отправка формы
+            document.querySelector('form').submit();
+        }
+
+        // Генерация всех приглашений
+        function generateAllInvitations() {
+            if (recognizedNames.length === 0) return;
+
+            // Отображение модального окна
+            generationModal.classList.add('active');
+
+            // Настройка прогресс-бара
+            totalNames.textContent = recognizedNames.length;
+            currentProgress.textContent = '0';
+            generationProgress.style.width = '0%';
+
+            // Очистка лога генерации
+            generationLogList.innerHTML = '';
+
+            // Имитация процесса генерации
+            let processed = 0;
+
+            function processNext() {
+                if (processed >= recognizedNames.length) {
+                    // Завершение процесса
+                    setTimeout(() => {
+                        // Редирект на страницу со списком приглашений
+                        window.location.href = document.querySelector('a[href*="view_invitation"]').getAttribute('href');
+                    }, 2000);
+                    return;
+                }
+
+                const name = recognizedNames[processed];
+
+                // Добавление записи в лог
+                const logItem = document.createElement('li');
+                logItem.textContent = `${currentLanguage === 'hy' ? 'Ստեղծվում է' : 'Создается'}: ${name}...`;
+                generationLogList.appendChild(logItem);
+                generationLogList.scrollTop = generationLogList.scrollHeight;
+
+                // Создание данных для отправки
+                const formData = new FormData();
+                formData.append('name', name); formData.append('hash', generateRandomHash());
+                formData.append('with_spouse', Math.random() > 0.5 ? 'True' : 'False');
+                formData.append('is_male', guessGenderByName(name) ? 'True' : 'False');
+                formData.append('event_id', document.querySelector('input[name="event_id"]').value);
+
+                // Отправка запроса на сервер
+                fetch(document.querySelector('form').action, {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(response => {
+                        processed++;
+
+                        if (response.ok) {
+                            logItem.className = 'success';
+                            logItem.textContent = `${currentLanguage === 'hy' ? 'Ստեղծված է' : 'Создано'}: ${name}`;
+                        } else {
+                            logItem.className = 'error';
+                            logItem.textContent = `${currentLanguage === 'hy' ? 'Սխալ' : 'Ошибка'}: ${name} - ${currentLanguage === 'hy' ? 'Չի հաջողվել ստեղծել' : 'Не удалось создать'}`;
+                        }
+
+                        // Обновление прогресса
+                        const progressPercent = (processed / recognizedNames.length) * 100;
+                        generationProgress.style.width = `${progressPercent}%`;
+                        currentProgress.textContent = processed;
+
+                        // Обработка следующего имени
+                        processNext();
+                    })
+                    .catch(error => {
+                        processed++;
+                        logItem.className = 'error';
+                        logItem.textContent = `${currentLanguage === 'hy' ? 'Սխալ' : 'Ошибка'}: ${name} - ${error.message}`;
+
+                        // Обновление прогресса даже при ошибке
+                        const progressPercent = (processed / recognizedNames.length) * 100;
+                        generationProgress.style.width = `${progressPercent}%`;
+                        currentProgress.textContent = processed;
+
+                        // Продолжаем обработку, даже если одно приглашение не удалось создать
+                        processNext();
+                    });
+            }
+
+            // Начать процесс
+            processNext();
+        }
+
+        // Определение пола по имени (простая эвристика)
+        function guessGenderByName(name) {
+            // Предположим, что мужские имена обычно оканчиваются на согласные
+            // А женские на гласные (это упрощение, но для демонстрации подойдет)
+
+            const lastChar = name.charAt(name.length - 1).toLowerCase();
+
+            if (currentLanguage === 'hy') {
+                // Для армянских имен
+                const maleEndings = ['կ', 'ն', 'ր', 'ս', 'ր', 'թ', 'ց', 'փ', 'լ', 'մ'];
+                const femaleEndings = ['ա', 'ե', 'ի', 'ո', 'ու'];
+
+                return maleEndings.includes(lastChar);
+            } else {
+                // Для русских имен
+                return !['а', 'я', 'ь'].includes(lastChar);
             }
         }
-    });
-    
-    generateBtn.addEventListener('click', function() {
-        const name = li.querySelector('.name-text').textContent;
-        generateInvitation(name);
-    });
-    
-    removeBtn.addEventListener('click', function() {
-        const name = li.querySelector('.name-text').textContent;
-        const index = recognizedNames.indexOf(name);
-        
-        if (index !== -1) {
-            recognizedNames.splice(index, 1);
-            li.remove();
-            
-            // Скрыть действия, если список пуст
-            if (recognizedNames.length === 0) {
+
+        // Обработчики событий
+        startVoiceBtn.addEventListener('click', startRecording);
+        stopVoiceBtn.addEventListener('click', stopRecording);
+
+        generateAllBtn.addEventListener('click', generateAllInvitations);
+
+        clearNamesBtn.addEventListener('click', function () {
+            if (confirm(currentLanguage === 'hy' ?
+                'Մաքրե՞լ ճանաչված անունների ցուցակը:' :
+                'Очистить список распознанных имен?')) {
+                namesList.innerHTML = '';
+                recognizedNames = [];
                 namesActions.style.display = 'none';
             }
-        }
-    });
-}
+        });
 
-// Обновление времени записи
-function updateRecordingTime() {
-    if (!isRecording) return;
-    
-    const elapsed = Math.floor((Date.now() - recordingStartTime) / 1000);
-    const minutes = Math.floor(elapsed / 60);
-    const seconds = elapsed % 60;
-    
-    recordingTime.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-}
+        // Закрытие модального окна
+        closeModalBtns.forEach(btn => {
+            btn.addEventListener('click', function () {
+                generationModal.classList.remove('active');
+            });
+        });
 
-// Остановка записи
-function stopRecording() {
-    if (!isRecording) return;
-    
-    recognition.stop();
-    isRecording = false;
-    clearInterval(recordingTimer);
-    
-    recordingStatus.classList.remove('recording-active');
-    statusText.textContent = currentLanguage === 'hy' ? 'Պատրաստ է ձայնագրման' : 'Готов к записи';
-    startVoiceBtn.style.display = 'flex';
-    stopVoiceBtn.style.display = 'none';
-}
-
-// Генерация приглашения для одного имени
-function generateInvitation(name) {
-    // Заполнение формы
-    const nameInput = document.getElementById('name');
-    const hashInput = document.getElementById('hash');
-    const withSpouseSelect = document.getElementById('with_spouse');
-    const isMaleSelect = document.getElementById('is_male');
-    
-    nameInput.value = name;
-    hashInput.value = generateRandomHash(); // Используем существующую функцию
-    
-    // Автоматическое определение пола по имени (простая эвристика)
-    const isMale = guessGenderByName(name);
-    isMaleSelect.value = isMale ? 'True' : 'False';
-    
-    // Отправка формы
-    document.querySelector('form').submit();
-}
-
-// Генерация всех приглашений
-// Генерация всех приглашений
-function generateAllInvitations() {
-    if (recognizedNames.length === 0) return;
-    
-    // Отображение модального окна
-    generationModal.classList.add('active');
-    
-    // Настройка прогресс-бара
-    totalNames.textContent = recognizedNames.length;
-    currentProgress.textContent = '0';
-    generationProgress.style.width = '0%';
-    
-    // Очистка лога генерации
-    generationLogList.innerHTML = '';
-    
-    // Имитация процесса генерации
-    let processed = 0;
-    
-    function processNext() {
-        if (processed >= recognizedNames.length) {
-            // Завершение процесса
-            setTimeout(() => {
-                // Редирект на страницу со списком приглашений
-                window.location.href = document.querySelector('a[href*="view_invitation"]').getAttribute('href');
-            }, 2000);
-            return;
-        }
-        
-        const name = recognizedNames[processed];
-        
-        // Добавление записи в лог
-        const logItem = document.createElement('li');
-        logItem.textContent = `${currentLanguage === 'hy' ? 'Ստեղծվում է' : 'Создается'}: ${name}...`;
-        generationLogList.appendChild(logItem);
-        generationLogList.scrollTop = generationLogList.scrollHeight;
-        
-        // Создание данных для отправки
-        const formData = new FormData();
-        formData.append('name', name);
-        formData.append('hash', generateRandomHash());
-        formData.append('with_spouse', Math.random() > 0.5 ? 'True' : 'False');
-        formData.append('is_male', guessGenderByName(name) ? 'True' : 'False');
-        formData.append('event_id', document.querySelector('input[name="event_id"]').value);
-        
-        // Отправка запроса на сервер
-        fetch(document.querySelector('form').action, {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => {
-            processed++;
-            
-            if (response.ok) {
-                logItem.className = 'success';
-                logItem.textContent = `${currentLanguage === 'hy' ? 'Ստեղծված է' : 'Создано'}: ${name}`;
-            } else {
-                logItem.className = 'error';
-                logItem.textContent = `${currentLanguage === 'hy' ? 'Սխալ' : 'Ошибка'}: ${name} - ${currentLanguage === 'hy' ? 'Չի հաջողվել ստեղծել' : 'Не удалось создать'}`;
+        // Закрытие модального окна при клике вне его содержимого
+        generationModal.addEventListener('click', function (e) {
+            if (e.target === generationModal) {
+                generationModal.classList.remove('active');
             }
-            
-            // Обновление прогресса
-            const progressPercent = (processed / recognizedNames.length) * 100;
-            generationProgress.style.width = `${progressPercent}%`;
-            currentProgress.textContent = processed;
-            
-            // Обработка следующего имени
-            processNext();
-        })
-        .catch(error => {
-            processed++;
-            logItem.className = 'error';
-            logItem.textContent = `${currentLanguage === 'hy' ? 'Սխալ' : 'Ошибка'}: ${name} - ${error.message}`;
-            
-            // Обновление прогресса даже при ошибке
-            const progressPercent = (processed / recognizedNames.length) * 100;
-            generationProgress.style.width = `${progressPercent}%`;
-            currentProgress.textContent = processed;
-            
-            // Продолжаем обработку, даже если одно приглашение не удалось создать
-            processNext();
         });
-    }
-    
-    // Начать процесс
-    processNext();
-}
-
-// Определение пола по имени (простая эвристика)
-function guessGenderByName(name) {
-    // Предположим, что мужские имена обычно оканчиваются на согласные
-    // А женские на гласные (это упрощение, но для демонстрации подойдет)
-    
-    const lastChar = name.charAt(name.length - 1).toLowerCase();
-    
-    if (currentLanguage === 'hy') {
-        // Для армянских имен
-        const maleEndings = ['կ', 'ն', 'ր', 'ս', 'ր', 'թ', 'ց', 'փ', 'լ', 'մ'];
-        const femaleEndings = ['ա', 'ե', 'ի', 'ո', 'ու'];
-        
-        return maleEndings.includes(lastChar);
-    } else {
-        // Для русских имен
-        return !['а', 'я', 'ь'].includes(lastChar);
-    }
-}
-
-// Обработчики событий
-startVoiceBtn.addEventListener('click', function() {
-    if (!recognition) {
-        initSpeechRecognition();
-    }
-    
-    if (!isRecording) {
-        recognition.start();
-    }
-});
-
-stopVoiceBtn.addEventListener('click', stopRecording);
-
-generateAllBtn.addEventListener('click', generateAllInvitations);
-
-clearNamesBtn.addEventListener('click', function() {
-    if (confirm(currentLanguage === 'hy' ? 
-        'Մաքրե՞լ ճանաչված անունների ցուցակը:' : 
-        'Очистить список распознанных имен?')) {
-        namesList.innerHTML = '';
-        recognizedNames = [];
-        namesActions.style.display = 'none';
-    }
-});
-
-// Закрытие модального окна
-closeModalBtns.forEach(btn => {
-    btn.addEventListener('click', function() {
-        generationModal.classList.remove('active');
-    });
-});
-
-// Закрытие модального окна при клике вне его содержимого
-generationModal.addEventListener('click', function(e) {
-    if (e.target === generationModal) {
-        generationModal.classList.remove('active');
-    }
-});
-
-// Инициализация распознавания речи при загрузке страницы
-document.addEventListener('DOMContentLoaded', function() {
-    // Инициализация элементов голосового интерфейса
-    if (document.getElementById('startVoiceBtn')) {
-        initSpeechRecognition();
-    }
-});
-
-// Интеграция с OpenAI API (опционально)
-async function transcribeWithOpenAI(audioBlob) {
-    const formData = new FormData();
-    formData.append('audio', audioBlob, 'speech.webm');
-    
-    try {
-        const response = await fetch('/api/transcribe', {
-            method: 'POST',
-            body: formData
-        });
-        
-        const data = await response.json();
-        if (data.text) {
-            processTranscript(data.text);
-        }
-    } catch (error) {
-        console.error('Error with OpenAI API:', error);
-        statusText.textContent = currentLanguage === 'hy' ? 
-            'Սխալ API-ի հետ' : 
-            'Ошибка API';
-    }
-}
     </script>
-    </body></html>
+</body>
+
+</html>
