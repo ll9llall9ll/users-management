@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <html lang="hy">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Մուտք | Вход</title>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:wght@400;500;600&family=Montserrat:wght@300;400;500&display=swap">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Montserrat:wght@300;400;500&display=swap');
 
@@ -33,7 +38,6 @@
             overflow-x: hidden;
             position: relative;
             color: var(--text-color);
-            padding: 20px;
         }
 
         /* Background effect */
@@ -43,7 +47,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: 
+            background:
                 radial-gradient(circle at 20% 30%, rgba(222, 208, 195, 0.8) 0%, transparent 40%),
                 radial-gradient(circle at 80% 70%, rgba(201, 183, 167, 0.6) 0%, transparent 40%);
             z-index: -2;
@@ -53,7 +57,7 @@
             position: fixed;
             width: 200vw;
             height: 200vh;
-            background: radial-gradient(circle, rgba(255,255,255,0.6) 10%, transparent 80%);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.6) 10%, transparent 80%);
             animation: shimmer 40s infinite linear;
             top: -50vh;
             left: -50vw;
@@ -61,36 +65,289 @@
         }
 
         @keyframes shimmer {
-            0% { transform: translate(-50%, -50%) rotate(0deg); }
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
         }
 
-        .container {
-            position: relative;
+        /* Частицы фона */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particles span {
+            position: absolute;
+            display: block;
+            width: 8px;
+            height: 8px;
+            background: rgba(156, 132, 104, 0.3);
+            border-radius: 50%;
+            animation: particleMove 20s infinite ease-in-out;
+        }
+
+        @keyframes particleMove {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(800px) translateX(-200px);
+                opacity: 0;
+            }
+        }
+
+        .particles span:nth-child(1) {
+            top: 12%;
+            left: 18%;
+            animation-duration: 18s;
+        }
+
+        .particles span:nth-child(2) {
+            top: 22%;
+            left: 65%;
+            animation-duration: 22s;
+        }
+
+        .particles span:nth-child(3) {
+            top: 35%;
+            left: 42%;
+            animation-duration: 25s;
+        }
+
+        .particles span:nth-child(4) {
+            top: 55%;
+            left: 78%;
+            animation-duration: 20s;
+        }
+
+        .particles span:nth-child(5) {
+            top: 75%;
+            left: 25%;
+            animation-duration: 16s;
+        }
+
+        .particles span:nth-child(6) {
+            top: 15%;
+            left: 85%;
+            animation-duration: 19s;
+        }
+
+        .particles span:nth-child(7) {
+            top: 45%;
+            left: 15%;
+            animation-duration: 21s;
+        }
+
+        .particles span:nth-child(8) {
+            top: 65%;
+            left: 60%;
+            animation-duration: 24s;
+        }
+
+        /* Основной контейнер - теперь единая секция */
+        .main-container {
+            display: flex;
+            width: 90%;
+            max-width: 1100px;
+            min-height: 600px;
             background: var(--bg-transp);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Левая сторона (видео) */
+        .left-side {
+            width: 80%;
             padding: 40px;
-            box-shadow: 
-                0 15px 35px rgba(0, 0, 0, 0.05),
-                0 5px 15px rgba(0, 0, 0, 0.05);
-            max-width: 420px;
+            position: relative;
+            border-right: none;
+            background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.1), rgba(156, 132, 104, 0.05));
+        }
+
+        /* Правая сторона (логин) */
+        .right-side {
+            width: 50%;
+            padding: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(to bottom left, rgba(255, 255, 255, 0.2), transparent);
+            position: relative;
+        }
+
+        /* Вертикальная разделительная линия между секциями */
+        .right-side::before {
+            content: '';
+            position: absolute;
+            top: 10%;
+            left: 0;
+            height: 80%;
+            width: 1px;
+            background: linear-gradient(to bottom, transparent, var(--primary-color), transparent);
+            opacity: 0.7;
+        }
+
+        /* Видео контейнер */
+        .video-container {
+            position: relative;
             width: 100%;
+            height: 60%;
+            overflow: hidden;
+            border-radius: 15px;
+            background-color: rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.08);
+            margin-bottom: 20px;
+        }
+
+        .video-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(145deg,
+                    rgba(156, 132, 104, 0.3),
+                    rgba(156, 132, 104, 0.1));
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .video-frame {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .video-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.9;
+            transition: all 0.5s;
+        }
+
+        .play-button-container {
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 5;
+        }
+
+        .play-button {
+            width: 70px;
+            height: 70px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .play-button i {
+            color: white;
+            font-size: 30px;
+            margin-left: 5px;
+        }
+
+        .play-button-container:hover .play-button {
+            background-color: rgba(156, 132, 104, 0.9);
+            transform: scale(1.1);
+        }
+
+        /* Информационная часть */
+        .info-content {
+            padding: 10px 0;
+        }
+
+        .site-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-darker);
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+
+        .site-description {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: var(--text-color);
+            margin-bottom: 20px;
+        }
+
+        /* Список функций */
+        .features-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 5px 0px;
+            background-color: rgba(255, 255, 255, 0.4);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            justify-content: flex-start;
+        }
+
+        .feature-item:hover {
+            background-color: rgba(255, 255, 255, 0.7);
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(156, 132, 104, 0.15);
+        }
+
+        .feature-item i {
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Контейнер логина */
+        .login-container {
+            width: 100%;
+            max-width: 360px;
             text-align: center;
             animation: fadeIn 1s ease-in-out forwards;
-            border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
         .login-header {
-            margin-bottom: 40px;
+            margin-bottom: 35px;
             position: relative;
-            padding-top: 25px; /* Added padding to move welcome text down */
         }
 
         h2 {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 2.8rem;
+            font-size: 2.6rem;
             font-weight: 600;
             color: var(--primary-color);
             margin-bottom: 10px;
@@ -100,20 +357,20 @@
         .login-header p {
             color: #666;
             font-size: 0.95rem;
-            max-width: 80%;
+            max-width: 85%;
             margin: 0 auto;
         }
 
         .form-group {
-            margin-bottom: 24px;
+            margin-bottom: 20px;
             position: relative;
             transition: all 0.3s;
         }
 
         .form-group input {
             width: 100%;
-            padding: 16px;
-            padding-left: 50px;
+            padding: 14px;
+            padding-left: 45px;
             border: none;
             border-radius: 12px;
             background: rgba(255, 255, 255, 0.6);
@@ -149,12 +406,12 @@
             left: 18px;
             transform: translateY(-50%);
             color: var(--primary-color);
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             transition: all 0.3s;
             opacity: 0.8;
         }
 
-        .form-group input:focus ~ i {
+        .form-group input:focus~i {
             transform: translateY(-50%) scale(1.2);
             color: var(--primary-dark);
             opacity: 1;
@@ -164,7 +421,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 24px;
+            margin-bottom: 22px;
             font-size: 0.9rem;
         }
 
@@ -238,7 +495,7 @@
         .divider {
             display: flex;
             align-items: center;
-            margin: 30px 0;
+            margin: 28px 0;
             color: #999;
             font-size: 0.9rem;
         }
@@ -263,12 +520,12 @@
             display: flex;
             justify-content: center;
             gap: 15px;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
         .social-btn {
-            width: 50px;
-            height: 50px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -280,7 +537,7 @@
         }
 
         .social-btn i {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: #555;
             transition: all 0.3s;
         }
@@ -296,7 +553,7 @@
 
         .signin {
             text-align: center;
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             margin-top: 20px;
             color: #666;
         }
@@ -328,43 +585,16 @@
             width: 100%;
         }
 
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        .particles span {
-            position: absolute;
-            display: block;
-            width: 8px;
-            height: 8px;
-            background: rgba(156, 132, 104, 0.3);
-            border-radius: 50%;
-            animation: particleMove 20s infinite ease-in-out;
-        }
-
-        @keyframes particleMove {
-            0% { transform: translateY(0) translateX(0); opacity: 1; }
-            100% { transform: translateY(800px) translateX(-200px); opacity: 0; }
-        }
-
-        .particles span:nth-child(1) { top: 12%; left: 18%; animation-duration: 18s; }
-        .particles span:nth-child(2) { top: 22%; left: 65%; animation-duration: 22s; }
-        .particles span:nth-child(3) { top: 35%; left: 42%; animation-duration: 25s; }
-        .particles span:nth-child(4) { top: 55%; left: 78%; animation-duration: 20s; }
-        .particles span:nth-child(5) { top: 75%; left: 25%; animation-duration: 16s; }
-        .particles span:nth-child(6) { top: 15%; left: 85%; animation-duration: 19s; }
-        .particles span:nth-child(7) { top: 45%; left: 15%; animation-duration: 21s; }
-        .particles span:nth-child(8) { top: 65%; left: 60%; animation-duration: 24s; }
-
         @keyframes fadeIn {
-            0% { opacity: 0; transform: translateY(20px); }
-            100% { opacity: 1; transform: translateY(0); }
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* Language Menu Toggle */
@@ -443,26 +673,56 @@
             background-color: rgba(156, 132, 104, 0.1);
         }
 
+        @keyframes buttonGlow {
+            0% {
+                box-shadow: 0 8px 20px rgba(156, 132, 104, 0.3);
+            }
+
+            100% {
+                box-shadow: 0 8px 25px rgba(156, 132, 104, 0.6);
+            }
+        }
+
         /* Responsive styles */
+        @media (max-width: 1200px) {
+            .main-container {
+                width: 95%;
+                max-width: 900px;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .main-container {
+                flex-direction: column;
+                width: 90%;
+                max-width: 500px;
+            }
+
+            .left-side {
+                display: none;
+                /* Hide left side */
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid rgba(156, 132, 104, 0.2);
+            }
+
+            .right-side {
+                width: 100%;
+                padding: 30px;
+            }
+        }
+
         @media (max-width: 480px) {
-            .container {
-                padding: 30px 20px;
-                border-radius: 16px;
+            .main-container {
+                width: 95%;
+            }
+
+            .right-side {
+                padding: 20px;
             }
 
             h2 {
                 font-size: 2.3rem;
-            }
-
-            .login-header p {
-                max-width: 100%;
-                font-size: 0.9rem;
-            }
-
-            .form-group input {
-                padding: 14px;
-                padding-left: 45px;
-                font-size: 0.95rem;
             }
 
             .remember-forgot {
@@ -470,23 +730,10 @@
                 align-items: flex-start;
                 gap: 10px;
             }
-
-            .social-login {
-                gap: 10px;
-            }
-
-            .social-btn {
-                width: 45px;
-                height: 45px;
-            }
-        }
-
-        @keyframes buttonGlow {
-            0% { box-shadow: 0 8px 20px rgba(156, 132, 104, 0.3); }
-            100% { box-shadow: 0 8px 25px rgba(156, 132, 104, 0.6); }
         }
     </style>
 </head>
+
 <body>
     <div class="bg-pattern"></div>
     <div class="bg-shimmer"></div>
@@ -502,68 +749,134 @@
         <span></span>
     </div>
 
-    <div class="container">
-        <!-- Language Menu Toggle -->
-        <div class="menu-toggle" id="menuToggle">
-            <i class="fas fa-globe"></i>
-        </div>
-        
-        <!-- Language selection dropdown -->
-        <div class="language-dropdown" id="languageDropdown">
-            <div class="language-buttons">
-                <button class="language-btn active" id="hyBtn">Հայերեն</button>
-                <button class="language-btn" id="ruBtn">Русский</button>
-            </div>
-        </div>
-        
-        <div class="login-header">
-            <h2 id="welcomeText">Բարի վերադարձ</h2>
-            <p id="instructionText">Շարունակելու համար մուտքագրեք ձեր տվյալները</p>
-        </div>
-        
-        <form method="post" action="#">
-            <div class="form-group">
-                <input type="text" name="username" id="usernameField" placeholder="Օգտվողի անուն" required>
-                <i class="fas fa-user"></i>
-            </div>
-            <div class="form-group">
-                <input type="password" name="password" id="passwordField" placeholder="Գաղտնաբառ" required>
-                <i class="fas fa-lock"></i>
-            </div>
-            
-            <div class="remember-forgot">
-                <div class="remember-me">
-                    <input type="checkbox" id="remember" name="remember">
-                    <label for="remember" id="rememberLabel">Հիշել ինձ</label>
-                </div>
-                <div class="forgot-password">
-                    <a href="#" id="forgotPasswordLink">Մոռացե՞լ եք գաղտնաբառը</a>
+    <!-- Новый единый контейнер вместо разделенных секций -->
+    <div class="main-container">
+        <!-- Левая сторона (видео и информация) -->
+        <div class="left-side">
+            <div class="video-container">
+                <div class="video-frame">
+                    <img src="/test/image/cnundamreklama.png" alt="Video thumbnail">
+                    <div class="play-button-container">
+                        <div class="play-button">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <video style="display: none;">
+                        <source src="/test/pres.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
                 </div>
             </div>
-            
-            <button type="submit" class="btn" id="loginButton">Մուտք</button>
-        </form>
-        
-        <div class="divider" id="dividerText">կամ շարունակեք հետևյալով</div>
-        
-        <div class="social-login">
-            <div class="social-btn">
-                <i class="fab fa-google"></i>
-            </div>
-            <div class="social-btn">
-                <i class="fab fa-facebook-f"></i>
-            </div>
-            <div class="social-btn">
-                <i class="fab fa-apple"></i>
+
+            <div class="info-content">
+                <h1 class="site-title">CNUND.AM</h1>
+                <p class="site-description" id="siteDescription">
+                    Հարթակը ամբողջ Հայաստանի համար։ Միացեք մեզ և բացահայտեք նոր հնարավորություններ։
+                </p>
+                <div class="features-list">
+                    <div class="feature-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <span id="secureFeature">Անվտանգ և հուսալի</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-bolt"></i>
+                        <span id="fastFeature">Արագ գործարկում</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-users"></i>
+                        <span id="communityFeature">Ակտիվ համայնք</span>
+                    </div>
+                </div>
             </div>
         </div>
-        
-        <div class="signin">
-            <span id="signupText">Չունե՞ք հաշիվ <a href="/register" id="signupLink">Գրանցվել այստեղ</a></span>
+
+        <!-- Правая сторона (логин) -->
+        <div class="right-side">
+            <!-- Language Menu Toggle -->
+            <div class="menu-toggle" id="menuToggle">
+                <i class="fas fa-globe"></i>
+            </div>
+
+            <!-- Language selection dropdown -->
+            <div class="language-dropdown" id="languageDropdown">
+                <div class="language-buttons">
+                    <button class="language-btn active" id="hyBtn">Հայերեն</button>
+                    <button class="language-btn" id="ruBtn">Русский</button>
+                </div>
+            </div>
+
+            <div class="login-container">
+                <div class="login-header">
+                    <h2 id="welcomeText">Բարի վերադարձ</h2>
+                    <p id="instructionText">Շարունակելու համար մուտքագրեք ձեր տվյալները</p>
+                </div>
+
+                <form method="post" action="#">
+                    <div class="form-group">
+                        <input type="text" name="username" id="usernameField" placeholder="Օգտվողի անուն" required>
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" name="password" id="passwordField" placeholder="Գաղտնաբառ" required>
+                        <i class="fas fa-lock"></i>
+                    </div>
+
+                    <div class="remember-forgot">
+                        <div class="remember-me">
+                            <input type="checkbox" id="remember" name="remember">
+                            <label for="remember" id="rememberLabel">Հիշել ինձ</label>
+                        </div>
+                        <div class="forgot-password">
+                            <a href="#" id="forgotPasswordLink">Մոռացե՞լ եք գաղտնաբառը</a>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn" id="loginButton">Մուտք</button>
+                </form>
+
+                <div class="divider" id="dividerText">կամ շարունակեք հետևյալով</div>
+                <div style="margin-top: 20px;">
+                    <script src="https://accounts.google.com/gsi/client" async defer></script>
+                    <div id="g_id_onload"
+                        data-client_id="425296575607-sv54o1k3vom2bs40rtsr8pes6bbfjsrv.apps.googleusercontent.com"
+                        data-callback="handleCredentialResponse" data-auto_prompt="false">
+                    </div>
+                    <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline"
+                        data-text="sign_in_with" data-shape="rectangular" data-logo_alignment="left">
+                    </div>
+                </div>
+                <div class="signin">
+                    <span id="signupText">Չունե՞ք հաշիվ <a href="/register" id="signupLink">Գրանցվել այստեղ</a></span>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
+        function handleCredentialResponse(response) {
+            // Создаем форму для отправки учетных данных
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '/login';
+
+            // Добавляем скрытое поле для токена
+            const credentialInput = document.createElement('input');
+            credentialInput.type = 'hidden';
+            credentialInput.name = 'credential';
+            credentialInput.value = response.credential;
+            form.appendChild(credentialInput);
+
+            // Добавляем скрытое поле для индикации Google-логина
+            const googleLoginInput = document.createElement('input');
+            googleLoginInput.type = 'hidden';
+            googleLoginInput.name = 'google_login';
+            googleLoginInput.value = 'true';
+            form.appendChild(googleLoginInput);
+
+            // Добавляем форму в тело документа и отправляем
+            document.body.appendChild(form);
+            form.submit();
+        }
         // Переводы
         const translations = {
             hy: {
@@ -576,7 +889,11 @@
                 login: 'Մուտք',
                 divider: 'կամ շարունակեք հետևյալով',
                 signup: 'Չունե՞ք հաշիվ ',
-                signupLink: 'Գրանցվել այստեղ'
+                signupLink: 'Գրանցվել այստեղ',
+                description: 'Հարթակը ամբողջ Հայաստանի համար։ Միացեք մեզ և բացահայտեք նոր հնարավորություններ։',
+                secureFeature: 'Անվտանգ և հուսալի',
+                fastFeature: 'Արագ գործարկում',
+                communityFeature: 'Ակտիվ համայնք'
             },
             ru: {
                 welcome: 'Добро пожаловать',
@@ -588,7 +905,13 @@
                 login: 'Войти',
                 divider: 'или продолжить с помощью',
                 signup: 'Нет аккаунта? ',
-                signupLink: 'Зарегистрироваться'
+                signupLink: 'Зарегистрироваться',
+                videoTitle: 'Добро пожаловать',
+                videoDescription: 'Присоединяйтесь к нашему сообществу сегодня',
+                description: 'Платформа для всей Армении. Присоединяйтесь к нам и откройте новые возможности.',
+                secureFeature: 'Безопасно и надежно',
+                fastFeature: 'Быстрый запуск',
+                communityFeature: 'Активное сообщество'
             }
         };
 
@@ -603,14 +926,20 @@
             document.getElementById('forgotPasswordLink').textContent = translations[lang].forgot;
             document.getElementById('loginButton').textContent = translations[lang].login;
             document.getElementById('dividerText').textContent = translations[lang].divider;
-            
+
             // Обновляем текст регистрации с ссылкой
             const signupText = document.getElementById('signupText');
             signupText.innerHTML = translations[lang].signup + '<a href="/register" id="signupLink">' + translations[lang].signupLink + '</a>';
-            
+
+            // Обновляем видео-секцию
+            document.getElementById('siteDescription').textContent = translations[lang].description;
+            document.getElementById('secureFeature').textContent = translations[lang].secureFeature;
+            document.getElementById('fastFeature').textContent = translations[lang].fastFeature;
+            document.getElementById('communityFeature').textContent = translations[lang].communityFeature;
+
             // Обновляем атрибут lang в HTML
             document.documentElement.lang = lang;
-            
+
             // Обновляем активные классы кнопок
             if (lang === 'hy') {
                 document.getElementById('hyBtn').classList.add('active');
@@ -619,66 +948,106 @@
                 document.getElementById('hyBtn').classList.remove('active');
                 document.getElementById('ruBtn').classList.add('active');
             }
-            
+
             // Сохраняем выбор в localStorage
             localStorage.setItem('selectedLanguage', lang);
         }
 
         // Инициализация при загрузке
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Получаем элементы
             const menuToggle = document.getElementById('menuToggle');
             const languageDropdown = document.getElementById('languageDropdown');
             const hyBtn = document.getElementById('hyBtn');
             const ruBtn = document.getElementById('ruBtn');
-            
+
             // Загружаем сохраненный язык
             const savedLanguage = localStorage.getItem('selectedLanguage');
             if (savedLanguage === 'ru') {
                 switchLanguage('ru');
             }
-            
+
             // Переключатель меню языков
-            menuToggle.addEventListener('click', function() {
+            menuToggle.addEventListener('click', function () {
                 languageDropdown.classList.toggle('active');
             });
-            
+
             // Закрытие меню при клике вне его
-            document.addEventListener('click', function(event) {
+            document.addEventListener('click', function (event) {
                 if (!menuToggle.contains(event.target) && !languageDropdown.contains(event.target)) {
                     languageDropdown.classList.remove('active');
                 }
             });
-            
+
             // Кнопки выбора языка
-            hyBtn.addEventListener('click', function() {
+            hyBtn.addEventListener('click', function () {
                 switchLanguage('hy');
                 languageDropdown.classList.remove('active');
             });
-            
-            ruBtn.addEventListener('click', function() {
+
+            ruBtn.addEventListener('click', function () {
                 switchLanguage('ru');
                 languageDropdown.classList.remove('active');
             });
-            
+
             // Эффект наведения на кнопку входа
             const loginButton = document.getElementById('loginButton');
-            loginButton.addEventListener('mouseenter', function() {
+            loginButton.addEventListener('mouseenter', function () {
                 this.style.animation = 'buttonGlow 1.5s infinite alternate';
             });
-            
-            loginButton.addEventListener('mouseleave', function() {
+
+            loginButton.addEventListener('mouseleave', function () {
                 this.style.animation = 'none';
             });
-            
+
             // Интерактивность социальных кнопок
             const socialButtons = document.querySelectorAll('.social-btn');
             socialButtons.forEach(button => {
-                button.addEventListener('click', function() {
+                button.addEventListener('click', function () {
                     console.log('Clicked social button: ' + this.querySelector('i').className);
                 });
+            });
+
+            // YouTube-style video play functionality
+            const playButtonContainer = document.querySelector('.play-button-container');
+            const videoFrame = document.querySelector('.video-frame');
+            const videoThumbnail = document.querySelector('.video-frame img');
+            const video = document.querySelector('.video-frame video');
+
+            playButtonContainer.addEventListener('click', function () {
+                // Hide thumbnail and play button
+                videoThumbnail.style.display = 'none';
+                playButtonContainer.style.display = 'none';
+
+                // Create a new video element with prominent controls
+                const videoContainer = document.createElement('div');
+                videoContainer.style.width = '100%';
+                videoContainer.style.height = '100%';
+                videoContainer.style.position = 'relative';
+
+                const newVideo = document.createElement('video');
+                newVideo.src = '/test/pres.mp4';
+                newVideo.controls = true; // Add video controls
+                newVideo.autoplay = true;
+                newVideo.loop = false;
+                newVideo.muted = false; // Enable sound
+                newVideo.style.width = '100%';
+                newVideo.style.height = '100%';
+                newVideo.style.objectFit = 'contain'; // Changed to contain to ensure controls are visible
+                newVideo.style.backgroundColor = '#000'; // Black background
+
+                // Make sure controls are always visible
+                newVideo.setAttribute('controlsList', 'nodownload');
+                newVideo.style.zIndex = '10';
+
+                videoContainer.appendChild(newVideo);
+
+                // Replace the hidden video with the container
+                videoFrame.innerHTML = '';
+                videoFrame.appendChild(videoContainer);
             });
         });
     </script>
 </body>
+
 </html>

@@ -14,8 +14,13 @@ import os
 import tempfile
 from flask import jsonify, request
 from pydub import AudioSegment
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+from google.oauth2 import id_token
+from google.auth.transport import requests as grequests
 # In-memory session storage
 active_sessions = set()
+
 
 
 def generate_session_id():
@@ -58,7 +63,7 @@ def check_password(password: str) -> str:
 
 app = Flask(__name__, static_folder='test')
 app.secret_key = secrets.token_hex(16)  # Generate a secure secret key
-
+CORS(app, resources={r"/login/google": {"origins": "*"}})
 def date(d):
      d.strftime("%d-%m-%y")
      return d
@@ -67,10 +72,13 @@ app.add_template_filter(date)
 appData = AppData()
 
 
+GOOGLE_CLIENT_ID = "" 
 
+# Хранилище сессий
+active_sessions = set()
 
 # Настройка клиента OpenAI с ключом API
-client = OpenAI(api_key="API_KEY")
+client = OpenAI(api_key="API")
 
 @app.route('/api/transcribe', methods=['POST'])
 def transcribe_audio():
@@ -133,12 +141,15 @@ def transcribe_audio():
 # Authentication middleware
 @app.before_request
 def check_session():
+    print(f"Request endpoint: {request.endpoint}")  # Отладка
     # Skip for public routes or static assets
-    if request.endpoint in ['login', 'register', 'invite', 'static'] or request.path.startswith('/static'):
+    if request.endpoint in ['login', 'register', 'invite', 'login_google', 'static'] or request.path.startswith('/static'):
+        print(f"Skipping session check for endpoint: {request.endpoint}")  # Отладка
         return None
 
     session_id = request.cookies.get('session_id')
     if not session_id or session_id not in active_sessions:
+        print("No session found, redirecting to login")  # Отладка
         return redirect(url_for('login'))
 
     # Set user_id from session in the request for easy access
@@ -316,25 +327,82 @@ def edit_user():
 def login():
     error = None
     if request.method == 'POST':
+        # Проверка на Google-логин
+        if request.form.get('google_login') == 'true':
+            try:
+                # Получаем токен из формы
+                token = request.form.get('credential')
+                
+                if not token:
+                    error = "Отсутствуют учетные данные Google"
+                    return render_template('login.html', error=error)
+                
+                # Верификация токена
+                idinfo = id_token.verify_oauth2_token(
+                    token,
+                    grequests.Request(),
+                    GOOGLE_CLIENT_ID
+                )
+                
+                # Извлечение информации о пользователе
+                email = idinfo.get('email')
+                name = idinfo.get('name', '')
+                
+                # Проверка существования пользователя
+                user = getUserByUsername(email)
+                if not user:
+                    # Разделение имени на части
+                    name_parts = name.split(' ', 1) if name else ['', '']
+                    first_name = name_parts[0]
+                    last_name = name_parts[1] if len(name_parts) > 1 else ''
+                    
+                    # Создание нового пользователя
+                    new_user = User(
+                        id='',
+                        username=email,
+                        name=first_name,
+                        surname=last_name,
+                        password='',  # Пустой пароль для Google-пользователей
+                        is_admin=False
+                    )
+                    insertUser(new_user)
+                    user = getUserByUsername(email)
+                
+                # Создание сессии
+                session_id = generate_session_id()
+                active_sessions.add(session_id)
+                
+                # Установка cookies
+                response = make_response(redirect(url_for('view_events')))
+                response.set_cookie('session_id', session_id, httponly=True, max_age=86400)
+                response.set_cookie('user_id', str(user.id), httponly=True, max_age=86400)
+                
+                return response
+            
+            except ValueError:
+                error = "Ошибка входа через Google"
+                return render_template('login.html', error=error)
+        
+        # Стандартная авторизация по логину/паролю
         current_username = request.form['username']
         current_password = request.form['password']
         
         user = getUserByUsername(current_username)
         if user and verify_password(user.password, current_password):
-            # Create session
+            # Создание сессии
             session_id = generate_session_id()
             active_sessions.add(session_id)
             
-            # Set cookies
+            # Установка cookies
             response = make_response(redirect(url_for('view_events')))
-            response.set_cookie('session_id', session_id, httponly=True, max_age=86400)  # 1 day
+            response.set_cookie('session_id', session_id, httponly=True, max_age=86400)
             response.set_cookie('user_id', str(user.id), httponly=True, max_age=86400)
             
             return response
         else:
-            error = "Invalid username or password"
+            error = "Неверное имя пользователя или пароль"
     
-    # Check if user is already logged in
+    # Проверка существующей сессии
     session_id = request.cookies.get('session_id')
     if session_id and session_id in active_sessions:
         return redirect(url_for('view_events'))
@@ -665,7 +733,6 @@ def bulk_delete_invitations():
     
     # Перенаправление обратно на страницу приглашений
     return redirect(url_for('view_invitation', event_id=event_id))
-
 
 
 @app.route('/delete_invitation', methods = ['GET', 'POST'])
