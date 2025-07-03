@@ -1,0 +1,587 @@
+<!doctype html>
+<html lang="ru" data-bs-theme="auto">
+
+<head>
+    <!-- Common Tag -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Свадебное приглашение {{event.display_name}}</title>
+
+    <!-- SEO Tag -->
+    <meta name="author" content="dewanakl">
+    <meta name="language" content="ru">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="googlebot" content="index, follow, max-image-preview:large">
+    <meta name="title" content="Свадебное приглашение {{event.display_name}}">
+    <meta name="description" content="Свадебное приглашение {{event.display_name}}">
+    <meta name="keywords" content="свадьба, приглашение, свадебное приглашение, онлайн приглашение, торжество">
+    <meta property="og:title" content="Свадебное приглашение {{event.display_name}}">
+    <meta property="og:description" content="Свадебное приглашение {{event.display_name}}">
+    <meta property="og:keywords" content="свадьба, приглашение, свадебное приглашение, онлайн приглашение, торжество">
+    <meta property="og:image" content="https://ulems.my.id/assets/images/bg.webp">
+    <meta property="og:image:secure_url" content="https://ulems.my.id/assets/images/bg.webp">
+    <meta property="og:image:type" content="image/webp">
+    <meta property="og:image:alt" content="Свадебное приглашение {{event.display_name}}">
+    <meta property="og:image:width" content="980">
+    <meta property="og:image:height" content="980">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ru_RU">
+    <meta property="og:url" content="https://ulems.my.id">
+    <meta property="og:site_name" content="Свадебное приглашение {{event.display_name}}">
+
+    <!-- Appearance -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Свадебное приглашение {{event.display_name}}">
+    <meta name="theme-color" content="#000000">
+    <meta name="color-scheme" content="dark light">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="canonical" href="https://ulems.my.id/">
+    <link rel="shortcut icon" type="image/x-icon" href="https://ulems.my.id/assets/favicon.ico">
+    <link rel="apple-touch-icon" sizes="192x192" href="https://ulems.my.id/assets/images/icon-192x192.png">
+    <link rel="icon" type="image/x-icon" href="https://ulems.my.id/assets/favicon.ico">
+
+    <!-- Preconnect CDN -->
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+
+    <!-- Preload Resources -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap" as="style">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap" as="style">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic&display=swap" as="style">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" integrity="sha256-oxqX0LQclbvrsJt8IymkxnISn4Np2Wy2rY9jjoQlDEg=" crossorigin="anonymous" as="style">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous" as="style">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha256-y3ibfOyBqlgBd+GzwFYQEVOZdNJD06HeDXihongBXKs=" crossorigin="anonymous" as="script">
+
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic&display=swap">
+
+    <!-- Dependencies CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" integrity="sha256-oxqX0LQclbvrsJt8IymkxnISn4Np2Wy2rY9jjoQlDEg=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+    <link rel="stylesheet" href="/test/parsic/css/guest.css">
+
+    <!-- Dependencies JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha256-y3ibfOyBqlgBd+GzwFYQEVOZdNJD06HeDXihongBXKs=" crossorigin="anonymous"></script>
+    <script src="/test/parsic/dist/guest.js"></script>
+</head>
+
+<body data-audio="/test/parsic/assets/music/pure-love-304010.mp3" data-confetti="true" data-time="{{event.date}}">
+
+    <!-- Root Invitation -->
+    <div class="row m-0 p-0 opacity-0" id="root">
+
+        <!-- Desktop mode -->
+        <div class="sticky-top vh-100 d-none d-sm-block col-sm-5 col-md-6 col-lg-7 col-xl-8 col-xxl-9 overflow-y-hidden m-0 p-0">
+            <div class="position-relative bg-white-black d-flex justify-content-center align-items-center vh-100">
+                <div class="d-flex position-absolute w-100 h-100">
+                    <div class="position-relative overflow-hidden vw-100">
+                        <div class="position-absolute h-100 w-100 slide-desktop" style="opacity: 0;">
+                            <img src="/test/parsic/assets/images/placeholder.webp" data-src="https://picsum.photos/1000/1000?random=7" alt="bg" class="bg-cover-home" style="mask-image: none; opacity: 30%;">
+                        </div>
+                        <div class="position-absolute h-100 w-100 slide-desktop" style="opacity: 0;">
+                            <img src="/test/parsic/assets/images/placeholder.webp" data-src="https://picsum.photos/1000/1000?random=8" alt="bg" class="bg-cover-home" style="mask-image: none; opacity: 30%;">
+                        </div>
+                        <div class="position-absolute h-100 w-100 slide-desktop" style="opacity: 0;">
+                            <img src="/test/parsic/assets/images/placeholder.webp" data-src="https://picsum.photos/1000/1000?random=9" alt="bg" class="bg-cover-home" style="mask-image: none; opacity: 30%;">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center p-4 bg-overlay-auto rounded-5">
+                    <h2 class="font-esthetic mb-4" style="font-size: 2rem;">Свадьба</h2>
+                    <h2 class="font-esthetic mb-4" style="font-size: 2rem;">{{event.display_name}}</h2>
+                    <p class="m-0" style="font-size: 1rem;">{{event.date}}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Smartphone mode -->
+        <div class="col-sm-7 col-md-6 col-lg-5 col-xl-4 col-xxl-3 m-0 p-0">
+            <!-- Main Content -->
+           <main data-bs-spy="scroll" data-bs-target="#navbar-menu" data-bs-root-margin="25% 0% 0% 0%" data-bs-smooth-scroll="true" tabindex="0">
+
+                <!-- Home -->
+                <section id="home" class="bg-light-dark position-relative overflow-hidden p-0 m-0">
+                    <img src="/test/parsic/assets/images/placeholder.webp" data-src="/test/parsic/assets/images/bg.webp" alt="bg" class="position-absolute opacity-25 top-50 start-50 translate-middle bg-cover-home">
+
+                    <div class="position-relative text-center bg-overlay-auto" style="background-color: unset;">
+                        <h1 class="font-esthetic pt-5 pb-4 fw-medium" style="font-size: 2.25rem;">Свадебное приглашение</h1>
+
+                        <img src="/test/parsic/assets/images/placeholder.webp" data-src="/test/parsic/assets/images/bg.webp" alt="bg" onclick="undangan.guest.modal(this)" class="img-center-crop rounded-circle border border-3 border-light shadow my-4 mx-auto cursor-pointer">
+
+                        <h2 class="font-esthetic my-4" style="font-size: 2.25rem;">{{event.display_name}}</h2>
+                        <p class="my-2" style="font-size: 1.25rem;">{{event.date}}</p>
+
+                        <button class="btn btn-outline-auto btn-sm shadow rounded-pill px-3 py-1" style="font-size: 0.825rem;">
+                            <i class="fa-solid fa-calendar-check me-2"></i>Сохранить в Google Календарь
+                        </button>
+
+                        <div class="d-flex justify-content-center align-items-center mt-4 mb-2">
+                            <div class="mouse-animation border border-secondary border-2 rounded-5 px-2 py-1 opacity-50">
+                                <div class="scroll-animation rounded-4 bg-secondary"></div>
+                            </div>
+                        </div>
+
+                        <p class="pb-4 m-0 text-secondary" style="font-size: 0.825rem;">Прокрутите вниз</p>
+                    </div>
+                </section>
+
+                <!-- Wave Separator -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="color-theme-svg no-gap-bottom">
+                    <path fill="currentColor" fill-opacity="1" d="M0,160L48,144C96,128,192,96,288,106.7C384,117,480,171,576,165.3C672,160,768,96,864,96C960,96,1056,160,1152,154.7C1248,149,1344,75,1392,37.3L1440,0L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+                </svg>
+
+                <!-- Wedding Info -->
+                <section class="bg-white-black text-center" id="wedding-info">
+                    <h2 class="font-esthetic py-4 m-0" style="font-size: 24px;">💕 Приглашение на свадьбу 💕</h2>
+                    <p class="pb-4 px-2 m-0" style="font-size: 0.95rem;">Дорогой {{invitation.name}}! Мы с радостью приглашаем вас разделить с нами один из самых важных дней в нашей жизни - нашу свадьбу!</p>
+
+                    <!-- Love animation -->
+                    <div class="position-relative">
+                        <div class="position-absolute" style="top: 0%; right: 5%;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="opacity-50" data-time="500" data-class="animate-love" viewBox="0 0 16 16">
+                                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="overflow-x-hidden pb-4">
+                        <div data-aos="fade-up" data-aos-duration="2000" class="pb-1">
+                            <img src="/test/parsic/assets/images/placeholder.webp" data-src="/test/parsic/assets/images/cowo.webp" alt="молодожены" onclick="undangan.guest.modal(this)" class="img-center-crop rounded-circle border border-3 border-light shadow my-4 mx-auto cursor-pointer">
+                            <h2 class="font-esthetic m-0" style="font-size: 2.125rem;">{{event.display_name}}</h2>
+                            <p class="mt-3 mb-1" style="font-size: 1.25rem;">соединяют свои сердца</p>
+                            <p class="mb-0" style="font-size: 0.95rem;">💍 В любви и единстве 💍</p>
+                        </div>
+                    </div>
+
+                    <!-- Love animation -->
+                    <div class="position-relative">
+                        <div class="position-absolute" style="top: 0%; left: 5%;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="opacity-50" data-time="2500" data-class="animate-love" viewBox="0 0 16 16">
+                                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
+                            </svg>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Wave Separator -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="color-theme-svg no-gap-bottom">
+                    <path fill="currentColor" fill-opacity="1" d="M0,192L40,181.3C80,171,160,149,240,149.3C320,149,400,171,480,165.3C560,160,640,128,720,128C800,128,880,160,960,186.7C1040,213,1120,235,1200,218.7C1280,203,1360,149,1400,122.7L1440,96L1440,0L1400,0C1360,0,1280,0,1200,0C1120,0,1040,0,960,0C880,0,800,0,720,0C640,0,560,0,480,0C400,0,320,0,240,0C160,0,80,0,40,0L0,0Z"></path>
+                </svg>
+
+                <!-- Wedding Message -->
+                <section class="bg-light-dark pt-2 pb-4">
+                    <div class="container text-center">
+                        <h2 class="font-esthetic pt-2 pb-1 m-0" style="font-size: 2rem;">О нашей любви</h2>
+
+                        <div class="bg-theme-auto mt-4 p-3 shadow rounded-4" data-aos="fade-down" data-aos-duration="2000">
+                            <p class="p-1 mb-2" style="font-size: 0.95rem;">💕 Любовь - это когда два сердца бьются в унисон 💕</p>
+                            <p class="m-0 p-0 text-theme-auto" style="font-size: 0.95rem;">И мы готовы начать нашу совместную жизнь</p>
+                        </div>
+
+                        <div class="bg-theme-auto mt-4 p-3 shadow rounded-4" data-aos="fade-down" data-aos-duration="2000">
+                            <p class="p-1 mb-2" style="font-size: 0.95rem;">🌹 Ваше присутствие сделает наш день особенным 🌹</p>
+                            <p class="m-0 p-0 text-theme-auto" style="font-size: 0.95rem;">Приходите разделить с нами радость этого момента</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Love Story -->
+                <section class="bg-light-dark pt-2 pb-4">
+                    <div class="container">
+                        <div class="bg-theme-auto rounded-5 shadow p-3">
+                            <h2 class="font-esthetic text-center py-2 mb-2" style="font-size: 2.125rem;">Наша история любви</h2>
+
+                            <div class="position-relative">
+                                <div class="position-absolute d-flex justify-content-center align-items-center top-50 start-50 translate-middle w-100 h-100 bg-overlay-auto z-3" style="opacity: 100%; background-color: unset;">
+                                    <button class="btn btn-outline-auto btn-sm rounded-4 shadow-sm" onclick="undangan.guest.showStory(this.parentNode)"><i class="fa-solid fa-heart fa-bounce me-2"></i>Узнать нашу историю</button>
+                                </div>
+
+                                <div class="overflow-y-scroll overflow-x-hidden p-2 with-scrollbar" style="height: 15rem;">
+                                    <div class="row">
+                                        <div class="col-auto position-relative">
+                                            <p class="position-relative d-flex justify-content-center align-items-center bg-theme-auto border border-secondary border-2 opacity-100 rounded-circle m-0 p-0 z-1" style="width: 2rem; height: 2rem;">1</p>
+                                            <hr class="position-absolute top-0 start-50 translate-middle-x border border-secondary h-100 z-0 opacity-100 m-0 rounded-4 shadow-none">
+                                        </div>
+                                        <div class="col mt-1 mb-3 ps-0">
+                                            <p class="fw-bold">💫 Первая встреча</p>
+                                            <p class="small mb-0">
+                                                Это было магическое знакомство, которое изменило нашу жизнь навсегда. С первого взгляда мы поняли, что между нами есть что-то особенное, что-то, что связывает наши сердца невидимыми нитями судьбы.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-auto position-relative">
+                                            <p class="position-relative d-flex justify-content-center align-items-center bg-theme-auto border border-secondary border-2 opacity-100 rounded-circle m-0 p-0 z-1" style="width: 2rem; height: 2rem;">2</p>
+                                            <hr class="position-absolute top-0 start-50 translate-middle-x border border-secondary h-100 z-0 opacity-100 m-0 rounded-4 shadow-none">
+                                        </div>
+                                        <div class="col mt-1 mb-3 ps-0">
+                                            <p class="fw-bold">💕 Развитие отношений</p>
+                                            <p class="small mb-0">
+                                                Каждый день, проведенный вместе, укреплял нашу связь. Мы открывали друг в друге новые грани, делились мечтами и планами на будущее. Наша любовь росла и крепла с каждым мгновением, проведенным рядом.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-auto position-relative">
+                                            <p class="position-relative d-flex justify-content-center align-items-center bg-theme-auto border border-secondary border-2 opacity-100 rounded-circle m-0 p-0 z-1" style="width: 2rem; height: 2rem;">3</p>
+                                            <hr class="position-absolute top-0 start-50 translate-middle-x border border-secondary h-100 z-0 opacity-100 m-0 rounded-4 shadow-none">
+                                        </div>
+                                        <div class="col mt-1 mb-3 ps-0">
+                                            <p class="fw-bold">💍 Предложение и решение</p>
+                                            <p class="small mb-0">
+                                                И вот настал тот особенный момент, когда мы поняли, что хотим провести всю оставшуюся жизнь вместе. Предложение руки и сердца стало естественным продолжением нашей прекрасной истории любви, и теперь мы готовы начать новую главу нашей жизни как муж и жена.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Wave Separator -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="color-theme-svg no-gap-bottom">
+                    <path fill="currentColor" fill-opacity="1" d="M0,96L30,106.7C60,117,120,139,180,154.7C240,171,300,181,360,186.7C420,192,480,192,540,181.3C600,171,660,149,720,154.7C780,160,840,192,900,208C960,224,1020,224,1080,208C1140,192,1200,160,1260,138.7C1320,117,1380,107,1410,101.3L1440,96L1440,320L1410,320C1380,320,1320,320,1260,320C1200,320,1140,320,1080,320C1020,320,960,320,900,320C840,320,780,320,720,320C660,320,600,320,540,320C480,320,420,320,360,320C300,320,240,320,180,320C120,320,60,320,30,320L0,320Z"></path>
+                </svg>
+
+                <!-- Wedding Date -->
+                <section class="bg-white-black pb-2" id="wedding-date">
+                    <div class="container text-center">
+                        <h2 class="font-esthetic py-4 m-0" style="font-size: 2.25rem;">Особенный день</h2>
+
+                        <div class="border rounded-pill shadow py-2 px-4 mt-2 mb-4">
+                            <div class="row justify-content-center">
+                                <div class="col-3 p-1">
+                                    <p class="d-inline m-0 p-0" style="font-size: 1.25rem;" id="day">0</p><small class="ms-1 me-0 my-0 p-0 d-inline">Дней</small>
+                                </div>
+                                <div class="col-3 p-1">
+                                    <p class="d-inline m-0 p-0" style="font-size: 1.25rem;" id="hour">0</p><small class="ms-1 me-0 my-0 p-0 d-inline">Часов</small>
+                                </div>
+                                <div class="col-3 p-1">
+                                    <p class="d-inline m-0 p-0" style="font-size: 1.25rem;" id="minute">0</p><small class="ms-1 me-0 my-0 p-0 d-inline">Минут</small>
+                                </div>
+                                <div class="col-3 p-1">
+                                    <p class="d-inline m-0 p-0" style="font-size: 1.25rem;" id="second">0</p><small class="ms-1 me-0 my-0 p-0 d-inline">Секунд</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="py-2 m-0" style="font-size: 0.95rem;">С огромной радостью приглашаем вас на торжественную церемонию:</p>
+
+                        <!-- Love animation -->
+                        <div class="position-relative">
+                            <div class="position-absolute" style="top: 0%; right: 5%;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="opacity-50" data-time="3000" data-class="animate-love" viewBox="0 0 16 16">
+                                    <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
+                                </svg>
+                            </div>
+                        </div>
+
+                        <div class="overflow-x-hidden">
+                            <div class="py-2" data-aos="fade-right" data-aos-duration="1500">
+                                <h2 class="font-esthetic m-0 py-2" style="font-size: 2rem;">Дата и время</h2>
+                                <p style="font-size: 0.95rem;">{{event.date}}</p>
+                            </div>
+
+                            <div class="py-2" data-aos="fade-left" data-aos-duration="1500">
+                                <h2 class="font-esthetic m-0 py-2" style="font-size: 2rem;">Место проведения</h2>
+                                <p style="font-size: 0.95rem;">{{event.hall_name}}</p>
+                            </div>
+                        </div>
+
+                        <p class="py-2 m-0" style="font-size: 0.95rem;">Адрес проведения торжества:</p>
+
+                        <!-- Location animation -->
+                        <div class="position-relative">
+                            <div class="position-absolute" style="top: 0%; left: 5%;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="opacity-50" data-time="2000" data-class="animate-love" viewBox="0 0 16 16">
+                                    <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <div class="py-2" data-aos="fade-down" data-aos-duration="1500">
+                            <h2 class="font-esthetic m-0 py-2" style="font-size: 2rem;">Адрес</h2>
+                            <p style="font-size: 0.95rem;">{{event.address_country}}, {{event.address_city}}, {{event.address_line}}</p>
+                        </div>
+
+                        <div class="py-2" data-aos="fade-down" data-aos-duration="1500">
+                            <a href="https://maps.google.com/?q={{event.address_line}}, {{event.address_city}}, {{event.address_country}}" target="_blank" class="btn btn-outline-auto btn-sm rounded-pill shadow mb-2 px-3"><i class="fa-solid fa-map-location-dot me-2"></i>Открыть в Google Maps</a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Gallery -->
+                <section class="bg-white-black pb-5 pt-3" id="gallery">
+                    <div class="container">
+                        <div class="border rounded-5 shadow p-3">
+
+                            <h2 class="font-esthetic text-center py-2 m-0" style="font-size: 2.25rem;">Фотогалерея</h2>
+
+                            <div id="carousel-image-one" data-aos="fade-up" data-aos-duration="1500" class="carousel slide mt-4" data-bs-ride="carousel">
+                                <div class="carousel-indicators">
+                                    <button type="button" data-bs-target="#carousel-image-one" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Слайд 1"></button>
+                                    <button type="button" data-bs-target="#carousel-image-one" data-bs-slide-to="1" aria-label="Слайд 2"></button>
+                                    <button type="button" data-bs-target="#carousel-image-one" data-bs-slide-to="2" aria-label="Слайд 3"></button>
+                                </div>
+
+                                <div class="carousel-inner rounded-4">
+                                    <div class="carousel-item active">
+                                        <img src="/test/parsic/assets/images/placeholder.webp" data-src="https://picsum.photos/1280/720?random=1" alt="фото 1" class="d-block img-fluid cursor-pointer" onclick="undangan.guest.modal(this)">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="/test/parsic/assets/images/placeholder.webp" data-src="https://picsum.photos/1280/720?random=2" alt="фото 2" class="d-block img-fluid cursor-pointer" onclick="undangan.guest.modal(this)">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="/test/parsic/assets/images/placeholder.webp" data-src="https://picsum.photos/1280/720?random=3" alt="фото 3" class="d-block img-fluid cursor-pointer" onclick="undangan.guest.modal(this)">
+                                    </div>
+                                </div>
+
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carousel-image-one" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Предыдущий</span>
+                                </button>
+
+                                <button class="carousel-control-next" type="button" data-bs-target="#carousel-image-one" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Следующий</span>
+                                </button>
+                            </div>
+
+                            <div id="carousel-image-two" data-aos="fade-up" data-aos-duration="1500" class="carousel slide mt-4" data-bs-ride="carousel">
+                                <div class="carousel-indicators">
+                                    <button type="button" data-bs-target="#carousel-image-two" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Слайд 1"></button>
+                                    <button type="button" data-bs-target="#carousel-image-two" data-bs-slide-to="1" aria-label="Слайд 2"></button>
+                                    <button type="button" data-bs-target="#carousel-image-two" data-bs-slide-to="2" aria-label="Слайд 3"></button>
+                                </div>
+
+                                <div class="carousel-inner rounded-4">
+                                    <div class="carousel-item active">
+                                        <img src="/test/parsic/assets/images/placeholder.webp" data-src="https://picsum.photos/1280/720?random=4" alt="фото 4" class="d-block img-fluid cursor-pointer" onclick="undangan.guest.modal(this)">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="/test/parsic/assets/images/placeholder.webp" data-src="https://picsum.photos/1280/720?random=5" alt="фото 5" class="d-block img-fluid cursor-pointer" onclick="undangan.guest.modal(this)">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="/test/parsic/assets/images/placeholder.webp" data-src="https://picsum.photos/1280/720?random=6" alt="фото 6" class="d-block img-fluid cursor-pointer" onclick="undangan.guest.modal(this)">
+                                    </div>
+                                </div>
+
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carousel-image-two" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Предыдущий</span>
+                                </button>
+
+                                <button class="carousel-control-next" type="button" data-bs-target="#carousel-image-two" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Следующий</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Wave Separator -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="color-theme-svg no-gap-bottom">
+                    <path fill="currentColor" fill-opacity="1" d="M0,96L30,106.7C60,117,120,139,180,154.7C240,171,300,181,360,186.7C420,192,480,192,540,181.3C600,171,660,149,720,154.7C780,160,840,192,900,208C960,224,1020,224,1080,208C1140,192,1200,160,1260,138.7C1320,117,1380,107,1410,101.3L1440,96L1440,0L1410,0C1380,0,1320,0,1260,0C1200,0,1140,0,1080,0C1020,0,960,0,900,0C840,0,780,0,720,0C660,0,600,0,540,0C480,0,420,0,360,0C300,0,240,0,180,0C120,0,60,0,30,0L0,0Z"></path>
+                </svg>
+
+                <!-- RSVP Section -->
+                <section class="bg-light-dark pb-3">
+                    <div class="container text-center">
+                        <h2 class="font-esthetic pt-3 mb-4" style="font-size: 2.25rem;">Подтвердите участие</h2>
+                        <p class="mb-1" style="font-size: 0.95rem;">Пожалуйста, сообщите нам о своем участии в торжестве:</p>
+
+                        <form method="post" action="{{ url_for('invite', h=invitation.hash) }}">
+                            <div class="bg-theme-auto rounded-4 shadow p-3 mx-4 mt-4 text-start" data-aos="fade-up" data-aos-duration="2500">
+                                <i class="fa-solid fa-users"></i>
+                                <p class="d-inline">Формат участия</p>
+
+                                <div class="mt-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="options" id="option1" value="single">
+                                        <label class="form-check-label" for="option1">
+                                            Приду один/одна
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="options" id="option2" value="with_spouse">
+                                        <label class="form-check-label" for="option2">
+                                            Приду с парой
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-theme-auto rounded-4 shadow p-3 mx-4 mt-4 text-start" data-aos="fade-up" data-aos-duration="2500">
+                                <i class="fa-solid fa-calendar-check"></i>
+                                <p class="d-inline">Дата и время</p>
+                                <div class="mt-2">
+                                    <input type="datetime-local" class="form-control" value="{{ event.date }}" disabled>
+                                </div>
+                            </div>
+
+                            <div class="bg-theme-auto rounded-4 shadow p-3 mx-4 mt-4 text-start" data-aos="fade-up" data-aos-duration="2500">
+                                <i class="fa-solid fa-location-dot"></i>
+                                <p class="d-inline">Место проведения</p>
+                                <div class="mt-2">
+                                    <input type="text" class="form-control" value="{{ event.hall_name }}" disabled>
+                                    <input type="text" class="form-control mt-2" value="{{ event.address_country }}, {{ event.address_city }}, {{ event.address_line }}" disabled>
+                                </div>
+                            </div>
+
+                            <div class="mt-4 px-4">
+                                <button type="submit" name='action' class="btn btn-success w-100 mb-3 rounded-4 shadow" onclick="return confirm('Вы уверены, что хотите принять приглашение?')" value="accepted">
+                                    <i class="fa-solid fa-check me-2"></i>Принять приглашение
+                                </button>
+                                <button type="submit" name='action' class="btn btn-danger w-100 rounded-4 shadow" onclick="return confirm('Вы уверены, что не сможете прийти?')" value="rejected">
+                                    <i class="fa-solid fa-times me-2"></i>Отклонить приглашение
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- Wave Separator -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="color-theme-svg no-gap-bottom">
+                    <path fill="currentColor" fill-opacity="1" d="M0,224L34.3,234.7C68.6,245,137,267,206,266.7C274.3,267,343,245,411,234.7C480,224,549,224,617,213.3C685.7,203,754,181,823,197.3C891.4,213,960,267,1029,266.7C1097.1,267,1166,213,1234,192C1302.9,171,1371,181,1406,186.7L1440,192L1440,320L1405.7,320C1371.4,320,1303,320,1234,320C1165.7,320,1097,320,1029,320C960,320,891,320,823,320C754.3,320,686,320,617,320C548.6,320,480,320,411,320C342.9,320,274,320,206,320C137.1,320,69,320,34,320L0,320Z"></path>
+                </svg>
+
+                <!-- End Of Invitation -->
+                <section class="bg-white-black py-2 no-gap-bottom">
+                    <div class="container text-center">
+                        <p class="pb-2 pt-4" style="font-size: 0.95rem;">Спасибо за ваше внимание! Мы с нетерпением ждем встречи с вами на нашей свадьбе!</p>
+
+                        <h2 class="font-esthetic" style="font-size: 16px;">💕 С любовью и надеждой на встречу! 💕</h2>
+
+                        <hr class="my-3">
+
+                        <!-- <div class="row align-items-center justify-content-between flex-column pb-3">
+                            <div class="col-auto">
+                                <small>Создано с <i class="fa-solid fa-heart mx-1"></i> для {{event.display_name}}</small>
+                            </div>
+                            <div class="col-auto">
+                                <small><i class="fa-brands fa-github me-1"></i><a target="_blank" href="https://github.com/dewanakl/undangan">github</a></small>
+                                <small><i class="fa-solid fa-chart-simple me-1"></i><a target="_blank" href="https://status.ulems.my.id">статус</a></small>
+                                <small><i class="fa-solid fa-music me-1"></i><a target="_blank" href="https://pixabay.com/music/modern-classical-pure-love-304010">музыка</a></small>
+                            </div>
+                        </div> -->
+                    </div>
+                </section>
+            </main>
+
+            <!-- Navbar Bottom -->
+            <nav class="navbar navbar-expand sticky-bottom rounded-top-4 border-top p-0" id="navbar-menu">
+                <ul class="navbar-nav nav-justified w-100 align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">
+                            <i class="fa-solid fa-house"></i>
+                            <span class="d-block" style="font-size: 0.7rem;">Главная</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#wedding-info">
+                            <i class="fa-solid fa-heart"></i>
+                            <span class="d-block" style="font-size: 0.7rem;">О свадьбе</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#wedding-date">
+                            <i class="fa-solid fa-calendar-check"></i>
+                            <span class="d-block" style="font-size: 0.7rem;">Дата</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#gallery">
+                            <i class="fa-solid fa-images"></i>
+                            <span class="d-block" style="font-size: 0.7rem;">Галерея</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Welcome Page -->
+    <div class="loading-page bg-white-black" id="welcome" style="opacity: 0;">
+        <div class="d-flex justify-content-center align-items-center vh-100 overflow-y-scroll">
+            <div class="d-flex flex-column text-center">
+                <h2 class="font-esthetic mb-4" style="font-size: 2.25rem;">Свадьба</h2>
+
+                <img src="/test/parsic/assets/images/bg.webp" data-src="/test/parsic/assets/images/bg.webp" alt="background" class="img-center-crop rounded-circle border border-3 border-light shadow mb-4 mx-auto">
+
+                <h2 class="font-esthetic mb-4" style="font-size: 2.25rem;">{{event.display_name}}</h2>
+                <div id="guest-name" data-message="Дорогой {{invitation.name}}"></div>
+
+                <button type="button" class="btn btn-light shadow rounded-4 mt-3 mx-auto" onclick="undangan.guest.open(this)"><i class="fa-solid fa-envelope-open fa-bounce me-2"></i>Открыть приглашение</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Button Group -->
+    <div class="d-flex position-fixed flex-column" style="bottom: 10vh; right: 2vh; z-index: 1030;">
+        <!-- Theme Button -->
+        <button type="button" id="button-theme" class="btn bg-light-dark border btn-sm rounded-circle d-none btn-transparent shadow-sm mt-3" aria-label="Сменить тему" onclick="undangan.theme.change()">
+            <i class="fa-solid fa-circle-half-stroke"></i>
+        </button>
+
+        <!-- Audio Button -->
+        <button type="button" id="button-music" class="btn bg-light-dark border btn-sm rounded-circle d-none btn-transparent shadow-sm mt-3" aria-label="Музыка" data-offline-disabled="false">
+            <i class="fa-solid fa-circle-pause spin-button"></i>
+        </button>
+    </div>
+
+    <!-- Loading Page -->
+    <div class="loading-page bg-white-black" id="loading" style="opacity: 1;">
+        <div class="d-flex justify-content-center align-items-center vh-100 overflow-y-scroll">
+            <div class="d-flex flex-column width-loading text-center">
+                <img src="/test/parsic/assets/images/placeholder.webp" data-src="/test/parsic/assets/images/icon-192x192.png" data-fetch-img="high" class="img-fluid mb-3 mx-auto object-fit-cover opacity-0" alt="icon" style="width: 3.5rem; height: 3.5rem;">
+                <div class="progress" role="progressbar" style="height: 0.5rem;" aria-label="индикатор загрузки">
+                    <div class="progress-bar" id="progress-bar" style="width: 0%"></div>
+                </div>
+                <small class="d-none mt-1 text-theme-auto" id="progress-info" style="font-size: 0.8rem;">Загрузка приложения...</small>
+                <noscript>
+                    <small class="mt-1 text-danger">Извините, это приглашение требует JavaScript для работы</small>
+                </noscript>
+            </div>
+        </div>
+        <div class="text-center position-fixed w-100" style="bottom: 8%; left: 0;">
+            <div class="d-flex flex-column">
+                <small class="text-secondary">от</small>
+                <small class="text-theme-auto"><i class="fa-brands fa-github me-1"></i>dewanakl</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Image -->
+    <div class="modal fade" id="modal-image" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 border border-0">
+                <div class="modal-body p-0">
+                    <div class="d-flex position-absolute top-0 end-0">
+                        <a class="btn d-flex justify-content-center align-items-center bg-overlay-auto p-2 m-1 rounded-circle border shadow-sm z-1" role="button" target="_blank" href="/test/parsic/assets/images/placeholder.webp" id="button-modal-click">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        </a>
+                        <button class="btn d-flex justify-content-center align-items-center bg-overlay-auto p-2 m-1 rounded-circle border shadow-sm z-1" id="button-modal-download">
+                            <i class="fa-solid fa-download"></i>
+                        </button>
+                        <button class="btn d-flex justify-content-center align-items-center bg-overlay-auto p-2 m-1 rounded-circle border shadow-sm z-1" data-bs-dismiss="modal">
+                            <i class="fa-solid fa-circle-xmark"></i>
+                        </button>
+                    </div>
+
+                    <img src="/test/parsic/assets/images/placeholder.webp" class="img-fluid w-100 rounded-4 cursor-pointer" alt="изображение" id="show-modal-image">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

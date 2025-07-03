@@ -22,5 +22,9 @@ def getFullConfig():
         'db_config': conn_params,
         'google_oauth_config': {
             'client_id': ''
+        },
+        'app': {
+            'port': '5006',
+            'debug': False
         }
     }

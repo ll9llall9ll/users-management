@@ -349,7 +349,7 @@ def login():
                 # Извлечение информации о пользователе
                 email = idinfo.get('email')
                 name = idinfo.get('name', '')
-                
+                print(email)
                 # Проверка существования пользователя
                 user = getUserByUsername(email)
                 if not user:
@@ -381,7 +381,7 @@ def login():
                 
                 return response
             
-            except ValueError:
+            except ValueError as err:
                 error = "Ошибка входа через Google"
                 return render_template('login.html', error=error)
         
@@ -796,7 +796,14 @@ if __name__ == '__main__':
     testTemplate = get_template_by_id(7)
     if testTemplate is None:
         create_template_with_id(TemplateDB(7, 'testTemplate', 'test_template.html', 'Test'))
-        print("Тестовый шаблон создан успешно.")
+    
+    parsicTemplate = get_template_by_id(8)
+    if parsicTemplate is None:
+        create_template_with_id(TemplateDB(8, 'parsicTemplate', 'parsic.html', 'Parsic'))
+
+    elegantTemplate = get_template_by_id(9)
+    if elegantTemplate is None:
+        create_template_with_id(TemplateDB(9, 'elegantTemplate', 'elegant.html', 'Elegant'))
 
 try:
     print("Attempting to add comments column...")
@@ -812,4 +819,4 @@ except Exception as e:
     
 
 upgrade_passwords_to_sha256()
-app.run(host='0.0.0.0', port=5006 , debug=False)
+app.run(host='0.0.0.0', port=getFullConfig()['app']['port'] , debug=getFullConfig()['app']['debug'])
