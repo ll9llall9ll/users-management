@@ -1,5 +1,5 @@
 import psycopg2
-from config import getDbConfig
+from config_prod import getDbConfig
 
 class User:
     def __init__(self, id, username, name, surname, password, is_admin=False):

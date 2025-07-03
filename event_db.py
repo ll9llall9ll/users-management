@@ -1,7 +1,7 @@
 import datetime
 import psycopg2
 
-from config import getDbConfig
+from config_prod import getDbConfig
 
 class Event:
     def __init__(self, internal_name, template_id, user_id, date, address_country, address_city, address_line, display_name, hall_name, unique_domain, is_deleted = False, id = None):

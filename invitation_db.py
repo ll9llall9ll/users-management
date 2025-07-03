@@ -1,5 +1,5 @@
 import psycopg2
-from config import getDbConfig
+from config_prod import getDbConfig
 
 class Invitation:
     def __init__(self, name, event_id, with_spouse, hash, is_male, accepted=None, id=None, comments=None, attendee_count=0):

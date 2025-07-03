@@ -1,5 +1,5 @@
 import psycopg2
-from config import getDbConfig
+from config_prod import getDbConfig
 
 class TemplateDB:
     def __init__(self, id, displayname, viewname, type):

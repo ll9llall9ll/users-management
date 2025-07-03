@@ -18,6 +18,8 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from google.oauth2 import id_token
 from google.auth.transport import requests as grequests
+from config_prod import getOpenaiConfig
+from config_prod import getFullConfig
 # In-memory session storage
 active_sessions = set()
 
@@ -72,13 +74,13 @@ app.add_template_filter(date)
 appData = AppData()
 
 
-GOOGLE_CLIENT_ID = "" 
+GOOGLE_CLIENT_ID = getFullConfig()['google_oauth_config']['client_id'] 
 
 # Хранилище сессий
 active_sessions = set()
 
 # Настройка клиента OpenAI с ключом API
-client = OpenAI(api_key="API")
+client = OpenAI(api_key=getOpenaiConfig()['api_key'])
 
 @app.route('/api/transcribe', methods=['POST'])
 def transcribe_audio():
@@ -810,4 +812,4 @@ except Exception as e:
     
 
 upgrade_passwords_to_sha256()
-app.run(host='0.0.0.0', port=5000 , debug=False)
+app.run(host='0.0.0.0', port=5006 , debug=False)
