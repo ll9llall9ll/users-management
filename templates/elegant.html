@@ -494,7 +494,7 @@
     </style>
 </head>
 
-<body data-audio="/assets/music/luxury-wedding.mp3" data-confetti="true" data-time="{{event.date}}">
+<body data-audio="/assets/music/luxury-wedding.mp3" data-confetti="true" data-time="{{event.date | date}}">
 
     <!-- Root Invitation -->
     <div class="row m-0 p-0" id="root" style="opacity: 0; display: none;">
@@ -526,7 +526,7 @@
                         <h2 class="font-readable mb-3 text-soft-navy" style="font-size: 2rem;">Элегантная свадьба</h2>
                         <h2 class="font-elegant mb-3 text-soft-blue" style="font-size: 1.9rem;">{{event.display_name}}</h2>
                         <div class="soft-divider"></div>
-                        <p class="m-0 font-serif text-soft-dark" style="font-size: 1.1rem;">{{event.date}}</p>
+                        <p class="m-0 font-serif text-soft-dark" style="font-size: 1.1rem;">{{event.date | date}}</p>
                     </div>
                 </div>
             </div>
@@ -553,7 +553,7 @@
 
                         <h2 class="font-elegant my-3 text-soft-blue" style="font-size: 2.1rem;">{{event.display_name}}</h2>
                         <div class="soft-divider mx-4"></div>
-                        <p class="my-2 font-serif text-soft-dark" style="font-size: 1.1rem;">{{event.date}}</p>
+                        <p class="my-2 font-serif text-soft-dark" style="font-size: 1.1rem;">{{event.date | date}}</p>
 
                         <button class="btn btn-outline-auto btn-sm soft-shadow rounded-pill px-3 py-2" style="font-size: 0.85rem;">
                             <i class="fa-solid fa-calendar-plus me-2 text-soft-blue"></i>Сохранить в календарь
@@ -842,7 +842,7 @@
                                         <i class="fa-solid fa-calendar-alt text-luxury-gold me-2"></i>Дата и время
                                     </h2>
                                     <div class="luxury-divider mx-4"></div>
-                                    <p class="font-serif text-luxury-dark mb-0" style="font-size: 1.1rem;">{{event.date}}</p>
+                                    <p class="font-serif text-luxury-dark mb-0" style="font-size: 1.1rem;">{{event.date | date}}</p>
                                 </div>
                             </div>
 

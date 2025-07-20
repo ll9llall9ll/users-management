@@ -67,8 +67,8 @@ app = Flask(__name__, static_folder='test')
 app.secret_key = secrets.token_hex(16)  # Generate a secure secret key
 CORS(app, resources={r"/login/google": {"origins": "*"}})
 def date(d):
-     d.strftime("%d-%m-%y")
-     return d
+     str_date = d.strftime("%d-%m-%y")
+     return str_date
 app.add_template_filter(date)
 
 appData = AppData()

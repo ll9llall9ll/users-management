@@ -71,7 +71,7 @@
     <script src="/test/parsic/dist/guest.js"></script>
 </head>
 
-<body data-audio="/test/parsic/assets/music/pure-love-304010.mp3" data-confetti="true" data-time="{{event.date}}">
+<body data-audio="/test/parsic/assets/music/pure-love-304010.mp3" data-confetti="true" data-time="{{event.date | date}}">
 
     <!-- Root Invitation -->
     <div class="row m-0 p-0 opacity-0" id="root">
@@ -96,7 +96,7 @@
                 <div class="text-center p-4 bg-overlay-auto rounded-5">
                     <h2 class="font-esthetic mb-4" style="font-size: 2rem;">Свадьба</h2>
                     <h2 class="font-esthetic mb-4" style="font-size: 2rem;">{{event.display_name}}</h2>
-                    <p class="m-0" style="font-size: 1rem;">{{event.date}}</p>
+                    <p class="m-0" style="font-size: 1rem;">{{event.date | date}}</p>
                 </div>
             </div>
         </div>
@@ -116,7 +116,7 @@
                         <img src="/test/parsic/assets/images/placeholder.webp" data-src="/test/parsic/assets/images/bg.webp" alt="bg" onclick="undangan.guest.modal(this)" class="img-center-crop rounded-circle border border-3 border-light shadow my-4 mx-auto cursor-pointer">
 
                         <h2 class="font-esthetic my-4" style="font-size: 2.25rem;">{{event.display_name}}</h2>
-                        <p class="my-2" style="font-size: 1.25rem;">{{event.date}}</p>
+                        <p class="my-2" style="font-size: 1.25rem;">{{event.date | date}}</p>
 
                         <button class="btn btn-outline-auto btn-sm shadow rounded-pill px-3 py-1" style="font-size: 0.825rem;">
                             <i class="fa-solid fa-calendar-check me-2"></i>Сохранить в Google Календарь
@@ -287,7 +287,7 @@
                         <div class="overflow-x-hidden">
                             <div class="py-2" data-aos="fade-right" data-aos-duration="1500">
                                 <h2 class="font-esthetic m-0 py-2" style="font-size: 2rem;">Дата и время</h2>
-                                <p style="font-size: 0.95rem;">{{event.date}}</p>
+                                <p style="font-size: 0.95rem;">{{event.date | date}}</p>
                             </div>
 
                             <div class="py-2" data-aos="fade-left" data-aos-duration="1500">
