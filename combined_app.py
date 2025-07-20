@@ -805,6 +805,9 @@ if __name__ == '__main__':
     if elegantTemplate is None:
         create_template_with_id(TemplateDB(9, 'elegantTemplate', 'elegant.html', 'Elegant'))
 
+    parsicAmTemplate = get_template_by_id(10)
+    if parsicAmTemplate is None:
+        create_template_with_id(TemplateDB(10, 'parsicAmTemplate', 'parsic_am.html', 'Parsic Armenian'))
 try:
     print("Attempting to add comments column...")
     result = executeQuery("ALTER TABLE invitation ADD COLUMN IF NOT EXISTS comments TEXT;")
