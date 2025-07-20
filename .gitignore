@@ -3,3 +3,4 @@ __pycache__
 config_prod.py
 combined_app_log.txt
 nohup.out
+.env
