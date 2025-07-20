@@ -402,26 +402,6 @@
                         <form method="post" action="{{ url_for('invite', h=invitation.hash) }}">
                             <div class="bg-theme-auto rounded-4 shadow p-3 mx-4 mt-4 text-start" data-aos="fade-up" data-aos-duration="2500">
                                 <i class="fa-solid fa-users"></i>
-                                <p class="d-inline">Մասնակցության ձևը</p>
-
-                                <div class="mt-3">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="options" id="option1" value="single">
-                                        <label class="form-check-label" for="option1">
-                                            Կգամ մենակ
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="options" id="option2" value="with_spouse">
-                                        <label class="form-check-label" for="option2">
-                                            Կգամ զույգով
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="bg-theme-auto rounded-4 shadow p-3 mx-4 mt-4 text-start" data-aos="fade-up" data-aos-duration="2500">
-                                <i class="fa-solid fa-users"></i>
                                 <p class="d-inline">Հյուրերի քանակը (ներառյալ Ձեզ)</p>
                                 <div class="mt-2">
                                     <select name="attendees_count" id="attendees_count" class="form-control">
@@ -455,7 +435,7 @@
                                 <i class="fa-solid fa-comment"></i>
                                 <p class="d-inline">Ձեր մեկնաբանությունը կամ հատուկ ցանկությունները</p>
                                 <div class="mt-2">
-                                    <textarea name="comment" id="comment" class="form-control" rows="3" 
+                                    <textarea name="comment" id="comment" class="form-control" rows="4" 
                                               placeholder="Գրեք այստեղ Ձեր մեկնաբանությունը կամ հատուկ ցանկությունները..."></textarea>
                                 </div>
                             </div>
