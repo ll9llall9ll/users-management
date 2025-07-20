@@ -421,6 +421,20 @@
                             </div>
 
                             <div class="bg-theme-auto rounded-4 shadow p-3 mx-4 mt-4 text-start" data-aos="fade-up" data-aos-duration="2500">
+                                <i class="fa-solid fa-users"></i>
+                                <p class="d-inline">Հյուրերի քանակը (ներառյալ Ձեզ)</p>
+                                <div class="mt-2">
+                                    <select name="attendees_count" id="attendees_count" class="form-control">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="bg-theme-auto rounded-4 shadow p-3 mx-4 mt-4 text-start" data-aos="fade-up" data-aos-duration="2500">
                                 <i class="fa-solid fa-calendar-check"></i>
                                 <p class="d-inline">Ամսաթիվ և ժամ</p>
                                 <div class="mt-2">
@@ -434,6 +448,15 @@
                                 <div class="mt-2">
                                     <input type="text" class="form-control" value="{{ event.hall_name }}" disabled>
                                     <input type="text" class="form-control mt-2" value="{{ event.address_country }}, {{ event.address_city }}, {{ event.address_line }}" disabled>
+                                </div>
+                            </div>
+
+                            <div class="bg-theme-auto rounded-4 shadow p-3 mx-4 mt-4 text-start" data-aos="fade-up" data-aos-duration="2500">
+                                <i class="fa-solid fa-comment"></i>
+                                <p class="d-inline">Ձեր մեկնաբանությունը կամ հատուկ ցանկությունները</p>
+                                <div class="mt-2">
+                                    <textarea name="comment" id="comment" class="form-control" rows="3" 
+                                              placeholder="Գրեք այստեղ Ձեր մեկնաբանությունը կամ հատուկ ցանկությունները..."></textarea>
                                 </div>
                             </div>
 
