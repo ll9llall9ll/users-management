@@ -164,7 +164,12 @@ def invite():
     hash = request.args.get('h')
     invitation = getInvitationByHash(hash)
     if invitation.accepted == True:
-        return render_template('invite_accepted4.html', msg = "Դուք ընդունել եք հրավերը, շնորհակալություն!"  )
+        event = getEventById(invitation.event_id)
+        return render_template('invite_accepted_new.html', 
+                             hall_name=event.hall_name, 
+                             event_date=event.date.strftime('%Y թ. %B %d, %H:%M'))
+    elif invitation.accepted == False:
+        return render_template('invite_declined_new.html')
     
     event = getEventById(invitation.event_id)
     template = get_template_by_id(event.template_id)
@@ -200,8 +205,12 @@ def invite():
         # Сохраняем в базу данных
         updateInvitation(invitation)
         
-        returnMsg = "Դուք ընդունել եք հրավերը, շնորհակալություն!" if accepted else "Ցավում ենք, որ չեք կարողանա միանալ մեզ:"
-        return render_template('invite_accepted4.html', msg = returnMsg)
+        if accepted:
+            return render_template('invite_accepted_new.html', 
+                                 hall_name=event.hall_name, 
+                                 event_date=event.date.strftime('%Y թ. %B %d, %H:%M'))
+        else:
+            return render_template('invite_declined_new.html')
     
     return render_template(template.viewname, invitation = invitation, event = event)
 
