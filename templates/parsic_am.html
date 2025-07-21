@@ -36,9 +36,9 @@
     <meta name="color-scheme" content="dark light">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="canonical" href="https://ulems.my.id/">
-    <link rel="shortcut icon" type="image/x-icon" href="https://ulems.my.id/assets/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="/test/parsic/assets/images/icon-192x192.png">
     <link rel="apple-touch-icon" sizes="192x192" href="https://ulems.my.id/assets/images/icon-192x192.png">
-    <link rel="icon" type="image/x-icon" href="https://ulems.my.id/assets/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="/test/parsic/assets/images/icon-192x192.png">
 
     <!-- Preconnect CDN -->
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
@@ -71,7 +71,7 @@
     <script src="/test/parsic/dist/guest.js"></script>
 </head>
 
-<body data-audio="/test/parsic/assets/music/pure-love-304010.mp3" data-confetti="true" data-time="{{event.date}}">
+<body data-audio="/test/parsic/assets/music/pure-love-304010.mp3"  data-confetti="true" data-time="{{event.date}}">
 
     <!-- Root Invitation -->
     <div class="row m-0 p-0 opacity-0" id="root">
@@ -252,81 +252,117 @@
                 </svg>
 
                 <!-- Timeline Section -->
-                <section class="bg-white-black pt-3 pb-4" id="timeline">
-                    <div class="container">
-                        <h2 class="font-esthetic text-center py-4 m-0" style="font-size: 2.25rem;">Օրվա ծրագիր</h2>
-                        
-                        <div class="timeline-container">
-                            <!-- Timeline Item 1 -->
-                            <div class="bg-theme-auto rounded-4 shadow p-3 mb-4" data-aos="fade-right" data-aos-duration="1500">
-                                <div class="row align-items-center">
-                                    <div class="col-3 text-center">
-                                        <div class="timeline-time">
-                                            <i class="fa-solid fa-clock text-primary mb-2" style="font-size: 2rem;"></i>
-                                            <p class="fw-bold m-0" style="font-size: 1.1rem;">10:00</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-9">
-                                        <h4 class="fw-bold text-primary mb-2">👰 Հյուրեր դեպի հարսը</h4>
-                                        <p class="mb-1" style="font-size: 0.9rem;">Հյուրերի հավաքում հարսի տանը</p>
-                                        <small class="text-muted">📍 Հարսի տուն</small>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Timeline Item 2 -->
-                            <div class="bg-theme-auto rounded-4 shadow p-3 mb-4" data-aos="fade-left" data-aos-duration="1500">
-                                <div class="row align-items-center">
-                                    <div class="col-3 text-center">
-                                        <div class="timeline-time">
-                                            <i class="fa-solid fa-clock text-success mb-2" style="font-size: 2rem;"></i>
-                                            <p class="fw-bold m-0" style="font-size: 1.1rem;">11:00</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-9">
-                                        <h4 class="fw-bold text-success mb-2">🤵 Հյուրեր դեպի փեսան</h4>
-                                        <p class="mb-1" style="font-size: 0.9rem;">Հյուրերի հավաքում փեսայի տանը</p>
-                                        <small class="text-muted">📍 Փեսայի տուն</small>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Timeline Item 3 -->
-                            <div class="bg-theme-auto rounded-4 shadow p-3 mb-4" data-aos="fade-right" data-aos-duration="1500">
-                                <div class="row align-items-center">
-                                    <div class="col-3 text-center">
-                                        <div class="timeline-time">
-                                            <i class="fa-solid fa-clock text-warning mb-2" style="font-size: 2rem;"></i>
-                                            <p class="fw-bold m-0" style="font-size: 1.1rem;">14:00</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-9">
-                                        <h4 class="fw-bold text-warning mb-2">⛪ Եկեղեցական արարողություն</h4>
-                                        <p class="mb-1" style="font-size: 0.9rem;">Հանդիսավոր պսակադրության արարողություն</p>
-                                        <small class="text-muted">📍 Սուրբ Գրիգոր Լուսավորիչ եկեղեցի</small>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Timeline Item 4 -->
-                            <div class="bg-theme-auto rounded-4 shadow p-3 mb-4" data-aos="fade-left" data-aos-duration="1500">
-                                <div class="row align-items-center">
-                                    <div class="col-3 text-center">
-                                        <div class="timeline-time">
-                                            <i class="fa-solid fa-clock text-danger mb-2" style="font-size: 2rem;"></i>
-                                            <p class="fw-bold m-0" style="font-size: 1.1rem;">16:00</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-9">
-                                        <h4 class="fw-bold text-danger mb-2">🎉 Հարսանեկան ընդունելություն</h4>
-                                        <p class="mb-1" style="font-size: 0.9rem;">Տոնակատարություն, ճաշ և պարեր</p>
-                                        <small class="text-muted">📍 {{event.hall_name}}</small>
-                                    </div>
-                                </div>
-                            </div>
+                <section class="bg-white-black pt-3 pb-4 overflow-hidden" id="timeline">
+    <div class="container">
+        <h2 class="font-esthetic text-center py-4 m-0" style="font-size: 2.25rem;">Օրվա ծրագիր</h2>
+        
+        <div class="timeline-container">
+            <!-- Timeline Item 1 -->
+            <div class="bg-theme-auto rounded-4 shadow p-3 mb-4 mx-2" data-aos="fade-up" data-aos-duration="1500">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0 text-center me-3" style="width: 80px;">
+                        <div class="timeline-time">
+                            <svg width="48px" height="48px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="mx-auto d-block">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <path d="M12 7V12L9.5 10.5M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                </g>
+                            </svg>
+                            <p class="fw-bold m-0 mt-1" style="font-size: 1rem;">10:00</p>
                         </div>
                     </div>
-                </section>
+                    <div class="flex-grow-1">
+                        <h4 class="fw-bold mb-2" style="font-size: 1.1rem; color:#4b4952;">Հարսի տուն</h4>
+<p class="mb-1" style="font-size: 0.9rem;">
+Հարսանիքի օրը սկսվում է այստեղ՝ հարսի տանը, որտեղ ջերմությամբ ու հուզմունքով հավաքվում են ընտանիքի անդամներն ու հյուրերը։ Սա այն պահն է, երբ ավանդույթները զուգակցվում են սիրո ու հպարտության հետ։
+</p>
+                        <small class="text-muted">📍 Հարսի տուն</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timeline Item 2 -->
+            <div class="bg-theme-auto rounded-4 shadow p-3 mb-4 mx-2" data-aos="fade-up" data-aos-duration="1700">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0 text-center me-3" style="width: 80px;">
+                        <div class="timeline-time">
+                            <svg width="48px" height="48px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="mx-auto d-block">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <path d="M12 7V12L10.5 9.5M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                </g>
+                            </svg>
+                            <p class="fw-bold m-0 mt-1" style="font-size: 1rem;">11:00</p>
+                        </div>
+                    </div>
+                    <div class="flex-grow-1">
+                        <h4 class="fw-bold mb-2" style="font-size: 1.1rem; color:#4b4952;">Փեսայի տուն</h4>
+<p class="mb-1" style="font-size: 0.9rem;">
+Փեսայի տանն ամեն ինչ պատրաստ է՝ ընկերների ձայները, զուռնա-դհոլի հնչյունները և անհամբեր սպասումը հարսի ճանապարհին։ Այստեղ սկսվում է ուրախությունը, որն ուղեկցելու է ողջ օրը։
+</p>
+
+                        <small class="text-muted">📍 Փեսայի տուն</small>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Timeline Item 3 -->
+            <div class="bg-theme-auto rounded-4 shadow p-3 mb-4 mx-2" data-aos="fade-up" data-aos-duration="1900">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0 text-center me-3" style="width: 80px;">
+                        <div class="timeline-time">
+                            <svg width="48px" height="48px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="mx-auto d-block">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <path d="M12 7V12L14.5 10.5M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                </g>
+                            </svg>
+                            <p class="fw-bold m-0 mt-1" style="font-size: 1rem;">14:00</p>
+                        </div>
+                    </div>
+                    <div class="flex-grow-1">
+                        <h4 class="fw-bold mb-2" style="font-size: 1.1rem; color:#4b4952;">Պսակադրության արարողություն</h4>
+<p class="mb-1" style="font-size: 0.9rem;">
+Եկեղեցու սուրբ մթնոլորտում, աղոթքների ու օրհնությունների ներքո, զույգը միանում է սուրբ ամուսնության մեջ։ Այս խորհրդանշական պահը միավորում է ոչ միայն նրանց սրտերը, այլ նաև երկու ընտանիքներ։
+</p>
+
+                        <small class="text-muted">📍 Սուրբ Գրիգոր Լուսավորիչ եկեղեցի</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timeline Item 4 -->
+            <div class="bg-theme-auto rounded-4 shadow p-3 mb-4 mx-2" data-aos="fade-up" data-aos-duration="2100">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0 text-center me-3" style="width: 80px;">
+                        <div class="timeline-time">
+                            <svg width="48px" height="48px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="mx-auto d-block">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <path d="M12 7V12L14.5 13.5M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                </g>
+                            </svg>
+                            <p class="fw-bold m-0 mt-1" style="font-size: 1rem;">16:00</p>
+                        </div>
+                    </div>
+                    <div class="flex-grow-1">
+                       <h4 class="fw-bold mb-2" style="font-size: 1.1rem; color:#4b4952;">Հարսանեկան ընդունելություն</h4>
+<p class="mb-1" style="font-size: 0.9rem;">
+Տոնական սրահը լցված է երաժշտությամբ, զվարթ ճիչերով ու անսպառ պարերով։ Ճաշացանկը հագեցած է համեղ կերակուրներով, իսկ սերը՝ տարածված է ամեն անկյունում։
+</p>
+
+                        <small class="text-muted">📍 {{event.hall_name}}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
                 <!-- Wave Separator -->
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="color-theme-svg no-gap-bottom">
@@ -367,7 +403,7 @@
 
                         <div class="overflow-x-hidden">
                             <div class="py-2" data-aos="fade-right" data-aos-duration="1500">
-                                <h2 class="font-esthetic m-0 py-2" style="font-size: 2rem;">Ամսաթիվ և ժամ</h2>
+                                <h2 class="font-esthetic m-0 py-2" style="font-size: 2rem;">Ամսաթիվ</h2>
                                 <p style="font-size: 0.95rem;">{{event.date | date}}</p>
                             </div>
 
@@ -497,9 +533,10 @@
 
                             <div class="bg-theme-auto rounded-4 shadow p-3 mx-4 mt-4 text-start" data-aos="fade-up" data-aos-duration="2500">
                                 <i class="fa-solid fa-calendar-check"></i>
-                                <p class="d-inline">Ամսաթիվ և ժամ</p>
+                                <p class="d-inline">Ամսաթիվ</p>
+                                
                                 <div class="mt-2">
-                                    <input type="datetime-local" class="form-control" value="{{ event.date }}" disabled>
+                                    <p class="d-inline form-control disabled">{{event.date | date }}</p>
                                 </div>
                             </div>
 
@@ -633,7 +670,7 @@
         <div class="text-center position-fixed w-100" style="bottom: 8%; left: 0;">
             <div class="d-flex flex-column">
                 <small class="text-secondary">ստեղծված է</small>
-                <small class="text-theme-auto"><i class="fa-brands fa-github me-1"></i>dewanakl</small>
+                <small class="text-theme-auto"><i class="fa-brands fa-github me-1"></i>Batsik.am</small>
             </div>
         </div>
     </div>
@@ -661,5 +698,28 @@
         </div>
     </div>
 </body>
+<style>
+/* Дополнительные стили для предотвращения overflow */
+.timeline-container {
+    overflow-x: hidden;
+}
+
+/* Стили для тёмной темы */
+[data-bs-theme="dark"] #timeline h4 {
+    color: #fbfbfe !important;
+}
+
+@media (max-width: 576px) {
+    .timeline-time svg {
+        width: 40px !important;
+        height: 40px !important;
+    }
+    
+    .flex-shrink-0 {
+        width: 60px !important;
+    }
+}
+</style>
+
 
 </html>
