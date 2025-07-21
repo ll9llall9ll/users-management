@@ -252,7 +252,7 @@
         .map-container {
             position: relative;
             width: 100%;
-            height: 200px;
+            height: 250px;
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
@@ -350,7 +350,7 @@
             }
             
             .map-container {
-                height: 150px;
+                height: 180px;
             }
             
             .map-actions {
@@ -380,7 +380,7 @@
             }
             
             .map-container {
-                height: 120px;
+                height: 150px;
             }
             
             .map-section h3 {
@@ -538,8 +538,8 @@
             ymaps.ready(function () {
                 var myMap = new ymaps.Map("yandex-map", {
                     center: EVENT_COORDINATES,
-                    zoom: 20,
-                    controls: ['zoomControl', 'fullscreenControl']
+                    zoom: 16,
+                    controls: ['zoomControl', 'fullscreenControl', 'geolocationControl']
                 }, {
                     searchControlProvider: 'yandex#search'
                 });
@@ -549,7 +549,7 @@
                     balloonContent: '{{ hall_name }}<br>{{ event_date}}',
                     hintContent: '{{ hall_name }}'
                 }, {
-                    preset: 'islands#redHeartIcon',
+                    preset: 'islands#icon',
                     iconColor: '#4CAF50'
                 });
 
