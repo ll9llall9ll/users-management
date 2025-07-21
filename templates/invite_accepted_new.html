@@ -207,8 +207,159 @@
                 padding: 20px;
             }
         }
+
+        /* Map Section Styles */
+        .map-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px auto;
+            max-width: 600px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            border: 2px solid rgba(76, 175, 80, 0.2);
+            animation: mapSlideIn 1s ease-out 0.5s both;
+        }
+
+        @keyframes mapSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .map-section h3 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+            font-weight: 600;
+            font-size: 1.3rem;
+        }
+
+        .map-section h3 i {
+            color: #4CAF50;
+            margin-right: 10px;
+        }
+
+        .map-container {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            border: 3px solid #4CAF50;
+        }
+
+        #yandex-map {
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+        }
+
+        .map-overlay {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 10px 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+        }
+
+        .map-info {
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+            color: #333;
+            font-size: 0.9rem;
+        }
+
+        .map-info i {
+            color: #4CAF50;
+            margin-right: 8px;
+            font-size: 1rem;
+        }
+
+        .map-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .map-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            box-shadow: 0 4px 10px rgba(76, 175, 80, 0.3);
+        }
+
+        .map-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(76, 175, 80, 0.4);
+        }
+
+        .map-btn.secondary {
+            background: linear-gradient(135deg, #2196F3, #1976D2);
+            box-shadow: 0 4px 10px rgba(33, 150, 243, 0.3);
+        }
+
+        .map-btn.secondary:hover {
+            box-shadow: 0 6px 15px rgba(33, 150, 243, 0.4);
+        }
+
+        .map-btn i {
+            margin-right: 8px;
+        }
+
+        /* Responsive map styles */
+        @media (max-width: 768px) {
+            .map-section {
+                padding: 20px 15px;
+            }
+            
+            .map-container {
+                height: 250px;
+            }
+            
+            .map-actions {
+                flex-direction: column;
+            }
+            
+            .map-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .map-container {
+                height: 200px;
+            }
+            
+            .map-section h3 {
+                font-size: 1.1rem;
+            }
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
 </head>
 <body>
     <!-- Floating hearts -->
@@ -245,6 +396,30 @@
             <div class="detail-item">
                 <i class="fas fa-heart"></i>
                 <span>Մենք սիրով սպասում ենք Ձեզ!</span>
+            </div>
+        </div>
+
+        <!-- Yandex Map Section -->
+        <div class="map-section">
+            <h3><i class="fas fa-map"></i> Տեղակայումը քարտեզի վրա</h3>
+            <div class="map-container">
+                <div id="yandex-map"></div>
+                <div class="map-overlay">
+                    <div class="map-info">
+                        <i class="fas fa-location-dot"></i>
+                        <span>{{ hall_name }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="map-actions">
+                <button onclick="openInYandexMaps()" class="map-btn">
+                    <i class="fas fa-external-link-alt"></i>
+                    Բացել Yandex Maps-ում
+                </button>
+                <button onclick="getDirections()" class="map-btn secondary">
+                    <i class="fas fa-route"></i>
+                    Ուղղություններ
+                </button>
             </div>
         </div>
 
@@ -308,7 +483,49 @@
         document.addEventListener('DOMContentLoaded', function() {
             createHearts();
             createConfetti();
+            initYandexMap();
         });
+
+        // Yandex Map initialization
+        function initYandexMap() {
+            ymaps.ready(function () {
+                // Координаты Еревана (можно изменить на нужные)
+                var myMap = new ymaps.Map("yandex-map", {
+                    center: [40.1792, 44.4991], // Ереван
+                    zoom: 15,
+                    controls: ['zoomControl', 'fullscreenControl']
+                }, {
+                    searchControlProvider: 'yandex#search'
+                });
+
+                // Добавляем метку
+                var myPlacemark = new ymaps.Placemark([40.1792, 44.4991], {
+                    balloonContent: '{{ hall_name }}<br>{{ event_date }}',
+                    hintContent: '{{ hall_name }}'
+                }, {
+                    preset: 'islands#redDotIcon'
+                });
+
+                myMap.geoObjects.add(myPlacemark);
+
+                // Анимация появления карты
+                myMap.container.fitToViewport();
+            });
+        }
+
+        // Open in Yandex Maps
+        function openInYandexMaps() {
+            var coords = "40.1792,44.4991"; // Координаты
+            var url = "https://yandex.ru/maps/?pt=" + coords + "&z=16&l=map";
+            window.open(url, '_blank');
+        }
+
+        // Get directions
+        function getDirections() {
+            var coords = "40.1792,44.4991"; // Координаты
+            var url = "https://yandex.ru/maps/?rtext=~" + coords + "&rtt=auto";
+            window.open(url, '_blank');
+        }
     </script>
 </body>
 </html>
