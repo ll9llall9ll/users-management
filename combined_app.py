@@ -163,14 +163,18 @@ def check_session():
 def invite():
     hash = request.args.get('h')
     invitation = getInvitationByHash(hash)
-    if invitation.accepted == True:
-        event = getEventById(invitation.event_id)
-        return render_template('invite_accepted_new.html', 
-                             hall_name=event.hall_name, 
-                             event_date=event.date.strftime('%Y թ. %B %d, %H:%M'))
-    elif invitation.accepted == False:
-        return render_template('invite_declined_new.html')
     
+    # Если уже есть ответ на приглашение, показываем соответствующую страницу
+    if invitation.accepted is not None:
+        event = getEventById(invitation.event_id)
+        if invitation.accepted == True:
+            return render_template('invite_accepted_new.html', 
+                                 hall_name=event.hall_name, 
+                                 event_date=event.date.strftime('%Y թ. %B %d, %H:%M'))
+        else:
+            return render_template('invite_declined_new.html')
+    
+    # Если ответа еще нет, показываем форму приглашения
     event = getEventById(invitation.event_id)
     template = get_template_by_id(event.template_id)
     
@@ -205,6 +209,7 @@ def invite():
         # Сохраняем в базу данных
         updateInvitation(invitation)
         
+        # После сохранения показываем соответствующую страницу
         if accepted:
             return render_template('invite_accepted_new.html', 
                                  hall_name=event.hall_name, 
