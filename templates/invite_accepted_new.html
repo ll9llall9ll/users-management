@@ -390,7 +390,7 @@
             
             <div class="detail-item">
                 <i class="fas fa-clock"></i>
-                <span><strong>Ամսաթիվ և ժամ:</strong> {{ event_date }}</span>
+                <span><strong>Ամսաթիվ:</strong> {{ event_date }}</span>
             </div>
             
             <div class="detail-item">
@@ -430,6 +430,9 @@
     </div>
 
     <script>
+        // Координаты места проведения мероприятия
+        const EVENT_COORDINATES = [40.059791, 44.444884];
+        
         // Create floating hearts
         function createHearts() {
             const container = document.getElementById('heartsContainer');
@@ -489,21 +492,21 @@
         // Yandex Map initialization
         function initYandexMap() {
             ymaps.ready(function () {
-                // Координаты Еревана (можно изменить на нужные)
                 var myMap = new ymaps.Map("yandex-map", {
-                    center: [40.1792, 44.4991], // Ереван
-                    zoom: 15,
+                    center: EVENT_COORDINATES,
+                    zoom: 20,
                     controls: ['zoomControl', 'fullscreenControl']
                 }, {
                     searchControlProvider: 'yandex#search'
                 });
 
                 // Добавляем метку
-                var myPlacemark = new ymaps.Placemark([40.1792, 44.4991], {
-                    balloonContent: '{{ hall_name }}<br>{{ event_date }}',
+                var myPlacemark = new ymaps.Placemark(EVENT_COORDINATES, {
+                    balloonContent: '{{ hall_name }}<br>{{ event_date}}',
                     hintContent: '{{ hall_name }}'
                 }, {
-                    preset: 'islands#redDotIcon'
+                    preset: 'islands#redHeartIcon',
+                    iconColor: '#4CAF50'
                 });
 
                 myMap.geoObjects.add(myPlacemark);
@@ -515,15 +518,15 @@
 
         // Open in Yandex Maps
         function openInYandexMaps() {
-            var coords = "40.1792,44.4991"; // Координаты
-            var url = "https://yandex.ru/maps/?pt=" + coords + "&z=16&l=map";
+            var coords = EVENT_COORDINATES[0] + "," + EVENT_COORDINATES[1];
+            var url = "https://yandex.com/maps/?ll=" + EVENT_COORDINATES[1] + "," + EVENT_COORDINATES[0] + "&z=16&pt=" + EVENT_COORDINATES[1] + "," + EVENT_COORDINATES[0] + ",pm2rdm";
             window.open(url, '_blank');
         }
 
         // Get directions
         function getDirections() {
-            var coords = "40.1792,44.4991"; // Координаты
-            var url = "https://yandex.ru/maps/?rtext=~" + coords + "&rtt=auto";
+            var coords = EVENT_COORDINATES[0] + "," + EVENT_COORDINATES[1];
+            var url = "https://yandex.com/maps/?rtext=~" + coords + "&rtt=auto";
             window.open(url, '_blank');
         }
     </script>
