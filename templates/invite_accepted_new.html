@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Շնորհակալություն!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Floating hearts animation */
+        .hearts-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 20px;
+            animation: floatHeart 8s linear infinite;
+        }
+
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Main container */
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 25px 30px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 450px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideIn 1s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Success icon */
+        .success-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            animation: pulse 2s infinite;
+        }
+
+        .success-icon i {
+            color: white;
+            font-size: 30px;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7);
+            }
+            70% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 10px rgba(76, 175, 80, 0);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
+            }
+        }
+
+        /* Typography */
+        .title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2rem;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .message {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        /* Event details */
+        .event-details {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 5px solid #4CAF50;
+        }
+
+        .event-details h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .detail-item i {
+            margin-right: 8px;
+            color: #4CAF50;
+            width: 16px;
+            font-size: 0.9rem;
+        }
+
+        /* Confetti animation */
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #4CAF50;
+            animation: confetti-fall 3s linear infinite;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 30px;
+            }
+            
+            .title {
+                font-size: 2.5rem;
+            }
+            
+            .message {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            .title {
+                font-size: 2rem;
+            }
+            
+            .event-details {
+                padding: 20px;
+            }
+        }
+
+        /* Map Section Styles */
+        .map-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 15px;
+            margin: 15px auto;
+            max-width: 100%;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            border: 2px solid rgba(76, 175, 80, 0.2);
+            animation: mapSlideIn 1s ease-out 0.5s both;
+        }
+
+        @keyframes mapSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .map-section h3 {
+            text-align: center;
+            margin-bottom: 12px;
+            color: #333;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .map-section h3 i {
+            color: #4CAF50;
+            margin-right: 8px;
+        }
+
+        .map-container {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 12px;
+            border: 3px solid #4CAF50;
+        }
+
+        #yandex-map {
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+        }
+
+        .map-overlay {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 6px 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+        }
+
+        .map-info {
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+            color: #333;
+            font-size: 0.8rem;
+        }
+
+        .map-info i {
+            color: #4CAF50;
+            margin-right: 6px;
+            font-size: 0.8rem;
+        }
+
+        .map-actions {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .map-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            box-shadow: 0 4px 10px rgba(76, 175, 80, 0.3);
+        }
+
+        .map-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(76, 175, 80, 0.4);
+        }
+
+        .map-btn.secondary {
+            background: linear-gradient(135deg, #2196F3, #1976D2);
+            box-shadow: 0 4px 10px rgba(33, 150, 243, 0.3);
+        }
+
+        .map-btn.secondary:hover {
+            box-shadow: 0 6px 15px rgba(33, 150, 243, 0.4);
+        }
+
+        .map-btn i {
+            margin-right: 6px;
+            font-size: 0.8rem;
+        }
+
+        /* Responsive map styles */
+        @media (max-width: 768px) {
+            body {
+                padding: 5px;
+            }
+            
+            .container {
+                padding: 20px 20px;
+                max-height: 95vh;
+            }
+            
+            .map-section {
+                padding: 12px;
+            }
+            
+            .map-container {
+                height: 180px;
+            }
+            
+            .map-actions {
+                flex-direction: column;
+                gap: 6px;
+            }
+            
+            .map-btn {
+                width: 100%;
+                justify-content: center;
+                padding: 10px;
+            }
+            
+            .title {
+                font-size: 1.8rem;
+            }
+            
+            .message {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+                width: 95%;
+            }
+            
+            .map-container {
+                height: 150px;
+            }
+            
+            .map-section h3 {
+                font-size: 1rem;
+            }
+            
+            .title {
+                font-size: 1.6rem;
+            }
+            
+            .success-icon {
+                width: 50px;
+                height: 50px;
+                margin-bottom: 15px;
+            }
+            
+            .success-icon i {
+                font-size: 24px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+</head>
+<body>
+    <!-- Floating hearts -->
+    <div class="hearts-container" id="heartsContainer"></div>
+
+    <!-- Confetti -->
+    <div id="confettiContainer"></div>
+
+    <div class="container">
+        <div class="success-icon">
+            <i class="fas fa-check"></i>
+        </div>
+        
+        <h1 class="title">Շնորհակալություն!</h1>
+        
+        <p class="message">
+            Մենք ուրախ ենք, որ Դուք կմասնակցեք մեր հատուկ օրվան: 
+            Ձեր ներկայությունը կդարձնի այս օրը ավելի անմոռանալի:
+        </p>
+
+        <div class="event-details">
+            <h3><i class="fas fa-calendar-heart"></i> Միջոցառման մանրամասները</h3>
+            
+            <div class="detail-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span><strong>Վայր:</strong> {{ hall_name }}</span>
+            </div>
+            
+            <div class="detail-item">
+                <i class="fas fa-clock"></i>
+                <span><strong>Ամսաթիվ:</strong> {{ event_date }}</span>
+            </div>
+            
+            <div class="detail-item">
+                <i class="fas fa-heart"></i>
+                <span>Մենք սիրով սպասում ենք Ձեզ!</span>
+            </div>
+        </div>
+
+        <!-- Yandex Map Section -->
+        <div class="map-section">
+            <h3><i class="fas fa-map"></i> Տեղակայումը քարտեզի վրա</h3>
+            <div class="map-container">
+                <div id="yandex-map"></div>
+                <div class="map-overlay">
+                    <div class="map-info">
+                        <i class="fas fa-location-dot"></i>
+                        <span>{{ hall_name }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="map-actions">
+                <button onclick="openInYandexMaps()" class="map-btn">
+                    <i class="fas fa-external-link-alt"></i>
+                    Բացել Yandex Maps-ում
+                </button>
+                <button onclick="getDirections()" class="map-btn secondary">
+                    <i class="fas fa-route"></i>
+                    Ուղղություններ
+                </button>
+            </div>
+        </div>
+
+        <p style="color: #888; font-size: 0.9rem; margin-top: 20px;">
+            <i class="fas fa-envelope"></i>
+            Եթե ունեք հարցեր, խնդրում ենք կապվել մեզ հետ:
+        </p>
+    </div>
+
+    <script>
+        // Координаты места проведения мероприятия
+        const EVENT_COORDINATES = [40.059791, 44.444884];
+        
+        // Create floating hearts
+        function createHearts() {
+            const container = document.getElementById('heartsContainer');
+            const heartSymbols = ['💖', '💕', '💗', '💝', '💘'];
+            
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDuration = (Math.random() * 3 + 5) + 's';
+                heart.style.animationDelay = Math.random() * 2 + 's';
+                
+                container.appendChild(heart);
+                
+                // Remove heart after animation
+                setTimeout(() => {
+                    if (heart.parentNode) {
+                        heart.parentNode.removeChild(heart);
+                    }
+                }, 8000);
+            }, 800);
+        }
+
+        // Create confetti
+        function createConfetti() {
+            const container = document.getElementById('confettiContainer');
+            const colors = ['#4CAF50', '#2196F3', '#FF9800', '#E91E63', '#9C27B0'];
+            
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDelay = Math.random() * 3 + 's';
+                    
+                    container.appendChild(confetti);
+                    
+                    // Remove confetti after animation
+                    setTimeout(() => {
+                        if (confetti.parentNode) {
+                            confetti.parentNode.removeChild(confetti);
+                        }
+                    }, 3000);
+                }, i * 100);
+            }
+        }
+
+        // Initialize animations
+        document.addEventListener('DOMContentLoaded', function() {
+            createHearts();
+            createConfetti();
+            initYandexMap();
+        });
+
+        // Yandex Map initialization
+        function initYandexMap() {
+            ymaps.ready(function () {
+                var myMap = new ymaps.Map("yandex-map", {
+                    center: EVENT_COORDINATES,
+                    zoom: 16,
+                    controls: ['zoomControl', 'fullscreenControl', 'geolocationControl']
+                }, {
+                    searchControlProvider: 'yandex#search'
+                });
+
+                // Добавляем метку
+                var myPlacemark = new ymaps.Placemark(EVENT_COORDINATES, {
+                    balloonContent: '{{ hall_name }}<br>{{ event_date}}',
+                    hintContent: '{{ hall_name }}'
+                }, {
+                    preset: 'islands#icon',
+                    iconColor: '#4CAF50'
+                });
+
+                myMap.geoObjects.add(myPlacemark);
+
+                // Анимация появления карты
+                myMap.container.fitToViewport();
+            });
+        }
+
+        // Open in Yandex Maps
+        function openInYandexMaps() {
+            var coords = EVENT_COORDINATES[0] + "," + EVENT_COORDINATES[1];
+            var url = "https://yandex.com/maps/?ll=" + EVENT_COORDINATES[1] + "," + EVENT_COORDINATES[0] + "&z=16&pt=" + EVENT_COORDINATES[1] + "," + EVENT_COORDINATES[0] + ",pm2rdm";
+            window.open(url, '_blank');
+        }
+
+        // Get directions
+        function getDirections() {
+            var coords = EVENT_COORDINATES[0] + "," + EVENT_COORDINATES[1];
+            var url = "https://yandex.com/maps/?rtext=~" + coords + "&rtt=auto";
+            window.open(url, '_blank');
+        }
+    </script>
+</body>
+</html>
