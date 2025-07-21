@@ -16,7 +16,9 @@
             font-family: 'Montserrat', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
+            padding: 10px;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             overflow: hidden;
@@ -60,11 +62,13 @@
         .container {
             background: rgba(255, 255, 255, 0.95);
             border-radius: 20px;
-            padding: 50px 40px;
+            padding: 25px 30px;
             text-align: center;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            max-width: 500px;
+            max-width: 450px;
             width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
             position: relative;
             animation: slideIn 1s ease-out;
         }
@@ -82,20 +86,20 @@
 
         /* Success icon */
         .success-icon {
-            width: 80px;
-            height: 80px;
+            width: 60px;
+            height: 60px;
             background: linear-gradient(135deg, #4CAF50, #45a049);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 30px;
+            margin: 0 auto 20px;
             animation: pulse 2s infinite;
         }
 
         .success-icon i {
             color: white;
-            font-size: 40px;
+            font-size: 30px;
         }
 
         @keyframes pulse {
@@ -116,16 +120,16 @@
         /* Typography */
         .title {
             font-family: 'Dancing Script', cursive;
-            font-size: 3rem;
+            font-size: 2.2rem;
             color: #333;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             font-weight: 700;
         }
 
         .message {
-            font-size: 1.2rem;
+            font-size: 1rem;
             color: #666;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             line-height: 1.6;
         }
 
@@ -133,30 +137,31 @@
         .event-details {
             background: linear-gradient(135deg, #f8f9fa, #e9ecef);
             border-radius: 15px;
-            padding: 25px;
-            margin: 30px 0;
+            padding: 15px;
+            margin: 15px 0;
             border-left: 5px solid #4CAF50;
         }
 
         .event-details h3 {
             color: #333;
-            margin-bottom: 15px;
-            font-size: 1.3rem;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
             font-weight: 600;
         }
 
         .detail-item {
             display: flex;
             align-items: center;
-            margin-bottom: 10px;
-            font-size: 1rem;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
             color: #555;
         }
 
         .detail-item i {
-            margin-right: 10px;
+            margin-right: 8px;
             color: #4CAF50;
-            width: 20px;
+            width: 16px;
+            font-size: 0.9rem;
         }
 
         /* Confetti animation */
@@ -212,9 +217,9 @@
         .map-section {
             background: rgba(255, 255, 255, 0.95);
             border-radius: 15px;
-            padding: 25px;
-            margin: 30px auto;
-            max-width: 600px;
+            padding: 15px;
+            margin: 15px auto;
+            max-width: 100%;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
             border: 2px solid rgba(76, 175, 80, 0.2);
             animation: mapSlideIn 1s ease-out 0.5s both;
@@ -233,25 +238,25 @@
 
         .map-section h3 {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 12px;
             color: #333;
             font-weight: 600;
-            font-size: 1.3rem;
+            font-size: 1.1rem;
         }
 
         .map-section h3 i {
             color: #4CAF50;
-            margin-right: 10px;
+            margin-right: 8px;
         }
 
         .map-container {
             position: relative;
             width: 100%;
-            height: 300px;
+            height: 200px;
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
+            margin-bottom: 12px;
             border: 3px solid #4CAF50;
         }
 
@@ -263,10 +268,10 @@
 
         .map-overlay {
             position: absolute;
-            top: 15px;
-            left: 15px;
+            top: 8px;
+            left: 8px;
             background: rgba(255, 255, 255, 0.95);
-            padding: 10px 15px;
+            padding: 6px 10px;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             backdrop-filter: blur(5px);
@@ -278,18 +283,18 @@
             align-items: center;
             font-weight: 500;
             color: #333;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
 
         .map-info i {
             color: #4CAF50;
-            margin-right: 8px;
-            font-size: 1rem;
+            margin-right: 6px;
+            font-size: 0.8rem;
         }
 
         .map-actions {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             justify-content: center;
             flex-wrap: wrap;
         }
@@ -297,10 +302,10 @@
         .map-btn {
             display: inline-flex;
             align-items: center;
-            padding: 12px 20px;
+            padding: 8px 12px;
             border: none;
             border-radius: 8px;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -325,36 +330,75 @@
         }
 
         .map-btn i {
-            margin-right: 8px;
+            margin-right: 6px;
+            font-size: 0.8rem;
         }
 
         /* Responsive map styles */
         @media (max-width: 768px) {
+            body {
+                padding: 5px;
+            }
+            
+            .container {
+                padding: 20px 20px;
+                max-height: 95vh;
+            }
+            
             .map-section {
-                padding: 20px 15px;
+                padding: 12px;
             }
             
             .map-container {
-                height: 250px;
+                height: 150px;
             }
             
             .map-actions {
                 flex-direction: column;
+                gap: 6px;
             }
             
             .map-btn {
                 width: 100%;
                 justify-content: center;
+                padding: 10px;
+            }
+            
+            .title {
+                font-size: 1.8rem;
+            }
+            
+            .message {
+                font-size: 0.9rem;
             }
         }
 
         @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+                width: 95%;
+            }
+            
             .map-container {
-                height: 200px;
+                height: 120px;
             }
             
             .map-section h3 {
-                font-size: 1.1rem;
+                font-size: 1rem;
+            }
+            
+            .title {
+                font-size: 1.6rem;
+            }
+            
+            .success-icon {
+                width: 50px;
+                height: 50px;
+                margin-bottom: 15px;
+            }
+            
+            .success-icon i {
+                font-size: 24px;
             }
         }
     </style>
