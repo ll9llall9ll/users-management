@@ -213,7 +213,7 @@ def invite():
         if accepted:
             return render_template('invite_accepted_new.html', 
                                  hall_name=event.hall_name or 'Նշված չէ', 
-                                 event_date=event.date.strftime('%d.%m.%Y, %H:%M') if event.date else 'Նշված չէ')
+                                 event_date=event.date.strftime('%d.%m.%Y') if event.date else 'Նշված չէ')
         else:
             return render_template('invite_declined_new.html')
     
