@@ -101,3 +101,25 @@ html[data-bs-theme="dark"] .bg-white-black {
 .no-gap-bottom {
     margin-bottom: -0.75rem !important;
 }
+
+html {
+    --bs-theme: light !important;
+}
+
+html[data-bs-theme] .color-theme-svg {
+    color: rgb(255, 255, 255) !important;
+    background-color: var(--bs-light) !important;
+}
+
+html[data-bs-theme] .bg-light-dark {
+    background-color: rgba(var(--bs-light-rgb), 1) !important;
+}
+
+html[data-bs-theme] .bg-white-black {
+    background-color: rgba(var(--bs-white-rgb), 1) !important;
+}
+
+html[data-bs-theme] .btn-transparent {
+    background-color: rgba(var(--bs-light-rgb), 0.5) !important;
+    backdrop-filter: blur(0.625rem);
+}
