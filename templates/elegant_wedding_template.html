@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Invitation - {{ event.display_name if event else 'Sarah & Michael' }}</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #f8f4f8;
+            --secondary-color: #e8d5c4;
+            --accent-color: #d4a574;
+            --text-dark: #2c2c2c;
+            --text-light: #666;
+            --white: #ffffff;
+            --shadow: 0 10px 30px rgba(0,0,0,0.1);
+            --shadow-light: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            min-height: 100vh;
+        }
+
+        /* Animated background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            animation: gradientShift 8s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+            50% { background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%); }
+        }
+
+        /* Floating particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            animation: float 6s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0; }
+            50% { transform: translateY(-100px) rotate(180deg); opacity: 1; }
+        }
+
+        /* Main container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Header section */
+        .header {
+            text-align: center;
+            padding: 60px 0;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .couple-names {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4rem;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            animation: slideIn 1.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .wedding-date {
+            font-size: 1.5rem;
+            color: var(--text-light);
+            margin-bottom: 10px;
+        }
+
+        .venue {
+            font-size: 1.2rem;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        /* Event details */
+        .event-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .detail-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: var(--shadow-light);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeInUp 1s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .detail-card:nth-child(1) { animation-delay: 0.2s; }
+        .detail-card:nth-child(2) { animation-delay: 0.4s; }
+        .detail-card:nth-child(3) { animation-delay: 0.6s; }
+
+        .detail-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .detail-icon {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+        }
+
+        .detail-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+
+        .detail-text {
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        /* Countdown timer */
+        .countdown-section {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+            animation: fadeInUp 1s ease-out 0.8s both;
+        }
+
+        .countdown-title {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .countdown-item {
+            background: var(--accent-color);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            min-width: 100px;
+            box-shadow: var(--shadow-light);
+            transition: transform 0.3s ease;
+        }
+
+        .countdown-item:hover {
+            transform: scale(1.05);
+        }
+
+        .countdown-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            display: block;
+        }
+
+        .countdown-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Photo gallery */
+        .gallery-section {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+            animation: fadeInUp 1s ease-out 1s both;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-family: 'Dancing Script', cursive;
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--accent-color);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .gallery-item {
+            aspect-ratio: 1;
+            background: linear-gradient(45deg, #f0f0f0, #e0e0e0);
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            font-size: 3rem;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        /* Story section */
+        .story-section {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+            animation: fadeInUp 1s ease-out 1.2s both;
+        }
+
+        .story-header {
+            padding: 30px 40px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .story-header:hover {
+            background: rgba(212, 165, 116, 0.1);
+        }
+
+        .story-content {
+            padding: 0 40px 40px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.3s ease;
+        }
+
+        .story-content.active {
+            max-height: 500px;
+            padding: 20px 40px 40px;
+        }
+
+        .story-toggle {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            transition: transform 0.3s ease;
+        }
+
+        .story-toggle.active {
+            transform: rotate(180deg);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background: var(--accent-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            box-shadow: var(--shadow-light);
+        }
+
+        .btn:hover {
+            background: #c19660;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--accent-color);
+            border: 2px solid var(--accent-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        /* Action buttons */
+        .action-buttons {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInUp 1s ease-out 1.4s both;
+        }
+
+        .action-buttons .btn {
+            margin: 10px;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideInScale 0.3s ease;
+        }
+
+        @keyframes slideInScale {
+            from { opacity: 0; transform: scale(0.8) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--text-dark);
+        }
+
+        .modal-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--accent-color);
+            font-family: 'Dancing Script', cursive;
+        }
+
+        /* Form styles */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 0;
+            color: var(--text-light);
+            animation: fadeInUp 1s ease-out 1.6s both;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .couple-names {
+                font-size: 3rem;
+            }
+
+            .header {
+                padding: 40px 20px;
+            }
+
+            .detail-card,
+            .countdown-section,
+            .gallery-section,
+            .story-section {
+                padding: 30px 20px;
+            }
+
+            .countdown-timer {
+                gap: 15px;
+            }
+
+            .countdown-item {
+                min-width: 80px;
+                padding: 15px;
+            }
+
+            .countdown-number {
+                font-size: 2rem;
+            }
+
+            .modal-content {
+                padding: 30px 20px;
+            }
+
+            .story-header,
+            .story-content {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .couple-names {
+                font-size: 2.5rem;
+            }
+
+            .countdown-timer {
+                gap: 10px;
+            }
+
+            .countdown-item {
+                min-width: 70px;
+                padding: 12px;
+            }
+
+            .countdown-number {
+                font-size: 1.5rem;
+            }
+
+            .action-buttons .btn {
+                display: block;
+                margin: 10px auto;
+                max-width: 250px;
+            }
+        }
+
+        /* Success message */
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border: 1px solid #c3e6cb;
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+    
+    <!-- Floating particles -->
+    <div class="particles" id="particles"></div>
+
+    <div class="container">
+        <!-- Header Section -->
+        <header class="header">
+            <h1 class="couple-names">
+                {% if invitation and event %}
+                    {{ invitation.name }} & {{ event.display_name }}
+                {% else %}
+                    Sarah & Michael
+                {% endif %}
+            </h1>
+            <p class="wedding-date">
+                {% if event and event.date %}
+                    {{ event.date.strftime('%B %d, %Y') }}
+                {% else %}
+                    September 15, 2024
+                {% endif %}
+            </p>
+            <p class="venue">
+                {% if event %}
+                    {{ event.hall_name or 'Grand Ballroom' }}
+                {% else %}
+                    Grand Ballroom
+                {% endif %}
+            </p>
+        </header>
+
+        <!-- Event Details -->
+        <section class="event-details">
+            <div class="detail-card">
+                <div class="detail-icon">📅</div>
+                <h3 class="detail-title">When</h3>
+                <p class="detail-text">
+                    {% if event and event.date %}
+                        {{ event.date.strftime('%A, %B %d, %Y') }}<br>
+                        {{ event.date.strftime('%I:%M %p') }}
+                    {% else %}
+                        Saturday, September 15, 2024<br>
+                        4:00 PM
+                    {% endif %}
+                </p>
+            </div>
+            <div class="detail-card">
+                <div class="detail-icon">📍</div>
+                <h3 class="detail-title">Where</h3>
+                <p class="detail-text">
+                    {% if event %}
+                        {{ event.hall_name or 'Grand Ballroom' }}<br>
+                        {{ event.address_city or 'City' }}, {{ event.address_country or 'Country' }}
+                    {% else %}
+                        Grand Ballroom<br>
+                        123 Wedding St, City
+                    {% endif %}
+                </p>
+            </div>
+            <div class="detail-card">
+                <div class="detail-icon">👗</div>
+                <h3 class="detail-title">Dress Code</h3>
+                <p class="detail-text">
+                    Formal Attire<br>
+                    Cocktail Dress
+                </p>
+            </div>
+        </section>
+
+        <!-- Countdown Timer -->
+        <section class="countdown-section">
+            <h2 class="countdown-title">Countdown to Our Big Day</h2>
+            <div class="countdown-timer" id="countdown">
+                <div class="countdown-item">
+                    <span class="countdown-number" id="days">00</span>
+                    <span class="countdown-label">Days</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="hours">00</span>
+                    <span class="countdown-label">Hours</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="minutes">00</span>
+                    <span class="countdown-label">Minutes</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="seconds">00</span>
+                    <span class="countdown-label">Seconds</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Photo Gallery -->
+        <section class="gallery-section">
+            <h2 class="section-title">Our Memories</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item" onclick="openGallery(0)">📷</div>
+                <div class="gallery-item" onclick="openGallery(1)">📷</div>
+                <div class="gallery-item" onclick="openGallery(2)">📷</div>
+                <div class="gallery-item" onclick="openGallery(3)">📷</div>
+                <div class="gallery-item" onclick="openGallery(4)">📷</div>
+                <div class="gallery-item" onclick="openGallery(5)">📷</div>
+            </div>
+        </section>
+
+        <!-- Our Story -->
+        <section class="story-section">
+            <div class="story-header" onclick="toggleStory()">
+                <h2 class="section-title" style="margin: 0;">Our Love Story</h2>
+                <span class="story-toggle" id="storyToggle">▼</span>
+            </div>
+            <div class="story-content" id="storyContent">
+                <p style="margin-bottom: 20px;">
+                    <strong>How We Met:</strong> It was a beautiful spring day when our paths first crossed at the local coffee shop. Sarah was reading her favorite book, and Michael couldn't help but notice her beautiful smile.
+                </p>
+                <p style="margin-bottom: 20px;">
+                    <strong>The Proposal:</strong> After three wonderful years together, Michael planned the perfect proposal during a sunset walk on the beach where they had their first date.
+                </p>
+                <p>
+                    <strong>Fun Fact:</strong> We both love traveling and have visited 15 countries together! Our favorite destination is Italy, where we fell even more in love with each other and amazing pasta.
+                </p>
+            </div>
+        </section>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button class="btn" onclick="openRSVP()">RSVP Now</button>
+            <button class="btn btn-secondary" onclick="addToCalendar()">Add to Calendar</button>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>We can't wait to celebrate with you! ❤️</p>
+            <p style="margin-top: 10px; font-size: 0.9rem;">
+                For questions, contact us at: wedding@sarahandmichael.com
+            </p>
+        </footer>
+    </div>
+
+    <!-- RSVP Modal -->
+    <div class="modal" id="rsvpModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <h2 class="modal-title">RSVP</h2>
+            <form id="rsvpForm" method="POST" action="{{ url_for('invite', h=invitation.hash) if invitation else '#' }}">
+                <div class="form-group">
+                    <label for="guestName">Full Name *</label>
+                    <input type="text" id="guestName" name="guest_name" required 
+                           value="{{ invitation.name if invitation else '' }}">
+                </div>
+                
+                <div class="form-group">
+                    <label for="guestEmail">Email Address *</label>
+                    <input type="email" id="guestEmail" name="guest_email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="attendance">Will you attend? *</label>
+                    <select id="attendance" name="options" required>
+                        <option value="">Please select...</option>
+                        <option value="alone">Yes, I'll attend alone</option>
+                        <option value="with_spouse">Yes, I'll attend with my partner</option>
+                        <option value="declined">Sorry, I can't attend</option>
+                    </select>
+                </div>
+                
+                <div class="form-group" id="guestCountGroup" style="display: none;">
+                    <label for="guestCount">Number of guests (including yourself)</label>
+                    <select id="guestCount" name="attendees_count">
+                        <option value="1">1 person</option>
+                        <option value="2">2 people</option>
+                        <option value="3">3 people</option>
+                        <option value="4">4 people</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="specialRequests">Special requests or dietary restrictions</label>
+                    <textarea id="specialRequests" name="comment" rows="3" 
+                              placeholder="Any special dietary needs, accessibility requirements, or other requests..."></textarea>
+                </div>
+                
+                <button type="submit" name="action" value="accepted" class="btn" style="width: 100%; margin-top: 10px;">
+                    Submit RSVP
+                </button>
+            </form>
+            
+            <div class="success-message" id="successMessage">
+                Thank you for your RSVP! We're excited to celebrate with you! 🎉
+            </div>
+        </div>
+    </div>
+
+    <!-- Gallery Modal -->
+    <div class="modal" id="galleryModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <h2 class="modal-title">Photo Gallery</h2>
+            <div style="text-align: center; padding: 40px;">
+                <div style="font-size: 4rem; margin-bottom: 20px;">📸</div>
+                <p>Beautiful memories will be displayed here!</p>
+                <p style="margin-top: 10px; color: var(--text-light);">
+                    Photo gallery coming soon...
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Create floating particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 4 + 4) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Countdown timer
+        function updateCountdown() {
+            {% if event and event.date %}
+                const eventDate = new Date('{{ event.date.strftime("%Y-%m-%d %H:%M:%S") }}').getTime();
+            {% else %}
+                const eventDate = new Date('2024-09-15 16:00:00').getTime();
+            {% endif %}
+            
+            const now = new Date().getTime();
+            const distance = eventDate - now;
+
+            if (distance < 0) {
+                document.getElementById('countdown').innerHTML = '<div class="countdown-item"><span class="countdown-number">🎉</span><span class="countdown-label">It\'s Time!</span></div>';
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = days.toString().padStart(2, '0');
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+        }
+
+        // Toggle story section
+        function toggleStory() {
+            const content = document.getElementById('storyContent');
+            const toggle = document.getElementById('storyToggle');
+            
+            content.classList.toggle('active');
+            toggle.classList.toggle('active');
+        }
+
+        // Open RSVP modal
+        function openRSVP() {
+            document.getElementById('rsvpModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Open gallery modal
+        function openGallery(index) {
+            document.getElementById('galleryModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close modal
+        function closeModal() {
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.classList.remove('active');
+            });
+            document.body.style.overflow = 'auto';
+        }
+
+        // Add to calendar
+        function addToCalendar() {
+            {% if event and event.date %}
+                const eventDate = '{{ event.date.strftime("%Y%m%dT%H%M%S") }}';
+                const eventEndDate = '{{ (event.date + timedelta(hours=4)).strftime("%Y%m%dT%H%M%S") if event.date else "" }}';
+                const eventTitle = '{{ event.display_name if event else "Wedding Celebration" }}';
+                const eventLocation = '{{ event.hall_name + ", " + event.address_city if event else "Grand Ballroom" }}';
+            {% else %}
+                const eventDate = '20240915T160000';
+                const eventEndDate = '20240915T220000';
+                const eventTitle = 'Wedding Celebration';
+                const eventLocation = 'Grand Ballroom';
+            {% endif %}
+            
+            const calendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventTitle)}&dates=${eventDate}/${eventEndDate}&details=${encodeURIComponent('Join us for our special day!')}&location=${encodeURIComponent(eventLocation)}`;
+            
+            window.open(calendarUrl, '_blank');
+        }
+
+        // Handle RSVP form
+        document.getElementById('rsvpForm').addEventListener('submit', function(e) {
+            {% if not invitation %}
+                e.preventDefault();
+                document.getElementById('successMessage').classList.add('show');
+                setTimeout(() => {
+                    closeModal();
+                    document.getElementById('successMessage').classList.remove('show');
+                }, 2000);
+            {% endif %}
+        });
+
+        // Show/hide guest count based on attendance selection
+        document.getElementById('attendance').addEventListener('change', function() {
+            const guestCountGroup = document.getElementById('guestCountGroup');
+            const value = this.value;
+            
+            if (value === 'alone' || value === 'with_spouse') {
+                guestCountGroup.style.display = 'block';
+                if (value === 'alone') {
+                    document.getElementById('guestCount').value = '1';
+                } else {
+                    document.getElementById('guestCount').value = '2';
+                }
+            } else {
+                guestCountGroup.style.display = 'none';
+            }
+        });
+
+        // Close modal when clicking outside
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeModal();
+                }
+            });
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Initialize everything when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
