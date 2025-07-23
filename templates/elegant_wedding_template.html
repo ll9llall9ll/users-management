@@ -833,7 +833,7 @@
         function addToCalendar() {
             {% if event and event.date %}
                 const eventDate = '{{ event.date.strftime("%Y%m%dT%H%M%S") }}';
-                const eventEndDate = '{{ (event.date + timedelta(hours=4)).strftime("%Y%m%dT%H%M%S") if event.date else "" }}';
+                const eventEndDate = '{{ event.date.strftime("%Y%m%dT%H%M%S") }}';
                 const eventTitle = '{{ event.display_name if event else "Wedding Celebration" }}';
                 const eventLocation = '{{ event.hall_name + ", " + event.address_city if event else "Grand Ballroom" }}';
             {% else %}
