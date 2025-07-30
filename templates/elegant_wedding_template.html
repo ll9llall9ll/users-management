@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Հարսանիքի հրավեր - Սաշա և Միքայել</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Armenian:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --rose-gold: #e8b4a0;
+            --blush-pink: #f7e7ce;
+            --cream: #faf6f2;
+            --sage-green: #9caf88;
+            --dusty-rose: #d4a5a5;
+            --champagne: #f7e7ce;
+            --text-dark: #4a4a4a;
+            --text-light: #8a8a8a;
+            --white: #ffffff;
+            --armenian-blue: #0033a0;
+            --armenian-red: #d90012;
+            --armenian-orange: #f2a800;
+            --shadow: 0 15px 35px rgba(0,0,0,0.1);
+            --shadow-light: 0 8px 25px rgba(0,0,0,0.08);
+        }
+
+        body {
+            font-family: 'Noto Sans Armenian', 'Playfair Display', serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+            background: linear-gradient(135deg, var(--blush-pink) 0%, var(--cream) 50%, var(--champagne) 100%);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Armenian text styling */
+        .armenian-text {
+            font-family: 'Noto Sans Armenian', sans-serif;
+        }
+
+        /* Romantic floating elements */
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            color: rgba(212, 165, 165, 0.3);
+            font-size: 20px;
+            animation: floatHeart 15s infinite linear;
+        }
+
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Rose petals */
+        .rose-petals {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .petal {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: radial-gradient(circle, var(--dusty-rose), var(--rose-gold));
+            border-radius: 50% 0;
+            animation: fallPetal 12s infinite linear;
+        }
+
+        @keyframes fallPetal {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Main container */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Personal Guest Section */
+        .personal-section {
+            background: linear-gradient(135deg, rgba(0, 51, 160, 0.1), rgba(217, 0, 18, 0.1), rgba(242, 168, 0, 0.1));
+            padding: 50px 40px;
+            border-radius: 25px;
+            margin-bottom: 40px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .personal-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 51, 160, 0.05) 0%, transparent 70%);
+            animation: shimmer 8s ease-in-out infinite;
+        }
+
+        .armenian-flag {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .flag-stripe {
+            width: 30px;
+            height: 20px;
+            border-radius: 2px;
+        }
+
+        .flag-red { background: var(--armenian-red); }
+        .flag-blue { background: var(--armenian-blue); }
+        .flag-orange { background: var(--armenian-orange); }
+
+        .personal-greeting {
+            font-size: 2.5rem;
+            font-family: 'Great Vibes', cursive;
+            color: var(--armenian-blue);
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .guest-name {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--armenian-red);
+            margin-bottom: 25px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .personal-message {
+            font-size: 1.3rem;
+            color: var(--text-dark);
+            line-height: 1.8;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        /* Header section */
+        .header {
+            text-align: center;
+            padding: 80px 0 60px;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 30px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(232, 180, 160, 0.1) 0%, transparent 70%);
+            animation: shimmer 8s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(180deg); }
+        }
+
+        .ornament {
+            font-size: 3rem;
+            color: var(--rose-gold);
+            margin-bottom: 20px;
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .couple-names {
+            font-family: 'Great Vibes', cursive;
+            font-size: 4.5rem;
+            color: var(--rose-gold);
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 1;
+        }
+
+        .wedding-date {
+            font-size: 1.8rem;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        .venue {
+            font-size: 1.3rem;
+            color: var(--text-light);
+            font-style: italic;
+        }
+
+        /* Event details */
+        .event-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .detail-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px 30px;
+            border-radius: 25px;
+            text-align: center;
+            box-shadow: var(--shadow-light);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .detail-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(232, 180, 160, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .detail-card:hover::before {
+            left: 100%;
+        }
+
+        .detail-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow);
+        }
+
+        .detail-icon {
+            font-size: 3rem;
+            color: var(--rose-gold);
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .detail-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text-dark);
+            font-family: 'Noto Sans Armenian', serif;
+        }
+
+        .detail-text {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        /* Countdown timer */
+        .countdown-section {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 50px 40px;
+            border-radius: 25px;
+            margin-bottom: 50px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .countdown-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3rem;
+            margin-bottom: 40px;
+            color: var(--rose-gold);
+        }
+
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .countdown-item {
+            background: linear-gradient(135deg, var(--rose-gold), var(--dusty-rose));
+            color: white;
+            padding: 25px 20px;
+            border-radius: 20px;
+            min-width: 120px;
+            box-shadow: var(--shadow-light);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .countdown-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255,255,255,0.1), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .countdown-item:hover::before {
+            transform: translateX(100%);
+        }
+
+        .countdown-item:hover {
+            transform: scale(1.05);
+        }
+
+        .countdown-number {
+            font-size: 3rem;
+            font-weight: 700;
+            display: block;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .countdown-label {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 5px;
+            font-family: 'Noto Sans Armenian', sans-serif;
+        }
+
+        /* Photo gallery slider */
+        .gallery-section {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 50px 40px;
+            border-radius: 25px;
+            margin-bottom: 50px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .section-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3.5rem;
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--rose-gold);
+        }
+
+        .gallery-slider {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .gallery-container {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-slide {
+            min-width: 100%;
+            aspect-ratio: 16/10;
+            background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            font-size: 4rem;
+            position: relative;
+        }
+
+        .gallery-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--rose-gold);
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-light);
+        }
+
+        .gallery-nav:hover {
+            background: var(--rose-gold);
+            color: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .gallery-prev {
+            left: 20px;
+        }
+
+        .gallery-next {
+            right: 20px;
+        }
+
+        .gallery-dots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .gallery-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--text-light);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-dot.active {
+            background: var(--rose-gold);
+            transform: scale(1.3);
+        }
+
+        /* Our Story section */
+        .story-section {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 25px;
+            margin-bottom: 50px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            overflow: hidden;
+        }
+
+        .story-header {
+            padding: 40px 50px 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, rgba(232, 180, 160, 0.1), transparent);
+        }
+
+        .story-header:hover {
+            background: linear-gradient(135deg, rgba(232, 180, 160, 0.2), transparent);
+        }
+
+        .story-content {
+            padding: 0 50px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+
+        .story-content.active {
+            max-height: 600px;
+            padding: 20px 50px 50px;
+        }
+
+        .story-toggle {
+            font-size: 2rem;
+            color: var(--rose-gold);
+            transition: transform 0.3s ease;
+        }
+
+        .story-toggle.active {
+            transform: rotate(180deg);
+        }
+
+        .story-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+        }
+
+        /* Response form */
+        .response-section {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 50px 40px;
+            border-radius: 25px;
+            margin-bottom: 50px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            text-align: center;
+        }
+
+        .response-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3.5rem;
+            margin-bottom: 40px;
+            color: var(--rose-gold);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 500;
+            color: var(--text-dark);
+            font-size: 1.1rem;
+            font-family: 'Noto Sans Armenian', sans-serif;
+        }
+
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid rgba(232, 180, 160, 0.3);
+            border-radius: 15px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: 'Noto Sans Armenian', serif;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--rose-gold);
+            box-shadow: 0 0 0 3px rgba(232, 180, 160, 0.2);
+            background: white;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* Action buttons */
+        .action-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .btn {
+            padding: 18px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            font-family: 'Noto Sans Armenian', serif;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            min-width: 180px;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-accept {
+            background: linear-gradient(135deg, var(--sage-green), #7a9b6b);
+            color: white;
+            box-shadow: var(--shadow-light);
+        }
+
+        .btn-accept:hover {
+            background: linear-gradient(135deg, #7a9b6b, var(--sage-green));
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-decline {
+            background: linear-gradient(135deg, var(--dusty-rose), #c49999);
+            color: white;
+            box-shadow: var(--shadow-light);
+        }
+
+        .btn-decline:hover {
+            background: linear-gradient(135deg, #c49999, var(--dusty-rose));
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-calendar {
+            background: linear-gradient(135deg, var(--rose-gold), #d4a085);
+            color: white;
+            box-shadow: var(--shadow-light);
+            margin-top: 20px;
+        }
+
+        .btn-calendar:hover {
+            background: linear-gradient(135deg, #d4a085, var(--rose-gold));
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 0;
+            color: var(--text-light);
+            font-style: italic;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .couple-names {
+                font-size: 3.5rem;
+            }
+
+            .header {
+                padding: 60px 30px 40px;
+            }
+
+            .personal-section,
+            .detail-card,
+            .countdown-section,
+            .gallery-section,
+            .story-section,
+            .response-section {
+                padding: 40px 25px;
+            }
+
+            .countdown-timer {
+                gap: 20px;
+            }
+
+            .countdown-item {
+                min-width: 100px;
+                padding: 20px 15px;
+            }
+
+            .countdown-number {
+                font-size: 2.5rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 280px;
+            }
+
+            .story-header,
+            .story-content {
+                padding-left: 25px;
+                padding-right: 25px;
+            }
+
+            .gallery-nav {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+
+            .gallery-prev {
+                left: 10px;
+            }
+
+            .gallery-next {
+                right: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .couple-names {
+                font-size: 2.8rem;
+            }
+
+            .section-title,
+            .countdown-title,
+            .response-title {
+                font-size: 2.5rem;
+            }
+
+            .personal-greeting {
+                font-size: 2rem;
+            }
+
+            .guest-name {
+                font-size: 1.5rem;
+            }
+
+            .personal-message {
+                font-size: 1.1rem;
+            }
+
+            .countdown-timer {
+                gap: 15px;
+            }
+
+            .countdown-item {
+                min-width: 80px;
+                padding: 15px 10px;
+            }
+
+            .countdown-number {
+                font-size: 2rem;
+            }
+
+            .countdown-label {
+                font-size: 0.8rem;
+            }
+
+            .container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating hearts -->
+    <div class="floating-hearts" id="floatingHearts"></div>
+    
+    <!-- Rose petals -->
+    <div class="rose-petals" id="rosePetals"></div>
+
+    <div class="container">
+        <!-- Personal Guest Section -->
+        <section class="personal-section armenian-text">
+            <div class="armenian-flag">
+                <div class="flag-stripe flag-red"></div>
+                <div class="flag-stripe flag-blue"></div>
+                <div class="flag-stripe flag-orange"></div>
+            </div>
+            <h2 class="personal-greeting">Սիրելի հյուր</h2>
+            <div class="guest-name" id="guestNameDisplay">Անուն Ազգանուն</div>
+            <p class="personal-message">
+                Մենք անսահման ուրախ ենք, որ Դուք մեր կյանքի այս կարևոր պահին մեզ հետ եք։ 
+                Ձեր ներկայությունը մեր ուրախության օրը կդարձնի ավելի լուսավոր և հիշարժան։
+            </p>
+            <p class="personal-message">
+                Այս հրավերը ստեղծված է հատուկ Ձեզ համար՝ սիրով և երախտագիտությամբ։
+            </p>
+        </section>
+
+        <!-- Header Section -->
+        <header class="header">
+            <div class="ornament">🌹</div>
+            <h1 class="couple-names">Սաշա և Միքայել</h1>
+            <p class="wedding-date armenian-text">Սեպտեմբեր 15, 2024</p>
+            <p class="venue armenian-text">Մեծ Հանդիսահանգույց</p>
+        </header>
+
+        <!-- Event Details -->
+        <section class="event-details">
+            <div class="detail-card">
+                <span class="detail-icon">💒</span>
+                <h3 class="detail-title armenian-text">Արարողություն</h3>
+                <p class="detail-text armenian-text">
+                    Շաբաթ, Սեպտեմբեր 15<br>
+                    Ժամը 16:00
+                </p>
+            </div>
+            <div class="detail-card">
+                <span class="detail-icon">🏛️</span>
+                <h3 class="detail-title armenian-text">Ընդունելություն</h3>
+                <p class="detail-text armenian-text">
+                    Մեծ Հանդիսահանգույց<br>
+                    Երևան, Հայաստան
+                </p>
+            </div>
+            <div class="detail-card">
+                <span class="detail-icon">👗</span>
+                <h3 class="detail-title armenian-text">Հագուստի կոդ</h3>
+                <p class="detail-text armenian-text">
+                    Պաշտոնական հագուստ<br>
+                    Կոկտեյլ զգեստ
+                </p>
+            </div>
+        </section>
+
+        <!-- Countdown Timer -->
+        <section class="countdown-section">
+            <h2 class="countdown-title">Մեր Մեծ Օրվա Հետ Հաշվարկ</h2>
+            <div class="countdown-timer" id="countdown">
+                <div class="countdown-item">
+                    <span class="countdown-number" id="days">00</span>
+                    <span class="countdown-label armenian-text">Օր</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="hours">00</span>
+                    <span class="countdown-label armenian-text">Ժամ</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="minutes">00</span>
+                    <span class="countdown-label armenian-text">Րոպե</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="seconds">00</span>
+                    <span class="countdown-label armenian-text">Վայրկյան</span>
+                </div>
+            </div>
+            
+            <button class="btn btn-calendar armenian-text" onclick="addToCalendar()" style="margin-top: 30px;">
+                📅 Ավելացնել Օրացույցում
+            </button>
+        </section>
+
+        <!-- Photo Gallery Slider -->
+        <section class="gallery-section">
+            <h2 class="section-title">Մեր Հուշերը</h2>
+            <div class="gallery-slider">
+                <div class="gallery-container" id="galleryContainer">
+                    <div class="gallery-slide">📷</div>
+                    <div class="gallery-slide">💕</div>
+                    <div class="gallery-slide">🌹</div>
+                    <div class="gallery-slide">💍</div>
+                    <div class="gallery-slide">❤️</div>
+                    <div class="gallery-slide">🥂</div>
+                </div>
+                <button class="gallery-nav gallery-prev" onclick="previousSlide()">‹</button>
+                <button class="gallery-nav gallery-next" onclick="nextSlide()">›</button>
+            </div>
+            <div class="gallery-dots" id="galleryDots"></div>
+        </section>
+
+        <!-- Our Story -->
+        <section class="story-section">
+            <div class="story-header" onclick="toggleStory()">
+                <h2 class="section-title armenian-text" style="margin: 0;">Մեր Սիրո Պատմությունը</h2>
+                <span class="story-toggle" id="storyToggle">🔽</span>
+            </div>
+            <div class="story-content armenian-text" id="storyContent">
+                <p class="story-text">
+                    <strong>💕 Ինչպես ենք հանդիպել:</strong> Դա գեղեցիկ գարնանային օր էր, երբ մեր ճանապահները առաջին անգամ հատվեցին տեղական սրճարանում: Սաշան կարդում էր իր սիրելի գիրքը, իսկ Միքայելը չէր կարող չնկատել նրա գեղեցիկ ժպիտը: Ինչ որ սկսվեց որպես պարզ «Ի՞նչ եք կարդում» հարցով, վերածվեց ժամերի զրույցի:
+                </p>
+                <p class="story-text">
+                    <strong>💍 Առաջարկությունը:</strong> Երեք հրաշալի տարի միասին անցկացնելուց հետո՝ Միքայելը պլանավորեց կատարյալ առաջարկությունը ծովափնյա զբոսանքի ժամանակ, այնտեղ, որտեղ նրանք ունեցել էին իրենց առաջին ժամանակակցությունը: Ոսկեծամանակային լույսի տակ, որը պարում էր ալիքների վրա, նա ծնկի վրա կանգնած ապրումի ամենակարևոր հարցը տվեց:
+                </p>
+                <p class="story-text">
+                    <strong>✈️ Հետաքրքիր փաստ:</strong> Մենք երկուսս էլ սիրում ենք ճանապարհորդել և միասին այցելել ենք 15 երկրների: Մեր ամենասիրելի ուղղությունն Իտալիան է, որտեղ մենք դարձանք ավելի սիրված միմյանց և հիանալի մակարոնի: Մենք անհամբեր սպասում ենք մեր մեղրամսյա ճանապարహորդությանը Տոսկանա:
+                </p>
+            </div>
+        </section>
+
+        <!-- Response Form -->
+        <section class="response-section">
+            <h2 class="response-title">Կմիանա՞ք Մեզ</h2>
+            <form method="POST" action="#">
+                <div class="form-group">
+                    <label for="guestCount" class="armenian-text">Հյուրերի թիվը (ներառյալ Դուք):</label>
+                    <select id="guestCount" name="attendees_count" required>
+                        <option value="">Խնդրում ենք ընտրել...</option>
+                        <option value="1">1 մարդ</option>
+                        <option value="2">2 մարդ</option>
+                        <option value="3">3 մարդ</option>
+                        <option value="4">4 մարդ</option>
+                        <option value="5">5 մարդ</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="specialRequests" class="armenian-text">Հատուկ պահանջներ կամ հաղորդագրություն զույգի համար:</label>
+                    <textarea id="specialRequests" name="comment" 
+                              placeholder="Առանձնահատուկ սննդային կարիքներ, հասանելիության պահանջմունքներ, կամ անուշ հաղորդագրություն մեզ համար..."></textarea>
+                </div>
+                
+                <div class="action-buttons">
+                    <button type="submit" name="action" value="accepted" class="btn btn-accept armenian-text">
+                        ✨ Այո, Կլինենք Այնտեղ
+                    </button>
+                    <button type="submit" name="action" value="declined" class="btn btn-decline armenian-text">
+                        💔 Ցավոք, Չենք Կարող Գալ
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer armenian-text">
+            <p>Անհամբեր սպասում ենք տոնելու Ձեզ հետ: 💕</p>
+            <p style="margin-top: 10px; font-size: 0.9rem;">
+                Հարցերի համար դիմեք մեզ: wedding@sashaandmichael.com
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Gallery functionality
+        let currentSlide = 0;
+        const totalSlides = 6;
+
+        function initGallery() {
+            const dotsContainer = document.getElementById('galleryDots');
+            for (let i = 0; i < totalSlides; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'gallery-dot';
+                if (i === 0) dot.classList.add('active');
+                dot.onclick = () => goToSlide(i);
+                dotsContainer.appendChild(dot);
+            }
+        }
+
+        function updateGallery() {
+            const container = document.getElementById('galleryContainer');
+            const dots = document.querySelectorAll('.gallery-dot');
+            
+            container.style.transform = `translateX(-${currentSlide * 100}%)`;
+            
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateGallery();
+        }
+
+        function previousSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateGallery();
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateGallery();
+        }
+
+        // Auto-advance gallery
+        setInterval(nextSlide, 4000);
+
+        // Create floating hearts
+        function createFloatingHearts() {
+            const heartsContainer = document.getElementById('floatingHearts');
+            const heartSymbols = ['💕', '💖', '💗', '💝', '💘', '❤️'];
+            
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDuration = (Math.random() * 5 + 10) + 's';
+                heart.style.animationDelay = Math.random() * 2 + 's';
+                
+                heartsContainer.appendChild(heart);
+                
+                setTimeout(() => {
+                    if (heart.parentNode) {
+                        heart.parentNode.removeChild(heart);
+                    }
+                }, 15000);
+            }, 2000);
+        }
+
+        // Create rose petals
+        function createRosePetals() {
+            const petalsContainer = document.getElementById('rosePetals');
+            
+            setInterval(() => {
+                const petal = document.createElement('div');
+                petal.className = 'petal';
+                petal.style.left = Math.random() * 100 + '%';
+                petal.style.animationDuration = (Math.random() * 4 + 8) + 's';
+                petal.style.animationDelay = Math.random() * 2 + 's';
+                
+                petalsContainer.appendChild(petal);
+                
+                setTimeout(() => {
+                    if (petal.parentNode) {
+                        petal.parentNode.removeChild(petal);
+                    }
+                }, 12000);
+            }, 1500);
+        }
+
+        // Fixed countdown timer (removed Jinja2 template tags)
+        function updateCountdown() {
+            // Set your wedding date here: Year, Month (0-based), Day, Hour, Minute
+            const eventDate = new Date(2024, 8, 15, 16, 0, 0).getTime(); // September 15, 2024, 4:00 PM
+            
+            const now = new Date().getTime();
+            const distance = eventDate - now;
+
+            if (distance < 0) {
+                document.getElementById('countdown').innerHTML = '<div class="countdown-item"><span class="countdown-number">🎉</span><span class="countdown-label">Ժամանակն է!</span></div>';
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = days.toString().padStart(2, '0');
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+        }
+
+        // Toggle story section
+        function toggleStory() {
+            const content = document.getElementById('storyContent');
+            const toggle = document.getElementById('storyToggle');
+            
+            content.classList.toggle('active');
+            toggle.classList.toggle('active');
+            toggle.textContent = content.classList.contains('active') ? '🔼' : '🔽';
+        }
+
+        // Fixed add to calendar function (removed Jinja2 template tags)
+        function addToCalendar() {
+            // Set your event details here
+            const eventDate = '20240915T160000'; // September 15, 2024, 4:00 PM
+            const eventTitle = 'Սաշա և Միքայել - Հարսանիք';
+            const eventLocation = 'Մեծ Հանդիսահանգույց, Երևան, Հայաստան';
+            
+            // Calculate end time (4 hours later)
+            const startDate = new Date('2024-09-15T16:00:00');
+            const endDate = new Date(startDate.getTime() + 4 * 60 * 60 * 1000);
+            const eventEndDate = endDate.toISOString().replace(/[-:]/g, '').split('.')[0];
+            
+            const calendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventTitle)}&dates=${eventDate}/${eventEndDate}&details=${encodeURIComponent('Միացեք մեզ այս հատուկ օրվա համար!')}&location=${encodeURIComponent(eventLocation)}`;
+            
+            window.open(calendarUrl, '_blank');
+        }
+
+        // Function to personalize guest name
+        function personalizeInvite() {
+            // You can get the guest name from URL parameters or other sources
+            const urlParams = new URLSearchParams(window.location.search);
+            const guestName = urlParams.get('guest') || 'Սիրելի Հյուր';
+            
+            document.getElementById('guestNameDisplay').textContent = guestName;
+        }
+
+        // Initialize everything when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            personalizeInvite();
+            initGallery();
+            createFloatingHearts();
+            createRosePetals();
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        });
+
+        // Smooth scrolling for better UX
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add some Armenian wedding traditions animation
+        function createArmenianElements() {
+            // Create traditional Armenian elements floating animation
+            const traditionSymbols = ['🍯', '🍇', '🌾', '🕊️', '🎭', '🎶'];
+            const container = document.body;
+            
+            setInterval(() => {
+                const element = document.createElement('div');
+                element.innerHTML = traditionSymbols[Math.floor(Math.random() * traditionSymbols.length)];
+                element.style.position = 'fixed';
+                element.style.left = Math.random() * 100 + '%';
+                element.style.top = '100vh';
+                element.style.fontSize = '1.5rem';
+                element.style.opacity = '0.4';
+                element.style.pointerEvents = 'none';
+                element.style.zIndex = '1';
+                element.style.animation = 'floatHeart 20s infinite linear';
+                
+                container.appendChild(element);
+                
+                setTimeout(() => {
+                    if (element.parentNode) {
+                        element.parentNode.removeChild(element);
+                    }
+                }, 20000);
+            }, 8000);
+        }
+
+        // Start Armenian elements animation
+        setTimeout(createArmenianElements, 3000);
+    </script>
+</body>
+</html>

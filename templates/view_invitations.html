@@ -1255,6 +1255,26 @@
                             </span>
                         </div>
                         <div class="detail-item">
+                            <span class="detail-label" id="churchAttendanceLabel">Եկեղեցի:</span>
+                            <span class="detail-value">
+                                {% if invitation.church_attendance %}
+                                <span class="badge badge-success" data-church="yes">Այո</span>
+                                {% else %}
+                                <span class="badge badge-light" data-church="no">Ոչ</span>
+                                {% endif %}
+                            </span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label" id="restaurantAttendanceLabel">Ռեստորան:</span>
+                            <span class="detail-value">
+                                {% if invitation.restaurant_attendance %}
+                                <span class="badge badge-success" data-restaurant="yes">Այո</span>
+                                {% else %}
+                                <span class="badge badge-light" data-restaurant="no">Ոչ</span>
+                                {% endif %}
+                            </span>
+                        </div>
+                        <div class="detail-item">
                             <span class="detail-label" id="commentsLabel">Մեկնաբանություններ:</span>
                             <span class="detail-value">
                                 {% if invitation.comments %}
@@ -1368,6 +1388,8 @@
                 deleteConfirmation: 'Դուք վստահ եք, որ ցանկանում եք ջնջել այս հրավերը?',
                 copiedMessage: 'Պատճենված!',
                 attendeesLabel: 'Մասնակիցներ:',
+                churchAttendanceLabel: 'Եկեղեցի:',
+                restaurantAttendanceLabel: 'Ռեստորան:',
                 commentsLabel: 'Մեկնաբանություններ:',
                 filterTitle: 'Զտիչ:',
                 filterAll: 'Բոլորը',
@@ -1416,6 +1438,8 @@
                 deleteConfirmation: 'Вы уверены, что хотите удалить это приглашение?',
                 copiedMessage: 'Скопировано!',
                 attendeesLabel: 'Участники:',
+                churchAttendanceLabel: 'Церковь:',
+                restaurantAttendanceLabel: 'Ресторан:',
                 commentsLabel: 'Комментарии:',
                 filterTitle: 'Фильтр:',
                 filterAll: 'Все',
@@ -1458,6 +1482,12 @@
                 if (label.textContent.includes('Մասնակիցներ') || label.textContent.includes('Участники')) {
                     label.textContent = translations[lang].attendeesLabel;
                 }
+                if (label.textContent.includes('Եկեղեցի') || label.textContent.includes('Եկեղեցի:')) {
+                    label.textContent = translations[lang].churchAttendanceLabel;
+                }
+                if (label.textContent.includes('Ռեստորան') || label.textContent.includes('Ռեստորան:')) {
+                    label.textContent = translations[lang].restaurantAttendanceLabel;
+                }
                 if (label.textContent.includes('Մեկնաբանություններ') || label.textContent.includes('Комментарии')) {
                     label.textContent = translations[lang].commentsLabel;
                 }
@@ -1475,6 +1505,18 @@
 
             document.querySelectorAll('[data-na="true"]').forEach(badge => {
                 badge.textContent = translations[lang].naText;
+            });
+            document.querySelectorAll('[data-church="yes"]').forEach(badge => {
+                badge.textContent = translations[lang].yesText;
+            });
+            document.querySelectorAll('[data-church="no"]').forEach(badge => {
+                badge.textContent = translations[lang].noText;
+            });
+            document.querySelectorAll('[data-restaurant="yes"]').forEach(badge => {
+                badge.textContent = translations[lang].yesText;
+            });
+            document.querySelectorAll('[data-restaurant="no"]').forEach(badge => {
+                badge.textContent = translations[lang].noText;
             });
             document.querySelectorAll('[data-comments="yes"]').forEach(badge => {
                 badge.textContent = translations[lang].yesText;

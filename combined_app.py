@@ -197,14 +197,22 @@ def invite():
             except ValueError:
                 attendee_count = 1
         
+        # Получаем информацию о посещении церкви и ресторана
+        church_attendance = 'church_attendance' in request.form
+        restaurant_attendance = 'restaurant_attendance' in request.form
+        
         # Обновляем объект приглашения
         invitation.with_spouse = with_spouse
         invitation.accepted = accepted
         invitation.comments = comments
         invitation.attendee_count = attendee_count
+        invitation.church_attendance = church_attendance
+        invitation.restaurant_attendance = restaurant_attendance
         
         # Отладочная информация
         print(f"Debug - Saving invitation with comments: '{invitation.comments}'")
+        print(f"Debug - Church attendance: {church_attendance}")
+        print(f"Debug - Restaurant attendance: {restaurant_attendance}")
         
         # Сохраняем в базу данных
         updateInvitation(invitation)
@@ -302,12 +310,18 @@ def edit_invitation():
                 attendee_count = 0
         except ValueError:
             attendee_count = 0
+        
+        # Получаем информацию о посещении церкви и ресторана
+        church_attendance = request.form.get('church_attendance') == 'True'
+        restaurant_attendance = request.form.get('restaurant_attendance') == 'True'
             
         # Отладочная информация
         print(f"Debug - Updating invitation with comments: '{comments}'")
+        print(f"Debug - Church attendance: {church_attendance}")
+        print(f"Debug - Restaurant attendance: {restaurant_attendance}")
         
         # Создаем обновленный объект приглашения со всеми полями
-        invitation = Invitation(name, event_id, with_spouse, hash, is_male, accepted, id, comments, attendee_count)
+        invitation = Invitation(name, event_id, with_spouse, hash, is_male, accepted, id, comments, attendee_count, church_attendance, restaurant_attendance)
         
         # Сохраняем в базу данных
         updateInvitation(invitation)
@@ -699,7 +713,9 @@ def create_invitation():
                 None, 
                 None, 
                 None, 
-                0
+                0,
+                False,  # church_attendance
+                False   # restaurant_attendance
             )
             
             result = createInvitation(invitation)
@@ -822,6 +838,14 @@ if __name__ == '__main__':
     parsicAmTemplate = get_template_by_id(10)
     if parsicAmTemplate is None:
         create_template_with_id(TemplateDB(10, 'parsicAmTemplate', 'parsic_am.html', 'Parsic Armenian'))
+    
+    parsicRuTemplate = get_template_by_id(12)
+    if parsicRuTemplate is None:
+        create_template_with_id(TemplateDB(12, 'parsicRuTemplate', 'parsic_ru.html', 'Parsic Russian'))
+    
+    elegantWedding = get_template_by_id(11)
+    if elegantWedding is None:
+        create_template_with_id(TemplateDB(11, 'elegantWedding_template_Arm', 'elegant_wedding_template.html', 'Elegant Wedding Arm'))
 try:
     print("Attempting to add comments column...")
     result = executeQuery("ALTER TABLE invitation ADD COLUMN IF NOT EXISTS comments TEXT;")
@@ -829,6 +853,14 @@ try:
     
     print("Attempting to add attendee_count column...")
     result = executeQuery("ALTER TABLE invitation ADD COLUMN IF NOT EXISTS attendee_count INTEGER DEFAULT 0;")
+    print(f"Result: {result}")
+    
+    print("Attempting to add church_attendance column...")
+    result = executeQuery("ALTER TABLE invitation ADD COLUMN IF NOT EXISTS church_attendance BOOLEAN DEFAULT false;")
+    print(f"Result: {result}")
+    
+    print("Attempting to add restaurant_attendance column...")
+    result = executeQuery("ALTER TABLE invitation ADD COLUMN IF NOT EXISTS restaurant_attendance BOOLEAN DEFAULT false;")
     print(f"Result: {result}")
 except Exception as e:
     print(f"Error adding columns: {e}")
