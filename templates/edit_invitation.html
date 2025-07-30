@@ -834,8 +834,40 @@
                         </div>
                     </div>
                     
-                    <!-- Новое поле: Комментарии -->
+                    <!-- Новое поле: Посещение церкви -->
                     <div class="form-group" style="--i:8">
+                        <label for="church_attendance">Посещение церкви</label>
+                        <div class="select-wrapper">
+                            <div class="input-wrapper">
+                                <select id="church_attendance" name="church_attendance" required>
+                                    <option value="True" {% if invitation.church_attendance == True %}selected{% endif %}>Да</option>
+                                    <option value="False" {% if invitation.church_attendance == False %}selected{% endif %}>Нет</option>
+                                </select>
+                                <span class="input-icon">
+                                    <i class="fas fa-church"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Новое поле: Посещение ресторана -->
+                    <div class="form-group" style="--i:9">
+                        <label for="restaurant_attendance">Посещение ресторана</label>
+                        <div class="select-wrapper">
+                            <div class="input-wrapper">
+                                <select id="restaurant_attendance" name="restaurant_attendance" required>
+                                    <option value="True" {% if invitation.restaurant_attendance == True %}selected{% endif %}>Да</option>
+                                    <option value="False" {% if invitation.restaurant_attendance == False %}selected{% endif %}>Нет</option>
+                                </select>
+                                <span class="input-icon">
+                                    <i class="fas fa-utensils"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Новое поле: Комментарии -->
+                    <div class="form-group" style="--i:10">
                         <label for="comments">Комментарии гостя</label>
                         <div class="input-wrapper" style="flex-direction: column; align-items: stretch;">
                             <textarea name="comments" id="comments" style="padding: 12px 15px; height: 100px; width: 100%; border: 1px solid var(--text-light); border-radius: var(--radius-small); outline: none; transition: var(--transition); font-size: 15px; color: var(--text-dark); background-color: rgba(255, 255, 255, 0.8);">{{ invitation.comments if invitation.comments }}</textarea>

@@ -2,7 +2,7 @@ import psycopg2
 from config_prod import getDbConfig
 
 class Invitation:
-    def __init__(self, name, event_id, with_spouse, hash, is_male, accepted=None, id=None, comments=None, attendee_count=0):
+    def __init__(self, name, event_id, with_spouse, hash, is_male, accepted=None, id=None, comments=None, attendee_count=0, church_attendance=False, restaurant_attendance=False):
         self.name = name
         self.event_id = event_id
         self.with_spouse = with_spouse
@@ -12,6 +12,8 @@ class Invitation:
         self.id = id
         self.comments = comments
         self.attendee_count = attendee_count
+        self.church_attendance = church_attendance
+        self.restaurant_attendance = restaurant_attendance
 
 conn_params = getDbConfig()
 
@@ -67,13 +69,15 @@ def createInvitation(invitation):
         # Правильные булевы значения для PostgreSQL
         with_spouse_value = 'true' if invitation.with_spouse else 'false'
         is_male_value = 'true' if invitation.is_male else 'false'
+        church_attendance_value = 'true' if invitation.church_attendance else 'false'
+        restaurant_attendance_value = 'true' if invitation.restaurant_attendance else 'false'
         
         insert_query = f"""
-            INSERT INTO invitation (name, event_id, with_spouse, hash, is_male, comments, attendee_count)
+            INSERT INTO invitation (name, event_id, with_spouse, hash, is_male, comments, attendee_count, church_attendance, restaurant_attendance)
             VALUES ('{invitation.name}', {invitation.event_id}, {with_spouse_value}, 
                     '{invitation.hash}', {is_male_value}, 
                     {comments_value}, 
-                    {invitation.attendee_count});
+                    {invitation.attendee_count}, {church_attendance_value}, {restaurant_attendance_value});
         """
         
         print(f"Debug - Executing SQL: {insert_query}")
@@ -109,6 +113,8 @@ def constructInv(dbRes):
     is_male = False
     comments = None
     attendee_count = 0
+    church_attendance = False
+    restaurant_attendance = False
     
     # Определяем по результатам debug_table_structure, 
     # какой столбец какому полю соответствует
@@ -122,7 +128,13 @@ def constructInv(dbRes):
     attendee_count = dbRes[7]
     is_male = dbRes[8]
     
-    print(f"Debug - Assigning fields: id={id}, name={name}, comments={comments}, attendee_count={attendee_count}, is_male={is_male}")
+    # Handle new fields if they exist in the database
+    if len(dbRes) > 9:
+        church_attendance = dbRes[9] if dbRes[9] is not None else False
+    if len(dbRes) > 10:
+        restaurant_attendance = dbRes[10] if dbRes[10] is not None else False
+    
+    print(f"Debug - Assigning fields: id={id}, name={name}, comments={comments}, attendee_count={attendee_count}, is_male={is_male}, church_attendance={church_attendance}, restaurant_attendance={restaurant_attendance}")
     # Создаем объект приглашения с явным указанием всех параметров
     invitation = Invitation(
         name=name,
@@ -133,7 +145,9 @@ def constructInv(dbRes):
         accepted=accepted,
         id=id,
         comments=comments,
-        attendee_count=attendee_count
+        attendee_count=attendee_count,
+        church_attendance=church_attendance,
+        restaurant_attendance=restaurant_attendance
     )
     print(f"Debug - Created invitation object with comments: {invitation.comments}, attendee_count: {invitation.attendee_count}")
    
@@ -197,6 +211,8 @@ def updateInvitation(invitation):
     # Правильные булевы значения для PostgreSQL
     with_spouse_value = 'true' if invitation.with_spouse else 'false'
     is_male_value = 'true' if invitation.is_male else 'false'
+    church_attendance_value = 'true' if invitation.church_attendance else 'false'
+    restaurant_attendance_value = 'true' if invitation.restaurant_attendance else 'false'
     
     update_query = f"""
         UPDATE invitation SET 
@@ -207,7 +223,9 @@ def updateInvitation(invitation):
             hash = '{invitation.hash}', 
             is_male = {is_male_value},
             comments = {comments_value},
-            attendee_count = {invitation.attendee_count}
+            attendee_count = {invitation.attendee_count},
+            church_attendance = {church_attendance_value},
+            restaurant_attendance = {restaurant_attendance_value}
         WHERE id = {invitation.id};
     """
     
@@ -244,6 +262,20 @@ def ensure_new_columns_exist():
             """)
             is_male_exists = cur.fetchone() is not None
             
+            cur.execute("""
+                SELECT column_name 
+                FROM information_schema.columns 
+                WHERE table_name = 'invitation' AND column_name = 'church_attendance';
+            """)
+            church_attendance_exists = cur.fetchone() is not None
+            
+            cur.execute("""
+                SELECT column_name 
+                FROM information_schema.columns 
+                WHERE table_name = 'invitation' AND column_name = 'restaurant_attendance';
+            """)
+            restaurant_attendance_exists = cur.fetchone() is not None
+            
             # Add columns if they don't exist
             if not comments_exists:
                 cur.execute("ALTER TABLE invitation ADD COLUMN comments TEXT;")
@@ -256,6 +288,14 @@ def ensure_new_columns_exist():
             if not is_male_exists:
                 cur.execute("ALTER TABLE invitation ADD COLUMN is_male BOOLEAN;")
                 print("Added 'is_male' column to invitation table")
+                
+            if not church_attendance_exists:
+                cur.execute("ALTER TABLE invitation ADD COLUMN church_attendance BOOLEAN DEFAULT false;")
+                print("Added 'church_attendance' column to invitation table")
+                
+            if not restaurant_attendance_exists:
+                cur.execute("ALTER TABLE invitation ADD COLUMN restaurant_attendance BOOLEAN DEFAULT false;")
+                print("Added 'restaurant_attendance' column to invitation table")
                 
             conn.commit()
 
