@@ -180,7 +180,7 @@
                                 data-src="/test/parsic/assets/images/cowo.webp" alt="молодожены"
                                 onclick="undangan.guest.modal(this)"
                                 class="img-center-crop rounded-circle border border-3 border-light shadow my-4 mx-auto cursor-pointer">
-                            <h2 class="font-esthetic m-0" style="font-size: 2.125rem;">Александр и Мария</h2>
+                            <h2 class="font-esthetic m-0" style="font-size: 2.125rem;">Василий и София</h2>
                             <p class="mb-1" style="font-size: 1.25rem;">объединяют свои сердца</p>
                             <p class="mb-0" style="font-size: 0.95rem;">💍 С любовью и единством 💍</p>
                         </div>
@@ -470,30 +470,30 @@
                 <section class="bg-light-dark pb-3">
                     <div class="container text-center">
                         <h2 class="font-esthetic pt-3 mb-4" style="font-size: 2.25rem;">Подтвердите участие</h2>
-                        <p class="mb-1" style="font-size: 0.95rem;">Пожалуйста, сообщите нам о вашем участии в праздновании:</p>
+                        <p class="mb-1" style="font-size: 0.95rem;">Пожалуйста, сообщите нам о вашем участии в торжествах:</p>
 
                         <form method="post" action="{{ url_for('invite', h=invitation.hash) }}">
                             <div class="bg-theme-auto rounded-4 shadow p-3 mx-4 mt-4 text-start" data-aos="fade-up"
                                 data-aos-duration="2500">
-                                <i class="fa-solid fa-users"></i>
-                                <p class="d-inline">Количество гостей (включая вас)</p>
-                                <div class="mt-2">
-                                    <select name="attendees_count" id="attendees_count" class="form-control">
-                                        <option value="1">Приду {{'один' if invitation.is_male else 'одна'}}</option>
-                                        <option value="2">Приду с {{'супругой' if invitation.is_male else 'супругом'}}</option>
-                                    </select>
-                                </div>
+                                <i class="fa-solid fa-user-check"></i>
+                                <p class="d-inline">Ваше участие</p>
+                                                                   <div class="mt-2">
+                                       <select name="attendance_type" id="attendance_type" class="form-control">
+                                           <option value="alone">Приду {{'один' if invitation.is_male else 'одна'}}</option>
+                                           <option value="with_partner">Приду с {{'супругой' if invitation.is_male else 'супругом'}}</option>
+                                       </select>
+                                   </div>
                             </div>
 
                             <div class="bg-theme-auto rounded-4 shadow p-3 mx-4 mt-4 text-start" data-aos="fade-up"
                                 data-aos-duration="2500">
                                 <i class="fa-solid fa-church"></i>
-                                <p class="d-inline">Участие в венчании</p>
+                                <p class="d-inline">Венчание в церкви (14:00)</p>
                                 <div class="mt-2">
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" name="church_attendance" id="church_attendance" value="yes" checked>
                                         <label class="form-check-label" for="church_attendance">
-                                            Да, буду присутствовать
+                                            Да, буду присутствовать на венчании
                                         </label>
                                     </div>
                                 </div>
@@ -502,12 +502,12 @@
                             <div class="bg-theme-auto rounded-4 shadow p-3 mx-4 mt-4 text-start" data-aos="fade-up"
                                 data-aos-duration="2500">
                                 <i class="fa-solid fa-utensils"></i>
-                                <p class="d-inline">Участие в банкете</p>
+                                <p class="d-inline">Свадебный банкет (16:00)</p>
                                 <div class="mt-2">
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" name="restaurant_attendance" id="restaurant_attendance" value="yes" checked>
                                         <label class="form-check-label" for="restaurant_attendance">
-                                            Да, буду присутствовать
+                                            Да, буду присутствовать на банкете
                                         </label>
                                     </div>
                                 </div>
@@ -516,10 +516,10 @@
                             <div class="bg-theme-auto rounded-4 shadow p-3 mx-4 mt-4 text-start" data-aos="fade-up"
                                 data-aos-duration="2500">
                                 <i class="fa-solid fa-comment"></i>
-                                <p class="d-inline">Ваш комментарий или особые пожелания</p>
+                                <p class="d-inline">Ваши пожелания или особые комментарии</p>
                                 <div class="mt-2">
                                     <textarea name="comment" id="comment" class="form-control" rows="4"
-                                        placeholder="Напишите здесь ваш комментарий или особые пожелания..."></textarea>
+                                        placeholder="Напишите ваши пожелания, поздравления или особые комментарии..."></textarea>
                                 </div>
                             </div>
 
@@ -716,6 +716,36 @@
         color: #fbfbfe !important;
     }
 
+    /* Улучшение читаемости шрифтов на мобильных устройствах */
+    @media (max-width: 768px) {
+        .font-esthetic {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+            font-weight: 600 !important;
+            letter-spacing: 0.5px !important;
+        }
+        
+        /* Улучшение читаемости для всех текстовых элементов */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+            font-weight: 600 !important;
+            letter-spacing: 0.3px !important;
+        }
+        
+        p, span, div, button, label, input, textarea, select {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+            font-weight: 400 !important;
+            letter-spacing: 0.2px !important;
+        }
+        
+        /* Улучшение контрастности для лучшей читаемости */
+        body {
+            -webkit-font-smoothing: antialiased !important;
+            -moz-osx-font-smoothing: grayscale !important;
+            text-rendering: optimizeLegibility !important;
+        }
+    }
+
+    /* Дополнительные улучшения для iPhone */
     @media (max-width: 576px) {
         .timeline-time svg {
             width: 40px !important;
@@ -724,6 +754,34 @@
 
         .flex-shrink-0 {
             width: 60px !important;
+        }
+        
+        /* Увеличение размера шрифта для лучшей читаемости на маленьких экранах */
+        .font-esthetic {
+            font-size: 1.8rem !important;
+            line-height: 1.3 !important;
+        }
+        
+        h1 {
+            font-size: 1.9rem !important;
+            line-height: 1.3 !important;
+        }
+        
+        h2 {
+            font-size: 1.7rem !important;
+            line-height: 1.3 !important;
+        }
+        
+        p {
+            font-size: 1rem !important;
+            line-height: 1.5 !important;
+        }
+        
+        /* Улучшение кнопок для сенсорных экранов */
+        .btn {
+            font-size: 1rem !important;
+            padding: 0.75rem 1.5rem !important;
+            min-height: 44px !important;
         }
     }
 </style>

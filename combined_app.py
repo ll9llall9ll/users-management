@@ -168,11 +168,12 @@ def invite():
     if invitation.accepted is not None:
         event = getEventById(invitation.event_id)
         if invitation.accepted == True:
-            return render_template('invite_accepted_new.html', 
-                                 hall_name=event.hall_name or 'Նշված չէ', 
-                                 event_date=event.date.strftime('%d.%m.%Y') if event.date else 'Նշված չէ')
+            return render_template('invite_accepted_ru.html', 
+                                 invitation=invitation,
+                                 hall_name=event.hall_name or 'Место будет уточнено', 
+                                 event_date=event.date.strftime('%d.%m.%Y') if event.date else 'Дата будет уточнена')
         else:
-            return render_template('invite_declined_new.html')
+            return render_template('invite_declined_ru.html', invitation=invitation)
     
     # Если ответа еще нет, показываем форму приглашения
     event = getEventById(invitation.event_id)
@@ -187,14 +188,17 @@ def invite():
         if not comments:  # Это проверит на None, пустую строку и строку с пробелами
             comments = None
         
-        # Получаем количество гостей
+        # Получаем тип участия (attendance_type)
+        attendance_type = request.form.get('attendance_type', 'alone')
+        
+        # Получаем количество гостей на основе типа участия
         attendee_count = 0
         if accepted:
-            try:
-                attendee_count = int(request.form.get('attendees_count', 1))
-                if attendee_count < 0:
-                    attendee_count = 1
-            except ValueError:
+            if attendance_type == 'alone':
+                attendee_count = 1
+            elif attendance_type == 'with_partner':
+                attendee_count = 2
+            else:
                 attendee_count = 1
         
         # Получаем информацию о посещении церкви и ресторана
@@ -208,6 +212,7 @@ def invite():
         invitation.attendee_count = attendee_count
         invitation.church_attendance = church_attendance
         invitation.restaurant_attendance = restaurant_attendance
+        invitation.attendance_type = attendance_type
         
         # Отладочная информация
         print(f"Debug - Saving invitation with comments: '{invitation.comments}'")
@@ -219,11 +224,12 @@ def invite():
         
         # После сохранения показываем соответствующую страницу
         if accepted:
-            return render_template('invite_accepted_new.html', 
-                                 hall_name=event.hall_name or 'Նշված չէ', 
-                                 event_date=event.date.strftime('%d.%m.%Y') if event.date else 'Նշված չէ')
+            return render_template('invite_accepted_ru.html', 
+                                 invitation=invitation,
+                                 hall_name=event.hall_name or 'Место будет уточнено', 
+                                 event_date=event.date.strftime('%d.%m.%Y') if event.date else 'Дата будет уточнена')
         else:
-            return render_template('invite_declined_new.html')
+            return render_template('invite_declined_ru.html', invitation=invitation)
     
     return render_template(template.viewname, invitation = invitation, event = event)
 
@@ -790,7 +796,7 @@ def view_invitation():
     # Отладочная информация
     print(f"Debug - Number of invitations: {len(invitations)}")
     for i, invitation in enumerate(invitations):
-        print(f"Debug - Invitation {i}: name={invitation.name}, comments={invitation.comments}, attendee_count={invitation.attendee_count}")
+        print(f"Debug - Invitation {i}: name={invitation.name}, comments={invitation.comments}, attendee_count={invitation.attendee_count}, attendance_type={invitation.attendance_type}")
     
     return render_template('view_invitations.html', invitations=invitations, event_id=event_id)
 
@@ -862,6 +868,14 @@ try:
     print("Attempting to add restaurant_attendance column...")
     result = executeQuery("ALTER TABLE invitation ADD COLUMN IF NOT EXISTS restaurant_attendance BOOLEAN DEFAULT false;")
     print(f"Result: {result}")
+    
+    print("Attempting to add attendance_type column...")
+    result = executeQuery("ALTER TABLE invitation ADD COLUMN IF NOT EXISTS attendance_type VARCHAR(50);")
+    print(f"Result: {result}")
+    
+    # Ensure all new columns exist
+    from invitation_db import ensure_new_columns_exist
+    ensure_new_columns_exist()
 except Exception as e:
     print(f"Error adding columns: {e}")
     # Upgrade existing passwords to SHA-256
