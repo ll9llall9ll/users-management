@@ -2,7 +2,7 @@ import psycopg2
 from config_prod import getDbConfig
 
 class Invitation:
-    def __init__(self, name, event_id, with_spouse, hash, is_male, accepted=None, id=None, comments=None, attendee_count=0, church_attendance=False, restaurant_attendance=False):
+    def __init__(self, name, event_id, with_spouse, hash, is_male, accepted=None, id=None, comments=None, attendee_count=0, church_attendance=False, restaurant_attendance=False, attendance_type=None):
         self.name = name
         self.event_id = event_id
         self.with_spouse = with_spouse
@@ -14,6 +14,7 @@ class Invitation:
         self.attendee_count = attendee_count
         self.church_attendance = church_attendance
         self.restaurant_attendance = restaurant_attendance
+        self.attendance_type = attendance_type
 
 conn_params = getDbConfig()
 
@@ -72,12 +73,15 @@ def createInvitation(invitation):
         church_attendance_value = 'true' if invitation.church_attendance else 'false'
         restaurant_attendance_value = 'true' if invitation.restaurant_attendance else 'false'
         
+        # Обработка attendance_type: если None или пусто, то SQL NULL
+        attendance_type_value = f"'{invitation.attendance_type}'" if invitation.attendance_type else "NULL"
+        
         insert_query = f"""
-            INSERT INTO invitation (name, event_id, with_spouse, hash, is_male, comments, attendee_count, church_attendance, restaurant_attendance)
+            INSERT INTO invitation (name, event_id, with_spouse, hash, is_male, comments, attendee_count, church_attendance, restaurant_attendance, attendance_type)
             VALUES ('{invitation.name}', {invitation.event_id}, {with_spouse_value}, 
                     '{invitation.hash}', {is_male_value}, 
                     {comments_value}, 
-                    {invitation.attendee_count}, {church_attendance_value}, {restaurant_attendance_value});
+                    {invitation.attendee_count}, {church_attendance_value}, {restaurant_attendance_value}, {attendance_type_value});
         """
         
         print(f"Debug - Executing SQL: {insert_query}")
@@ -115,6 +119,7 @@ def constructInv(dbRes):
     attendee_count = 0
     church_attendance = False
     restaurant_attendance = False
+    attendance_type = None
     
     # Определяем по результатам debug_table_structure, 
     # какой столбец какому полю соответствует
@@ -133,8 +138,10 @@ def constructInv(dbRes):
         church_attendance = dbRes[9] if dbRes[9] is not None else False
     if len(dbRes) > 10:
         restaurant_attendance = dbRes[10] if dbRes[10] is not None else False
+    if len(dbRes) > 11:
+        attendance_type = dbRes[11] if dbRes[11] is not None else None
     
-    print(f"Debug - Assigning fields: id={id}, name={name}, comments={comments}, attendee_count={attendee_count}, is_male={is_male}, church_attendance={church_attendance}, restaurant_attendance={restaurant_attendance}")
+    print(f"Debug - Assigning fields: id={id}, name={name}, comments={comments}, attendee_count={attendee_count}, is_male={is_male}, church_attendance={church_attendance}, restaurant_attendance={restaurant_attendance}, attendance_type={attendance_type}")
     # Создаем объект приглашения с явным указанием всех параметров
     invitation = Invitation(
         name=name,
@@ -147,7 +154,8 @@ def constructInv(dbRes):
         comments=comments,
         attendee_count=attendee_count,
         church_attendance=church_attendance,
-        restaurant_attendance=restaurant_attendance
+        restaurant_attendance=restaurant_attendance,
+        attendance_type=attendance_type
     )
     print(f"Debug - Created invitation object with comments: {invitation.comments}, attendee_count: {invitation.attendee_count}")
    
@@ -214,6 +222,9 @@ def updateInvitation(invitation):
     church_attendance_value = 'true' if invitation.church_attendance else 'false'
     restaurant_attendance_value = 'true' if invitation.restaurant_attendance else 'false'
     
+    # Обработка attendance_type: если None или пусто, то SQL NULL
+    attendance_type_value = f"'{invitation.attendance_type}'" if invitation.attendance_type else "NULL"
+    
     update_query = f"""
         UPDATE invitation SET 
             name = '{invitation.name}', 
@@ -225,7 +236,8 @@ def updateInvitation(invitation):
             comments = {comments_value},
             attendee_count = {invitation.attendee_count},
             church_attendance = {church_attendance_value},
-            restaurant_attendance = {restaurant_attendance_value}
+            restaurant_attendance = {restaurant_attendance_value},
+            attendance_type = {attendance_type_value}
         WHERE id = {invitation.id};
     """
     
@@ -276,6 +288,13 @@ def ensure_new_columns_exist():
             """)
             restaurant_attendance_exists = cur.fetchone() is not None
             
+            cur.execute("""
+                SELECT column_name 
+                FROM information_schema.columns 
+                WHERE table_name = 'invitation' AND column_name = 'attendance_type';
+            """)
+            attendance_type_exists = cur.fetchone() is not None
+            
             # Add columns if they don't exist
             if not comments_exists:
                 cur.execute("ALTER TABLE invitation ADD COLUMN comments TEXT;")
@@ -296,6 +315,10 @@ def ensure_new_columns_exist():
             if not restaurant_attendance_exists:
                 cur.execute("ALTER TABLE invitation ADD COLUMN restaurant_attendance BOOLEAN DEFAULT false;")
                 print("Added 'restaurant_attendance' column to invitation table")
+                
+            if not attendance_type_exists:
+                cur.execute("ALTER TABLE invitation ADD COLUMN attendance_type VARCHAR(50);")
+                print("Added 'attendance_type' column to invitation table")
                 
             conn.commit()
 
