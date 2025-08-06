@@ -67,7 +67,7 @@ app = Flask(__name__, static_folder='test')
 app.secret_key = secrets.token_hex(16)  # Generate a secure secret key
 CORS(app, resources={r"/login/google": {"origins": "*"}})
 def date(d):
-     str_date = d.strftime("%d-%m-%y")
+     str_date = d.strftime("%d.%m.%Y")
      return str_date
 app.add_template_filter(date)
 
@@ -852,6 +852,15 @@ if __name__ == '__main__':
     elegantWedding = get_template_by_id(11)
     if elegantWedding is None:
         create_template_with_id(TemplateDB(11, 'elegantWedding_template_Arm', 'elegant_wedding_template.html', 'Elegant Wedding Arm'))
+    
+    # Добавляем новые шаблоны New Design Template
+    newDesignTemplate = get_template_by_id(13)
+    if newDesignTemplate is None:
+        create_template_with_id(TemplateDB(13, 'New Design Template', 'newDesign_template.html', 'wedding'))
+    
+    newDesignTemplateAM = get_template_by_id(14)
+    if newDesignTemplateAM is None:
+        create_template_with_id(TemplateDB(14, 'New Design Template AM', 'newDesign_template_AM.html', 'wedding'))
 try:
     print("Attempting to add comments column...")
     result = executeQuery("ALTER TABLE invitation ADD COLUMN IF NOT EXISTS comments TEXT;")
