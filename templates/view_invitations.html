@@ -794,6 +794,65 @@
             color: var(--white);
         }
 
+        .btn-success {
+            background-color: #388e3c;
+        }
+
+        .btn-success:hover {
+            background-color: #2e7d32;
+        }
+
+        .badge-primary {
+            background-color: #1976d2;
+        }
+
+        .badge-pink {
+            background-color: #e91e63;
+        }
+        
+        /* Стили для спиннера */
+        .fa-spinner {
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .clickable-gender {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+        
+        .clickable-gender:hover {
+            transform: scale(1.05);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        
+        .clickable-gender:active {
+            transform: scale(0.95);
+        }
+        
+        /* Скрываем/показываем текст в зависимости от языка */
+        .gender-text-hy {
+            display: none;
+        }
+        
+        .gender-text-ru {
+            display: inline;
+        }
+        
+        /* Для армянского языка */
+        body[data-language="hy"] .gender-text-hy {
+            display: inline;
+        }
+        
+        body[data-language="hy"] .gender-text-ru {
+            display: none;
+        }
+
         .actions-container {
             display: flex;
             gap: 10px;
@@ -1224,6 +1283,9 @@
                 <a href="{{ url_for('create_invitation', event_id=event_id) }}" class="btn">
                     <i class="fas fa-plus"></i> <span id="createInvitationText">Ստեղծել հրավեր</span>
                 </a>
+                <button class="btn btn-success" id="exportAcceptedBtn">
+                    <i class="fas fa-download"></i> <span id="exportAcceptedText">Экспорт принятых</span>
+                </button>
             </div>
 
             <div class="invitations-cards mobile-only">
@@ -1251,6 +1313,34 @@
                                 {{ invitation.attendee_count }}
                                 {% else %}
                                 <span class="badge badge-light" data-na="true">Հ/Հ</span>
+                                {% endif %}
+                            </span>
+                        </div>
+
+                        <div class="detail-item">
+                            <span class="detail-label" id="genderLabel">Пол:</span>
+                            <span class="detail-value">
+                                {% if invitation.is_male %}
+                                <span class="badge badge-primary clickable-gender" data-gender="male" data-invitation-id="{{ invitation.id }}" data-current-gender="true">
+                                    <span class="gender-text-hy">Արական</span>
+                                    <span class="gender-text-ru">Мужской</span>
+                                </span>
+                                {% else %}
+                                <span class="badge badge-pink clickable-gender" data-gender="female" data-invitation-id="{{ invitation.id }}" data-current-gender="false">
+                                    <span class="gender-text-hy">Իգական</span>
+                                    <span class="gender-text-ru">Женский</span>
+                                </span>
+                                {% endif %}
+                            </span>
+                        </div>
+
+                        <div class="detail-item">
+                            <span class="detail-label" id="withSpouseLabel">С супругом:</span>
+                            <span class="detail-value">
+                                {% if invitation.with_spouse %}
+                                <span class="badge badge-success" data-spouse="yes">Այո</span>
+                                {% else %}
+                                <span class="badge badge-light" data-spouse="no">Ոչ</span>
                                 {% endif %}
                             </span>
                         </div>
@@ -1380,6 +1470,8 @@
                 naText: 'Հ/Հ',
                 yesText: 'Այո',
                 noText: 'Ոչ',
+                maleText: 'Արական',
+                femaleText: 'Իգական',
                 viewText: 'Դիտել',
                 editText: 'Խմբագրել',
                 deleteText: 'Ջնջել',
@@ -1389,6 +1481,8 @@
                 deleteConfirmation: 'Դուք վստահ եք, որ ցանկանում եք ջնջել այս հրավերը?',
                 copiedMessage: 'Պատճենված!',
                 attendeesLabel: 'Մասնակիցներ:',
+                genderLabel: 'Սեռ:',
+                withSpouseLabel: 'Զուգընկերոջ հետ:',
                 churchAttendanceLabel: 'Եկեղեցի:',
                 restaurantAttendanceLabel: 'Ռեստորան:',
                 commentsLabel: 'Մեկնաբանություններ:',
@@ -1406,7 +1500,8 @@
                 confirmDeleteText: 'Ջնջել',
                 noItemsSelected: 'Ընտրեք առնվազն մեկ հրավեր',
                 selectAllText: 'Ընտրել բոլորը',
-                deselectAllText: 'Չեղարկել ընտրությունը'
+                deselectAllText: 'Չեղարկել ընտրությունը',
+                exportAcceptedText: 'JSON էքսպորտ ընդունվածների'
             },
             ru: {
                 sideTitle: 'Менеджер приглашений',
@@ -1430,6 +1525,8 @@
                 naText: 'Н/Д',
                 yesText: 'Да',
                 noText: 'Нет',
+                maleText: 'Мужской',
+                femaleText: 'Женский',
                 viewText: 'Просмотр',
                 editText: 'Изменить',
                 deleteText: 'Удалить',
@@ -1439,6 +1536,8 @@
                 deleteConfirmation: 'Вы уверены, что хотите удалить это приглашение?',
                 copiedMessage: 'Скопировано!',
                 attendeesLabel: 'Участники:',
+                genderLabel: 'Пол:',
+                withSpouseLabel: 'С супругом:',
                 churchAttendanceLabel: 'Церковь:',
                 restaurantAttendanceLabel: 'Ресторан:',
                 commentsLabel: 'Комментарии:',
@@ -1456,7 +1555,8 @@
                 confirmDeleteText: 'Удалить',
                 noItemsSelected: 'Выберите хотя бы одно приглашение',
                 selectAllText: 'Выбрать все',
-                deselectAllText: 'Снять выделение'
+                deselectAllText: 'Снять выделение',
+                exportAcceptedText: 'JSON экспорт принятых'
             }
         };
 
@@ -1482,6 +1582,12 @@
             document.querySelectorAll('.detail-label').forEach(label => {
                 if (label.textContent.includes('Մասնակիցներ') || label.textContent.includes('Участники')) {
                     label.textContent = translations[lang].attendeesLabel;
+                }
+                if (label.textContent.includes('Սեռ') || label.textContent.includes('Пол')) {
+                    label.textContent = translations[lang].genderLabel;
+                }
+                if (label.textContent.includes('Զուգընկերոջ հետ') || label.textContent.includes('С супругом')) {
+                    label.textContent = translations[lang].withSpouseLabel;
                 }
                 if (label.textContent.includes('Եկեղեցի') || label.textContent.includes('Եկեղեցի:')) {
                     label.textContent = translations[lang].churchAttendanceLabel;
@@ -1525,6 +1631,18 @@
             document.querySelectorAll('[data-comments="no"]').forEach(badge => {
                 badge.textContent = translations[lang].noText;
             });
+            document.querySelectorAll('[data-spouse="yes"]').forEach(badge => {
+                badge.textContent = translations[lang].yesText;
+            });
+            document.querySelectorAll('[data-spouse="no"]').forEach(badge => {
+                badge.textContent = translations[lang].noText;
+            });
+            document.querySelectorAll('[data-gender="male"]').forEach(badge => {
+                badge.textContent = translations[lang].maleText;
+            });
+            document.querySelectorAll('[data-gender="female"]').forEach(badge => {
+                badge.textContent = translations[lang].femaleText;
+            });
 
             document.querySelectorAll('.view-text').forEach(text => {
                 text.textContent = translations[lang].viewText;
@@ -1552,8 +1670,232 @@
             document.getElementById('bulkDeleteText').textContent = translations[lang].bulkDeleteText;
             document.getElementById('selectAllText').textContent = translations[lang].selectAllText;
             document.getElementById('deselectAllText').textContent = translations[lang].deselectAllText;
+            document.getElementById('exportAcceptedText').textContent = translations[lang].exportAcceptedText;
 
             document.documentElement.lang = lang;
+        }
+
+        // ПРОСТАЯ и НАДЕЖНАЯ функция для определения пола по имени
+        function detectGenderByName(name, isMaleFromDB) {
+            // Если есть данные из БД, используем их как приоритет
+            if (isMaleFromDB !== null) {
+                return isMaleFromDB;
+            }
+            
+            const lowerName = name.toLowerCase();
+            
+            // Список женских армянских имен
+            const femaleNames = [
+                'լիլիթ', 'մարիամ', 'սիրանուշ', 'անահիտ', 'հասմիկ', 'նարինե', 'արիանա', 'մարիա', 'սոնա', 'լիզա', 'կարինե',
+                'հայկուհի', 'վարդուհի', 'սիրանույշ', 'անահիտ', 'լուսինե', 'հասմիկ', 'նարինե', 'արիանա', 'մարիա', 'սոնա', 'լիզա', 'կարինե',
+                'հայկուհի', 'վարդուհի', 'սիրանույշ', 'անահիտ', 'լուսինե', 'գայանե', 'ռուզան', 'նունե', 'սիրանույշ', 'անահիտ', 'լուսինե',
+                // Добавляем женские имена, которые заканчиваются на согласные
+                'անուշ', 'շուշան', 'հասմիկ', 'նունե', 'ռուզան', 'գայանե', 'սիրանույշ', 'անահիտ', 'լուսինե',
+                'սոնա', 'լիզա', 'կարինե', 'հայկուհի', 'վարդուհի',
+                // Добавляем русские женские имена
+                'анна', 'мария', 'елена', 'наталья', 'ольга', 'ирина', 'татьяна', 'светлана', 'людмила', 'галина',
+                // Армянские имена, написанные русскими буквами
+                'анаит', 'лилит', 'мариам', 'сирануш', 'нарине', 'ариана', 'соня', 'лиза', 'карине',
+                'гаяне', 'рузан', 'нуне', 'сирануйш', 'лусине', 'ани', 'галина',
+                // Дополнительные армянские женские имена
+                'աստղիկ', 'նաիրա', 'սեդա', 'լաուրա', 'դիանա', 'զարուհի', 'զեյնաբ', 'զեյնապ',
+                'շողիկ', 'լուսիկ', 'վարդիկ', 'սիրիկ', 'անիկ', 'կարիկ', 'նարիկ', 'մարիկ'
+            ];
+            
+            // Список мужских армянских имен
+            const maleNames = [
+                'վահան', 'հայկ', 'արամ', 'սարգիս', 'կարեն', 'ռոբերտ', 'դավիթ', 'մհեր', 'տիգրան', 'վահե', 'հրաչյա', 'սամվել', 'գագիկ', 'ռաֆիկ', 'վիգեն',
+                // Добавляем русские мужские имена
+                'михаил', 'александр', 'дмитрий', 'сергей', 'андрей', 'владимир', 'николай', 'игорь', 'алексей', 'михаил'
+            ];
+            
+            // Проверяем точные совпадения
+            if (femaleNames.includes(lowerName)) {
+                return false; // Женский
+            }
+            
+            if (maleNames.includes(lowerName)) {
+                return true; // Мужской
+            }
+            
+            // Если имя не найдено в списках - проверяем окончания
+            const lastChar = name.charAt(name.length - 1);
+            
+            // Женские окончания (армянские и русские)
+            if (['ա', 'ե', 'ի', 'ու', 'а', 'я', 'ь'].includes(lastChar)) {
+                return false; // Женский
+            }
+            
+            // Мужские окончания (армянские)
+            if (['ան', 'իկ', 'ուն', 'են', 'ին', 'ոն'].some(ending => name.endsWith(ending))) {
+                return true; // Мужской
+            }
+            
+            // Если все правила не сработали - используем умное правило по умолчанию
+            // Анализируем гласные - женские имена обычно содержат больше гласных
+            const vowels = name.match(/[աեըիոուևաеёиоуыэюя]/g);
+            const vowelCount = vowels ? vowels.length : 0;
+            const vowelRatio = vowelCount / name.length;
+            
+            // Если больше 40% гласных - скорее всего женское
+            if (vowelRatio > 0.4) {
+                return false; // Женский
+            } else {
+                return true; // Мужской
+            }
+        }
+
+        // Функция для изменения пола
+        function toggleGender(genderBadge) {
+            console.log('toggleGender called with:', genderBadge);
+            console.log('Badge text:', genderBadge.textContent);
+            console.log('Badge classes:', genderBadge.className);
+            
+            const invitationId = genderBadge.getAttribute('data-invitation-id');
+            const currentGender = genderBadge.getAttribute('data-current-gender') === 'true';
+            const newGender = !currentGender;
+            
+            console.log('Invitation ID:', invitationId);
+            console.log('Current gender:', currentGender);
+            console.log('New gender:', newGender);
+            
+            // Показываем индикатор загрузки
+            const hyText = genderBadge.querySelector('.gender-text-hy');
+            const ruText = genderBadge.querySelector('.gender-text-ru');
+            
+            if (hyText) hyText.textContent = 'Փոխվում է...';
+            if (ruText) ruText.textContent = 'Изменяется...';
+            
+            genderBadge.style.opacity = '0.7';
+            
+            // Отправляем запрос на сервер
+            fetch('/api/update_gender', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    invitation_id: invitationId,
+                    is_male: newGender
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Обновляем UI
+                    updateGenderBadge(genderBadge, newGender);
+                    
+                    // Показываем уведомление об успехе
+                    const successMessage = currentLanguage === 'hy' 
+                        ? 'Սեռը հաջողությամբ փոխվել է' 
+                        : 'Пол успешно изменен';
+                    showNotification(successMessage, 'success');
+                } else {
+                    // Показываем ошибку
+                    const errorMessage = currentLanguage === 'hy' 
+                        ? 'Սխալ՝ չհաջողվեց փոխել սեռը' 
+                        : 'Ошибка: не удалось изменить пол';
+                    showNotification(errorMessage, 'error');
+                    
+                    // Возвращаем исходный текст
+                    const hyText = genderBadge.querySelector('.gender-text-hy');
+                    const ruText = genderBadge.querySelector('.gender-text-ru');
+                    if (hyText) hyText.textContent = currentGender ? 'Արական' : 'Իգական';
+                    if (ruText) ruText.textContent = currentGender ? 'Мужской' : 'Женский';
+                    genderBadge.style.opacity = '1';
+                }
+            })
+                    .catch(error => {
+            console.error('Error updating gender:', error);
+            
+            let errorMessage;
+            if (error.status === 401) {
+                errorMessage = currentLanguage === 'hy' 
+                    ? 'Սխալ՝ անհրաժեշտ է մուտք գործել' 
+                    : 'Ошибка: необходимо войти в систему';
+            } else {
+                errorMessage = currentLanguage === 'hy' 
+                    ? 'Սխալ՝ չհաջողվեց փոխել սեռը' 
+                    : 'Ошибка: не удалось изменить пол';
+            }
+            
+            showNotification(errorMessage, 'error');
+            
+            // Возвращаем исходный текст
+            const hyText = genderBadge.querySelector('.gender-text-hy');
+            const ruText = genderBadge.querySelector('.gender-text-ru');
+            if (hyText) hyText.textContent = currentGender ? 'Արական' : 'Իգական';
+            if (ruText) ruText.textContent = currentGender ? 'Мужской' : 'Женский';
+            genderBadge.style.opacity = '1';
+        });
+        }
+        
+        // Функция для обновления UI бейджа пола
+        function updateGenderBadge(genderBadge, isMale) {
+            // Обновляем атрибуты
+            genderBadge.setAttribute('data-current-gender', isMale.toString());
+            genderBadge.setAttribute('data-gender', isMale ? 'male' : 'female');
+            
+            // Обновляем классы
+            if (isMale) {
+                genderBadge.className = 'badge badge-primary clickable-gender';
+            } else {
+                genderBadge.className = 'badge badge-pink clickable-gender';
+            }
+            
+            // Обновляем текст для обоих языков
+            const hyText = genderBadge.querySelector('.gender-text-hy');
+            const ruText = genderBadge.querySelector('.gender-text-ru');
+            
+            if (hyText) hyText.textContent = isMale ? 'Արական' : 'Իգական';
+            if (ruText) ruText.textContent = isMale ? 'Мужской' : 'Женский';
+            
+            // Обновляем основной текст бейджа (для совместимости)
+            genderBadge.textContent = currentLanguage === 'hy' 
+                ? (isMale ? 'Արական' : 'Իգական')
+                : (isMale ? 'Мужской' : 'Женский');
+            
+            genderBadge.style.opacity = '1';
+        }
+        
+        // Функция для показа уведомлений
+        function showNotification(message, type) {
+            // Создаем элемент уведомления
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.textContent = message;
+            
+            // Добавляем стили
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 15px 20px;
+                border-radius: 5px;
+                color: white;
+                font-weight: bold;
+                z-index: 10000;
+                animation: slideIn 0.3s ease;
+            `;
+            
+            if (type === 'success') {
+                notification.style.backgroundColor = '#4caf50';
+            } else {
+                notification.style.backgroundColor = '#f44336';
+            }
+            
+            // Добавляем в DOM
+            document.body.appendChild(notification);
+            
+            // Удаляем через 3 секунды
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
         }
 
         document.addEventListener('DOMContentLoaded', function () {
@@ -1605,215 +1947,343 @@
             });
 
             const bulkDeleteBtn = document.getElementById('bulkDeleteBtn');
-    const invitationCheckboxes = document.querySelectorAll('.invitation-checkbox');
-    const selectAllBtn = document.getElementById('selectAllBtn');
-    const deselectAllBtn = document.getElementById('deselectAllBtn');
+            const invitationCheckboxes = document.querySelectorAll('.invitation-checkbox');
+            const selectAllBtn = document.getElementById('selectAllBtn');
+            const deselectAllBtn = document.getElementById('deselectAllBtn');
 
-    if (invitationCheckboxes.length > 0) {
-        bulkDeleteBtn.disabled = true;
+            if (invitationCheckboxes.length > 0) {
+                bulkDeleteBtn.disabled = true;
 
-        function updateSelectedCount() {
-            const checkedCount = document.querySelectorAll('.invitation-checkbox:checked').length;
-            bulkDeleteBtn.disabled = checkedCount === 0;
-            const existingCounter = bulkDeleteBtn.querySelector('.selected-counter');
-            if (checkedCount > 0) {
-                if (existingCounter) {
-                    existingCounter.textContent = checkedCount;
-                } else {
-                    const counter = document.createElement('span');
-                    counter.className = 'selected-counter';
-                    counter.textContent = checkedCount;
-                    bulkDeleteBtn.appendChild(counter);
-                }
-            } else if (existingCounter) {
-                existingCounter.remove();
-            }
+                function updateSelectedCount() {
+                    const checkedCount = document.querySelectorAll('.invitation-checkbox:checked').length;
+                    bulkDeleteBtn.disabled = checkedCount === 0;
+                    const existingCounter = bulkDeleteBtn.querySelector('.selected-counter');
+                    if (checkedCount > 0) {
+                        if (existingCounter) {
+                            existingCounter.textContent = checkedCount;
+                        } else {
+                            const counter = document.createElement('span');
+                            counter.className = 'selected-counter';
+                            counter.textContent = checkedCount;
+                            bulkDeleteBtn.appendChild(counter);
+                        }
+                    } else if (existingCounter) {
+                        existingCounter.remove();
+                    }
 
-            const totalCheckboxes = invitationCheckboxes.length;
-            if (checkedCount === 0) {
-                selectAllBtn.style.display = 'inline-flex';
-                deselectAllBtn.style.display = 'none';
-            } else if (checkedCount === totalCheckboxes) {
-                selectAllBtn.style.display = 'none';
-                deselectAllBtn.style.display = 'inline-flex';
-            }
-        }
-
-        invitationCheckboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', function () {
-                const card = this.closest('.invitation-card');
-                if (card) {
-                    if (this.checked) {
-                        card.classList.add('selected');
-                    } else {
-                        card.classList.remove('selected');
+                    const totalCheckboxes = invitationCheckboxes.length;
+                    if (checkedCount === 0) {
+                        selectAllBtn.style.display = 'inline-flex';
+                        deselectAllBtn.style.display = 'none';
+                    } else if (checkedCount === totalCheckboxes) {
+                        selectAllBtn.style.display = 'none';
+                        deselectAllBtn.style.display = 'inline-flex';
                     }
                 }
-                updateSelectedCount();
-            });
-        });
 
-        selectAllBtn.addEventListener('click', function () {
-            invitationCheckboxes.forEach(checkbox => {
-                checkbox.checked = true;
-                const card = checkbox.closest('.invitation-card');
-                if (card) card.classList.add('selected');
-            });
-            updateSelectedCount();
-        });
-
-        deselectAllBtn.addEventListener('click', function () {
-            invitationCheckboxes.forEach(checkbox => {
-                checkbox.checked = false;
-                const card = checkbox.closest('.invitation-card');
-                if (card) card.classList.remove('selected');
-            });
-            updateSelectedCount();
-        });
-
-        // Исправленный обработчик для bulkDeleteBtn
-        bulkDeleteBtn.addEventListener('click', function(event) {
-            event.preventDefault();
-            event.stopPropagation(); // Останавливаем всплытие события
-
-            const checkedCount = document.querySelectorAll('.invitation-checkbox:checked').length;
-            
-            if (checkedCount === 0) {
-                alert(currentLanguage === 'hy' ? 
-                    translations.hy.noItemsSelected : translations.ru.noItemsSelected);
-                return;
-            }
-
-            // Удаляем существующий попап, если он есть, чтобы избежать дублирования
-            let popupElement = document.getElementById('deletePopup');
-            if (popupElement) {
-                popupElement.remove();
-            }
-
-            // Создаем новый попап
-            popupElement = document.createElement('div');
-            popupElement.id = 'deletePopup';
-            popupElement.className = 'delete-popup';
-
-            // Добавляем попап в конец body для корректного z-index
-            document.body.appendChild(popupElement);
-
-            const buttonRect = this.getBoundingClientRect();
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
-
-            popupElement.innerHTML = `
-                <div class="popup-content">
-                    <div class="popup-header">
-                        <h3>${currentLanguage === 'hy' ? translations.hy.deleteModalTitle : translations.ru.deleteModalTitle}</h3>
-                    </div>
-                    <div class="popup-body">
-                        <p>${currentLanguage === 'hy' ? translations.hy.deleteModalMessage : translations.ru.deleteModalMessage}</p>
-                        <div class="selected-count-popup">
-                            <span>${currentLanguage === 'hy' ? translations.hy.selectedCountText : translations.ru.selectedCountText}</span>
-                            <span>${checkedCount}</span>
-                        </div>
-                    </div>
-                    <div class="popup-footer">
-                        <button class="btn" id="cancelDeletePopupBtn">
-                            <i class="fas fa-times"></i>
-                            <span>${currentLanguage === 'hy' ? translations.hy.cancelText : translations.ru.cancelText}</span>
-                        </button>
-                        <button class="btn btn-danger" id="confirmDeletePopupBtn">
-                            <i class="fas fa-trash-alt"></i>
-                            <span>${currentLanguage === 'hy' ? translations.hy.confirmDeleteText : translations.ru.confirmDeleteText}</span>
-                        </button>
-                    </div>
-                </div>
-            `;
-
-            // Улучшенное позиционирование с учетом границ экрана
-            const popupHeight = popupElement.offsetHeight;
-            const popupWidth = popupElement.offsetWidth;
-            let topPos = buttonRect.top + scrollTop - popupHeight - 10;
-            let leftPos = buttonRect.left + scrollLeft;
-
-            // Проверка границ экрана
-            if (topPos < scrollTop) {
-                topPos = buttonRect.bottom + scrollTop + 10; // Показываем под кнопкой, если не помещается сверху
-            }
-            if (leftPos + popupWidth > window.innerWidth + scrollLeft) {
-                leftPos = window.innerWidth + scrollLeft - popupWidth - 10; // Корректируем, если выходит за правую границу
-            }
-            if (leftPos < scrollLeft) {
-                leftPos = scrollLeft + 10; // Корректируем, если выходит за левую границу
-            }
-
-            popupElement.style.position = 'absolute';
-            popupElement.style.top = `${topPos}px`;
-            popupElement.style.left = `${leftPos}px`;
-            popupElement.style.display = 'block';
-            popupElement.style.zIndex = '1000';
-
-            // Обработчики кнопок
-            const cancelBtn = document.getElementById('cancelDeletePopupBtn');
-            const confirmBtn = document.getElementById('confirmDeletePopupBtn');
-
-            cancelBtn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                popupElement.style.display = 'none';
-            });
-
-            confirmBtn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                const selectedIds = Array.from(document.querySelectorAll('.invitation-checkbox:checked'))
-                    .map(checkbox => checkbox.getAttribute('data-id'));
-
-                const form = document.createElement('form');
-                form.method = 'POST';
-                form.action = '/bulk-delete-invitations';
-
-                const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
-                if (csrfToken) {
-                    const csrfInput = document.createElement('input');
-                    csrfInput.type = 'hidden';
-                    csrfInput.name = 'csrf_token';
-                    csrfInput.value = csrfToken;
-                    form.appendChild(csrfInput);
-                }
-
-                selectedIds.forEach(id => {
-                    const input = document.createElement('input');
-                    input.type = 'hidden';
-                    input.name = 'ids[]';
-                    input.value = id;
-                    form.appendChild(input);
+                invitationCheckboxes.forEach(checkbox => {
+                    checkbox.addEventListener('change', function () {
+                        const card = this.closest('.invitation-card');
+                        if (card) {
+                            if (this.checked) {
+                                card.classList.add('selected');
+                            } else {
+                                card.classList.remove('selected');
+                            }
+                        }
+                        updateSelectedCount();
+                    });
                 });
 
-                const eventId = document.querySelector('[name="event_id"]')?.value ||
-                    new URLSearchParams(window.location.search).get('event_id');
-                if (eventId) {
-                    const eventInput = document.createElement('input');
-                    eventInput.type = 'hidden';
-                    eventInput.name = 'event_id';
-                    eventInput.value = eventId;
-                    form.appendChild(eventInput);
-                }
+                selectAllBtn.addEventListener('click', function () {
+                    invitationCheckboxes.forEach(checkbox => {
+                        checkbox.checked = true;
+                        const card = checkbox.closest('.invitation-card');
+                        if (card) card.classList.add('selected');
+                    });
+                    updateSelectedCount();
+                });
 
-                document.body.appendChild(form);
-                form.submit();
+                deselectAllBtn.addEventListener('click', function () {
+                    invitationCheckboxes.forEach(checkbox => {
+                        checkbox.checked = false;
+                        const card = checkbox.closest('.invitation-card');
+                        if (card) card.classList.remove('selected');
+                    });
+                    updateSelectedCount();
+                });
+
+                // Исправленный обработчик для bulkDeleteBtn
+                bulkDeleteBtn.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    event.stopPropagation(); // Останавливаем всплытие события
+
+                    const checkedCount = document.querySelectorAll('.invitation-checkbox:checked').length;
+                    
+                    if (checkedCount === 0) {
+                        alert(currentLanguage === 'hy' ? 
+                            translations.hy.noItemsSelected : translations.ru.noItemsSelected);
+                        return;
+                    }
+
+                    // Удаляем существующий попап, если он есть, чтобы избежать дублирования
+                    let popupElement = document.getElementById('deletePopup');
+                    if (popupElement) {
+                        popupElement.remove();
+                    }
+
+                    // Создаем новый попап
+                    popupElement = document.createElement('div');
+                    popupElement.id = 'deletePopup';
+                    popupElement.className = 'delete-popup';
+
+                    // Добавляем попап в конец body для корректного z-index
+                    document.body.appendChild(popupElement);
+
+                    const buttonRect = this.getBoundingClientRect();
+                    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                    const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+
+                    popupElement.innerHTML = `
+                        <div class="popup-content">
+                            <div class="popup-header">
+                                <h3>${currentLanguage === 'hy' ? translations.hy.deleteModalTitle : translations.ru.deleteModalTitle}</h3>
+                            </div>
+                            <div class="popup-body">
+                                <p>${currentLanguage === 'hy' ? translations.hy.deleteModalMessage : translations.ru.deleteModalMessage}</p>
+                                <div class="selected-count-popup">
+                                    <span>${currentLanguage === 'hy' ? translations.hy.selectedCountText : translations.ru.selectedCountText}</span>
+                                    <span>${checkedCount}</span>
+                                </div>
+                            </div>
+                            <div class="popup-footer">
+                                <button class="btn" id="cancelDeletePopupBtn">
+                                    <i class="fas fa-times"></i>
+                                    <span>${currentLanguage === 'hy' ? translations.hy.cancelText : translations.ru.cancelText}</span>
+                                </button>
+                                <button class="btn btn-danger" id="confirmDeletePopupBtn">
+                                    <i class="fas fa-trash-alt"></i>
+                                    <span>${currentLanguage === 'hy' ? translations.hy.confirmDeleteText : translations.ru.confirmDeleteText}</span>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+
+                    // Улучшенное позиционирование с учетом границ экрана
+                    const popupHeight = popupElement.offsetHeight;
+                    const popupWidth = popupElement.offsetWidth;
+                    let topPos = buttonRect.top + scrollTop - popupHeight - 10;
+                    let leftPos = buttonRect.left + scrollLeft;
+
+                    // Проверка границ экрана
+                    if (topPos < scrollTop) {
+                        topPos = buttonRect.bottom + scrollTop + 10; // Показываем под кнопкой, если не помещается сверху
+                    }
+                    if (leftPos + popupWidth > window.innerWidth + scrollLeft) {
+                        leftPos = window.innerWidth + scrollLeft - popupWidth - 10; // Корректируем, если выходит за правую границу
+                    }
+                    if (leftPos < scrollLeft) {
+                        leftPos = scrollLeft + 10; // Корректируем, если выходит за левую границу
+                    }
+
+                    popupElement.style.position = 'absolute';
+                    popupElement.style.top = `${topPos}px`;
+                    popupElement.style.left = `${leftPos}px`;
+                    popupElement.style.display = 'block';
+                    popupElement.style.zIndex = '1000';
+
+                    // Обработчики кнопок
+                    const cancelBtn = document.getElementById('cancelDeletePopupBtn');
+                    const confirmBtn = document.getElementById('confirmDeletePopupBtn');
+
+                    cancelBtn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        popupElement.style.display = 'none';
+                    });
+
+                    confirmBtn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        const selectedIds = Array.from(document.querySelectorAll('.invitation-checkbox:checked'))
+                            .map(checkbox => checkbox.getAttribute('data-id'));
+
+                        const form = document.createElement('form');
+                        form.method = 'POST';
+                        form.action = '/bulk-delete-invitations';
+
+                        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+                        if (csrfToken) {
+                            const csrfInput = document.createElement('input');
+                            csrfInput.type = 'hidden';
+                            csrfInput.name = 'csrf_token';
+                            csrfInput.value = csrfToken;
+                            form.appendChild(csrfInput);
+                        }
+
+                        selectedIds.forEach(id => {
+                            const input = document.createElement('input');
+                            input.type = 'hidden';
+                            input.name = 'ids[]';
+                            input.value = id;
+                            form.appendChild(input);
+                        });
+
+                        const eventId = document.querySelector('[name="event_id"]')?.value ||
+                            new URLSearchParams(window.location.search).get('event_id');
+                        if (eventId) {
+                            const eventInput = document.createElement('input');
+                            eventInput.type = 'hidden';
+                            eventInput.name = 'event_id';
+                            eventInput.value = eventId;
+                            form.appendChild(eventInput);
+                        }
+
+                        document.body.appendChild(form);
+                        form.submit();
+                    });
+
+                    // Закрытие попапа при клике вне области
+                    const closePopupHandler = function(e) {
+                        if (!popupElement.contains(e.target) && e.target !== bulkDeleteBtn) {
+                            popupElement.style.display = 'none';
+                            document.removeEventListener('click', closePopupHandler);
+                        }
+                    };
+
+                    // Добавляем обработчик закрытия с небольшой задержкой, чтобы избежать немедленного закрытия
+                    setTimeout(() => {
+                        document.addEventListener('click', closePopupHandler);
+                    }, 100);
+                });
+            } // Закрытие условия if (invitationCheckboxes.length > 0)
+
+            // Функция экспорта принятых гостей
+            const exportAcceptedBtn = document.getElementById('exportAcceptedBtn');
+            if (exportAcceptedBtn) {
+                exportAcceptedBtn.addEventListener('click', function() {
+                    // Показываем индикатор загрузки
+                    const originalText = this.innerHTML;
+                    this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Экспорт...';
+                    this.disabled = true;
+                    
+                    // Получаем event_id из URL
+                    const eventId = new URLSearchParams(window.location.search).get('event_id');
+                    
+                    if (!eventId) {
+                        alert(currentLanguage === 'hy' ? 'Սխալ՝ չի գտնվել միջոցառման ID' : 'Ошибка: не найден ID мероприятия');
+                        this.innerHTML = originalText;
+                        this.disabled = false;
+                        return;
+                    }
+                    
+                    // Отправляем запрос на бэкенд
+                    fetch('/api/export_accepted_guests', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            event_id: eventId,
+                            language: currentLanguage
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Создаем JSON файл из полученных данных
+                            const jsonContent = JSON.stringify(data.data, null, 2);
+                            const blob = new Blob([jsonContent], { type: 'application/json;charset=utf-8' });
+                            
+                            // Создаем и скачиваем JSON файл
+                            const url = URL.createObjectURL(blob);
+                            const link = document.createElement('a');
+                            link.setAttribute('href', url);
+                            
+                            // Создаем информативное имя файла
+                            const fileName = currentLanguage === 'hy' 
+                                ? `ընդունված_հյուրեր_${eventId}_${new Date().toISOString().split('T')[0]}.json`
+                                : `принятые_гости_${eventId}_${new Date().toISOString().split('T')[0]}.json`;
+                            
+                            link.setAttribute('download', fileName);
+                            document.body.appendChild(link);
+                            link.click();
+                            document.body.removeChild(link);
+                            
+                            // Освобождаем память
+                            URL.revokeObjectURL(url);
+                            
+                            // Показываем уведомление об успехе
+                            const successMessage = currentLanguage === 'hy' 
+                                ? `Հաջողությամբ JSON արտահանվել է ${data.data.total_accepted} հրավեր`
+                                : `Успешно экспортировано в JSON ${data.data.total_accepted} приглашений`;
+                            showNotification(successMessage, 'success');
+                        } else {
+                            // Показываем ошибку
+                            const errorMessage = currentLanguage === 'hy' 
+                                ? `Սխալ՝ ${data.error}` 
+                                : `Ошибка: ${data.error}`;
+                            showNotification(errorMessage, 'error');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error exporting:', error);
+                        let errorMessage;
+                        
+                        if (error.status === 401) {
+                            errorMessage = currentLanguage === 'hy' 
+                                ? 'Սխալ՝ անհրաժեշտ է մուտք գործել' 
+                                : 'Ошибка: необходимо войти в систему';
+                        } else {
+                            errorMessage = currentLanguage === 'hy' 
+                                ? 'Սխալ՝ չհաջողվեց արտահանել տվյալները' 
+                                : 'Ошибка: не удалось экспортировать данные';
+                        }
+                        
+                        showNotification(errorMessage, 'error');
+                    })
+                    .finally(() => {
+                        // Восстанавливаем кнопку
+                        this.innerHTML = originalText;
+                        this.disabled = false;
+                    });
+                });
+            }
+            
+            // Функциональность для изменения пола при клике
+            console.log('DOM loaded, setting up gender click handlers');
+            
+            // Добавляем обработчики для всех кликабельных бейджей пола
+            document.addEventListener('click', function(e) {
+                console.log('Click detected on:', e.target);
+                console.log('Classes:', e.target.classList);
+                
+                if (e.target.classList.contains('clickable-gender')) {
+                    console.log('Gender badge clicked!');
+                    toggleGender(e.target);
+                }
             });
-
-            // Закрытие попапа при клике вне области
-            const closePopupHandler = function(e) {
-                if (!popupElement.contains(e.target) && e.target !== bulkDeleteBtn) {
-                    popupElement.style.display = 'none';
-                    document.removeEventListener('click', closePopupHandler);
-                }
-            };
-
-            // Добавляем обработчик закрытия с небольшой задержкой, чтобы избежать немедленного закрытия
-            setTimeout(() => {
-                document.addEventListener('click', closePopupHandler);
-            }, 100);
-        });
-    }
-        });
+            
+            // Проверяем, сколько кликабельных бейджей найдено
+            const genderBadges = document.querySelectorAll('.clickable-gender');
+            console.log('Found gender badges:', genderBadges.length);
+            genderBadges.forEach((badge, index) => {
+                console.log(`Badge ${index}:`, badge.textContent, badge.getAttribute('data-invitation-id'));
+            });
+        }); // Закрытие document.addEventListener('DOMContentLoaded')
+    
+        // CSS анимации для уведомлений
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+        
     </script>
 </body>
 </html>
