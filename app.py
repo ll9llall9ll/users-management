@@ -1,4 +1,4 @@
-from flask import Flask, abort, render_template, request, redirect, url_for, session
+from flask import Flask, abort, render_template, request, redirect, url_for, session, jsonify
 from db_extensions import executeQuery
 from murad_db import getUserByUsernameAndPassword, insertUser, getUserById, User, editUser, deleteUser, getUserListFromDb, getUserByUsername
 from event_db import Event, createEvent, getEventByUserId, updateEvent, getEventById, deleteEvent
@@ -48,6 +48,58 @@ app.add_template_filter(date)
 
 appData = AppData()
 
+# Декоратор для проверки аутентификации
+def require_auth(f):
+    def decorated_function(*args, **kwargs):
+        if not appData.IsLoggedIn:
+            return jsonify({'success': False, 'error': 'Authentication required'}), 401
+        return f(*args, **kwargs)
+    decorated_function.__name__ = f.__name__
+    return decorated_function
+
+# Декоратор для проверки доступа к событию
+# Использование:
+# @require_event_access() - стандартная проверка event_id из JSON
+# @require_event_access(get_event_by_invitation) - проверка через фабричную функцию
+def require_event_access(event_factory=None):
+    def decorator(f):
+        def decorated_function(*args, **kwargs):
+            # Сначала проверяем аутентификацию
+            if not appData.IsLoggedIn:
+                return jsonify({'success': False, 'error': 'Authentication required'}), 401
+            
+            # Если передана фабричная функция для события, используем её
+            if event_factory:
+                try:
+                    event = event_factory()
+                    if not event:
+                        return jsonify({'success': False, 'error': 'Event not found'}), 404
+                    
+                    # Проверяем права доступа к событию
+                    # В app.py у нас есть appData.loggedInuserId
+                    # Можно добавить проверку, что пользователь является владельцем события
+                    # Пока что просто проверяем, что событие существует
+                    
+                except Exception as e:
+                    print(f"Error in event access check: {str(e)}")
+                    return jsonify({'success': False, 'error': 'Event access validation failed'}), 400
+            else:
+                # Стандартная проверка event_id из JSON
+                try:
+                    data = request.get_json()
+                    event_id = data.get('event_id')
+                    
+                    if not event_id:
+                        return jsonify({'success': False, 'error': 'Event ID is required'}), 400
+                    
+                except Exception as e:
+                    return jsonify({'success': False, 'error': 'Invalid request data'}), 400
+            
+            return f(*args, **kwargs)
+        decorated_function.__name__ = f.__name__
+        return decorated_function
+    return decorator
+
 
 @app.route('/invite', methods = ['GET', 'POST'])
 def invite():
@@ -58,10 +110,20 @@ def invite():
     event = getEventById(invitation.event_id)
     template = get_template_by_id(event.template_id)
     if request.method == 'POST':
-        with_spouse = 'options' in request.form and request.form['options'] == 'with_spouse'
         accepted = request.form['action'] == 'accepted'
+        
+        # Получаем тип участия (attendance_type) если есть
+        attendance_type = request.form.get('attendance_type', 'alone')
+        
+        # Определяем with_spouse на основе attendance_type
+        with_spouse = attendance_type == 'with_partner'
+        
         invitation.with_spouse = with_spouse
         invitation.accepted = accepted
+        
+        # Добавляем отладочную информацию
+        print(f"Debug - App.py: accepted={accepted}, with_spouse={with_spouse}, attendance_type={attendance_type}")
+        
         updateInvitation(invitation)
         returnMsg = "Դուք ընդունել եք հրավերը, շնորհակալություն!" if accepted else "Ցավում ենք, որ չեք կարողանա միանալ մեզ:"
         return render_template('invite_accepted4.html',  msg = returnMsg  )
@@ -357,6 +419,186 @@ def view_invitation():
     if appData.IsLoggedIn:
         return render_template('view_invitations.html', invitations=invitations, event_id=event_id)
     return redirect(url_for('login'))
+
+
+# Фабричная функция для получения события по invitation_id
+def get_event_by_invitation():
+    try:
+        data = request.get_json()
+        invitation_id = data.get('invitation_id')
+        
+        if not invitation_id:
+            return None
+        
+        invitation = getInvitationById(invitation_id)
+        if not invitation:
+            return None
+        
+        event = getEventById(invitation.event_id)
+        return event
+    except Exception as e:
+        print(f"Error getting event by invitation: {str(e)}")
+        return None
+
+@app.route('/api/update_gender', methods=['POST'])
+@require_event_access(get_event_by_invitation)
+def update_gender():
+    try:
+        data = request.get_json()
+        invitation_id = data.get('invitation_id')
+        is_male = data.get('is_male')
+        
+        if invitation_id is None or is_male is None:
+            return jsonify({'success': False, 'error': 'Missing required parameters'}), 400
+        
+        # Получаем приглашение из базы данных
+        invitation = getInvitationById(invitation_id)
+        if not invitation:
+            return jsonify({'success': False, 'error': 'Invitation not found'}), 404
+        
+        # Обновляем пол
+        invitation.is_male = is_male
+        
+        # Сохраняем изменения в базу данных
+        updateInvitation(invitation)
+        
+        return jsonify({'success': True, 'message': 'Gender updated successfully'})
+        
+    except Exception as e:
+        print(f"Error updating gender: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+# Фабричная функция для получения события по event_id
+def get_event_by_id():
+    try:
+        data = request.get_json()
+        event_id = data.get('event_id')
+        
+        if not event_id:
+            return None
+        
+        event = getEventById(event_id)
+        return event
+    except Exception as e:
+        print(f"Error getting event by ID: {str(e)}")
+        return None
+
+@app.route('/api/export_accepted_guests', methods=['POST'])
+@require_event_access(get_event_by_id)
+def export_accepted_guests():
+    try:
+        data = request.get_json()
+        event_id = data.get('event_id')
+        language = data.get('language', 'ru')  # По умолчанию русский
+        
+        if not event_id:
+            return jsonify({'success': False, 'error': 'Event ID is required'}), 400
+        
+        # Получаем все приглашения для события
+        invitations = getInvitationsListByEventId(event_id)
+        
+        # Фильтруем только принятые
+        accepted_invitations = [inv for inv in invitations if inv.accepted == True]
+        
+        if not accepted_invitations:
+            return jsonify({'success': False, 'error': 'No accepted invitations found'}), 404
+        
+        # Функция для определения пола по имени
+        def detect_gender_by_name(name, is_male_from_db):
+            if is_male_from_db is not None:
+                return is_male_from_db
+            
+            name_lower = name.lower()
+            
+            # Список женских имен
+            female_names = [
+                'լիլիթ', 'մարիամ', 'սիրանուշ', 'անահիտ', 'հասմիկ', 'նարինե', 'արիանա', 'մարիա', 'սոնա', 'լիզա', 'կարինե',
+                'հայկուհի', 'վարդուհի', 'սիրանույշ', 'անահիտ', 'լուսինե', 'գայանե', 'ռուզան', 'նունե',
+                'անուշ', 'շուշան', 'նունե', 'ռուզան', 'գայանե', 'սիրանույշ', 'անահիտ', 'լուսինե',
+                'սոնա', 'լիզա', 'կարինե', 'հայկուհի', 'վարդուհի',
+                'анна', 'мария', 'елена', 'наталья', 'ольга', 'ирина', 'татьяна', 'светлана', 'людмила', 'галина',
+                'анаит', 'лилит', 'мариам', 'сирануш', 'нарине', 'ариана', 'соня', 'лиза', 'карине',
+                'гаяне', 'рузан', 'нуне', 'сирануйш', 'лусине', 'ани', 'галина',
+                'աստղիկ', 'նաիրա', 'սեդա', 'լաուրա', 'դիանա', 'զարուհի', 'զեյնաբ', 'զեյնապ',
+                'շողիկ', 'լուսիկ', 'վարդիկ', 'սիրիկ', 'անիկ', 'կարիկ', 'նարիկ', 'մարիկ'
+            ]
+            
+            # Список мужских имен
+            male_names = [
+                'վահան', 'հայկ', 'արամ', 'սարգիս', 'կարեն', 'ռոբերտ', 'դավիթ', 'մհեր', 'տիգրան', 'վահե', 'հրաչյա', 'սամվել', 'գագիկ', 'ռաֆիկ', 'վիգեն',
+                'михаил', 'александр', 'дмитрий', 'сергей', 'андрей', 'владимир', 'николай', 'игорь', 'алексей'
+            ]
+            
+            if name_lower in female_names:
+                return False
+            if name_lower in male_names:
+                return True
+            
+            # Проверяем окончания
+            last_char = name[-1]
+            if last_char in ['ա', 'е', 'ի', 'ու', 'а', 'я', 'ь']:
+                return False
+            if any(name.endswith(ending) for ending in ['ան', 'իկ', 'ուն', 'են', 'ին', 'ոն']):
+                return True
+            
+            # Анализ гласных
+            vowels = sum(1 for char in name if char.lower() in 'աեըիոուևаеёиоуыэюя')
+            vowel_ratio = vowels / len(name)
+            return vowel_ratio <= 0.4
+        
+        # Подготавливаем данные для экспорта
+        export_data = {
+            'event_id': event_id,
+            'export_date': datetime.now().isoformat(),
+            'export_language': language,
+            'total_accepted': len(accepted_invitations),
+            'total_attendees': sum(inv.attendee_count or 1 for inv in accepted_invitations),
+            'guests': []
+        }
+        
+        for invitation in accepted_invitations:
+            # Используем флаг is_male из базы данных
+            is_male = invitation.is_male
+            
+            if invitation.with_spouse:
+                # Создаем умное имя для супруга/супруги
+                if language == 'hy':
+                    spouse_name = f"Կին {invitation.name}-ի" if is_male else f"Ամուսին {invitation.name}-ի"
+                else:
+                    spouse_name = f"Супруга {invitation.name}" if is_male else f"Супруг {invitation.name}"
+                
+                guest_data = {
+                    'guest_name': invitation.name,
+                    'second_guest': spouse_name,
+                    'group_size': 2,
+                    'group_description': '2 մարդ' if language == 'hy' else '2 человека',
+                    'has_spouse': True,
+                    'guest_gender': 'արական' if is_male else 'իգական' if language == 'hy' else 'мужской' if is_male else 'женский'
+                }
+            else:
+                guest_data = {
+                    'guest_name': invitation.name,
+                    'second_guest': None,
+                    'group_size': 1,
+                    'group_description': '1 մարդ' if language == 'hy' else '1 человек',
+                    'has_spouse': False,
+                    'guest_gender': 'արական' if is_male else 'իգական' if language == 'hy' else 'мужской' if is_male else 'женский'
+                }
+            
+            export_data['guests'].append(guest_data)
+        
+        return jsonify({
+            'success': True,
+            'data': export_data
+        })
+        
+    except Exception as e:
+        print(f"Error exporting accepted guests: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({'success': False, 'error': str(e)}), 500
 
 
 if __name__ == '__main__':

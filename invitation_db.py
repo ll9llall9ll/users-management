@@ -242,6 +242,7 @@ def updateInvitation(invitation):
     """
     
     print(f"Debug - Executing update SQL: {update_query}")
+    print(f"Debug - Update values: with_spouse={invitation.with_spouse}, accepted={invitation.accepted}, attendance_type={invitation.attendance_type}")
 
     with psycopg2.connect(**conn_params) as conn:
         with conn.cursor() as cur:
@@ -295,6 +296,13 @@ def ensure_new_columns_exist():
             """)
             attendance_type_exists = cur.fetchone() is not None
             
+            cur.execute("""
+                SELECT column_name 
+                FROM information_schema.columns 
+                WHERE table_name = 'invitation' AND column_name = 'with_spouse';
+            """)
+            with_spouse_exists = cur.fetchone() is not None
+            
             # Add columns if they don't exist
             if not comments_exists:
                 cur.execute("ALTER TABLE invitation ADD COLUMN comments TEXT;")
@@ -319,6 +327,10 @@ def ensure_new_columns_exist():
             if not attendance_type_exists:
                 cur.execute("ALTER TABLE invitation ADD COLUMN attendance_type VARCHAR(50);")
                 print("Added 'attendance_type' column to invitation table")
+                
+            if not with_spouse_exists:
+                cur.execute("ALTER TABLE invitation ADD COLUMN with_spouse BOOLEAN DEFAULT false;")
+                print("Added 'with_spouse' column to invitation table")
                 
             conn.commit()
 
