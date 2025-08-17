@@ -675,6 +675,14 @@
             flex: 1;
             color: var(--text-dark);
         }
+        
+        .guest-nickname {
+            color: var(--primary);
+            font-style: italic;
+            font-size: 0.9em;
+            margin-top: 2px;
+            display: block;
+        }
 
         /* Status badge */
         .badge {
@@ -1102,7 +1110,12 @@
                         <ul class="detail-list">
                             <li class="detail-item">
                                 <div class="detail-label" id="nameLabel">Անուն:</div>
-                                <div class="detail-value">{{ invitation.name }}</div>
+                                <div class="detail-value">
+                                    {{ invitation.name }}
+                                    {% if invitation.guest_nickname %}
+                                    <br><small class="guest-nickname">({{ invitation.guest_nickname }})</small>
+                                    {% endif %}
+                                </div>
                             </li>
                             <li class="detail-item">
                                 <div class="detail-label" id="statusLabel">Կարգավիճակ:</div>
@@ -1227,7 +1240,7 @@
                 this.innerHTML = originalText;
             }, 2000);
         }).catch(err => {
-            console.error('Failed to copy: ', err);
+            // Ошибка копирования - можно добавить уведомление пользователю
         });
     });
     
@@ -1473,7 +1486,6 @@
             const noCommentsElement = commentCard.querySelector('.no-comments');
             if (noCommentsElement) {
                 noCommentsElement.textContent = translations[lang].noCommentsText;
-                console.log("Updated no comments text to:", translations[lang].noCommentsText);
             }
         }
         

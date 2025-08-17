@@ -1501,6 +1501,17 @@
                     </div>
 
                     <div class="form-group" style="--i:2">
+                        <label for="guest_nickname" id="guestNicknameLabel">Հյուրի մականունը (ընտրովի)</label>
+                        <div class="input-wrapper">
+                            <input type="text" name="guest_nickname" id="guest_nickname" placeholder="Օրինակ: 2-րդ Սերգեյ, մեր Սերգեյ">
+                            <span class="input-icon">
+                                <i class="fas fa-tag"></i>
+                            </span>
+                        </div>
+                        <small class="form-text">Օգտագործեք այս դաշտը հյուրերին տարբերակելու համար, եթե նրանք ունեն նույն անունը</small>
+                    </div>
+
+                    <div class="form-group" style="--i:3">
                         <label for="hash" id="hashLabel">Եզակի նույնացուցիչ (Hash)</label>
                         <div class="input-wrapper">
                             <input type="text" name="hash" id="hash" required>
@@ -1511,7 +1522,7 @@
                     </div>
 
                     <div class="form-row">
-                        <div class="form-group" style="--i:3">
+                        <div class="form-group" style="--i:4">
                             <label for="with_spouse" id="withSpouseLabel">Զուգընկերոջ հետ</label>
                             <div class="select-wrapper">
                                 <div class="input-wrapper">
@@ -1526,7 +1537,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group" style="--i:4">
+                        <div class="form-group" style="--i:5">
                             <label for="is_male" id="genderLabel">Սեռ</label>
                             <div class="select-wrapper">
                                 <div class="input-wrapper">
@@ -1689,7 +1700,6 @@
         function switchLanguage(lang) {
             if (currentLanguage !== lang) {
                 currentLanguage = lang;
-                console.log(lang)
                 // Сохраняем выбор в localStorage
                 localStorage.setItem('selectedLanguage', lang);
 
@@ -1888,7 +1898,6 @@
         function initAudioRecording() {
             // Проверка поддержки браузером
             if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-                console.error("Media Devices API не поддерживается в этом браузере.");
                 statusText.textContent = currentLanguage === 'hy' ?
                     'Ձայնագրությունը չի աջակցվում այս բրաուզերում' :
                     'Запись не поддерживается в этом браузере';
@@ -1936,7 +1945,6 @@
                         'Готов к записи';
                 })
                 .catch(error => {
-                    console.error("Ошибка доступа к микрофону:", error);
                     statusText.textContent = currentLanguage === 'hy' ?
                         'Սխալ՝ միացրեք միկրոֆոնը' :
                         'Ошибка: включите микрофон';
@@ -2032,7 +2040,6 @@
                         }
                     } else {
                         // Обработка ошибки
-                        console.error('Error in transcription:', data.error);
                         statusText.textContent = currentLanguage === 'hy' ?
                             'Սխալ: չհաջողվեց վերլուծել' :
                             'Ошибка: не удалось проанализировать';
@@ -2048,7 +2055,6 @@
                         loadingElement.remove();
                     }
 
-                    console.error('Error sending audio to server:', error);
                     statusText.textContent = currentLanguage === 'hy' ?
                         'Սխալ: сервер չի պատասխանում' :
                         'Ошибка: сервер не отвечает';
@@ -2061,7 +2067,6 @@
 
         // Обработка распознанного текста и выделение имен
         function processTranscript(transcript) {
-    console.log('Распознанный текст:', transcript);
 
     // Очистка и нормализация текста
     transcript = transcript.trim()

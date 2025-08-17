@@ -528,8 +528,11 @@ def edit_invitation():
         print(f"Debug - Church attendance: {church_attendance}")
         print(f"Debug - Restaurant attendance: {restaurant_attendance}")
         
+        # Получаем псевдоним гостя
+        guest_nickname = request.form.get('guest_nickname', '').strip() or None
+        
         # Создаем обновленный объект приглашения со всеми полями
-        invitation = Invitation(name, event_id, with_spouse, hash, is_male, accepted, id, comments, attendee_count, church_attendance, restaurant_attendance)
+        invitation = Invitation(name, event_id, with_spouse, hash, is_male, accepted, id, comments, attendee_count, church_attendance, restaurant_attendance, None, guest_nickname)
         
         # Сохраняем в базу данных
         updateInvitation(invitation)
@@ -901,9 +904,10 @@ def create_invitation():
         elif request.method == 'POST':
             name = request.form['name']
             hash = request.form['hash']
+            guest_nickname = request.form.get('guest_nickname', '').strip() or None
             
             # Отладочная информация
-            print(f"Debug - Form data: name={name}, hash={hash}")
+            print(f"Debug - Form data: name={name}, hash={hash}, guest_nickname={guest_nickname}")
             print(f"Debug - Form with_spouse={request.form['with_spouse']}")
             print(f"Debug - Form is_male={request.form['is_male']}")
             
@@ -923,7 +927,9 @@ def create_invitation():
                 None, 
                 0,
                 False,  # church_attendance
-                False   # restaurant_attendance
+                False,  # restaurant_attendance
+                None,   # attendance_type
+                guest_nickname
             )
             
             result = createInvitation(invitation)

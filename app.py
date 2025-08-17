@@ -379,7 +379,8 @@ def create_invitation():
             hash = request.form['hash']
             with_spouse = request.form['with_spouse']
             is_male = request.form['is_male']
-            invitation = Invitation(name, event_id, with_spouse, hash, is_male)
+            guest_nickname = request.form.get('guest_nickname', '').strip() or None
+            invitation = Invitation(name, event_id, with_spouse, hash, is_male, guest_nickname=guest_nickname)
             createInvitation(invitation)
             return redirect(url_for('view_invitation', event_id=event_id))
     return redirect(url_for('login'))
@@ -398,7 +399,8 @@ def edit_invitation():
         with_spouse = request.form['with_spouse']
         accepted = request.form['accepted']
         is_male = request.form['is_male']
-        invitation = Invitation(name, event_id, with_spouse, hash, is_male, accepted, id)
+        guest_nickname = request.form.get('guest_nickname', '').strip() or None
+        invitation = Invitation(name, event_id, with_spouse, hash, is_male, accepted, id, guest_nickname=guest_nickname)
         updateInvitation(invitation)
         return redirect(url_for('view_invitation', event_id = event_id))
     return redirect(url_for('login'))
