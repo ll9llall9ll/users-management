@@ -237,12 +237,12 @@
                                     <img src="/test/image/church.png" alt="Церковь" class="mb-3" style="width: 240px; height: 240px; object-fit: contain; border-radius: 12px;">
                                     <h4 class="fw-bold mb-2" style="font-size: 1.5rem; font-family: 'Sacramento', cursive; color: #4b4952;">Венчание в церкви</h4>
                                     <p class="fw-bold mb-2" style="font-size: 1.5rem; font-family: 'Sacramento', cursive; color: #4b4952;">14:00</p>
-                                    <p class="mb-2" style="font-family: 'Josefin Sans', sans-serif; font-size: 1.2rem; color: #4b4952;">Свято-Троицкий собор</p>
-                                    <a href="https://www.google.com/maps/search/?api=1&query=Свято-Троицкий собор, Москва"
+                                    <p class="mb-2" style="font-family: 'Josefin Sans', sans-serif; font-size: 1.2rem; color: #4b4952;">Храм Покрова Пресвятой Богородицы</p>
+                                    <a href="https://yandex.ru/maps/?ll=44.545274,40.223760&z=16&text=Храм Покрова Пресвятой Богородицы"
                                        target="_blank" rel="noopener noreferrer" 
                                        class="btn btn-sm d-flex align-items-center justify-content-center" style="background-color: #4b4952; border-color: #4b4952; color: white; gap: 8px;">
                                         <img src="/test/image/geo.png" alt="Карты" style="width: 30px; height: 40px; filter: brightness(0) invert(1);">
-                                        <span style="font-size: 0.9rem;">Открыть в картах</span>
+                                        <span style="font-size: 0.9rem;">Открыть в Яндекс.Картах</span>
                                     </a>
                                 </div>
                             </div>
@@ -255,11 +255,11 @@
                                     <h4 class="fw-bold mb-2" style="font-size: 1.5rem; font-family: 'Sacramento', cursive; color: #4b4952;">Свадебный банкет</h4>
                                     <p class="fw-bold mb-2" style="font-size: 1.5rem; font-family: 'Sacramento', cursive; color: #4b4952;">16:00</p>
                                     <p class="mb-2" style="font-family: 'Josefin Sans', sans-serif; font-size: 1.2rem; color: #4b4952;">{{ event.hall_name }}</p>
-                                    <a href="https://maps.app.goo.gl/JvCJ4JGgKkShJEU49"
+                                    <a href="https://yandex.ru/maps/?ll=44.503804,40.242197&z=16&text={{ event.hall_name }}"
                                        target="_blank" rel="noopener noreferrer" 
                                        class="btn btn-sm d-flex align-items-center justify-content-center" style="background-color: #4b4952; border-color: #4b4952; color: white; gap: 8px;">
                                         <img src="/test/image/geo.png" alt="Карты" style="width: 30px; height: 40px; filter: brightness(0) invert(1);">
-                                        <span style="font-size: 0.9rem;">Открыть в картах</span>
+                                        <span style="font-size: 0.9rem;">Открыть в Яндекс.Картах</span>
                                     </a>
                                 </div>
                             </div>
@@ -505,7 +505,7 @@
                                                                    <div class="mt-2">
                                        <select name="attendance_type" id="attendance_type" class="form-control">
                                            <option value="alone">Приду {{'один' if invitation.is_male else 'одна'}}</option>
-                                           <option value="with_partner">Приду с {{'супругой' if invitation.is_male else 'супругом'}}</option>
+                                           <option value="with_partner">Приду с {{'с супругой/дамой сердца' if invitation.is_male else 'супругом/кавалером'}}</option>
                                        </select>
                                    </div>
                             </div>
