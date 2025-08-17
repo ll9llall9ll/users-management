@@ -236,13 +236,13 @@
                                 <div class="text-center">
                                     <img src="/test/image/church.png" alt="Церковь" class="mb-3" style="width: 240px; height: 240px; object-fit: contain; border-radius: 12px;">
                                     <h4 class="fw-bold mb-2" style="font-size: 1.5rem; font-family: 'Sacramento', cursive; color: #4b4952;">Венчание в церкви</h4>
-                                    <p class="fw-bold mb-2" style="font-size: 1.5rem; font-family: 'Sacramento', cursive; color: #4b4952;">14:00</p>
+                                    <p class="fw-bold mb-2" style="font-size: 1.5rem; font-family: 'Sacramento', cursive; color: #4b4952;">12:30</p>
                                     <p class="mb-2" style="font-family: 'Josefin Sans', sans-serif; font-size: 1.2rem; color: #4b4952;">Храм Покрова Пресвятой Богородицы</p>
-                                    <a href="https://yandex.ru/maps/?ll=44.545274,40.223760&z=16&text=Храм Покрова Пресвятой Богородицы"
+                                    <a href="https://maps.app.goo.gl/KubzBDnNrrJDmbC49"
                                        target="_blank" rel="noopener noreferrer" 
                                        class="btn btn-sm d-flex align-items-center justify-content-center" style="background-color: #4b4952; border-color: #4b4952; color: white; gap: 8px;">
                                         <img src="/test/image/geo.png" alt="Карты" style="width: 30px; height: 40px; filter: brightness(0) invert(1);">
-                                        <span style="font-size: 0.9rem;">Открыть в Яндекс.Картах</span>
+                                        <span style="font-size: 0.9rem;">Открыть в Google Maps</span>
                                     </a>
                                 </div>
                             </div>
@@ -253,19 +253,97 @@
                                 <div class="text-center">
                                     <img src="/test/image/hall.png" alt="Зал" class="mb-3" style="width: 240px; height: 240px; object-fit: cover; border-radius: 12px;">
                                     <h4 class="fw-bold mb-2" style="font-size: 1.5rem; font-family: 'Sacramento', cursive; color: #4b4952;">Свадебный банкет</h4>
-                                    <p class="fw-bold mb-2" style="font-size: 1.5rem; font-family: 'Sacramento', cursive; color: #4b4952;">16:00</p>
+                                    <p class="fw-bold mb-2" style="font-size: 1.5rem; font-family: 'Sacramento', cursive; color: #4b4952;">16:30</p>
                                     <p class="mb-2" style="font-family: 'Josefin Sans', sans-serif; font-size: 1.2rem; color: #4b4952;">{{ event.hall_name }}</p>
-                                    <a href="https://yandex.ru/maps/?ll=44.503804,40.242197&z=16&text={{ event.hall_name }}"
+                                    <a href="https://maps.app.goo.gl/uVMTYKYhsrUV8v3C8"
                                        target="_blank" rel="noopener noreferrer" 
                                        class="btn btn-sm d-flex align-items-center justify-content-center" style="background-color: #4b4952; border-color: #4b4952; color: white; gap: 8px;">
                                         <img src="/test/image/geo.png" alt="Карты" style="width: 30px; height: 40px; filter: brightness(0) invert(1);">
-                                        <span style="font-size: 0.9rem;">Открыть в Яндекс.Картах</span>
+                                        <span style="font-size: 0.9rem;">Открыть в Google Maps</span>
                                     </a>
                                 </div>
                             </div>
                         </div>
 
                     </div>
+                </section>
+
+                 <!-- Wedding Date -->
+                <section class="bg-light-dark pb-2" id="wedding-date">
+                    <div class="container text-center">
+                        <h2 class="font-esthetic pt-3 mb-4" style="font-size: 2.25rem;">Особенный день</h2>
+
+                        <div class="border rounded-pill shadow py-2 px-4 mt-2 mb-4">
+                            <div class="row justify-content-center">
+                                <div class="col-3 p-1">
+                                    <p class="d-inline m-0 p-0" style="font-size: 1.25rem;" id="day">0</p><small
+                                        class="ms-1 me-0 my-0 p-0 d-inline">Дней</small>
+                                </div>
+                                <div class="col-3 p-1">
+                                    <p class="d-inline m-0 p-0" style="font-size: 1.25rem;" id="hour">0</p><small
+                                        class="ms-1 me-0 my-0 p-0 d-inline">Часов</small>
+                                </div>
+                                <div class="col-3 p-1">
+                                    <p class="d-inline m-0 p-0" style="font-size: 1.25rem;" id="minute">0</p><small
+                                        class="ms-1 me-0 my-0 p-0 d-inline">Минут</small>
+                                </div>
+                                <div class="col-3 p-1">
+                                    <p class="d-inline m-0 p-0" style="font-size: 1.25rem;" id="second">0</p><small
+                                        class="ms-1 me-0 my-0 p-0 d-inline">Секунд</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="py-2 m-0" style="font-size: 0.95rem;">С большой радостью приглашаем вас на торжественную церемонию:</p>
+
+                        <!-- Love animation -->
+                        <div class="position-relative">
+                            <div class="position-absolute" style="top: 0%; right: 5%;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
+                                    class="opacity-50" data-time="3000" data-class="animate-love" viewBox="0 0 16 16">
+                                    <path
+                                        d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
+                                </svg>
+                            </div>
+                        </div>
+
+                        <!-- <div class="overflow-x-hidden">
+                            <div class="py-2" data-aos="fade-right" data-aos-duration="1500">
+                                <h2 class="font-esthetic m-0 py-2" style="font-size: 2rem;">Дата</h2>
+                                <p style="font-size: 0.95rem;">{{event.date | date}}</p>
+                            </div>
+
+                            <div class="py-2" data-aos="fade-left" data-aos-duration="1500">
+                                <h2 class="font-esthetic m-0 py-2" style="font-size: 2rem;">Место проведения</h2>
+                                <p style="font-size: 0.95rem;">{{event.hall_name}}</p>
+                            </div>
+                        </div> -->
+
+                        <!-- <p class="py-2 m-0" style="font-size: 0.95rem;">Адрес празднования:</p> -->
+
+                        <!-- Location animation -->
+                        <!-- <div class="position-relative">
+                            <div class="position-absolute" style="top: 0%; left: 5%;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
+                                    class="opacity-50" data-time="2000" data-class="animate-love" viewBox="0 0 16 16">
+                                    <path
+                                        d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
+                                </svg>
+                            </div>
+                        </div> -->
+
+                        <!-- <div class="py-2" data-aos="fade-down" data-aos-duration="1500">
+                            <h2 class="font-esthetic m-0 py-2" style="font-size: 2rem;">Адрес</h2>
+                            <p style="font-size: 0.95rem;">{{event.address_country}}, {{event.address_city}},
+                                {{event.address_line}}</p>
+                        </div>
+
+                        <div class="py-2" data-aos="fade-down" data-aos-duration="1500">
+                            <a href="https://maps.google.com/?q={{event.address_line}}, {{event.address_city}}, {{event.address_country}}"
+                                target="_blank" class="btn btn-outline-auto btn-sm rounded-pill shadow mb-2 px-3"><i
+                                    class="fa-solid fa-map-location-dot me-2"></i>Открыть в Google Maps</a>
+                        </div>
+                    </div> -->
                 </section>
 
                 <!-- Wave Separator -->
@@ -289,7 +367,7 @@
                         <div class="bg-theme-auto mt-4 p-3 shadow rounded-4" data-aos="fade-down"
                             data-aos-duration="2000">
                             <p class="p-1 mb-2" style="font-size: 0.95rem;">Ваше присутствие сделает наш день особенным 🌹</p>
-                            <p class="m-0 p-0 text-theme-auto typewriter-text" data-text="Давайте разделим с нами радость этого момента" style="font-size: 0.95rem;"></p>
+                            <p class="m-0 p-0 text-theme-auto typewriter-text" data-text="Разделите с нами радость этого момента" style="font-size: 0.95rem;"></p>
                         </div>
                     </div>
                 </section>
@@ -406,83 +484,7 @@
                     </path>
                 </svg>
 
-                <!-- Wedding Date -->
-                <section class="bg-light-dark pb-2" id="wedding-date">
-                    <div class="container text-center">
-                        <h2 class="font-esthetic pt-3 mb-4" style="font-size: 2.25rem;">Особенный день</h2>
-
-                        <div class="border rounded-pill shadow py-2 px-4 mt-2 mb-4">
-                            <div class="row justify-content-center">
-                                <div class="col-3 p-1">
-                                    <p class="d-inline m-0 p-0" style="font-size: 1.25rem;" id="day">0</p><small
-                                        class="ms-1 me-0 my-0 p-0 d-inline">Дней</small>
-                                </div>
-                                <div class="col-3 p-1">
-                                    <p class="d-inline m-0 p-0" style="font-size: 1.25rem;" id="hour">0</p><small
-                                        class="ms-1 me-0 my-0 p-0 d-inline">Часов</small>
-                                </div>
-                                <div class="col-3 p-1">
-                                    <p class="d-inline m-0 p-0" style="font-size: 1.25rem;" id="minute">0</p><small
-                                        class="ms-1 me-0 my-0 p-0 d-inline">Минут</small>
-                                </div>
-                                <div class="col-3 p-1">
-                                    <p class="d-inline m-0 p-0" style="font-size: 1.25rem;" id="second">0</p><small
-                                        class="ms-1 me-0 my-0 p-0 d-inline">Секунд</small>
-                                </div>
-                            </div>
-                        </div>
-
-                        <p class="py-2 m-0" style="font-size: 0.95rem;">С большой радостью приглашаем вас на торжественную церемонию:</p>
-
-                        <!-- Love animation -->
-                        <div class="position-relative">
-                            <div class="position-absolute" style="top: 0%; right: 5%;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
-                                    class="opacity-50" data-time="3000" data-class="animate-love" viewBox="0 0 16 16">
-                                    <path
-                                        d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
-                                </svg>
-                            </div>
-                        </div>
-
-                        <div class="overflow-x-hidden">
-                            <div class="py-2" data-aos="fade-right" data-aos-duration="1500">
-                                <h2 class="font-esthetic m-0 py-2" style="font-size: 2rem;">Дата</h2>
-                                <p style="font-size: 0.95rem;">{{event.date | date}}</p>
-                            </div>
-
-                            <div class="py-2" data-aos="fade-left" data-aos-duration="1500">
-                                <h2 class="font-esthetic m-0 py-2" style="font-size: 2rem;">Место проведения</h2>
-                                <p style="font-size: 0.95rem;">{{event.hall_name}}</p>
-                            </div>
-                        </div>
-
-                        <p class="py-2 m-0" style="font-size: 0.95rem;">Адрес празднования:</p>
-
-                        <!-- Location animation -->
-                        <div class="position-relative">
-                            <div class="position-absolute" style="top: 0%; left: 5%;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
-                                    class="opacity-50" data-time="2000" data-class="animate-love" viewBox="0 0 16 16">
-                                    <path
-                                        d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
-                                </svg>
-                            </div>
-                        </div>
-
-                        <div class="py-2" data-aos="fade-down" data-aos-duration="1500">
-                            <h2 class="font-esthetic m-0 py-2" style="font-size: 2rem;">Адрес</h2>
-                            <p style="font-size: 0.95rem;">{{event.address_country}}, {{event.address_city}},
-                                {{event.address_line}}</p>
-                        </div>
-
-                        <div class="py-2" data-aos="fade-down" data-aos-duration="1500">
-                            <a href="https://maps.google.com/?q={{event.address_line}}, {{event.address_city}}, {{event.address_country}}"
-                                target="_blank" class="btn btn-outline-auto btn-sm rounded-pill shadow mb-2 px-3"><i
-                                    class="fa-solid fa-map-location-dot me-2"></i>Открыть в Google Maps</a>
-                        </div>
-                    </div>
-                </section>
+               
 
                 <!-- Wave Separator -->
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="color-theme-svg no-gap-bottom">
@@ -502,22 +504,30 @@
                                 data-aos-duration="2500">
                                 <i class="fa-solid fa-user-check"></i>
                                 <p class="d-inline">Ваше участие</p>
-                                                                   <div class="mt-2">
-                                       <select name="attendance_type" id="attendance_type" class="form-control">
-                                           <option value="alone">Приду {{'один' if invitation.is_male else 'одна'}}</option>
-                                           <option value="with_partner">Приду с {{'супругой/дамой сердца' if invitation.is_male else 'супругом/кавалером'}}</option>
-                                       </select>
-                                   </div>
+                                <div class="mt-3">
+                                    <div class="heart-radio">
+                                        <input type="radio" name="attendance_type" id="option1" value="alone" checked>
+                                        <label class="heart-label" for="option1">
+                                            💝 Приду {{'один' if invitation.is_male else 'одна'}}
+                                        </label>
+                                    </div>
+                                    <div class="heart-radio">
+                                        <input type="radio" name="attendance_type" id="option2" value="with_partner">
+                                        <label class="heart-label" for="option2">
+                                            💕 Приду с {{'супругой/дамой сердца' if invitation.is_male else 'супругом/кавалером'}}
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="bg-theme-auto rounded-4 shadow p-3 mx-4 mt-4 text-start" data-aos="fade-up"
                                 data-aos-duration="2500">
                                 <i class="fa-solid fa-church"></i>
-                                <p class="d-inline">Венчание в церкви (14:00)</p>
+                                <p class="d-inline">Венчание в церкви (12:30)</p>
                                 <div class="mt-2">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="church_attendance" id="church_attendance" value="yes" checked>
-                                        <label class="form-check-label" for="church_attendance">
+                                    <div class="heart-checkbox">
+                                        <input type="checkbox" name="church_attendance" id="church_attendance" value="yes" checked>
+                                        <label class="heart-checkbox-label" for="church_attendance">
                                             Да, буду присутствовать на венчании
                                         </label>
                                     </div>
@@ -527,11 +537,11 @@
                             <div class="bg-theme-auto rounded-4 shadow p-3 mx-4 mt-4 text-start" data-aos="fade-up"
                                 data-aos-duration="2500">
                                 <i class="fa-solid fa-utensils"></i>
-                                <p class="d-inline">Свадебный банкет (16:00)</p>
+                                <p class="d-inline">Свадебный банкет (16:30)</p>
                                 <div class="mt-2">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="restaurant_attendance" id="restaurant_attendance" value="yes" checked>
-                                        <label class="form-check-label" for="restaurant_attendance">
+                                    <div class="heart-checkbox">
+                                        <input type="checkbox" name="restaurant_attendance" id="restaurant_attendance" value="yes" checked>
+                                        <label class="heart-checkbox-label" for="restaurant_attendance">
                                             Да, буду присутствовать на банкете
                                         </label>
                                     </div>
@@ -802,6 +812,64 @@
                   observer.observe(loveSection);
               }
           });
+          
+          // Дополнительные эффекты для красивых радио кнопок и чекбоксов
+          document.addEventListener('DOMContentLoaded', function() {
+              // Добавляем звуковой эффект при выборе опций
+              const radioButtons = document.querySelectorAll('.heart-radio input[type="radio"]');
+              const checkboxes = document.querySelectorAll('.heart-checkbox input[type="checkbox"]');
+              
+              // Функция для создания пузырькового эффекта
+              function createBubbleEffect(element) {
+                  const bubble = document.createElement('div');
+                  bubble.style.position = 'absolute';
+                  bubble.style.width = '20px';
+                  bubble.style.height = '20px';
+                  bubble.style.background = 'rgba(255, 255, 255, 0.6)';
+                  bubble.style.borderRadius = '50%';
+                  bubble.style.pointerEvents = 'none';
+                  bubble.style.animation = 'bubbleFloat 1s ease-out forwards';
+                  
+                  const rect = element.getBoundingClientRect();
+                  bubble.style.left = (rect.left + rect.width / 2 - 10) + 'px';
+                  bubble.style.top = (rect.top + rect.height / 2 - 10) + 'px';
+                  
+                  document.body.appendChild(bubble);
+                  
+                  setTimeout(() => {
+                      document.body.removeChild(bubble);
+                  }, 1000);
+              }
+              
+              // Обработчики для радио кнопок
+              radioButtons.forEach(radio => {
+                  radio.addEventListener('change', function() {
+                      if (this.checked) {
+                          createBubbleEffect(this);
+                          // Добавляем класс для анимации
+                          const label = this.nextElementSibling;
+                          label.style.animation = 'none';
+                          setTimeout(() => {
+                              label.style.animation = 'heartBeat 0.6s ease-in-out';
+                          }, 10);
+                      }
+                  });
+              });
+              
+              // Обработчики для чекбоксов
+              checkboxes.forEach(checkbox => {
+                  checkbox.addEventListener('change', function() {
+                      createBubbleEffect(this);
+                      const label = this.nextElementSibling;
+                      if (this.checked) {
+                          label.style.animation = 'none';
+                          setTimeout(() => {
+                              label.style.animation = 'heartBeat 0.6s ease-in-out';
+                          }, 10);
+                      }
+                  });
+              });
+          });
      </script>
 </body>
 <style>
@@ -891,6 +959,163 @@
          opacity: 0.7;
          animation: heartFloat 3s ease-in-out infinite;
          pointer-events: none;
+     }
+     
+     /* Стили для красивых радио кнопок в виде сердечек */
+     .heart-radio {
+         position: relative;
+         display: inline-block;
+         margin-right: 20px;
+         margin-bottom: 10px;
+     }
+     
+     .heart-radio input[type="radio"] {
+         position: absolute;
+         opacity: 0;
+         cursor: pointer;
+         height: 0;
+         width: 0;
+     }
+     
+     .heart-radio .heart-label {
+         display: inline-block;
+         padding: 8px 16px;
+         background: white;
+         color: #333;
+         border: 2px solid #ff6b9d;
+         border-radius: 25px;
+         cursor: pointer;
+         transition: all 0.3s ease;
+         font-size: 14px;
+         font-weight: 500;
+         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+         position: relative;
+         overflow: hidden;
+     }
+     
+     .heart-radio .heart-label::before {
+         content: '';
+         margin-right: 0;
+         font-size: 16px;
+         transition: all 0.3s ease;
+     }
+     
+     .heart-radio input[type="radio"]:checked + .heart-label {
+         background: linear-gradient(135deg, #e84393, #fd79a8);
+         transform: scale(1.05);
+         box-shadow: 0 6px 20px rgba(232, 67, 147, 0.4);
+         color: white;
+     }
+     
+     .heart-radio input[type="radio"]:checked + .heart-label::before {
+         content: '';
+         transform: none;
+     }
+     
+     .heart-radio .heart-label:hover {
+         background: #fff5f7;
+         border-color: #e84393;
+         transform: translateY(-2px);
+         box-shadow: 0 4px 15px rgba(255, 107, 157, 0.2);
+     }
+     
+     .heart-radio .heart-label:active {
+         transform: scale(0.95);
+     }
+     
+     /* Анимация для выбранной опции */
+     @keyframes heartBeat {
+         0% { transform: scale(1); }
+         50% { transform: scale(1.1); }
+         100% { transform: scale(1); }
+     }
+     
+     .heart-radio input[type="radio"]:checked + .heart-label {
+         animation: heartBeat 0.6s ease-in-out;
+     }
+     
+     /* Стили для красивых чекбоксов */
+     .heart-checkbox {
+         position: relative;
+         display: inline-block;
+         margin-bottom: 10px;
+     }
+     
+     .heart-checkbox input[type="checkbox"] {
+         position: absolute;
+         opacity: 0;
+         cursor: pointer;
+         height: 0;
+         width: 0;
+     }
+     
+     .heart-checkbox .heart-checkbox-label {
+         display: inline-block;
+         padding: 8px 16px;
+         background: white;
+         color: #333;
+         border: 2px solid #74b9ff;
+         border-radius: 25px;
+         cursor: pointer;
+         transition: all 0.3s ease;
+         font-size: 14px;
+         font-weight: 500;
+         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+         position: relative;
+         overflow: hidden;
+     }
+     
+     .heart-checkbox .heart-checkbox-label::before {
+         content: '☐';
+         margin-right: 8px;
+         font-size: 18px;
+         transition: all 0.3s ease;
+         color: #74b9ff;
+         font-weight: bold;
+     }
+     
+     .heart-checkbox input[type="checkbox"]:checked + .heart-checkbox-label {
+         background: linear-gradient(135deg, #00b894, #00cec9);
+         transform: scale(1.05);
+         box-shadow: 0 6px 20px rgba(0, 184, 148, 0.4);
+         color: white;
+         font-weight: 500;
+     }
+     
+     .heart-checkbox input[type="checkbox"]:checked + .heart-checkbox-label::before {
+         content: '✓';
+         transform: scale(1.2);
+         color: white;
+         font-weight: bold;
+     }
+     
+     .heart-checkbox .heart-checkbox-label:hover {
+         background: #f0f8ff;
+         border-color: #0984e3;
+         transform: translateY(-2px);
+         box-shadow: 0 4px 15px rgba(116, 185, 255, 0.2);
+     }
+     
+     .heart-checkbox .heart-checkbox-label:active {
+         transform: scale(0.95);
+     }
+     
+
+     
+     /* Анимация для пузырькового эффекта */
+     @keyframes bubbleFloat {
+         0% {
+             transform: scale(0) translateY(0);
+             opacity: 0.8;
+         }
+         50% {
+             transform: scale(1.2) translateY(-20px);
+             opacity: 0.6;
+         }
+         100% {
+             transform: scale(0) translateY(-40px);
+             opacity: 0;
+         }
      }
      
      @keyframes heartFloat {
