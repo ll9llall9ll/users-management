@@ -2,7 +2,7 @@ import psycopg2
 from config_prod import getDbConfig
 
 class Invitation:
-    def __init__(self, name, event_id, with_spouse, hash, is_male, accepted=None, id=None, comments=None, attendee_count=0, church_attendance=False, restaurant_attendance=False, attendance_type=None):
+    def __init__(self, name, event_id, with_spouse, hash, is_male, accepted=None, id=None, comments=None, attendee_count=0, church_attendance=False, restaurant_attendance=False, attendance_type=None, guest_nickname=None):
         self.name = name
         self.event_id = event_id
         self.with_spouse = with_spouse
@@ -15,6 +15,7 @@ class Invitation:
         self.church_attendance = church_attendance
         self.restaurant_attendance = restaurant_attendance
         self.attendance_type = attendance_type
+        self.guest_nickname = guest_nickname
 
 conn_params = getDbConfig()
 
@@ -76,12 +77,15 @@ def createInvitation(invitation):
         # Обработка attendance_type: если None или пусто, то SQL NULL
         attendance_type_value = f"'{invitation.attendance_type}'" if invitation.attendance_type else "NULL"
         
+        # Обработка guest_nickname: если None или пусто, то SQL NULL
+        guest_nickname_value = f"'{invitation.guest_nickname}'" if invitation.guest_nickname else "NULL"
+        
         insert_query = f"""
-            INSERT INTO invitation (name, event_id, with_spouse, hash, is_male, comments, attendee_count, church_attendance, restaurant_attendance, attendance_type)
+            INSERT INTO invitation (name, event_id, with_spouse, hash, is_male, comments, attendee_count, church_attendance, restaurant_attendance, attendance_type, guest_nickname)
             VALUES ('{invitation.name}', {invitation.event_id}, {with_spouse_value}, 
                     '{invitation.hash}', {is_male_value}, 
                     {comments_value}, 
-                    {invitation.attendee_count}, {church_attendance_value}, {restaurant_attendance_value}, {attendance_type_value});
+                    {invitation.attendee_count}, {church_attendance_value}, {restaurant_attendance_value}, {attendance_type_value}, {guest_nickname_value});
         """
         
         print(f"Debug - Executing SQL: {insert_query}")
@@ -140,8 +144,10 @@ def constructInv(dbRes):
         restaurant_attendance = dbRes[10] if dbRes[10] is not None else False
     if len(dbRes) > 11:
         attendance_type = dbRes[11] if dbRes[11] is not None else None
+    if len(dbRes) > 12:
+        guest_nickname = dbRes[12] if dbRes[12] is not None else None
     
-    print(f"Debug - Assigning fields: id={id}, name={name}, comments={comments}, attendee_count={attendee_count}, is_male={is_male}, church_attendance={church_attendance}, restaurant_attendance={restaurant_attendance}, attendance_type={attendance_type}")
+    print(f"Debug - Assigning fields: id={id}, name={name}, comments={comments}, attendee_count={attendee_count}, is_male={is_male}, church_attendance={church_attendance}, restaurant_attendance={restaurant_attendance}, attendance_type={attendance_type}, guest_nickname={guest_nickname}")
     # Создаем объект приглашения с явным указанием всех параметров
     invitation = Invitation(
         name=name,
@@ -155,7 +161,8 @@ def constructInv(dbRes):
         attendee_count=attendee_count,
         church_attendance=church_attendance,
         restaurant_attendance=restaurant_attendance,
-        attendance_type=attendance_type
+        attendance_type=attendance_type,
+        guest_nickname=guest_nickname
     )
     print(f"Debug - Created invitation object with comments: {invitation.comments}, attendee_count: {invitation.attendee_count}")
    
@@ -225,6 +232,9 @@ def updateInvitation(invitation):
     # Обработка attendance_type: если None или пусто, то SQL NULL
     attendance_type_value = f"'{invitation.attendance_type}'" if invitation.attendance_type else "NULL"
     
+    # Обработка guest_nickname: если None или пусто, то SQL NULL
+    guest_nickname_value = f"'{invitation.guest_nickname}'" if invitation.guest_nickname else "NULL"
+    
     update_query = f"""
         UPDATE invitation SET 
             name = '{invitation.name}', 
@@ -237,7 +247,8 @@ def updateInvitation(invitation):
             attendee_count = {invitation.attendee_count},
             church_attendance = {church_attendance_value},
             restaurant_attendance = {restaurant_attendance_value},
-            attendance_type = {attendance_type_value}
+            attendance_type = {attendance_type_value},
+            guest_nickname = {guest_nickname_value}
         WHERE id = {invitation.id};
     """
     
@@ -303,6 +314,13 @@ def ensure_new_columns_exist():
             """)
             with_spouse_exists = cur.fetchone() is not None
             
+            cur.execute("""
+                SELECT column_name 
+                FROM information_schema.columns 
+                WHERE table_name = 'invitation' AND column_name = 'guest_nickname';
+            """)
+            guest_nickname_exists = cur.fetchone() is not None
+            
             # Add columns if they don't exist
             if not comments_exists:
                 cur.execute("ALTER TABLE invitation ADD COLUMN comments TEXT;")
@@ -331,6 +349,10 @@ def ensure_new_columns_exist():
             if not with_spouse_exists:
                 cur.execute("ALTER TABLE invitation ADD COLUMN with_spouse BOOLEAN DEFAULT false;")
                 print("Added 'with_spouse' column to invitation table")
+                
+            if not guest_nickname_exists:
+                cur.execute("ALTER TABLE invitation ADD COLUMN guest_nickname VARCHAR(255);")
+                print("Added 'guest_nickname' column to invitation table")
                 
             conn.commit()
 

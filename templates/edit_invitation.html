@@ -222,6 +222,213 @@
             opacity: 0.9;
         }
 
+        /* Menu toggle button */
+        .menu-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 30px;
+            height: 25px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .menu-toggle .bar {
+            width: 100%;
+            height: 3px;
+            background-color: var(--white);
+            border-radius: 2px;
+            transition: var(--transition);
+        }
+
+        .menu-toggle.active .bar:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .menu-toggle.active .bar:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active .bar:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 998;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Side Navigation */
+        .side-nav {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 300px;
+            height: 100vh;
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 999;
+            transition: right 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .side-nav.active {
+            right: 0;
+        }
+
+        .side-nav-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid rgba(156, 132, 104, 0.2);
+        }
+
+        .side-nav-title {
+            font-size: 20px;
+            color: var(--primary-dark);
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .close-menu-btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: var(--text-medium);
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .close-menu-btn:hover {
+            background-color: rgba(156, 132, 104, 0.1);
+            color: var(--primary);
+        }
+
+        .nav-items {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .nav-item {
+            border-bottom: 1px solid rgba(156, 132, 104, 0.1);
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            border-radius: var(--radius-small);
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-link:hover {
+            background-color: rgba(156, 132, 104, 0.1);
+            color: var(--primary);
+        }
+
+        .nav-link i {
+            margin-right: 10px;
+            font-size: 18px;
+            width: 22px;
+            text-align: center;
+        }
+
+        .nav-link.logout {
+            color: #d32f2f;
+        }
+
+        .nav-link.logout:hover {
+            background-color: rgba(211, 47, 47, 0.1);
+        }
+
+        .side-nav-footer {
+            display: flex;
+            position: absolute;
+            width: 100%;
+            bottom: 230px;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 25px;
+            border-top: 1px solid rgba(156, 132, 104, 0.2);
+        }
+
+        .copyright {
+            font-size: 12px;
+            color: var(--text-light);
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        /* Language Selector */
+        .language-selector {
+            display: flex;
+            margin-bottom: 15px;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .language-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-medium);
+            margin-bottom: 10px;
+        }
+
+        .language-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .language-btn {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid var(--primary);
+            border-radius: var(--radius-small);
+            background-color: transparent;
+            color: var(--primary);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .language-btn.active {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .language-btn:hover:not(.active) {
+            background-color: rgba(156, 132, 104, 0.1);
+        }
+
         /* Right side content */
         .right {
             flex: 1.1;
@@ -691,6 +898,105 @@
             .right {
                 overflow-y: auto;
             }
+
+            .top-nav {
+                margin-bottom: 15px;
+            }
+
+            .top-nav .btn {
+                padding: 8px 15px;
+                font-size: 13px;
+            }
+
+            .actions-container {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+            }
+
+            .actions-container .btn {
+                width: 100%;
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+
+            .menu-toggle {
+                top: 15px;
+                right: 15px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            body {
+                padding: 0;
+            }
+
+            .container {
+                width: 100%;
+                height: 100vh;
+                max-height: none;
+                border-radius: 0;
+                flex-direction: column;
+                overflow-y: auto;
+            }
+
+            .side-image {
+                min-height: 120px;
+                max-height: 120px;
+            }
+
+            .side-image .text {
+                padding: 10px;
+            }
+
+            .side-image .text h3 {
+                font-size: 18px;
+                margin-bottom: 5px;
+            }
+
+            .side-image .text p {
+                font-size: 12px;
+                line-height: 1.3;
+            }
+
+            .side-image .logo {
+                width: 40px;
+                height: 40px;
+                margin-bottom: 5px;
+            }
+
+            .side-image .logo i {
+                font-size: 18px;
+            }
+
+            .right {
+                padding: 15px 12px;
+                flex: 1;
+            }
+
+            .top-nav {
+                flex-direction: row;
+                margin-bottom: 15px;
+            }
+
+            .top-nav .btn {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+
+            .invitation-header h2 {
+                font-size: 20px;
+            }
+
+            .invitation-header::after {
+                margin: 8px auto 0;
+            }
+
+            .actions-container {
+                flex-direction: column;
+                gap: 8px;
+                margin-top: 15px;
+            }
         }
     </style>
 </head>
@@ -716,25 +1022,75 @@
                 <div class="logo">
                     <i class="fas fa-envelope-open-text"></i>
                 </div>
-                <h3>Edit Invitation</h3>
-                <p>Update invitation details for your guest</p>
+                <h3 id="dashboardTitle">Խմբագրել հրավերը</h3>
+                <p id="dashboardDesc">Թարմացրեք հրավերի մանրամասները ձեր հյուրի համար</p>
+            </div>
+            <div class="menu-toggle" id="menuToggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+
+        <!-- Overlay -->
+        <div class="overlay" id="overlay"></div>
+
+        <!-- Side Navigation -->
+        <div class="side-nav" id="sideNav">
+            <div class="side-nav-header">
+                <h2 class="side-nav-title" id="menuTitle">Մենյու</h2>
+                <button class="close-menu-btn" id="closeMenuBtn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <ul class="nav-items">
+                <li class="nav-item">
+                    <a href="{{ url_for('view_events') }}" class="nav-link">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span id="eventsNavText">Միջոցառումներ</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('profile') }}" class="nav-link">
+                        <i class="fas fa-user"></i>
+                        <span id="profileText">Պրոֆիլ</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('logout') }}" class="nav-link logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span id="logoutNavText">Դուրս գալ</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="side-nav-footer">
+                <!-- Переключатель языков -->
+                <div class="language-selector">
+                    <h3 class="language-title" id="languageTitle">Լեզու</h3>
+                    <div class="language-buttons">
+                        <button class="language-btn active" id="hyBtn">Հայերեն</button>
+                        <button class="language-btn" id="ruBtn">Русский</button>
+                    </div>
+                </div>
+                <div class="copyright" id="copyrightNav">© 2024 Հրավերների կառավարիչ</div>
             </div>
         </div>
 
         <div class="right">
             <div class="invitation-header">
-                <h2>Edit Invitation Details</h2>
+                <h2 id="invitationHeaderText">Խմբագրել հրավերի մանրամասները</h2>
                 {% if invitation.accepted == True %}
                 <span class="status-badge status-accepted">
-                    <i class="fas fa-check-circle"></i> Accepted
+                    <i class="fas fa-check-circle"></i> <span id="acceptedText">Ընդունված</span>
                 </span>
                 {% elif invitation.accepted == False %}
                 <span class="status-badge status-declined">
-                    <i class="fas fa-times-circle"></i> Declined
+                    <i class="fas fa-times-circle"></i> <span id="declinedText">Մերժված</span>
                 </span>
                 {% else %}
                 <span class="status-badge status-pending">
-                    <i class="fas fa-clock"></i> Pending
+                    <i class="fas fa-clock"></i> <span id="pendingText">Սպասման մեջ</span>
                 </span>
                 {% endif %}
             </div>
@@ -742,7 +1098,7 @@
             <div class="form-container">
                 <form method="POST" action="{{ url_for('edit_invitation', id=invitation.id) }}">
                     <div class="form-group" style="--i:1">
-                        <label for="name">Guest Name</label>
+                        <label for="name" id="nameLabel">Հյուրի անունը</label>
                         <div class="input-wrapper">
                             <input type="text" name="name" id="name" value="{{ invitation.name }}" required>
                             <span class="input-icon">
@@ -752,7 +1108,18 @@
                     </div>
                     
                     <div class="form-group" style="--i:2">
-                        <label for="hash">Unique Identifier (Hash)</label>
+                        <label for="guest_nickname" id="guestNicknameLabel">Հյուրի մականունը (ընտրովի)</label>
+                        <div class="input-wrapper">
+                            <input type="text" name="guest_nickname" id="guest_nickname" value="{{ invitation.guest_nickname if invitation.guest_nickname else '' }}" placeholder="Օրինակ: 2-րդ Սերգեյ, մեր Սերգեյ">
+                            <span class="input-icon">
+                                <i class="fas fa-tag"></i>
+                            </span>
+                        </div>
+                        <small class="form-text" id="guestNicknameHelp">Օգտագործեք այս դաշտը հյուրերին տարբերակելու համար, եթե նրանք ունեն նույն անունը</small>
+                    </div>
+                    
+                    <div class="form-group" style="--i:3">
+                        <label for="hash" id="hashLabel">Եզակի նույնացուցիչ (Hash)</label>
                         <div class="input-wrapper">
                             <input type="text" name="hash" id="hash" value="{{ invitation.hash }}" required>
                             <span class="input-icon">
@@ -761,8 +1128,8 @@
                         </div>
                     </div>
                     
-                    <div class="form-group" style="--i:3">
-                        <label for="event_id">Event ID</label>
+                    <div class="form-group" style="--i:4">
+                        <label for="event_id" id="eventIdLabel">Միջոցառման ID</label>
                         <div class="input-wrapper">
                             <input type="number" name="event_id" id="event_id" value="{{ invitation.event_id }}" required>
                             <span class="input-icon">
@@ -772,13 +1139,13 @@
                     </div>
                     
                     <div class="form-row">
-                        <div class="form-group" style="--i:4">
-                            <label for="with_spouse">With Spouse</label>
+                        <div class="form-group" style="--i:5">
+                            <label for="with_spouse" id="withSpouseLabel">Զուգընկերոջ հետ</label>
                             <div class="select-wrapper">
                                 <div class="input-wrapper">
                                     <select id="with_spouse" name="with_spouse" required>
-                                        <option value="True" {% if invitation.with_spouse == True %}selected{% endif %}>Yes</option>
-                                        <option value="False" {% if invitation.with_spouse == False %}selected{% endif %}>No</option>
+                                        <option value="True" {% if invitation.with_spouse == True %}selected{% endif %} id="yesOption">Այո</option>
+                                        <option value="False" {% if invitation.with_spouse == False %}selected{% endif %} id="noOption">Ոչ</option>
                                     </select>
                                     <span class="input-icon">
                                         <i class="fas fa-user-friends"></i>
@@ -788,12 +1155,12 @@
                         </div>
                         
                         <div class="form-group" style="--i:5">
-                            <label for="is_male">Gender</label>
+                            <label for="is_male" id="genderLabel">Սեռ</label>
                             <div class="select-wrapper">
                                 <div class="input-wrapper">
                                     <select id="is_male" name="is_male" required>
-                                        <option value="True" {% if invitation.is_male == True %}selected{% endif %}>Male</option>
-                                        <option value="False" {% if invitation.is_male == False %}selected{% endif %}>Female</option>
+                                        <option value="True" {% if invitation.is_male == True %}selected{% endif %} id="maleOption">Արական</option>
+                                        <option value="False" {% if invitation.is_male == False %}selected{% endif %} id="femaleOption">Իգական</option>
                                     </select>
                                     <span class="input-icon">
                                         <i class="fas fa-venus-mars"></i>
@@ -804,14 +1171,14 @@
                     </div>
                     
                     {% if invitation.accepted is not none %}
-                    <div class="form-group" style="--i:6">
-                        <label for="accepted">Response Status</label>
+                    <div class="form-group" style="--i:7">
+                        <label for="accepted" id="responseStatusLabel">Պատասխանի կարգավիճակ</label>
                         <div class="select-wrapper">
                             <div class="input-wrapper">
                                 <select id="accepted" name="accepted" required>
-                                    <option value="True" {% if invitation.accepted == True %}selected{% endif %}>Accepted</option>
-                                    <option value="False" {% if invitation.accepted == False %}selected{% endif %}>Declined</option>
-                                    <option value="NULL">Pending</option>
+                                    <option value="True" {% if invitation.accepted == True %}selected{% endif %} id="acceptedOption">Ընդունված</option>
+                                    <option value="False" {% if invitation.accepted == False %}selected{% endif %} id="declinedOption">Մերժված</option>
+                                    <option value="NULL" id="pendingOption">Սպասման մեջ</option>
                                 </select>
                                 <span class="input-icon">
                                     <i class="fas fa-reply"></i>
@@ -824,8 +1191,8 @@
                     {% endif %}
                     
                     <!-- Новое поле: Количество гостей -->
-                    <div class="form-group" style="--i:7">
-                        <label for="attendee_count">Количество гостей</label>
+                    <div class="form-group" style="--i:8">
+                        <label for="attendee_count" id="attendeeCountLabel">Հյուրերի քանակը</label>
                         <div class="input-wrapper">
                             <input type="number" name="attendee_count" id="attendee_count" value="{{ invitation.attendee_count if invitation.attendee_count is not none else 0 }}" min="0">
                             <span class="input-icon">
@@ -835,13 +1202,13 @@
                     </div>
                     
                     <!-- Новое поле: Посещение церкви -->
-                    <div class="form-group" style="--i:8">
-                        <label for="church_attendance">Посещение церкви</label>
+                    <div class="form-group" style="--i:9">
+                        <label for="church_attendance" id="churchAttendanceLabel">Եկեղեցու այցելություն</label>
                         <div class="select-wrapper">
                             <div class="input-wrapper">
                                 <select id="church_attendance" name="church_attendance" required>
-                                    <option value="True" {% if invitation.church_attendance == True %}selected{% endif %}>Да</option>
-                                    <option value="False" {% if invitation.church_attendance == False %}selected{% endif %}>Нет</option>
+                                    <option value="True" {% if invitation.church_attendance == True %}selected{% endif %} id="churchYesOption">Այո</option>
+                                    <option value="False" {% if invitation.church_attendance == False %}selected{% endif %} id="churchNoOption">Ոչ</option>
                                 </select>
                                 <span class="input-icon">
                                     <i class="fas fa-church"></i>
@@ -851,13 +1218,13 @@
                     </div>
                     
                     <!-- Новое поле: Посещение ресторана -->
-                    <div class="form-group" style="--i:9">
-                        <label for="restaurant_attendance">Посещение ресторана</label>
+                    <div class="form-group" style="--i:10">
+                        <label for="restaurant_attendance" id="restaurantAttendanceLabel">Ռեստորանի այցելություն</label>
                         <div class="select-wrapper">
                             <div class="input-wrapper">
                                 <select id="restaurant_attendance" name="restaurant_attendance" required>
-                                    <option value="True" {% if invitation.restaurant_attendance == True %}selected{% endif %}>Да</option>
-                                    <option value="False" {% if invitation.restaurant_attendance == False %}selected{% endif %}>Нет</option>
+                                    <option value="True" {% if invitation.restaurant_attendance == True %}selected{% endif %} id="restaurantYesOption">Այո</option>
+                                    <option value="False" {% if invitation.restaurant_attendance == False %}selected{% endif %} id="restaurantNoOption">Ոչ</option>
                                 </select>
                                 <span class="input-icon">
                                     <i class="fas fa-utensils"></i>
@@ -867,15 +1234,15 @@
                     </div>
                     
                     <!-- Новое поле: Комментарии -->
-                    <div class="form-group" style="--i:10">
-                        <label for="comments">Комментарии гостя</label>
+                    <div class="form-group" style="--i:11">
+                        <label for="comments" id="commentsLabel">Հյուրի մեկնաբանությունները</label>
                         <div class="input-wrapper" style="flex-direction: column; align-items: stretch;">
                             <textarea name="comments" id="comments" style="padding: 12px 15px; height: 100px; width: 100%; border: 1px solid var(--text-light); border-radius: var(--radius-small); outline: none; transition: var(--transition); font-size: 15px; color: var(--text-dark); background-color: rgba(255, 255, 255, 0.8);">{{ invitation.comments if invitation.comments }}</textarea>
                         </div>
                     </div>
                     
                     <button type="submit" class="btn">
-                        <i class="fas fa-save"></i> Save Changes
+                        <i class="fas fa-save"></i> <span id="saveChangesText">Պահպանել փոփոխությունները</span>
                     </button>
                 </form>
                 
@@ -885,17 +1252,230 @@
                 
                 <div class="bottom-links">
                     <a href="{{ url_for('view_invitation', event_id=invitation.event_id) }}" class="btn btn-secondary">
-                        <i class="fas fa-arrow-left"></i> Back to Invitations
+                        <i class="fas fa-arrow-left"></i> <span id="backToInvitationsText">Վերադառնալ հրավերներին</span>
                     </a>
                     <a href="{{ url_for('profile') }}" class="btn btn-secondary">
-                        <i class="fas fa-user"></i> Back to Profile
+                        <i class="fas fa-user"></i> <span id="backToProfileText">Վերադառնալ պրոֆիլին</span>
                     </a>
                     <a href="{{ url_for('logout') }}" class="btn btn-danger">
-                        <i class="fas fa-sign-out-alt"></i> Logout
+                        <i class="fas fa-sign-out-alt"></i> <span id="logoutText">Դուրս գալ</span>
                     </a>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const menuToggle = document.getElementById('menuToggle');
+            const sideNav = document.getElementById('sideNav');
+            const overlay = document.getElementById('overlay');
+            const closeMenuBtn = document.getElementById('closeMenuBtn');
+
+            // Language buttons
+            const hyBtn = document.getElementById('hyBtn');
+            const ruBtn = document.getElementById('ruBtn');
+
+            menuToggle.addEventListener('click', toggleMenu);
+            overlay.addEventListener('click', toggleMenu);
+            closeMenuBtn.addEventListener('click', toggleMenu);
+
+            function toggleMenu() {
+                menuToggle.classList.toggle('active');
+                sideNav.classList.toggle('active');
+                overlay.classList.toggle('active');
+                document.body.style.overflow = sideNav.classList.contains('active') ? 'hidden' : 'auto';
+            }
+
+            // Language toggle functionality
+            // Загружаем сохраненный язык из localStorage или устанавливаем армянский по умолчанию
+            let currentLanguage = localStorage.getItem('selectedLanguage') || 'hy';
+
+            hyBtn.addEventListener('click', function () {
+                if (currentLanguage !== 'hy') {
+                    currentLanguage = 'hy';
+                    updateLanguageButtons();
+                    updateLanguage(currentLanguage);
+                    localStorage.setItem('selectedLanguage', 'hy');
+                }
+            });
+
+            ruBtn.addEventListener('click', function () {
+                if (currentLanguage !== 'ru') {
+                    currentLanguage = 'ru';
+                    updateLanguageButtons();
+                    updateLanguage(currentLanguage);
+                    localStorage.setItem('selectedLanguage', 'ru');
+                }
+            });
+
+            function updateLanguageButtons() {
+                if (currentLanguage === 'hy') {
+                    hyBtn.classList.add('active');
+                    ruBtn.classList.remove('active');
+                } else {
+                    hyBtn.classList.remove('active');
+                    ruBtn.classList.add('active');
+                }
+            }
+
+            // Text content for both languages
+            const translations = {
+                hy: {
+                    dashboardTitle: 'Խմբագրել հրավերը',
+                    dashboardDesc: 'Թարմացրեք հրավերի մանրամասները ձեր հյուրի համար',
+                    menuTitle: 'Մենյու',
+                    eventsNavText: 'Միջոցառումներ',
+                    profileText: 'Պրոֆիլ',
+                    logoutNavText: 'Դուրս գալ',
+                    invitationHeaderText: 'Խմբագրել հրավերի մանրամասները',
+                    acceptedText: 'Ընդունված',
+                    declinedText: 'Մերժված',
+                    pendingText: 'Սպասման մեջ',
+                    nameLabel: 'Հյուրի անունը',
+                    guestNicknameLabel: 'Հյուրի մականունը (ընտրովի)',
+                    guestNicknameHelp: 'Օգտագործեք այս դաշտը հյուրերին տարբերակելու համար, եթե նրանք ունեն նույն անունը',
+                    hashLabel: 'Եզակի նույնացուցիչ (Hash)',
+                    eventIdLabel: 'Միջոցառման ID',
+                    withSpouseLabel: 'Զուգընկերոջ հետ',
+                    yesOption: 'Այո',
+                    noOption: 'Ոչ',
+                    genderLabel: 'Սեռ',
+                    maleOption: 'Արական',
+                    femaleOption: 'Իգական',
+                    responseStatusLabel: 'Պատասխանի կարգավիճակ',
+                    acceptedOption: 'Ընդունված',
+                    declinedOption: 'Մերժված',
+                    pendingOption: 'Սպասման մեջ',
+                    attendeeCountLabel: 'Հյուրերի քանակը',
+                    churchAttendanceLabel: 'Եկեղեցու այցելություն',
+                    churchYesOption: 'Այո',
+                    churchNoOption: 'Ոչ',
+                    restaurantAttendanceLabel: 'Ռեստորանի այցելություն',
+                    restaurantYesOption: 'Այո',
+                    restaurantNoOption: 'Ոչ',
+                    commentsLabel: 'Հյուրի մեկնաբանությունները',
+                    saveChangesText: 'Պահպանել փոփոխությունները',
+                    backToInvitationsText: 'Վերադառնալ հրավերներին',
+                    backToProfileText: 'Վերադառնալ պրոֆիլին',
+                    logoutText: 'Դուրս գալ',
+                    copyrightNav: '© 2024 Հրավերների կառավարիչ',
+                    languageTitle: 'Լեզու'
+                },
+                ru: {
+                    dashboardTitle: 'Редактировать приглашение',
+                    dashboardDesc: 'Обновите детали приглашения для вашего гостя',
+                    menuTitle: 'Меню',
+                    eventsNavText: 'События',
+                    profileText: 'Профиль',
+                    logoutNavText: 'Выйти',
+                    invitationHeaderText: 'Редактировать детали приглашения',
+                    acceptedText: 'Принято',
+                    declinedText: 'Отклонено',
+                    pendingText: 'В ожидании',
+                    nameLabel: 'Имя гостя',
+                    guestNicknameLabel: 'Псевдоним гостя (необязательно)',
+                    guestNicknameHelp: 'Используйте это поле для различения гостей с одинаковыми именами',
+                    hashLabel: 'Уникальный идентификатор (Hash)',
+                    eventIdLabel: 'ID события',
+                    withSpouseLabel: 'С супругом',
+                    yesOption: 'Да',
+                    noOption: 'Нет',
+                    genderLabel: 'Пол',
+                    maleOption: 'Мужской',
+                    femaleOption: 'Женский',
+                    responseStatusLabel: 'Статус ответа',
+                    acceptedOption: 'Принято',
+                    declinedOption: 'Отклонено',
+                    pendingOption: 'В ожидании',
+                    attendeeCountLabel: 'Количество гостей',
+                    churchAttendanceLabel: 'Посещение церкви',
+                    churchYesOption: 'Да',
+                    churchNoOption: 'Нет',
+                    restaurantAttendanceLabel: 'Посещение ресторана',
+                    restaurantYesOption: 'Да',
+                    restaurantNoOption: 'Нет',
+                    commentsLabel: 'Комментарии гостя',
+                    saveChangesText: 'Сохранить изменения',
+                    backToInvitationsText: 'Вернуться к приглашениям',
+                    backToProfileText: 'Вернуться в профиль',
+                    logoutText: 'Выйти',
+                    copyrightNav: '© 2024 Менеджер приглашений',
+                    languageTitle: 'Язык'
+                }
+            };
+
+            // Function to update all text content based on selected language
+            function updateLanguage(lang) {
+                // Обновляем только те элементы, которые существуют на странице
+                const elements = {
+                    'dashboardTitle': translations[lang].dashboardTitle,
+                    'dashboardDesc': translations[lang].dashboardDesc,
+                    'menuTitle': translations[lang].menuTitle,
+                    'eventsNavText': translations[lang].eventsNavText,
+                    'profileText': translations[lang].profileText,
+                    'logoutNavText': translations[lang].logoutNavText,
+                    'invitationHeaderText': translations[lang].invitationHeaderText,
+                    'nameLabel': translations[lang].nameLabel,
+                    'guestNicknameLabel': translations[lang].guestNicknameLabel,
+                    'guestNicknameHelp': translations[lang].guestNicknameHelp,
+                    'hashLabel': translations[lang].hashLabel,
+                    'eventIdLabel': translations[lang].eventIdLabel,
+                    'withSpouseLabel': translations[lang].withSpouseLabel,
+                    'yesOption': translations[lang].yesOption,
+                    'noOption': translations[lang].noOption,
+                    'genderLabel': translations[lang].genderLabel,
+                    'maleOption': translations[lang].maleOption,
+                    'femaleOption': translations[lang].femaleOption,
+                    'responseStatusLabel': translations[lang].responseStatusLabel,
+                    'acceptedOption': translations[lang].acceptedOption,
+                    'declinedOption': translations[lang].declinedOption,
+                    'pendingOption': translations[lang].pendingOption,
+                    'attendeeCountLabel': translations[lang].attendeeCountLabel,
+                    'churchAttendanceLabel': translations[lang].churchAttendanceLabel,
+                    'churchYesOption': translations[lang].churchYesOption,
+                    'churchNoOption': translations[lang].churchNoOption,
+                    'restaurantAttendanceLabel': translations[lang].restaurantAttendanceLabel,
+                    'restaurantYesOption': translations[lang].restaurantYesOption,
+                    'restaurantNoOption': translations[lang].restaurantNoOption,
+                    'commentsLabel': translations[lang].commentsLabel,
+                    'saveChangesText': translations[lang].saveChangesText,
+                    'backToInvitationsText': translations[lang].backToInvitationsText,
+                    'backToProfileText': translations[lang].backToProfileText,
+                    'logoutText': translations[lang].logoutText,
+                    'copyrightNav': translations[lang].copyrightNav,
+                    'languageTitle': translations[lang].languageTitle
+                };
+
+                // Обновляем элементы, проверяя их существование
+                Object.keys(elements).forEach(id => {
+                    const element = document.getElementById(id);
+                    if (element) {
+                        element.textContent = elements[id];
+                    }
+                });
+
+                // Обновляем статусные бейджи, если они существуют
+                const acceptedText = document.getElementById('acceptedText');
+                const declinedText = document.getElementById('declinedText');
+                const pendingText = document.getElementById('pendingText');
+
+                if (acceptedText) {
+                    acceptedText.textContent = translations[lang].acceptedText;
+                }
+                if (declinedText) {
+                    declinedText.textContent = translations[lang].declinedText;
+                }
+                if (pendingText) {
+                    pendingText.textContent = translations[lang].pendingText;
+                }
+            }
+
+            // Initialize language
+            updateLanguageButtons();
+            updateLanguage(currentLanguage);
+        });
+    </script>
 </body>
 </html>

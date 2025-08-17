@@ -1026,8 +1026,6 @@ function updateLanguage(lang) {
     
     // Update HTML lang attribute
     document.documentElement.lang = lang;
-    
-    console.log('Language updated to:', lang);
 }
 
 // Form validation
@@ -1093,7 +1091,6 @@ hyBtn.addEventListener('click', function() {
         updateLanguageButtons();
         updateLanguage(currentLanguage);
         localStorage.setItem('selectedLanguage', 'hy');
-        console.log('Language set to Armenian, saved to localStorage');
     }
 });
 
@@ -1103,7 +1100,6 @@ ruBtn.addEventListener('click', function() {
         updateLanguageButtons();
         updateLanguage(currentLanguage);
         localStorage.setItem('selectedLanguage', 'ru');
-        console.log('Language set to Russian, saved to localStorage');
     }
 });
 
@@ -1114,13 +1110,10 @@ overlay.addEventListener('click', closeMenu);
 
 // Initialize everything when the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM fully loaded');
-    
     // Setup form validation
     setupFormValidation();
     
     // Apply saved language
-    console.log('Current language from localStorage:', currentLanguage);
     updateLanguageButtons();
     updateLanguage(currentLanguage);
 });

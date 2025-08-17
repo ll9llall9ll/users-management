@@ -897,6 +897,15 @@
             flex: 1;
             margin-right: 10px;
         }
+        
+        .guest-nickname {
+            color: var(--primary);
+            font-style: italic;
+            font-size: 0.85em;
+            margin-top: 2px;
+            display: block;
+            font-weight: 400;
+        }
 
         .invitation-card-details {
             padding: 12px 16px;
@@ -1295,7 +1304,12 @@
                         <div class="card-checkbox-container">
                             <input type="checkbox" class="invitation-checkbox" data-id="{{ invitation.id }}">
                         </div>
-                        <h3 class="invitation-name">{{ invitation.name }}</h3>
+                        <h3 class="invitation-name">
+                            {{ invitation.name }}
+                            {% if invitation.guest_nickname %}
+                            <br><small class="guest-nickname">({{ invitation.guest_nickname }})</small>
+                            {% endif %}
+                        </h3>
                         {% if invitation.accepted == True %}
                         <span class="badge badge-success" data-status="accepted">Ընդունված</span>
                         {% elif invitation.accepted == False %}
@@ -1747,17 +1761,9 @@
 
         // Функция для изменения пола
         function toggleGender(genderBadge) {
-            console.log('toggleGender called with:', genderBadge);
-            console.log('Badge text:', genderBadge.textContent);
-            console.log('Badge classes:', genderBadge.className);
-            
             const invitationId = genderBadge.getAttribute('data-invitation-id');
             const currentGender = genderBadge.getAttribute('data-current-gender') === 'true';
             const newGender = !currentGender;
-            
-            console.log('Invitation ID:', invitationId);
-            console.log('Current gender:', currentGender);
-            console.log('New gender:', newGender);
             
             // Показываем индикатор загрузки
             const hyText = genderBadge.querySelector('.gender-text-hy');
@@ -1806,7 +1812,6 @@
                 }
             })
                     .catch(error => {
-            console.error('Error updating gender:', error);
             
             let errorMessage;
             if (error.status === 401) {
@@ -1908,9 +1913,13 @@
             searchInput.addEventListener('keyup', function () {
                 const searchTerm = this.value.toLowerCase();
                 invitationCards.forEach(card => {
-                    const name = card.querySelector('.invitation-name').textContent.toLowerCase();
+                    const nameElement = card.querySelector('.invitation-name');
+                    const name = nameElement.textContent.toLowerCase();
                     const status = card.querySelector('.badge').textContent.toLowerCase();
-                    card.style.display = (name.includes(searchTerm) || status.includes(searchTerm)) ? '' : 'none';
+                    
+                    // Поиск по имени и псевдониму
+                    const isVisible = name.includes(searchTerm) || status.includes(searchTerm);
+                    card.style.display = isVisible ? '' : 'none';
                 });
             });
 
@@ -2225,7 +2234,6 @@
                         }
                     })
                     .catch(error => {
-                        console.error('Error exporting:', error);
                         let errorMessage;
                         
                         if (error.status === 401) {
@@ -2249,24 +2257,18 @@
             }
             
             // Функциональность для изменения пола при клике
-            console.log('DOM loaded, setting up gender click handlers');
             
             // Добавляем обработчики для всех кликабельных бейджей пола
             document.addEventListener('click', function(e) {
-                console.log('Click detected on:', e.target);
-                console.log('Classes:', e.target.classList);
-                
                 if (e.target.classList.contains('clickable-gender')) {
-                    console.log('Gender badge clicked!');
                     toggleGender(e.target);
                 }
             });
             
             // Проверяем, сколько кликабельных бейджей найдено
             const genderBadges = document.querySelectorAll('.clickable-gender');
-            console.log('Found gender badges:', genderBadges.length);
             genderBadges.forEach((badge, index) => {
-                console.log(`Badge ${index}:`, badge.textContent, badge.getAttribute('data-invitation-id'));
+                // Инициализация бейджей пола
             });
         }); // Закрытие document.addEventListener('DOMContentLoaded')
     

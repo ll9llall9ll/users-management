@@ -1124,7 +1124,6 @@
     
         // Function to update all text content based on selected language
         function updateLanguage(lang) {
-            console.log("Setting language to:", lang);
             currentLanguage = lang;
             
             // Save to localStorage
@@ -1182,7 +1181,7 @@
                 try {
                     updateLanguageButtons();
                 } catch (e) {
-                    console.log("Could not update language buttons yet, will try again when DOM is loaded");
+                    // Language buttons not ready yet, will try again when DOM is loaded
                 }
             } else {
                 currentLanguage = 'hy'; // Default to Armenian
@@ -1191,7 +1190,6 @@
     
         // Document ready function
         document.addEventListener('DOMContentLoaded', function() {
-            console.log("DOM fully loaded. Current language is:", currentLanguage);
             
             // Fix for broken profile text span if needed
             var profileTextEl = document.getElementById('profileText');
