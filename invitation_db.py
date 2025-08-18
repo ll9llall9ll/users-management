@@ -65,35 +65,36 @@ def getInvitationByHash(hash):
 
 def createInvitation(invitation):
     try:
-        # Обработка комментариев: если None или пусто, то SQL NULL
-        comments_value = f"'{invitation.comments}'" if invitation.comments else "NULL"
+        print(f"Creating invitation: {invitation.name}, event_id: {invitation.event_id}")
         
-        # Правильные булевы значения для PostgreSQL
-        with_spouse_value = 'true' if invitation.with_spouse else 'false'
-        is_male_value = 'true' if invitation.is_male else 'false'
-        church_attendance_value = 'true' if invitation.church_attendance else 'false'
-        restaurant_attendance_value = 'true' if invitation.restaurant_attendance else 'false'
-        
-        # Обработка attendance_type: если None или пусто, то SQL NULL
-        attendance_type_value = f"'{invitation.attendance_type}'" if invitation.attendance_type else "NULL"
-        
-        # Обработка guest_nickname: если None или пусто, то SQL NULL
-        guest_nickname_value = f"'{invitation.guest_nickname}'" if invitation.guest_nickname else "NULL"
-        
-        insert_query = f"""
+        # Используем параметризованный запрос для безопасности
+        insert_query = """
             INSERT INTO invitation (name, event_id, with_spouse, hash, is_male, comments, attendee_count, church_attendance, restaurant_attendance, attendance_type, guest_nickname)
-            VALUES ('{invitation.name}', {invitation.event_id}, {with_spouse_value}, 
-                    '{invitation.hash}', {is_male_value}, 
-                    {comments_value}, 
-                    {invitation.attendee_count}, {church_attendance_value}, {restaurant_attendance_value}, {attendance_type_value}, {guest_nickname_value});
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         """
         
-        print(f"Debug - Executing SQL: {insert_query}")
+        # Подготавливаем параметры
+        params = (
+            invitation.name,
+            invitation.event_id,
+            invitation.with_spouse,
+            invitation.hash,
+            invitation.is_male,
+            invitation.comments,
+            invitation.attendee_count,
+            invitation.church_attendance,
+            invitation.restaurant_attendance,
+            invitation.attendance_type,
+            invitation.guest_nickname
+        )
+        
+        print(f"Debug - Executing SQL with params: {params}")
         
         with psycopg2.connect(**conn_params) as conn:
             with conn.cursor() as cur:
-                cur.execute(insert_query)
+                cur.execute(insert_query, params)
                 conn.commit()
+                print(f"Successfully inserted invitation with hash: {invitation.hash}")
         return True
     except Exception as e:
         print(f"Error in createInvitation: {str(e)}")
