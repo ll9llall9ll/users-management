@@ -1295,6 +1295,9 @@
                 <button class="btn btn-success" id="exportAcceptedBtn">
                     <i class="fas fa-download"></i> <span id="exportAcceptedText">Экспорт принятых</span>
                 </button>
+                <button class="btn btn-warning" id="exportCsvBtn">
+                    <i class="fas fa-file-csv"></i> <span id="exportCsvText">Экспорт CSV с ссылками</span>
+                </button>
                 <button class="btn btn-info" id="importCsvBtn">
                     <i class="fas fa-file-csv"></i> <span id="importCsvText">Импорт CSV</span>
                 </button>
@@ -1520,6 +1523,7 @@
                 selectAllText: 'Ընտրել բոլորը',
                 deselectAllText: 'Չեղարկել ընտրությունը',
                 exportAcceptedText: 'JSON էքսպորտ ընդունվածների',
+                exportCsvText: 'CSV էքսպորտ հղումներով',
                 importCsvText: 'CSV ներմուծում'
             },
             ru: {
@@ -1576,6 +1580,7 @@
                 selectAllText: 'Выбрать все',
                 deselectAllText: 'Снять выделение',
                 exportAcceptedText: 'JSON экспорт принятых',
+                exportCsvText: 'Экспорт CSV с ссылками',
                 importCsvText: 'Импорт CSV'
             }
         };
@@ -1691,6 +1696,7 @@
             document.getElementById('selectAllText').textContent = translations[lang].selectAllText;
             document.getElementById('deselectAllText').textContent = translations[lang].deselectAllText;
             document.getElementById('exportAcceptedText').textContent = translations[lang].exportAcceptedText;
+            document.getElementById('exportCsvText').textContent = translations[lang].exportCsvText;
             document.getElementById('importCsvText').textContent = translations[lang].importCsvText;
 
             document.documentElement.lang = lang;
@@ -2386,6 +2392,96 @@
                             errorMessage = currentLanguage === 'hy' 
                                 ? 'Սխալ՝ չհաջողվեց արտահանել տվյալները' 
                                 : 'Ошибка: не удалось экспортировать данные';
+                        }
+                        
+                        showNotification(errorMessage, 'error');
+                    })
+                    .finally(() => {
+                        // Восстанавливаем кнопку
+                        this.innerHTML = originalText;
+                        this.disabled = false;
+                    });
+                });
+            }
+
+            // Функция экспорта CSV с ссылками
+            const exportCsvBtn = document.getElementById('exportCsvBtn');
+            if (exportCsvBtn) {
+                exportCsvBtn.addEventListener('click', function() {
+                    // Показываем индикатор загрузки
+                    const originalText = this.innerHTML;
+                    this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Экспорт CSV...';
+                    this.disabled = true;
+                    
+                    // Получаем event_id из URL
+                    const eventId = new URLSearchParams(window.location.search).get('event_id');
+                    
+                    if (!eventId) {
+                        alert(currentLanguage === 'hy' ? 'Սխալ՝ չի գտնվել միջոցառման ID' : 'Ошибка: не найден ID мероприятия');
+                        this.innerHTML = originalText;
+                        this.disabled = false;
+                        return;
+                    }
+                    
+                    // Отправляем запрос на бэкенд
+                    fetch('/api/export_csv_guests_with_links', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            event_id: eventId,
+                            language: currentLanguage
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Создаем CSV файл из полученных данных
+                            const blob = new Blob([data.csv_data], { type: 'text/csv;charset=utf-8' });
+                            
+                            // Создаем и скачиваем CSV файл
+                            const url = URL.createObjectURL(blob);
+                            const link = document.createElement('a');
+                            link.setAttribute('href', url);
+                            
+                            // Создаем информативное имя файла
+                            const fileName = currentLanguage === 'hy' 
+                                ? `հյուրեր_հղումներով_${eventId}_${new Date().toISOString().split('T')[0]}.csv`
+                                : `гости_со_ссылками_${eventId}_${new Date().toISOString().split('T')[0]}.csv`;
+                            
+                            link.setAttribute('download', fileName);
+                            document.body.appendChild(link);
+                            link.click();
+                            document.body.removeChild(link);
+                            
+                            // Освобождаем память
+                            URL.revokeObjectURL(url);
+                            
+                            // Показываем уведомление об успехе
+                            const successMessage = currentLanguage === 'hy' 
+                                ? `Հաջողությամբ CSV արտահանվել է ${data.total_guests} հրավեր`
+                                : `Успешно экспортировано в CSV ${data.total_guests} приглашений`;
+                            showNotification(successMessage, 'success');
+                        } else {
+                            // Показываем ошибку
+                            const errorMessage = currentLanguage === 'hy' 
+                                ? `Սխալ՝ ${data.error}` 
+                                : `Ошибка: ${data.error}`;
+                            showNotification(errorMessage, 'error');
+                        }
+                    })
+                    .catch(error => {
+                        let errorMessage;
+                        
+                        if (error.status === 401) {
+                            errorMessage = currentLanguage === 'hy' 
+                                ? 'Սխալ՝ անհրաժեշտ է մուտք գործել' 
+                                : 'Ошибка: необходимо войти в систему';
+                        } else {
+                            errorMessage = currentLanguage === 'hy' 
+                                ? 'Սխал՝ չհաջողվեց արտահանել CSV տվյալները' 
+                                : 'Ошибка: не удалось экспортировать CSV данные';
                         }
                         
                         showNotification(errorMessage, 'error');
