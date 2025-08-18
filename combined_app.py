@@ -334,8 +334,229 @@ def export_accepted_guests():
         traceback.print_exc()
         return jsonify({'success': False, 'error': str(e)}), 500
 
+def detect_gender_by_name(name):
+    """
+    Улучшенная функция для определения пола по имени.
+    Учитывает армянские и русские имена.
+    """
+    name_lower = name.lower()
+    
+    # Список женских армянских имен
+    female_names = [
+        'լիլիթ', 'մարիամ', 'սիրանուշ', 'անահիտ', 'հասմիկ', 'նարինե', 'արիանա', 'մարիա', 'սոնա', 'լիզա', 'կարինե',
+        'հայկուհի', 'վարդուհի', 'սիրանույշ', 'անահիտ', 'լուսինե', 'հասմիկ', 'նարինե', 'արիանա', 'մարիա', 'սոնա', 'լիզա', 'կարինե',
+        'հայկուհի', 'վարդուհի', 'սիրանույշ', 'անահիտ', 'լուսինե', 'գայանե', 'ռուզան', 'նունե', 'սիրանույշ', 'անահիտ', 'լուսինե',
+        'անուշ', 'շուշան', 'հասմիկ', 'նունե', 'ռուզան', 'գայանե', 'սիրանույշ', 'անահիտ', 'լուսինե',
+        'սոնա', 'լիզա', 'կարինե', 'հայկուհի', 'վարդուհի',
+        # Русские женские имена
+        'анна', 'мария', 'елена', 'наталья', 'ольга', 'ирина', 'татьяна', 'светлана', 'людмила', 'галина',
+        # Армянские имена, написанные русскими буквами
+        'анаит', 'лилит', 'мариам', 'сирануш', 'нарине', 'ариана', 'соня', 'лиза', 'карине',
+        'гаяне', 'рузан', 'нуне', 'сирануйш', 'лусине', 'ани', 'галина',
+        # Дополнительные армянские женские имена
+        'աստղիկ', 'նաիրա', 'սեդա', 'լաուրա', 'դիանա', 'զարուհի', 'զեյնաբ', 'զեյնապ',
+        'շողիկ', 'լուսիկ', 'վարդիկ', 'սիրիկ', 'անիկ', 'կարիկ', 'նարիկ', 'մարիկ'
+    ]
+    
+    # Список мужских армянских имен
+    male_names = [
+        'վահան', 'հայկ', 'արամ', 'սարգիս', 'կարեն', 'ռոբերտ', 'դավիթ', 'մհեր', 'տիգրան', 'վահե', 'հրաչյա', 'սամվել', 'գագիկ', 'ռաֆիկ', 'վիգեն',
+        # Русские мужские имена
+        'михаил', 'александр', 'дмитрий', 'сергей', 'андрей', 'владимир', 'николай', 'игорь', 'алексей', 'михаил'
+    ]
+    
+    # Проверяем точные совпадения
+    if name_lower in female_names:
+        return False  # Женский
+    
+    if name_lower in male_names:
+        return True  # Мужской
+    
+    # Проверяем окончания
+    # Женские окончания (армянские и русские)
+    female_endings = ['ա', 'ե', 'ի', 'ու', 'а', 'я', 'ь']
+    for ending in female_endings:
+        if name_lower.endswith(ending):
+            return False  # Женский
+    
+    # Мужские окончания (армянские)
+    male_endings = ['ան', 'իկ', 'ուն', 'են', 'ին', 'ոն']
+    for ending in male_endings:
+        if name_lower.endswith(ending):
+            return True  # Мужской
+    
+    # Если все правила не сработали - используем умное правило по умолчанию
+    # Анализируем гласные - женские имена обычно содержат больше гласных
+    vowels = name_lower.count('ա') + name_lower.count('ե') + name_lower.count('ը') + name_lower.count('ի') + name_lower.count('ո') + name_lower.count('ու') + name_lower.count('և') + name_lower.count('а') + name_lower.count('е') + name_lower.count('ё') + name_lower.count('и') + name_lower.count('о') + name_lower.count('у') + name_lower.count('ы') + name_lower.count('э') + name_lower.count('ю') + name_lower.count('я')
+    vowel_ratio = vowels / len(name_lower)
+    
+    # Если больше 40% гласных - скорее всего женское
+    if vowel_ratio > 0.4:
+        return False  # Женский
+    else:
+        return True  # Мужской
 
-
+@app.route('/api/import_csv_guests', methods=['POST'])
+@require_event_access(get_event_by_id)
+def import_csv_guests():
+    try:
+        print("=== CSV Import Debug ===")
+        data = request.get_json()
+        print(f"Received data keys: {list(data.keys()) if data else 'None'}")
+        
+        event_id = data.get('event_id')
+        csv_data = data.get('csv_data')
+        language = data.get('language', 'ru')
+        
+        print(f"Event ID: {event_id}")
+        print(f"CSV data length: {len(csv_data) if csv_data else 0}")
+        print(f"Language: {language}")
+        
+        if not event_id:
+            return jsonify({'success': False, 'error': 'Event ID is required'}), 400
+        
+        if not csv_data:
+            return jsonify({'success': False, 'error': 'CSV data is required'}), 400
+        
+        # Проверяем размер данных (примерно 10MB)
+        if len(csv_data.encode('utf-8')) > 10 * 1024 * 1024:
+            return jsonify({'success': False, 'error': 'CSV file is too large (max 10MB)'}), 400
+        
+        # Парсим CSV данные
+        lines = csv_data.strip().split('\n')
+        print(f"Total lines in CSV: {len(lines)}")
+        print(f"First line: {lines[0] if lines else 'None'}")
+        
+        if len(lines) < 2:  # Нужна как минимум заголовок и одна строка данных
+            return jsonify({'success': False, 'error': 'CSV file is empty or invalid'}), 400
+        
+        # Проверяем количество строк (максимум 1000)
+        if len(lines) > 1001:  # +1 для заголовка
+            return jsonify({'success': False, 'error': 'CSV file has too many rows (max 1000)'}), 400
+        
+        # Проверяем заголовок
+        header = lines[0].strip().split(',')
+        print(f"Header parts: {header}")
+        print(f"Header length: {len(header)}")
+        
+        if len(header) < 3:
+            return jsonify({'success': False, 'error': 'CSV header must have at least 3 columns: Сторона, Имя гостя, Имя Гостя в приглашении'}), 400
+        
+        # Пропускаем заголовок (первую строку)
+        data_lines = lines[1:]
+        print(f"Data lines count: {len(data_lines)}")
+        
+        imported_count = 0
+        errors = []
+        processed_names = set()  # Для отслеживания дубликатов
+        
+        for line_num, line in enumerate(data_lines, start=2):  # Начинаем с 2, так как первая строка - заголовок
+            try:
+                print(f"Processing line {line_num}: {line}")
+                
+                # Разделяем строку по запятой, учитывая кавычки
+                parts = []
+                current_part = ""
+                in_quotes = False
+                
+                for char in line:
+                    if char == '"':
+                        in_quotes = not in_quotes
+                    elif char == ',' and not in_quotes:
+                        parts.append(current_part.strip())
+                        current_part = ""
+                    else:
+                        current_part += char
+                
+                # Добавляем последнюю часть
+                parts.append(current_part.strip())
+                
+                # Очищаем кавычки из всех частей
+                parts = [part.strip('"').strip() for part in parts]
+                print(f"Parsed parts: {parts}")
+                
+                # Проверяем, что у нас есть нужные колонки
+                if len(parts) < 3:
+                    print(f"Error: insufficient columns in line {line_num}")
+                    errors.append(f"Строка {line_num}: недостаточно колонок (нужно 3, получено {len(parts)})")
+                    continue
+                
+                # Извлекаем данные
+                # parts[0] - "Сторона" (игнорируем)
+                guest_nickname = parts[1]  # "Имя гостя"
+                guest_name = parts[2]      # "Имя Гостя в приглашении"
+                
+                # Проверяем, что данные не пустые
+                if not guest_name:
+                    errors.append(f"Строка {line_num}: пустое имя гостя")
+                    continue
+                
+                # Проверяем на дубликаты
+                if guest_name in processed_names:
+                    errors.append(f"Строка {line_num}: дубликат имени '{guest_name}'")
+                    continue
+                
+                processed_names.add(guest_name)
+                
+                # Генерируем хеш для приглашения
+                import hashlib
+                import time
+                hash_value = hashlib.md5(f"{guest_name}{event_id}{time.time()}".encode()).hexdigest()
+                
+                # Определяем пол по имени (используем простую логику)
+                is_male = detect_gender_by_name(guest_name)
+                
+                # Создаем приглашение
+                invitation = Invitation(
+                    name=guest_name,
+                    event_id=event_id,
+                    with_spouse=False,  # По умолчанию False
+                    hash=hash_value,
+                    is_male=is_male,
+                    accepted=None,  # По умолчанию None (ожидает ответа)
+                    guest_nickname=guest_nickname if guest_nickname else None
+                )
+                
+                print(f"Created invitation: name={guest_name}, nickname={guest_nickname}, is_male={is_male}")
+                
+                # Сохраняем в базу данных
+                try:
+                    if createInvitation(invitation):
+                        imported_count += 1
+                        print(f"Successfully imported invitation {imported_count}")
+                    else:
+                        print(f"Failed to save invitation to database")
+                        errors.append(f"Строка {line_num}: ошибка сохранения в базу данных")
+                except Exception as db_error:
+                    print(f"Database error: {str(db_error)}")
+                    errors.append(f"Строка {line_num}: ошибка базы данных - {str(db_error)}")
+                    
+            except Exception as e:
+                print(f"Error processing line {line_num}: {str(e)}")
+                errors.append(f"Строка {line_num}: {str(e)}")
+        
+        print(f"Import completed. Imported: {imported_count}, Errors: {len(errors)}")
+        
+        # Формируем ответ
+        response_data = {
+            'success': True,
+            'imported_count': imported_count,
+            'total_lines': len(data_lines)
+        }
+        
+        if errors:
+            response_data['errors'] = errors[:10]  # Показываем только первые 10 ошибок
+            response_data['error_count'] = len(errors)
+            print(f"First 10 errors: {errors[:10]}")
+        
+        print("=== CSV Import Debug End ===")
+        return jsonify(response_data)
+        
+    except Exception as e:
+        print(f"Error importing CSV guests: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({'success': False, 'error': str(e)}), 500
 
 # Authentication middleware
 @app.before_request

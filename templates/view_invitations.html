@@ -1295,6 +1295,10 @@
                 <button class="btn btn-success" id="exportAcceptedBtn">
                     <i class="fas fa-download"></i> <span id="exportAcceptedText">Экспорт принятых</span>
                 </button>
+                <button class="btn btn-info" id="importCsvBtn">
+                    <i class="fas fa-file-csv"></i> <span id="importCsvText">Импорт CSV</span>
+                </button>
+                <input type="file" id="csvFileInput" accept=".csv" style="display: none;">
             </div>
 
             <div class="invitations-cards mobile-only">
@@ -1515,7 +1519,8 @@
                 noItemsSelected: 'Ընտրեք առնվազն մեկ հրավեր',
                 selectAllText: 'Ընտրել բոլորը',
                 deselectAllText: 'Չեղարկել ընտրությունը',
-                exportAcceptedText: 'JSON էքսպորտ ընդունվածների'
+                exportAcceptedText: 'JSON էքսպորտ ընդունվածների',
+                importCsvText: 'CSV ներմուծում'
             },
             ru: {
                 sideTitle: 'Менеджер приглашений',
@@ -1570,7 +1575,8 @@
                 noItemsSelected: 'Выберите хотя бы одно приглашение',
                 selectAllText: 'Выбрать все',
                 deselectAllText: 'Снять выделение',
-                exportAcceptedText: 'JSON экспорт принятых'
+                exportAcceptedText: 'JSON экспорт принятых',
+                importCsvText: 'Импорт CSV'
             }
         };
 
@@ -1685,6 +1691,7 @@
             document.getElementById('selectAllText').textContent = translations[lang].selectAllText;
             document.getElementById('deselectAllText').textContent = translations[lang].deselectAllText;
             document.getElementById('exportAcceptedText').textContent = translations[lang].exportAcceptedText;
+            document.getElementById('importCsvText').textContent = translations[lang].importCsvText;
 
             document.documentElement.lang = lang;
         }
@@ -2164,6 +2171,141 @@
                     }, 100);
                 });
             } // Закрытие условия if (invitationCheckboxes.length > 0)
+
+            // Функция импорта CSV
+            const importCsvBtn = document.getElementById('importCsvBtn');
+            const csvFileInput = document.getElementById('csvFileInput');
+            
+            if (importCsvBtn && csvFileInput) {
+                importCsvBtn.addEventListener('click', function() {
+                    csvFileInput.click();
+                });
+                
+                csvFileInput.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    if (!file) return;
+                    
+                    // Проверяем тип файла
+                    if (!file.name.toLowerCase().endsWith('.csv')) {
+                        alert(currentLanguage === 'hy' ? 'Խնդրում ենք ընտրել CSV ֆայլ' : 'Пожалуйста, выберите CSV файл');
+                        return;
+                    }
+                    
+                    // Проверяем размер файла (10MB)
+                    if (file.size > 10 * 1024 * 1024) {
+                        alert(currentLanguage === 'hy' ? 'Ֆայլը չափազանց մեծ է (առավելագույնը 10MB)' : 'Файл слишком большой (максимум 10MB)');
+                        return;
+                    }
+                    
+                    // Показываем индикатор загрузки
+                    const originalText = importCsvBtn.innerHTML;
+                    importCsvBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Импорт...';
+                    importCsvBtn.disabled = true;
+                    
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const csvContent = e.target.result;
+                        
+                        // Получаем event_id из URL
+                        const eventId = new URLSearchParams(window.location.search).get('event_id');
+                        
+                        if (!eventId) {
+                            console.error('Event ID not found in URL');
+                            alert(currentLanguage === 'hy' ? 'Սխալ՝ չի գտնվել միջոցառման ID' : 'Ошибка: не найден ID мероприятия');
+                            importCsvBtn.innerHTML = originalText;
+                            importCsvBtn.disabled = false;
+                            return;
+                        }
+                        
+                        console.log('Event ID:', eventId);
+                        
+                        console.log('Sending CSV data to server...');
+                        console.log('CSV content length:', csvContent.length);
+                        console.log('CSV content preview:', csvContent.substring(0, 200) + '...');
+                        
+                        // Отправляем CSV данные на сервер
+                        fetch('/api/import_csv_guests', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                event_id: eventId,
+                                csv_data: csvContent,
+                                language: currentLanguage
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                let successMessage = currentLanguage === 'hy' 
+                                    ? `Հաջողությամբ ներմուծվել է ${data.imported_count} հրավեր`
+                                    : `Успешно импортировано ${data.imported_count} приглашений`;
+                                
+                                // Добавляем информацию об ошибках, если они есть
+                                if (data.errors && data.errors.length > 0) {
+                                    const errorInfo = currentLanguage === 'hy' 
+                                        ? ` (${data.error_count} սխալներ)`
+                                        : ` (${data.error_count} ошибок)`;
+                                    successMessage += errorInfo;
+                                }
+                                
+                                showNotification(successMessage, 'success');
+                                
+                                // Показываем ошибки в консоли для отладки
+                                if (data.errors && data.errors.length > 0) {
+                                    console.log('CSV Import Errors:', data.errors);
+                                }
+                                
+                                // Перезагружаем страницу для отображения новых приглашений
+                                setTimeout(() => {
+                                    window.location.reload();
+                                }, 1500);
+                            } else {
+                                const errorMessage = currentLanguage === 'hy' 
+                                    ? `Սխալ՝ ${data.error}` 
+                                    : `Ошибка: ${data.error}`;
+                                showNotification(errorMessage, 'error');
+                                console.error('CSV Import Error:', data);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Network error:', error);
+                            let errorMessage;
+                            
+                            if (error.name === 'TypeError' && error.message.includes('fetch')) {
+                                errorMessage = currentLanguage === 'hy' 
+                                    ? 'Սխալ՝ չհաջողվեց միանալ սերվերին' 
+                                    : 'Ошибка: не удалось подключиться к серверу';
+                            } else if (error.status === 401) {
+                                errorMessage = currentLanguage === 'hy' 
+                                    ? 'Սխալ՝ անհրաժեշտ է մուտք գործել' 
+                                    : 'Ошибка: необходимо войти в систему';
+                            } else if (error.status === 500) {
+                                errorMessage = currentLanguage === 'hy' 
+                                    ? 'Սխալ՝ սերվերի սխալ' 
+                                    : 'Ошибка: ошибка сервера';
+                            } else {
+                                errorMessage = currentLanguage === 'hy' 
+                                    ? 'Սխալ՝ չհաջողվեց ներմուծել տվյալները' 
+                                    : 'Ошибка: не удалось импортировать данные';
+                            }
+                            
+                            showNotification(errorMessage, 'error');
+                        })
+                        .finally(() => {
+                            // Восстанавливаем кнопку
+                            importCsvBtn.innerHTML = originalText;
+                            importCsvBtn.disabled = false;
+                            // Очищаем input
+                            csvFileInput.value = '';
+                        });
+                    };
+                    
+                    // Пытаемся определить кодировку файла
+                    reader.readAsText(file, 'UTF-8');
+                });
+            }
 
             // Функция экспорта принятых гостей
             const exportAcceptedBtn = document.getElementById('exportAcceptedBtn');
