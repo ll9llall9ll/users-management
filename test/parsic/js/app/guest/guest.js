@@ -29,6 +29,8 @@ export const guest = (() => {
      * @returns {void}
      */
     const countDownDate = () => {
+        console.log('ParsicRu - countDownDate function called');
+        
         const eventDate = document.body.getAttribute('data-time');
         let count;
         
@@ -37,27 +39,47 @@ export const guest = (() => {
         
         // Проверяем, что дата установлена
         if (!eventDate || eventDate === 'Дата будет уточнена') {
-            console.log('Date not set or will be clarified later');
+            console.log('ParsicRu - Date not set or will be clarified later');
             return;
         }
         
-        // Парсим дату в формате DD.MM.YYYY
+        // Парсим дату в формате DD.MM.YYYY (русский формат)
         if (eventDate && eventDate.includes('.')) {
             const parts = eventDate.split('.');
             if (parts.length === 3) {
                 const day = parseInt(parts[0]);
                 const month = parseInt(parts[1]) - 1; // Месяцы в JS начинаются с 0
                 const year = parseInt(parts[2]);
+                
+                // Проверяем валидность даты
+                if (isNaN(day) || isNaN(month) || isNaN(year)) {
+                    console.error('ParsicRu - Invalid date parts:', { day, month, year });
+                    return;
+                }
+                
                 count = new Date(year, month, day, 12, 0, 0).getTime(); // Устанавливаем время на 12:00
                 console.log('ParsicRu - Parsed date:', new Date(year, month, day, 12, 0, 0));
                 console.log('ParsicRu - Target time:', count);
+                console.log('ParsicRu - Current time:', Date.now());
             } else {
-                console.error('Invalid date format');
+                console.error('ParsicRu - Invalid date format, expected DD.MM.YYYY');
                 return;
             }
         } else {
             // Пробуем стандартный парсинг для обратной совместимости
-            count = (new Date(eventDate.replace(' ', 'T'))).getTime();
+            try {
+                count = (new Date(eventDate.replace(' ', 'T'))).getTime();
+                console.log('ParsicRu - Standard date parsing:', new Date(eventDate.replace(' ', 'T')));
+            } catch (error) {
+                console.error('ParsicRu - Failed to parse date:', error);
+                return;
+            }
+        }
+
+        // Проверяем, что count валидный
+        if (!count || isNaN(count)) {
+            console.error('ParsicRu - Invalid count value:', count);
+            return;
         }
 
         /**
@@ -71,8 +93,24 @@ export const guest = (() => {
         const minute = document.getElementById('minute');
         const second = document.getElementById('second');
 
+        // Проверяем, что все элементы найдены
+        if (!day || !hour || !minute || !second) {
+            console.error('ParsicRu - Countdown elements not found:', { day, hour, minute, second });
+            return;
+        }
+
         const updateCountdown = () => {
             const distance = Math.abs(count - Date.now());
+            
+            console.log('ParsicRu - Countdown update:', {
+                target: new Date(count),
+                current: new Date(),
+                distance: distance,
+                days: Math.floor(distance / (1000 * 60 * 60 * 24)),
+                hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+                minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+                seconds: Math.floor((distance % (1000 * 60)) / 1000)
+            });
 
             day.textContent = pad(Math.floor(distance / (1000 * 60 * 60 * 24)));
             hour.textContent = pad(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
@@ -82,6 +120,7 @@ export const guest = (() => {
             util.timeOut(updateCountdown, 1000 - (Date.now() % 1000));
         };
 
+        console.log('ParsicRu - Starting countdown...');
         util.timeOut(updateCountdown);
     };
 
@@ -318,13 +357,17 @@ export const guest = (() => {
      * @returns {Promise<void>}
      */
     const booting = async () => {
+        console.log('ParsicRu - Booting started...');
+        
         animateSvg();
+        console.log('ParsicRu - Calling countDownDate...');
         countDownDate();
         showGuestName();
         modalImageClick();
         normalizeArabicFont();
         buildGoogleCalendar();
 
+        console.log('ParsicRu - Booting completed');
         document.body.scrollIntoView({ behavior: 'instant' });
         document.getElementById('root').classList.remove('opacity-0');
 
@@ -369,9 +412,7 @@ export const guest = (() => {
         });
 
         if (!token || token.length <= 0) {
-            document.getElementById('comment')?.remove();
-            document.querySelector('a.nav-link[href="#comment"]')?.closest('li.nav-item')?.remove();
-
+            // Не удаляем секцию комментариев, просто загружаем базовые компоненты
             vid.load();
             img.load();
             aud.load();

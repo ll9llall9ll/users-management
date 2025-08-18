@@ -77,7 +77,7 @@
     <script src="/test/parsic/dist/guest.js"></script>
 </head>
 
-<body data-audio="/test/parsic/assets/music/pure-love-304010.mp3" data-confetti="true" data-time="{% if event.date %}{{event.date | date}}{% else %}Дата будет уточнена{% endif %}">
+<body data-audio="/test/parsic/assets/music/pure-love-304010.mp3" data-confetti="true" data-time="{% if event.date %}{{ event.date.strftime('%d.%m.%Y') }}{% else %}Дата будет уточнена{% endif %}">
 
     <!-- Root Invitation -->
     <div class="row m-0 p-0 opacity-0" id="root">
@@ -503,9 +503,9 @@
                             <div class="bg-theme-auto rounded-4 shadow p-3 mx-4 mt-4 text-start" data-aos="fade-up"
                                 data-aos-duration="2500">
                                 <i class="fa-solid fa-comment"></i>
-                                <p class="d-inline">Ваши пожелания или особые комментарии</p>
+                                <p class="d-inline">Ваши пожелания или комментарии</p>
                                 <div class="mt-2">
-                                    <textarea name="comment" id="comment" class="form-control" rows="4"
+                                    <textarea name="comment" id="comment" class="form-control" rows="3"
                                         placeholder="Напишите ваши пожелания, поздравления или особые комментарии..."></textarea>
                                 </div>
                             </div>
@@ -562,6 +562,10 @@
                         <hr class="my-3">
                     </div>
                 </section>
+
+
+
+                <!-- Wave Separator -->
             </main>
 
             <!-- Navbar Bottom -->
@@ -597,6 +601,7 @@
                             <span class="d-block" style="font-size: 0.7rem;">Галерея</span>
                         </a>
                     </li>
+
                 </ul>
             </nav>
         </div>
