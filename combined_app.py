@@ -334,6 +334,80 @@ def export_accepted_guests():
         traceback.print_exc()
         return jsonify({'success': False, 'error': str(e)}), 500
 
+@app.route('/api/export_csv_guests_with_links', methods=['POST'])
+@require_event_access(get_event_by_id)
+def export_csv_guests_with_links():
+    try:
+        data = request.get_json()
+        event_id = data.get('event_id')
+        language = data.get('language', 'ru')  # По умолчанию русский
+        
+        if not event_id:
+            return jsonify({'success': False, 'error': 'Event ID is required'}), 400
+        
+        # Получаем все приглашения для события
+        invitations = getInvitationsListByEventId(event_id)
+        
+        if not invitations:
+            return jsonify({'success': False, 'error': 'No invitations found'}), 404
+        
+        # Создаем CSV данные
+        import csv
+        import io
+        
+        # Создаем StringIO объект для записи CSV
+        output = io.StringIO()
+        writer = csv.writer(output)
+        
+        # Записываем заголовок
+        if language == 'hy':
+            header = ['Կողմ', 'Հյուրի անուն', 'Հյուրի անուն հրավերում', 'Հյուրի հղում']
+        else:
+            header = ['Сторона', 'Имя гостя', 'Имя Гостя в приглашении', 'Ссылка гостя']
+        
+        writer.writerow(header)
+        
+        # Получаем базовый URL для генерации ссылок
+        base_url = request.host_url.rstrip('/')
+        
+        # Записываем данные для каждого приглашения
+        for invitation in invitations:
+            # Генерируем ссылку для гостя
+            guest_link = f"{base_url}/invite?h={invitation.hash}"
+            
+            # Определяем сторону (по умолчанию "Гость")
+            side = "Հյուր" if language == 'hy' else "Гость"
+            
+            # Используем guest_nickname если есть, иначе пустая строка
+            guest_nickname = invitation.guest_nickname if invitation.guest_nickname else ""
+            
+            # Записываем строку данных
+            row = [
+                side,  # Сторона
+                guest_nickname,  # Имя гостя (nickname)
+                invitation.name,  # Имя Гостя в приглашении
+                guest_link  # Ссылка гостя
+            ]
+            
+            writer.writerow(row)
+        
+        # Получаем CSV данные как строку
+        csv_data = output.getvalue()
+        output.close()
+        
+        return jsonify({
+            'success': True,
+            'csv_data': csv_data,
+            'filename': f'guests_with_links_{event_id}.csv',
+            'total_guests': len(invitations)
+        })
+        
+    except Exception as e:
+        print(f"Error exporting CSV guests with links: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({'success': False, 'error': str(e)}), 500
+
 def detect_gender_by_name(name):
     """
     Улучшенная функция для определения пола по имени.
