@@ -1603,6 +1603,56 @@
     </div>
     <script>
         function generateRandomHash(length = 8) {
+            const nameInput = document.getElementById('name');
+            const guestName = nameInput ? nameInput.value.trim() : '';
+            
+            // Если есть имя гостя, создаем хеш на основе имени
+            if (guestName) {
+                // Словарь для транслитерации русских букв
+                const translitMap = {
+                    'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd', 'е': 'e', 'ё': 'e',
+                    'ж': 'zh', 'з': 'z', 'и': 'i', 'й': 'y', 'к': 'k', 'л': 'l', 'м': 'm',
+                    'н': 'n', 'о': 'o', 'п': 'p', 'р': 'r', 'с': 's', 'т': 't', 'у': 'u',
+                    'ф': 'f', 'х': 'h', 'ц': 'ts', 'ч': 'ch', 'ш': 'sh', 'щ': 'sch',
+                    'ъ': '', 'ы': 'y', 'ь': '', 'э': 'e', 'ю': 'yu', 'я': 'ya',
+                    'А': 'a', 'Б': 'b', 'В': 'v', 'Г': 'g', 'Д': 'd', 'Е': 'e', 'Ё': 'e',
+                    'Ж': 'zh', 'З': 'z', 'И': 'i', 'Й': 'y', 'К': 'k', 'Л': 'l', 'М': 'm',
+                    'Н': 'n', 'О': 'o', 'П': 'p', 'Р': 'r', 'С': 's', 'Т': 't', 'У': 'u',
+                    'Ф': 'f', 'Х': 'h', 'Ц': 'ts', 'Ч': 'ch', 'Ш': 'sh', 'Щ': 'sch',
+                    'Ъ': '', 'Ы': 'y', 'Ь': '', 'Э': 'e', 'Ю': 'yu', 'Я': 'ya'
+                };
+                
+                // Очищаем имя от лишних символов и транслитерируем
+                let cleanName = '';
+                for (let c of guestName) {
+                    if (c.match(/[a-zA-Zа-яА-Я]/)) {
+                        // Транслитерируем русские буквы
+                        if (translitMap[c]) {
+                            cleanName += translitMap[c];
+                        } else {
+                            // Оставляем латинские буквы как есть
+                            cleanName += c.toLowerCase();
+                        }
+                    }
+                }
+                
+                // Берем первые 3-4 буквы имени
+                const namePart = cleanName.substring(0, 4);
+                
+                // Генерируем короткий случайный хеш (4 символа)
+                const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+                let randomPart = '';
+                for (let i = 0; i < 4; i++) {
+                    randomPart += chars.charAt(Math.floor(Math.random() * chars.length));
+                }
+                
+                // Добавляем timestamp для уникальности
+                const timestamp = Date.now().toString().slice(-3);
+                
+                return `${namePart}${randomPart}${timestamp}`;
+            }
+            
+            // Если имени нет, генерируем обычный случайный хеш
             const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
             let result = '';
 
@@ -1620,6 +1670,22 @@
             // Always set a new random hash when the page loads
             if (hashInput) {
                 hashInput.value = generateRandomHash();
+            }
+            
+            // Добавляем автоматическое обновление хеша при изменении имени
+            const nameInput = document.getElementById('name');
+            if (nameInput && hashInput) {
+                nameInput.addEventListener('input', function() {
+                    // Обновляем хеш только если поле хеша не было изменено вручную
+                    if (!hashInput.dataset.manuallyEdited) {
+                        hashInput.value = generateRandomHash();
+                    }
+                });
+                
+                // Отмечаем, если пользователь редактирует хеш вручную
+                hashInput.addEventListener('input', function() {
+                    hashInput.dataset.manuallyEdited = 'true';
+                });
             }
 
             // Optional: Add a refresh button next to the hash field

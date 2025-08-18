@@ -49,7 +49,7 @@ POST /api/export_csv_guests_with_links
 ```json
 {
     "success": true,
-    "csv_data": "Сторона,Имя гостя,Имя Гостя в приглашении,Ссылка гостя\nГость,Мама,Анаит Ервандовна,http://localhost:5000/invite?h=abc123...",
+    "csv_data": "Сторона,Имя гостя,Имя Гостя в приглашении,Ссылка гостя\nГость,Мама,Анаит Ервандовна,http://localhost:5000/invite?h=Anai7x2k629",
     "filename": "guests_with_links_123.csv",
     "total_guests": 25
 }
@@ -59,9 +59,9 @@ POST /api/export_csv_guests_with_links
 
 ```csv
 Сторона,Имя гостя,Имя Гостя в приглашении,Ссылка гостя
-Гость,Мама,Анаит Ервандовна,http://localhost:5000/invite?h=abc123def456
-Гость,Папа,Ерванд Арамаисович,http://localhost:5000/invite?h=ghi789jkl012
-Гость,Бабушка,Людмила Петровна,http://localhost:5000/invite?h=mno345pqr678
+Гость,Мама,Анаит Ервандовна,http://localhost:5000/invite?h=Anai7x2k629
+Гость,Папа,Ерванд Арамаисович,http://localhost:5000/invite?h=Erva9m4p629
+Гость,Бабушка,Людмила Петровна,http://localhost:5000/invite?h=Lyud5n8q629
 ```
 
 ## Тестирование
