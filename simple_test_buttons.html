@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Простой тест кнопок</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f0f0f0;
+        }
+        .test-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .button-group {
+            margin: 20px 0;
+            padding: 20px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+        }
+        .location-btn {
+            display: inline-block;
+            padding: 15px 25px;
+            margin: 10px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .primary {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+        }
+        .secondary {
+            background: linear-gradient(135deg, #2196F3, #1976D2);
+            color: white;
+        }
+        .location-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .debug-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            font-family: monospace;
+            font-size: 14px;
+        }
+        .test-result {
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            border-left: 4px solid #28a745;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 Простой тест кнопок</h1>
+        <p>Проверяем, что кнопки работают корректно</p>
+        
+        <div class="button-group">
+            <h3>⛪ Храм</h3>
+            <button class="location-btn primary" data-location="church" data-action="maps">
+                Открыть в Google Maps
+            </button>
+            <button class="location-btn secondary" data-location="church" data-action="directions">
+                Построить маршрут
+            </button>
+        </div>
+        
+        <div class="button-group">
+            <h3>🏛️ Зал</h3>
+            <button class="location-btn primary" data-location="hall" data-action="maps">
+                Открыть в Google Maps
+            </button>
+            <button class="location-btn secondary" data-location="hall" data-action="directions">
+                Построить маршрут
+            </button>
+        </div>
+        
+        <div class="debug-info">
+            <strong>Отладочная информация:</strong><br>
+            <div id="debug-output">Инициализация...</div>
+        </div>
+        
+        <div class="test-result">
+            <strong>Результат тестирования:</strong><br>
+            <div id="test-output">Нажмите кнопки для проверки</div>
+        </div>
+        
+        <button onclick="testAllButtons()" style="padding: 15px 30px; font-size: 18px; background: #007bff; color: white; border: none; border-radius: 8px; cursor: pointer;">
+            🧪 Протестировать все кнопки
+        </button>
+    </div>
+
+    <script>
+        // Координаты для тестирования
+        const CHURCH_COORDINATES = [40.059791, 44.444884];
+        const HALL_COORDINATES = [40.059791, 44.444884];
+        
+        // Функция логирования
+        function log(message) {
+            const debugOutput = document.getElementById('debug-output');
+            const timestamp = new Date().toLocaleTimeString();
+            debugOutput.innerHTML += `<div>[${timestamp}] ${message}</div>`;
+            console.log(message);
+        }
+        
+        // Функция показа результата
+        function showResult(message, isSuccess = true) {
+            const testOutput = document.getElementById('test-output');
+            const color = isSuccess ? '#28a745' : '#dc3545';
+            testOutput.innerHTML = `<span style="color: ${color};">${message}</span>`;
+        }
+        
+        // Функция открытия Google Maps
+        function openInGoogleMaps(type) {
+            log(`openInGoogleMaps вызвана с типом: ${type}`);
+            
+            let name;
+            if (type === 'church') {
+                name = 'Храм Святого Григория';
+            } else if (type === 'hall') {
+                name = 'Свадебный зал';
+            } else {
+                log(`Ошибка: неизвестный тип: ${type}`);
+                return false;
+            }
+            
+            const searchQuery = encodeURIComponent(name);
+            const url = `https://www.google.com/maps/search/${searchQuery}`;
+            log(`Открываем URL: ${url}`);
+            
+            try {
+                window.open(url, '_blank');
+                log('Google Maps успешно открыт');
+                return true;
+            } catch (error) {
+                log(`Ошибка открытия Google Maps: ${error}`);
+                return false;
+            }
+        }
+        
+        // Функция получения маршрута
+        function getDirections(type) {
+            log(`getDirections вызвана с типом: ${type}`);
+            
+            let coordinates;
+            if (type === 'church') {
+                coordinates = CHURCH_COORDINATES;
+            } else if (type === 'hall') {
+                coordinates = HALL_COORDINATES;
+            } else {
+                log(`Ошибка: неизвестный тип: ${type}`);
+                return false;
+            }
+            
+            const url = `https://yandex.com/maps/?rtext=~${coordinates[0]},${coordinates[1]}&rtt=auto`;
+            log(`Открываем URL: ${url}`);
+            
+            try {
+                window.open(url, '_blank');
+                log('Яндекс навигатор успешно открыт');
+                return true;
+            } catch (error) {
+                log(`Ошибка открытия Яндекс навигатора: ${error}`);
+                return false;
+            }
+        }
+        
+        // Обработчик кликов по кнопкам
+        function handleButtonClick(event) {
+            const button = event.currentTarget;
+            const location = button.getAttribute('data-location');
+            const action = button.getAttribute('data-action');
+            
+            log(`Кнопка нажата: ${location} - ${action}`);
+            
+            let success = false;
+            if (action === 'maps') {
+                success = openInGoogleMaps(location);
+            } else if (action === 'directions') {
+                success = getDirections(location);
+            }
+            
+            if (success) {
+                showResult(`✅ Кнопка ${action} для ${location} работает!`, true);
+            } else {
+                showResult(`❌ Кнопка ${action} для ${location} не работает!`, false);
+            }
+        }
+        
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            log('DOM загружен, инициализируем кнопки...');
+            
+            // Находим все кнопки
+            const allButtons = document.querySelectorAll('.location-btn');
+            log(`Найдено кнопок: ${allButtons.length}`);
+            
+            // Добавляем обработчики событий
+            allButtons.forEach((button, index) => {
+                const location = button.getAttribute('data-location');
+                const action = button.getAttribute('data-action');
+                log(`Кнопка ${index}: ${location} - ${action}`);
+                
+                // Убираем старые обработчики если есть
+                button.removeEventListener('click', handleButtonClick);
+                
+                // Добавляем новый обработчик
+                button.addEventListener('click', handleButtonClick);
+                
+                // Добавляем стили для курсора
+                button.style.cursor = 'pointer';
+                
+                log(`Кнопка ${index} обработчик событий добавлен`);
+            });
+            
+            log('Инициализация завершена!');
+            showResult('✅ Все кнопки инициализированы. Нажмите любую кнопку для тестирования.', true);
+        });
+        
+        // Функция тестирования всех кнопок
+        function testAllButtons() {
+            log('=== Начинаем тестирование всех кнопок ===');
+            
+            let allWorking = true;
+            
+            // Тестируем Google Maps
+            if (!openInGoogleMaps('church')) allWorking = false;
+            if (!openInGoogleMaps('hall')) allWorking = false;
+            
+            // Тестируем маршруты
+            if (!getDirections('church')) allWorking = false;
+            if (!getDirections('hall')) allWorking = false;
+            
+            if (allWorking) {
+                showResult('🎉 Все кнопки работают корректно!', true);
+                log('=== Тестирование завершено успешно ===');
+            } else {
+                showResult('⚠️ Некоторые кнопки не работают. Проверьте консоль.', false);
+                log('=== Тестирование завершено с ошибками ===');
+            }
+        }
+        
+        // Глобальные функции для отладки
+        window.openInGoogleMaps = openInGoogleMaps;
+        window.getDirections = getDirections;
+        window.handleButtonClick = handleButtonClick;
+        window.testAllButtons = testAllButtons;
+        
+        log('Скрипт загружен и готов к работе');
+    </script>
+</body>
+</html>
+

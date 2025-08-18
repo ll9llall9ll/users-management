@@ -5,33 +5,33 @@
     <!-- Common Tag -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Приглашение принято</title>
+    <title>Приглашение принято - Свадьба</title>
 
     <!-- SEO Tag -->
     <meta name="author" content="batsik.am">
     <meta name="language" content="ru">
     <meta name="robots" content="index, follow, max-image-preview:large">
     <meta name="googlebot" content="index, follow, max-image-preview:large">
-    <meta name="title" content="Приглашение принято">
+    <meta name="title" content="Приглашение принято - Свадьба">
     <meta name="description" content="Спасибо за подтверждение участия в нашей свадьбе">
     <meta name="keywords" content="свадьба, приглашение, подтверждение, участие">
-    <meta property="og:title" content="Приглашение принято">
+    <meta property="og:title" content="Приглашение принято - Свадьба">
     <meta property="og:description" content="Спасибо за подтверждение участия в нашей свадьбе">
     <meta property="og:keywords" content="свадьба, приглашение, подтверждение, участие">
     <meta property="og:image" content="/test/parsic/assets/images/icon-192x192.png">
     <meta property="og:image:secure_url" content="/test/parsic/assets/images/icon-192x192.png">
     <meta property="og:image:type" content="image/webp">
-    <meta property="og:image:alt" content="Приглашение принято">
+    <meta property="og:image:alt" content="Приглашение принято - Свадьба">
     <meta property="og:image:width" content="980">
     <meta property="og:image:height" content="980">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="ru_RU">
     <meta property="og:url" content="https://ulems.my.id">
-    <meta property="og:site_name" content="Приглашение принято">
+    <meta property="og:site_name" content="Приглашение принято - Свадьба">
 
     <!-- Appearance -->
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-title" content="Приглашение принято">
+    <meta name="apple-mobile-web-app-title" content="Приглашение принято - Свадьба">
     <meta name="theme-color" content="#000000">
     <meta name="color-scheme" content="dark light">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -75,12 +75,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
         integrity="sha256-y3ibfOyBqlgBd+GzwFYQEVOZdNJD06HeDXihongBXKs=" crossorigin="anonymous"></script>
     <script src="/test/parsic/dist/guest.js"></script>
-    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
 </head>
 
-<body data-audio="/test/parsic/assets/music/pure-love-304010.mp3" data-confetti="true">
+<body data-confetti="true" data-time="{{event_date}}">
 
-    <!-- Root Container -->
+    <!-- Root Invitation -->
     <div class="row m-0 p-0" id="root">
 
         <!-- Desktop mode -->
@@ -90,8 +89,7 @@
                 <div class="d-flex position-absolute w-100 h-100">
                     <div class="position-relative overflow-hidden vw-100">
                         <div class="position-absolute h-100 w-100 slide-desktop" style="opacity: 1;">
-                            <img src="/test/parsic/assets/images/placeholder.webp"
-                                data-src="https://picsum.photos/1000/1000?random=7" alt="bg" class="bg-cover-home"
+                            <img src="/test/parsic/assets/images/1_1.jpg" alt="bg" class="bg-cover-home"
                                 style="mask-image: none; opacity: 30%;">
                         </div>
                     </div>
@@ -99,7 +97,6 @@
 
                 <div class="text-center p-4 bg-overlay-auto rounded-5">
                     <h2 class="font-esthetic mb-4" style="font-size: 2rem;">Приглашение принято!</h2>
-                    <p class="m-0" style="font-size: 1rem;">Спасибо за подтверждение участия</p>
                 </div>
             </div>
         </div>
@@ -110,140 +107,170 @@
             <main data-bs-spy="scroll" data-bs-target="#navbar-menu" data-bs-root-margin="25% 0% 0% 0%"
                 data-bs-smooth-scroll="true" tabindex="0">
 
-                <!-- Success Section -->
-                <section id="success" class="bg-light-dark position-relative overflow-hidden p-0 m-0">
-                    <img src="/test/parsic/assets/images/placeholder.webp" data-src="/test/parsic/assets/images/bg.webp"
-                        alt="bg" class="position-absolute opacity-25 top-50 start-50 translate-middle bg-cover-home">
-
+                <!-- Home -->
+                <section id="home" class="bg-light-dark position-relative overflow-hidden p-0 m-0">
                     <div class="position-relative text-center bg-overlay-auto" style="background-color: unset;">
-                        <!-- Success Icon -->
-                        <div class="success-icon-container mt-5 mb-4">
-                            <div class="success-icon">
-                                <i class="fa-solid fa-check"></i>
+                        <!-- Объединенный заголовок и обращение -->
+                        <div class="mb-4">
+                            <h1 class="font-esthetic pt-5 pb-3 fw-bold" style="font-size: 2.8rem;">Приглашение принято!</h1>
+                            <h3 class="font-esthetic" style="font-size: 1.6rem;">
+                                {% if invitation and invitation.name %}
+                                    {% if invitation.is_male %}
+                                        Дорогой {{ invitation.name }}!
+                                    {% else %}
+                                        Дорогая {{ invitation.name }}!
+                                    {% endif %}
+                                {% else %}
+                                    Дорогие гости!
+                                {% endif %}
+                            </h3>
+                            <div class="thank-you-message">
+                                <p class="my-2" style="font-size: 1.1rem; line-height: 1.6; max-width: 280px; margin: 0 auto;">
+                                    <span class="d-block mb-1">Спасибо за подтверждение</span>
+                                    <span class="d-block">участия в нашей свадьбе!</span>
+                                </p>
                             </div>
                         </div>
 
-                        <h1 class="font-esthetic pt-3 pb-4 fw-medium" style="font-size: 2.5rem;">Приглашение принято!</h1>
-                        <p class="my-3" style="font-size: 1.2rem;">Спасибо за подтверждение участия в нашей свадьбе</p>
-
-                        <!-- Guest Name -->
-                        {% if invitation and invitation.name %}
-                        <div class="guest-name-container mb-4">
-                            <h3 class="font-esthetic" style="font-size: 1.8rem; color: #28a745;">Дорогой {{ invitation.name }}!</h3>
+                        <div class="my-4 mx-auto d-flex justify-content-center align-items-center"
+                            style="width: 200px; height: 200px; font-size: 120px; color: #28a745; font-weight: bold;">
+                            ✔
                         </div>
-                        {% endif %}
-
-                        <!-- Celebration Animation -->
-                        <div class="celebration-container">
-                            <div class="celebration-item">🎉</div>
-                            <div class="celebration-item">💕</div>
-                            <div class="celebration-item">✨</div>
-                            <div class="celebration-item">🎊</div>
-                            <div class="celebration-item">💖</div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Wave Separator -->
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="color-theme-svg no-gap-bottom">
-                    <path fill="currentColor" fill-opacity="1"
-                        d="M0,160L48,144C96,128,192,96,288,106.7C384,117,480,171,576,165.3C672,160,768,96,864,96C960,96,1056,160,1152,154.7C1248,149,1344,75,1392,37.3L1440,0L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z">
-                    </path>
-                </svg>
-
-                <!-- Details Section -->
-                <section class="bg-white-black text-center" id="details">
-                    <h2 class="font-esthetic py-4 m-0" style="font-size: 2rem;">Детали мероприятия</h2>
-                    
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-md-8">
-                                <div class="bg-theme-auto rounded-4 shadow p-4 mb-4" data-aos="fade-up" data-aos-duration="1500">
-                                    <h3 class="font-esthetic mb-3" style="font-size: 1.5rem;">📅 Дата и время</h3>
-                                    <p class="mb-0" style="font-size: 1.1rem;">{{ event_date if event_date else 'Дата будет уточнена' }}</p>
-                                </div>
-
-                                <div class="bg-theme-auto rounded-4 shadow p-4 mb-4" data-aos="fade-up" data-aos-duration="1700">
-                                    <h3 class="font-esthetic mb-3" style="font-size: 1.5rem;">🏛️ Место проведения</h3>
-                                    <p class="mb-0" style="font-size: 1.1rem;">{{ hall_name if hall_name else 'Место будет уточнено' }}</p>
-                                </div>
-
-                                <div class="bg-theme-auto rounded-4 shadow p-4" data-aos="fade-up" data-aos-duration="1900">
-                                    <h3 class="font-esthetic mb-3" style="font-size: 1.5rem;">💝 Что дальше?</h3>
-                                    <p class="mb-2" style="font-size: 1rem;">Мы отправим вам напоминание за несколько дней до мероприятия</p>
-                                    <p class="mb-0" style="font-size: 1rem;">С нетерпением ждем встречи с вами!</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Wave Separator -->
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="color-theme-svg no-gap-bottom">
-                    <path fill="currentColor" fill-opacity="1"
-                        d="M0,96L30,106.7C60,117,120,139,180,154.7C240,171,300,181,360,186.7C420,192,480,192,540,181.3C600,171,660,149,720,154.7C780,160,840,192,900,208C960,224,1020,224,1080,208C1140,192,1200,160,1260,138.7C1320,117,1380,107,1410,101.3L1440,96L1440,0L1410,0C1380,0,1320,0,1260,0C1200,0,1140,0,1080,0C1020,0,960,0,900,0C840,0,780,0,720,0C660,0,600,0,540,0C480,0,420,0,360,0C300,0,240,0,180,0C120,0,60,0,30,0L0,0Z">
-                    </path>
-                </svg>
-
-                <!-- Map Section -->
-                <section class="bg-light-dark pt-2 pb-4" id="map">
-                    <div class="container text-center">
-                        <h2 class="font-esthetic pt-2 pb-1 m-0" style="font-size: 2rem;">📍 Местоположение</h2>
                         
-                        <div class="map-section mt-4" data-aos="fade-up" data-aos-duration="2000">
-                            <div class="map-container">
-                                <div id="yandex-map"></div>
-                                <div class="map-overlay">
-                                    <div class="map-info">
-                                        <i class="fas fa-location-dot"></i>
-                                        <span>{{ hall_name if hall_name else 'Место проведения' }}</span>
-                                    </div>
+                        <p class="my-2 event-date-mobile" style="font-size: 1.5rem; font-weight: 600;">{{event_date}}</p>
+
+                        <!-- Обратный отсчет дней -->
+                        <div class="countdown-section mt-4 mb-3">
+                            <h4 class="countdown-title mb-3" style="font-size: 1.3rem; color: #4b4952;">До нашей свадьбы осталось:</h4>
+                            <div class="countdown-timer" id="countdown">
+                                <div class="countdown-item">
+                                    <span class="countdown-number" id="days">0</span>
+                                    <span class="countdown-label">Дней</span>
                                 </div>
-                            </div>
-                            <div class="map-actions mt-3">
-                                <button onclick="openInYandexMaps()" class="map-btn">
-                                    <i class="fas fa-external-link-alt"></i>
-                                    Открыть в Yandex Maps
-                                </button>
-                                <button onclick="getDirections()" class="map-btn secondary">
-                                    <i class="fas fa-route"></i>
-                                    Построить маршрут
-                                </button>
+                                <div class="countdown-item">
+                                    <span class="countdown-number" id="hours">0</span>
+                                    <span class="countdown-label">Часов</span>
+                                </div>
+                                <div class="countdown-item">
+                                    <span class="countdown-number" id="minutes">0</span>
+                                    <span class="countdown-label">Минут</span>
+                                </div>
+                                <div class="countdown-item">
+                                    <span class="countdown-number" id="seconds">0</span>
+                                    <span class="countdown-label">Секунд</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </section>
 
                 <!-- Wave Separator -->
+                <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="color-theme-svg no-gap-bottom">
+                    <path fill="currentColor" fill-opacity="1"
+                        d="M0,192L40,181.3C80,171,160,149,240,149.3C320,149,400,171,480,165.3C560,160,640,128,720,128C800,128,880,160,960,186.7C1040,213,1120,235,1200,218.7C1280,203,1360,149,1400,122.7L1440,96L1440,0L1400,0C1360,0,1280,0,1200,0C1120,0,1040,0,960,0C880,0,800,0,720,0C640,0,560,0,480,0C400,0,320,0,240,0C160,0,80,0,40,0L0,0Z">
+                    </path>
+                </svg> -->
+
+
+
+                <!-- Wave Separator -->
+                <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="color-theme-svg no-gap-bottom">
+                    <path fill="currentColor" fill-opacity="1"
+                        d="M0,224L34.3,234.7C68.6,245,137,267,206,266.7C274.3,267,343,245,411,234.7C480,224,549,224,617,213.3C685.7,203,754,181,823,197.3C891.4,213,960,267,1029,266.7C1097.1,267,1166,213,1234,192C1302.9,171,1371,181,1406,186.7L1440,192L1440,320L1405.7,320C1371.4,320,1303,320,1234,320C1165.7,320,1097,320,1029,320C960,320,891,320,823,320C754.3,320,686,320,617,320C548.6,320,480,320,411,320C342.9,320,274,320,206,320C137.1,320,69,320,34,320L0,320Z">
+                    </path>
+                </svg> -->
+
+                <!-- Timeline Section -->
+                <section class="bg-white-black pt-3 pb-4 overflow-hidden" id="timeline">
+                    <div class="container">
+                        <h2 class="font-esthetic text-center py-4 m-0" style="font-size: 2.25rem;">Расписание дня</h2>
+
+                        <div class="timeline-container">
+                            <!-- Timeline Item 1 - Church -->
+                            <div class="bg-theme-auto rounded-4 shadow p-3 mb-4 mx-2" data-aos="fade-up"
+                                data-aos-duration="1500">
+                                <div class="text-center">
+                                    <img src="/test/image/church.png" alt="Церковь" class="mb-3" style="width: 240px; height: 240px; object-fit: contain; border-radius: 12px;">
+                                    <h4 class="fw-bold mb-2" style="font-size: 1.5rem; font-family: 'Sacramento', cursive; color: #4b4952;">Венчание в церкви</h4>
+                                    <p class="fw-bold mb-2" style="font-size: 1.5rem; font-family: 'Sacramento', cursive; color: #4b4952;">12:30</p>
+                                    <p class="mb-2" style="font-family: 'Josefin Sans', sans-serif; font-size: 1.2rem; color: #4b4952;">Храм Покрова Пресвятой Богородицы</p>
+                                                                         <a href="https://maps.app.goo.gl/KubzBDnNrrJDmbC49"
+                                        target="_blank" rel="noopener noreferrer" 
+                                        class="btn btn-sm d-flex align-items-center justify-content-center mb-2" style="background-color: #4b4952; border-color: #4b4952; color: white; gap: 8px;">
+                                         <img src="/test/image/geo.png" alt="Карты" style="width: 30px; height: 40px; filter: brightness(0) invert(1);">
+                                         <span style="font-size: 0.9rem;">Открыть в Google Maps</span>
+                                     </a>
+                                     
+                                     <a href="https://yandex.ru/maps/?rtext=~40.224150,44.545371&rtt=auto"
+                                        target="_blank" rel="noopener noreferrer" 
+                                        class="btn btn-sm d-flex align-items-center justify-content-center" style="background-color: #1e3a8a; border-color: #1e3a8a; color: white; gap: 8px;">
+                                         <span style="font-size: 1.5rem;">🧭</span>
+                                         <span style="font-size: 0.9rem;">Построить маршрут</span>
+                                     </a>
+                                </div>
+                            </div>
+
+                            <!-- Timeline Item 2 - Restaurant -->
+                            <div class="bg-theme-auto rounded-4 shadow p-3 mb-4 mx-2" data-aos="fade-up"
+                                data-aos-duration="1700">
+                                <div class="text-center">
+                                    <img src="/test/image/hall.png" alt="Зал" class="mb-3" style="width: 240px; height: 240px; object-fit: cover; border-radius: 12px;">
+                                    <h4 class="fw-bold mb-2" style="font-size: 1.5rem; font-family: 'Sacramento', cursive; color: #4b4952;">Свадебный банкет</h4>
+                                    <p class="fw-bold mb-2" style="font-size: 1.5rem; font-family: 'Sacramento', cursive; color: #4b4952;">16:30</p>
+                                    <p class="mb-2" style="font-family: 'Josefin Sans', sans-serif; font-size: 1.2rem; color: #4b4952;">{{ hall_name }}</p>
+                                                                         <a href="https://maps.app.goo.gl/uVMTYKYhsrUV8v3C8"
+                                        target="_blank" rel="noopener noreferrer" 
+                                        class="btn btn-sm d-flex align-items-center justify-content-center mb-2" style="background-color: #4b4952; border-color: #4b4952; color: white; gap: 8px;">
+                                         <img src="/test/image/geo.png" alt="Карты" style="width: 30px; height: 40px; filter: brightness(0) invert(1);">
+                                         <span style="font-size: 0.9rem;">Открыть в Google Maps</span>
+                                     </a>
+                                     
+                                     <a href="https://yandex.ru/maps/?rtext=~40.242197,44.503804&rtt=auto"
+                                        target="_blank" rel="noopener noreferrer" 
+                                        class="btn btn-sm d-flex align-items-center justify-content-center" style="background-color: #1e3a8a; border-color: #1e3a8a; color: white; gap: 8px;">
+                                         <span style="font-size: 1.5rem;">🧭</span>
+                                         <span style="font-size: 0.9rem;">Построить маршрут</span>
+                                     </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+      
+                <!-- Wave Separator -->
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="color-theme-svg no-gap-bottom">
                     <path fill="currentColor" fill-opacity="1"
-                        d="M0,160L48,144C96,128,192,96,288,106.7C384,117,480,171,576,165.3C672,160,768,96,864,96C960,96,1056,160,1152,154.7C1248,149,1344,75,1392,37.3L1440,0L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z">
+                        d="M0,224L34.3,234.7C68.6,245,137,267,206,266.7C274.3,267,343,245,411,234.7C480,224,549,224,617,213.3C685.7,203,754,181,823,197.3C891.4,213,960,267,1029,266.7C1097.1,267,1166,213,1234,192C1302.9,171,1371,181,1406,186.7L1440,192L1440,320L1405.7,320C1371.4,320,1303,320,1234,320C1165.7,320,1097,320,1029,320C960,320,891,320,823,320C754.3,320,686,320,617,320C548.6,320,480,320,411,320C342.9,320,274,320,206,320C137.1,320,69,320,34,320L0,320Z">
                     </path>
                 </svg>
 
-                <!-- Thank You Section -->
-                <section class="bg-white-black pt-2 pb-4">
-                    <div class="container text-center">
-                        <h2 class="font-esthetic pt-2 pb-1 m-0" style="font-size: 2rem;">Спасибо вам!</h2>
-
-                        <div class="bg-theme-auto mt-4 p-4 shadow rounded-4" data-aos="fade-down" data-aos-duration="2000">
-                            <p class="p-1 mb-3" style="font-size: 1.1rem;">💕 Ваше присутствие сделает наш день особенным 💕</p>
-                            <p class="m-0 p-0 text-theme-auto" style="font-size: 1rem;">Мы очень рады, что вы сможете разделить с нами радость этого момента</p>
-                        </div>
-
-                        <div class="bg-theme-auto mt-4 p-4 shadow rounded-4" data-aos="fade-down" data-aos-duration="2000">
-                            <p class="p-1 mb-3" style="font-size: 1.1rem;">🌹 С любовью и благодарностью 🌹</p>
-                            <p class="m-0 p-0 text-theme-auto" style="font-size: 1rem;">Василий и София</p>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- End Of Page -->
-                <section class="bg-light-dark py-2 no-gap-bottom">
+                <!-- End Of Invitation -->
+                <section class="bg-white-black py-2 no-gap-bottom">
                     <div class="container text-center">
                         <p class="pb-2 pt-4" style="font-size: 0.95rem;">Спасибо за ваше внимание! Мы с нетерпением ждем встречи с вами на нашей свадьбе!</p>
 
-                        <h2 class="font-esthetic" style="font-size: 16px;">💕 С любовью и надеждой на встречу! 💕</h2>
+                        <div class="position-relative">
+                            <!-- Анимированные сердечки -->
+                            <div class="position-absolute" style="top: -8px; left: 15%;">
+                                <span class="heart-animation-small" style="animation-delay: 0s;">💕</span>
+                            </div>
+                            <div class="position-absolute" style="top: -12px; right: 15%;">
+                                <span class="heart-animation-small" style="animation-delay: 0.7s;">💕</span>
+                            </div>
+                            <div class="position-absolute" style="top: 2px; left: 10%;">
+                                <span class="heart-animation-small" style="animation-delay: 1.4s;">💕</span>
+                            </div>
+                            <div class="position-absolute" style="top: -2px; right: 10%;">
+                                <span class="heart-animation-small" style="animation-delay: 2.1s;">💕</span>
+                            </div>
+                            
+                            <!-- Заголовок на двух строках -->
+                            <h2 class="font-esthetic m-0" style="font-size: 18px; line-height: 1.3;">
+                                <span class="d-block mb-1">С любовью и надеждой</span>
+                                <span class="d-block">на встречу!</span>
+                            </h2>
+                        </div>
 
                         <hr class="my-3">
                     </div>
@@ -254,21 +281,16 @@
             <nav class="navbar navbar-expand sticky-bottom rounded-top-4 border-top p-0" id="navbar-menu">
                 <ul class="navbar-nav nav-justified w-100 align-items-center">
                     <li class="nav-item">
-                        <a class="nav-link" href="#success">
-                            <i class="fa-solid fa-check-circle"></i>
-                            <span class="d-block" style="font-size: 0.7rem;">Подтверждено</span>
+                        <a class="nav-link" href="#home">
+                            <i class="fa-solid fa-house"></i>
+                            <span class="d-block" style="font-size: 0.7rem;">Главная</span>
                         </a>
                     </li>
+
                     <li class="nav-item">
-                        <a class="nav-link" href="#details">
-                            <i class="fa-solid fa-calendar-check"></i>
-                            <span class="d-block" style="font-size: 0.7rem;">Детали</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#map">
-                            <i class="fa-solid fa-map-marker-alt"></i>
-                            <span class="d-block" style="font-size: 0.7rem;">Карта</span>
+                        <a class="nav-link" href="#timeline">
+                            <i class="fa-solid fa-timeline"></i>
+                            <span class="d-block" style="font-size: 0.7rem;">Расписание</span>
                         </a>
                     </li>
                 </ul>
@@ -276,411 +298,418 @@
         </div>
     </div>
 
-    <!-- Button Group -->
-    <div class="d-flex position-fixed flex-column" style="bottom: 10vh; right: 2vh; z-index: 1030;">
-        <!-- Audio Button -->
-        <button type="button" id="button-music"
-            class="btn bg-light-dark border btn-sm rounded-circle d-none btn-transparent shadow-sm mt-3"
-            aria-label="Музыка" data-offline-disabled="false">
-            <i class="fa-solid fa-circle-pause spin-button"></i>
-        </button>
-    </div>
 
-    <!-- Loading Page -->
-    <div class="loading-page bg-white-black" id="loading" style="opacity: 0;">
-        <div class="d-flex justify-content-center align-items-center vh-100 overflow-y-scroll">
-            <div class="d-flex flex-column width-loading text-center">
-                <img src="/test/parsic/assets/images/placeholder.webp"
-                    data-src="/test/parsic/assets/images/icon-192x192.png" data-fetch-img="high"
-                    class="img-fluid mb-3 mx-auto object-fit-cover opacity-0" alt="icon"
-                    style="width: 3.5rem; height: 3.5rem;">
-                <div class="progress" role="progressbar" style="height: 0.5rem;" aria-label="индикатор загрузки">
-                    <div class="progress-bar" id="progress-bar" style="width: 0%"></div>
+
+
+
+
+
+    <!-- Modal Image -->
+    <div class="modal fade" id="modal-image" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 border border-0">
+                <div class="modal-body p-0">
+                    <div class="d-flex position-absolute top-0 end-0">
+                        <a class="btn d-flex justify-content-center align-items-center bg-overlay-auto p-2 m-1 rounded-circle border shadow-sm z-1"
+                            role="button" target="_blank" href="/test/parsic/assets/images/placeholder.webp"
+                            id="button-modal-click">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        </a>
+                        <button
+                            class="btn d-flex justify-content-center align-items-center bg-overlay-auto p-2 m-1 rounded-circle border shadow-sm z-1"
+                            id="button-modal-download">
+                            <i class="fa-solid fa-download"></i>
+                        </button>
+                        <button
+                            class="btn d-flex justify-content-center align-items-center bg-overlay-auto p-2 m-1 rounded-circle border shadow-sm z-1"
+                            data-bs-dismiss="modal">
+                            <i class="fa-solid fa-circle-xmark"></i>
+                        </button>
+                    </div>
+
+                    <img src="/test/parsic/assets/images/placeholder.webp"
+                        class="img-fluid w-100 rounded-4 cursor-pointer" alt="фото" id="show-modal-image">
                 </div>
-                <small class="d-none mt-1 text-theme-auto" id="progress-info" style="font-size: 0.8rem;">Загрузка приложения...</small>
-                <noscript>
-                    <small class="mt-1 text-danger">Извините, это приглашение требует JavaScript для работы</small>
-                </noscript>
-            </div>
-        </div>
-        <div class="text-center position-fixed w-100" style="bottom: 8%; left: 0;">
-            <div class="d-flex flex-column">
-                <small class="text-secondary">создано</small>
-                <small class="text-theme-auto"><i class="fa-brands fa-github me-1"></i>Batsik.am</small>
             </div>
         </div>
     </div>
-</body>
 
-<style>
-    /* Success Icon Styles */
-    .success-icon-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+    <script>
+        // Функция обратного отсчета
+        function updateCountdown() {
+            const eventDate = document.body.getAttribute('data-time');
+            if (!eventDate || eventDate === 'Дата будет уточнена') {
+                document.getElementById('countdown').innerHTML = '<div class="countdown-item"><span class="countdown-number">📅</span><span class="countdown-label">Дата будет уточнена</span></div>';
+                return;
+            }
 
-    .success-icon {
-        width: 120px;
-        height: 120px;
-        background: linear-gradient(135deg, #28a745, #20c997);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        animation: successPulse 2s ease-in-out infinite;
-        box-shadow: 0 10px 30px rgba(40, 167, 69, 0.3);
-    }
+            // Парсим дату в формате DD.MM.YYYY
+            let targetDate;
+            if (eventDate.includes('.')) {
+                const parts = eventDate.split('.');
+                if (parts.length === 3) {
+                    const day = parseInt(parts[0]);
+                    const month = parseInt(parts[1]) - 1; // Месяцы в JS начинаются с 0
+                    const year = parseInt(parts[2]);
+                    targetDate = new Date(year, month, day, 12, 0, 0); // Устанавливаем время на 12:00
+                } else {
+                    document.getElementById('countdown').innerHTML = '<div class="countdown-item"><span class="countdown-number">❌</span><span class="countdown-label">Неверный формат даты</span></div>';
+                    return;
+                }
+            } else {
+                // Пробуем стандартный парсинг
+                targetDate = new Date(eventDate);
+            }
 
-    .success-icon i {
-        color: white;
-        font-size: 60px;
-        animation: successBounce 1s ease-in-out;
-    }
+            // Проверяем, что дата валидна
+            if (isNaN(targetDate.getTime())) {
+                document.getElementById('countdown').innerHTML = '<div class="countdown-item"><span class="countdown-number">❌</span><span class="countdown-label">Ошибка парсинга даты</span></div>';
+                return;
+            }
 
-    @keyframes successPulse {
-        0%, 100% {
-            transform: scale(1);
-            box-shadow: 0 10px 30px rgba(40, 167, 69, 0.3);
-        }
-        50% {
-            transform: scale(1.05);
-            box-shadow: 0 15px 40px rgba(40, 167, 69, 0.4);
-        }
-    }
+            const now = new Date();
+            const difference = targetDate - now;
 
-    @keyframes successBounce {
-        0% {
-            transform: scale(0);
-        }
-        50% {
-            transform: scale(1.2);
-        }
-        100% {
-            transform: scale(1);
-        }
-    }
+            if (difference <= 0) {
+                // Свадьба уже началась
+                document.getElementById('countdown').innerHTML = '<div class="countdown-item"><span class="countdown-number">🎉</span><span class="countdown-label">Свадьба началась!</span></div>';
+                return;
+            }
 
-    /* Guest Name Styles */
-    .guest-name-container {
-        background: linear-gradient(135deg, rgba(40, 167, 69, 0.1), rgba(32, 201, 151, 0.1));
-        border-radius: 15px;
-        padding: 15px;
-        border: 2px solid rgba(40, 167, 69, 0.3);
-        animation: guestNameGlow 3s ease-in-out infinite;
-    }
+            // Вычисляем дни, часы, минуты и секунды
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
 
-    @keyframes guestNameGlow {
-        0%, 100% {
-            box-shadow: 0 0 20px rgba(40, 167, 69, 0.2);
-        }
-        50% {
-            box-shadow: 0 0 30px rgba(40, 167, 69, 0.4);
-        }
-    }
-
-    /* Celebration Animation */
-    .celebration-container {
-        position: relative;
-        height: 100px;
-        margin: 20px 0;
-    }
-
-    .celebration-item {
-        position: absolute;
-        font-size: 2rem;
-        animation: celebrationFloat 3s ease-in-out infinite;
-        opacity: 0;
-    }
-
-    .celebration-item:nth-child(1) {
-        left: 20%;
-        animation-delay: 0s;
-    }
-
-    .celebration-item:nth-child(2) {
-        left: 40%;
-        animation-delay: 0.5s;
-    }
-
-    .celebration-item:nth-child(3) {
-        left: 60%;
-        animation-delay: 1s;
-    }
-
-    .celebration-item:nth-child(4) {
-        left: 80%;
-        animation-delay: 1.5s;
-    }
-
-    .celebration-item:nth-child(5) {
-        left: 50%;
-        animation-delay: 2s;
-    }
-
-    @keyframes celebrationFloat {
-        0% {
-            opacity: 0;
-            transform: translateY(50px) scale(0.5);
-        }
-        20% {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-        80% {
-            opacity: 1;
-            transform: translateY(-30px) scale(1.1);
-        }
-        100% {
-            opacity: 0;
-            transform: translateY(-50px) scale(0.8);
-        }
-    }
-
-    /* Map Section Styles */
-    .map-section {
-        background: rgba(255, 255, 255, 0.95);
-        border-radius: 15px;
-        padding: 15px;
-        margin: 15px auto;
-        max-width: 100%;
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-        border: 2px solid rgba(40, 167, 69, 0.2);
-        animation: mapSlideIn 1s ease-out 0.5s both;
-    }
-
-    @keyframes mapSlideIn {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    .map-container {
-        position: relative;
-        width: 100%;
-        height: 250px;
-        border-radius: 12px;
-        overflow: hidden;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        margin-bottom: 12px;
-        border: 3px solid #28a745;
-    }
-
-    #yandex-map {
-        width: 100%;
-        height: 100%;
-        border-radius: 10px;
-    }
-
-    .map-overlay {
-        position: absolute;
-        top: 8px;
-        left: 8px;
-        background: rgba(255, 255, 255, 0.95);
-        padding: 6px 10px;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        backdrop-filter: blur(5px);
-        z-index: 1000;
-    }
-
-    .map-info {
-        display: flex;
-        align-items: center;
-        font-weight: 500;
-        color: #333;
-        font-size: 0.8rem;
-    }
-
-    .map-info i {
-        color: #28a745;
-        margin-right: 6px;
-        font-size: 0.8rem;
-    }
-
-    .map-actions {
-        display: flex;
-        gap: 8px;
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-
-    .map-btn {
-        display: inline-flex;
-        align-items: center;
-        padding: 8px 12px;
-        border: none;
-        border-radius: 8px;
-        font-size: 0.8rem;
-        font-weight: 500;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        text-decoration: none;
-        background: linear-gradient(135deg, #28a745, #20c997);
-        color: white;
-        box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);
-    }
-
-    .map-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 15px rgba(40, 167, 69, 0.4);
-    }
-
-    .map-btn.secondary {
-        background: linear-gradient(135deg, #2196F3, #1976D2);
-        box-shadow: 0 4px 10px rgba(33, 150, 243, 0.3);
-    }
-
-    .map-btn.secondary:hover {
-        box-shadow: 0 6px 15px rgba(33, 150, 243, 0.4);
-    }
-
-    .map-btn i {
-        margin-right: 6px;
-        font-size: 0.8rem;
-    }
-
-    /* Responsive map styles */
-    @media (max-width: 768px) {
-        .map-container {
-            height: 180px;
-        }
-        
-        .map-actions {
-            flex-direction: column;
-            gap: 6px;
-        }
-        
-        .map-btn {
-            width: 100%;
-            justify-content: center;
-            padding: 10px;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .map-container {
-            height: 150px;
-        }
-    }
-
-    /* Улучшение читаемости шрифтов на мобильных устройствах */
-    @media (max-width: 768px) {
-        .font-esthetic {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
-            font-weight: 600 !important;
-            letter-spacing: 0.5px !important;
-        }
-        
-        h1, h2, h3, h4, h5, h6 {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
-            font-weight: 600 !important;
-            letter-spacing: 0.3px !important;
-        }
-        
-        p, span, div, button, label, input, textarea, select {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
-            font-weight: 400 !important;
-            letter-spacing: 0.2px !important;
-        }
-        
-        body {
-            -webkit-font-smoothing: antialiased !important;
-            -moz-osx-font-smoothing: grayscale !important;
-            text-rendering: optimizeLegibility !important;
-        }
-    }
-
-    @media (max-width: 576px) {
-        .success-icon {
-            width: 100px;
-            height: 100px;
+            // Обновляем элементы на странице
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
         }
 
-        .success-icon i {
-            font-size: 50px;
-        }
-        
-        .font-esthetic {
-            font-size: 1.8rem !important;
-            line-height: 1.3 !important;
-        }
-        
-        h1 {
-            font-size: 1.9rem !important;
-            line-height: 1.3 !important;
-        }
-        
-        h2 {
-            font-size: 1.7rem !important;
-            line-height: 1.3 !important;
-        }
-        
-        p {
-            font-size: 1rem !important;
-            line-height: 1.5 !important;
-        }
-        
-        .btn {
-            font-size: 1rem !important;
-            padding: 0.75rem 1.5rem !important;
-            min-height: 44px !important;
-        }
-    }
-</style>
-
-<script>
-    // Координаты места проведения мероприятия (можно изменить на реальные)
-    const EVENT_COORDINATES = [40.059791, 44.444884];
-    
-    // Initialize Yandex Map
-    function initYandexMap() {
-        ymaps.ready(function () {
-            var myMap = new ymaps.Map("yandex-map", {
-                center: EVENT_COORDINATES,
-                zoom: 16,
-                controls: ['zoomControl', 'fullscreenControl', 'geolocationControl']
-            }, {
-                searchControlProvider: 'yandex#search'
-            });
-
-            // Добавляем метку
-            var myPlacemark = new ymaps.Placemark(EVENT_COORDINATES, {
-                balloonContent: '{{ hall_name if hall_name else "Место проведения" }}<br>{{ event_date if event_date else "Дата будет уточнена" }}',
-                hintContent: '{{ hall_name if hall_name else "Место проведения" }}'
-            }, {
-                preset: 'islands#icon',
-                iconColor: '#28a745'
-            });
-
-            myMap.geoObjects.add(myPlacemark);
-
-            // Анимация появления карты
-            myMap.container.fitToViewport();
+        // Запускаем обратный отсчет при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            // Отладочная информация
+            const eventDate = document.body.getAttribute('data-time');
+            console.log('Event date from data-time:', eventDate);
+            console.log('Event date type:', typeof eventDate);
+            
+            updateCountdown();
+            // Обновляем каждую секунду
+            setInterval(updateCountdown, 1000);
         });
-    }
+    </script>
 
-    // Open in Yandex Maps
-    function openInYandexMaps() {
-        var url = "https://yandex.com/maps/?ll=" + EVENT_COORDINATES[1] + "," + EVENT_COORDINATES[0] + "&z=16&pt=" + EVENT_COORDINATES[1] + "," + EVENT_COORDINATES[0] + ",pm2rdm";
-        window.open(url, '_blank');
-    }
+    <style>
+        /* Дополнительные стили для предотвращения overflow */
+        .timeline-container {
+            /* overflow-x: hidden; */
+        }
 
-    // Get directions
-    function getDirections() {
-        var url = "https://yandex.com/maps/?rtext=~" + EVENT_COORDINATES[0] + "," + EVENT_COORDINATES[1] + "&rtt=auto";
-        window.open(url, '_blank');
-    }
+        /* Стили для тёмной темы */
+        [data-bs-theme="dark"] #timeline h4 {
+            color: #fbfbfe !important;
+        }
 
-    // Initialize map when page loads
-    document.addEventListener('DOMContentLoaded', function() {
-        initYandexMap();
-    });
-</script>
+        /* Улучшение читаемости шрифтов на мобильных устройствах */
+        @media (max-width: 768px) {
+            .font-esthetic {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+                font-weight: 600 !important;
+                letter-spacing: 0.5px !important;
+            }
+            
+            /* Улучшение читаемости для всех текстовых элементов */
+            h1, h2, h3, h4, h5, h6 {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+                font-weight: 600 !important;
+                letter-spacing: 0.3px !important;
+            }
+            
+            p, span, div, button, label, input, textarea, select {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+                font-weight: 400 !important;
+                letter-spacing: 0.2px !important;
+            }
+            
+            /* Улучшение контрастности для лучшей читаемости */
+            body {
+                -webkit-font-smoothing: antialiased !important;
+                -moz-osx-font-smoothing: grayscale !important;
+                text-rendering: optimizeLegibility !important;
+            }
+        }
 
-</html> 
+        /* Дополнительные улучшения для iPhone */
+        @media (max-width: 576px) {
+            .timeline-time svg {
+                width: 40px !important;
+                height: 40px !important;
+            }
+
+            .flex-shrink-0 {
+                width: 60px !important;
+            }
+            
+            /* Увеличение размера шрифта для лучшей читаемости на маленьких экранах */
+            .font-esthetic {
+                font-size: 1.8rem !important;
+                line-height: 1.3 !important;
+            }
+            
+            h1 {
+                font-size: 1.9rem !important;
+                line-height: 1.3 !important;
+            }
+            
+            h2 {
+                font-size: 1.7rem !important;
+                line-height: 1.3 !important;
+            }
+            
+            p {
+                font-size: 1rem !important;
+                line-height: 1.5 !important;
+            }
+            
+            /* Улучшение кнопок для сенсорных экранов */
+            .btn {
+                font-size: 1rem !important;
+                padding: 0.75rem 1.5rem !important;
+                min-height: 44px !important;
+            }
+        }
+     
+        /* Анимация сердечек */
+        .heart-animation {
+            display: inline-block;
+            font-size: 20px;
+            opacity: 0.7;
+            animation: heartFloat 3s ease-in-out infinite;
+            pointer-events: none;
+        }
+        
+        /* Анимация для пузырькового эффекта */
+        @keyframes heartFloat {
+            0%, 100% {
+                transform: translateY(0px) scale(1);
+                opacity: 0.7;
+            }
+            25% {
+                transform: translateY(-8px) scale(1.1);
+                opacity: 0.9;
+            }
+            50% {
+                transform: translateY(-4px) scale(1.05);
+                opacity: 0.8;
+            }
+            75% {
+                transform: translateY(-6px) scale(1.15);
+                opacity: 1;
+            }
+        }
+        
+        /* Анимация маленьких сердечек для финального заголовка */
+        .heart-animation-small {
+            display: inline-block;
+            font-size: 14px;
+            opacity: 0.6;
+            animation: heartFloatSmall 4s ease-in-out infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes heartFloatSmall {
+            0%, 100% {
+                transform: translateY(0px) scale(1);
+                opacity: 0.6;
+            }
+            25% {
+                transform: translateY(-6px) scale(1.08);
+                opacity: 0.8;
+            }
+            50% {
+                transform: translateY(-3px) scale(1.04);
+                opacity: 0.7;
+            }
+            75% {
+                transform: translateY(-5px) scale(1.12);
+                opacity: 0.9;
+            }
+        }
+        
+        /* Адаптивность для мобильных устройств */
+        @media (max-width: 576px) {
+            .heart-animation {
+                font-size: 16px;
+            }
+            
+            .heart-animation:nth-child(1),
+            .heart-animation:nth-child(2) {
+                top: -5px !important;
+            }
+            
+            .heart-animation:nth-child(3),
+            .heart-animation:nth-child(4) {
+                top: 2px !important;
+            }
+            
+            .heart-animation-small {
+                font-size: 12px;
+            }
+            
+            .heart-animation-small:nth-child(1),
+            .heart-animation-small:nth-child(2) {
+                top: -4px !important;
+            }
+            
+            .heart-animation-small:nth-child(3),
+            .heart-animation-small:nth-child(4) {
+                top: 1px !important;
+            }
+        }
+
+        /* Стили для обратного отсчета */
+        .countdown-section {
+            /* background: linear-gradient(135deg, rgba(75, 73, 82, 0.05), rgba(75, 73, 82, 0.1));
+            border-radius: 20px;
+            padding: 20px;
+            border: 2px solid rgba(75, 73, 82, 0.1); */
+        }
+
+        .countdown-title {
+            font-family: 'Sacramento', cursive;
+            color: #4b4952;
+            margin-bottom: 20px;
+        }
+
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .countdown-item {
+            text-align: center;
+            background: white;
+            border-radius: 15px;
+            padding: 15px 10px;
+            min-width: 80px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .countdown-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .countdown-number {
+            display: block;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #4b4952;
+            font-family: 'Josefin Sans', sans-serif;
+            margin-bottom: 5px;
+        }
+
+        .countdown-label {
+            display: block;
+            font-size: 0.9rem;
+            color: #6c757d;
+            font-family: 'Josefin Sans', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Адаптивность для обратного отсчета */
+        @media (max-width: 576px) {
+            .countdown-timer {
+                gap: 10px;
+            }
+            
+            .countdown-item {
+                min-width: 70px;
+                padding: 12px 8px;
+            }
+            
+            .countdown-number {
+                font-size: 1.5rem;
+            }
+            
+            .countdown-label {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Увеличение размера даты для мобильных устройств */
+        @media (max-width: 768px) {
+            .event-date-mobile {
+                font-size: 1.8rem !important;
+                font-weight: 700 !important;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .event-date-mobile {
+                font-size: 2rem !important;
+                font-weight: 700 !important;
+            }
+        }
+
+        /* Адаптивность для заголовка "Приглашение принято!" */
+        @media (max-width: 768px) {
+            #home h1.font-esthetic {
+                font-size: 3rem !important;
+                font-weight: 800 !important;
+            }
+        }
+
+        @media (max-width: 576px) {
+            #home h1.font-esthetic {
+                font-size: 3.2rem !important;
+                font-weight: 800 !important;
+            }
+        }
+
+        /* Стили для красивого сообщения благодарности */
+        .thank-you-message {
+            margin: 20px 0;
+        }
+
+        .thank-you-message p {
+            font-family: 'Josefin Sans', sans-serif !important;
+            color: #4b4952 !important;
+            text-align: center !important;
+            font-weight: 500 !important;
+        }
+
+        .thank-you-message .d-block:first-child {
+            color: #28a745 !important;
+            font-weight: 600 !important;
+        }
+
+        .thank-you-message .d-block:last-child {
+            color: #6c757d !important;
+            font-weight: 500 !important;
+        }
+
+        /* Адаптивность для мобильных устройств */
+        @media (max-width: 576px) {
+            .thank-you-message p {
+                font-size: 1rem !important;
+                max-width: 260px !important;
+            }
+        }
+      
+
+       
+
+
+
+    </style>
+
+</body>
+</html>
