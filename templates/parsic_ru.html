@@ -77,7 +77,7 @@
     <script src="/test/parsic/dist/guest.js"></script>
 </head>
 
-<body data-audio="/test/parsic/assets/music/pure-love-304010.mp3" data-confetti="true" data-time="{{event.date}}">
+<body data-audio="/test/parsic/assets/music/pure-love-304010.mp3" data-confetti="true" data-time="{% if event.date %}{{event.date | date}}{% else %}Дата будет уточнена{% endif %}">
 
     <!-- Root Invitation -->
     <div class="row m-0 p-0 opacity-0" id="root">
