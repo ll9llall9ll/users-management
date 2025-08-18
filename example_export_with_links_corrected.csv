@@ -1,7 +1,11 @@
 Сторона,Имя гостя,Имя Гостя в приглашении,Ссылка гостя
-Гость,Мама,Анаит Ервандовна,http://localhost:5000/invite?h=d267d9f395cf835ad310a7d6538564e4
-Гость,Папа,Ерванд Арамаисович,http://localhost:5000/invite?h=a1b2c3d4e5f678901234567890123456
-Гость,Бабушка,Людмила Петровна,http://localhost:5000/invite?h=f9e8d7c6b5a432109876543210987654
-Гость,Дедушка,Петр Иванович,http://localhost:5000/invite?h=1234567890abcdef1234567890abcdef
-Гость,Сестра,Мариам Ервандовна,http://localhost:5000/invite?h=abcdef1234567890abcdef1234567890
-Гость,Брат,Арам Ервандович,http://localhost:5000/invite?h=9876543210fedcba9876543210fedcba
+Гость,Мама,Анаит Ервандовна,http://localhost:5000/invite?h=Anai7x2k629
+Гость,Папа,Ерванд Арамаисович,http://localhost:5000/invite?h=Erva9m4p629
+Гость,Бабушка,Людмила Петровна,http://localhost:5000/invite?h=Lyud5n8q629
+Гость,Дедушка,Сергей Иванович,http://localhost:5000/invite?h=Serg2k7r629
+Гость,Тетя,Мария Петровна,http://localhost:5000/invite?h=Mari8h3s629
+Гость,Дядя,Александр Николаевич,http://localhost:5000/invite?h=Alek4m9t629
+Гость,Сестра,Елена Сергеевна,http://localhost:5000/invite?h=Elen6p1u629
+Гость,Брат,Дмитрий Александрович,http://localhost:5000/invite?h=Dmit3v5w629
+Гость,Подруга,Ольга Дмитриевна,http://localhost:5000/invite?h=Olga7y2x629
+Гость,Друг,Михаил Олегович,http://localhost:5000/invite?h=Miha1z8a629

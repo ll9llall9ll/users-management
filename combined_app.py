@@ -9,6 +9,9 @@ import hashlib
 import secrets
 import uuid
 import openai
+import time
+import random
+import string
 from openai import OpenAI
 import os
 import tempfile
@@ -22,6 +25,53 @@ from config_prod import getOpenaiConfig
 from config_prod import getFullConfig
 # In-memory session storage
 active_sessions = set()
+
+
+def generate_guest_hash(guest_name, event_id):
+    """
+    Генерирует короткий хеш для гостя, содержащий его имя.
+    Формат: {первые_буквы_имени}{короткий_хеш}
+    Пример: Анаит -> ana7x2k, Ерванд -> erv9m4p
+    """
+    # Словарь для транслитерации русских букв
+    translit_map = {
+        'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd', 'е': 'e', 'ё': 'e',
+        'ж': 'zh', 'з': 'z', 'и': 'i', 'й': 'y', 'к': 'k', 'л': 'l', 'м': 'm',
+        'н': 'n', 'о': 'o', 'п': 'p', 'р': 'r', 'с': 's', 'т': 't', 'у': 'u',
+        'ф': 'f', 'х': 'h', 'ц': 'ts', 'ч': 'ch', 'ш': 'sh', 'щ': 'sch',
+        'ъ': '', 'ы': 'y', 'ь': '', 'э': 'e', 'ю': 'yu', 'я': 'ya',
+        'А': 'A', 'Б': 'B', 'В': 'V', 'Г': 'G', 'Д': 'D', 'Е': 'E', 'Ё': 'E',
+        'Ж': 'Zh', 'З': 'Z', 'И': 'I', 'Й': 'Y', 'К': 'K', 'Л': 'L', 'М': 'M',
+        'Н': 'N', 'О': 'O', 'П': 'P', 'Р': 'R', 'С': 'S', 'Т': 'T', 'У': 'U',
+        'Ф': 'F', 'Х': 'H', 'Ц': 'Ts', 'Ч': 'Ch', 'Ш': 'Sh', 'Щ': 'Sch',
+        'Ъ': '', 'Ы': 'Y', 'Ь': '', 'Э': 'E', 'Ю': 'Yu', 'Я': 'Ya'
+    }
+    
+    # Очищаем имя от лишних символов и транслитерируем
+    clean_name = ''
+    for c in guest_name:
+        if c.isalpha():
+            # Транслитерируем русские буквы
+            if c in translit_map:
+                clean_name += translit_map[c]
+            else:
+                # Оставляем латинские буквы как есть
+                clean_name += c.lower()
+    
+    # Берем первые 3-4 буквы имени
+    name_part = clean_name[:4] if len(clean_name) >= 4 else clean_name
+    
+    # Генерируем короткий случайный хеш (4 символа)
+    chars = string.ascii_lowercase + string.digits
+    random_part = ''.join(random.choice(chars) for _ in range(4))
+    
+    # Объединяем имя и случайную часть
+    hash_value = f"{name_part}{random_part}"
+    
+    # Добавляем timestamp для уникальности
+    timestamp = str(int(time.time()))[-3:]  # Последние 3 цифры timestamp
+    
+    return f"{hash_value}{timestamp}"
 
 
 
@@ -573,9 +623,7 @@ def import_csv_guests():
                 processed_names.add(guest_name)
                 
                 # Генерируем хеш для приглашения
-                import hashlib
-                import time
-                hash_value = hashlib.md5(f"{guest_name}{event_id}{time.time()}".encode()).hexdigest()
+                hash_value = generate_guest_hash(guest_name, event_id)
                 
                 # Определяем пол по имени (используем простую логику)
                 is_male = detect_gender_by_name(guest_name)

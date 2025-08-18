@@ -5,6 +5,10 @@ from event_db import Event, createEvent, getEventByUserId, updateEvent, getEvent
 from datetime import datetime
 from template_db import get_template_by_id , TemplateDB, create_template_with_id , get_all_templates
 from invitation_db import Invitation, createInvitation, getInvitationByHash, getInvitationById, updateInvitation, getInvitationsListByEventId, deleteInvitation
+import hashlib
+import time
+import random
+import string
 
 class AppData:
     def __init__(self):
@@ -590,9 +594,7 @@ def import_csv_guests():
                 processed_names.add(guest_name)
                 
                 # Генерируем хеш для приглашения
-                import hashlib
-                import time
-                hash_value = hashlib.md5(f"{guest_name}{event_id}{time.time()}".encode()).hexdigest()
+                hash_value = generate_guest_hash(guest_name, event_id)
                 
                 # Определяем пол по имени (используем простую логику)
                 is_male = detect_gender_by_name(guest_name)
