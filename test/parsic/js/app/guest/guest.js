@@ -48,8 +48,8 @@ export const guest = (() => {
                 const day = parseInt(parts[0]);
                 const month = parseInt(parts[1]) - 1; // Месяцы в JS начинаются с 0
                 const year = parseInt(parts[2]);
-                count = new Date(year, month, day, 18, 0, 0).getTime(); // Устанавливаем время на 18:00 (как в acceptedRu)
-                console.log('ParsicRu - Parsed date:', new Date(year, month, day, 18, 0, 0));
+                count = new Date(year, month, day, 12, 0, 0).getTime(); // Устанавливаем время на 12:00
+                console.log('ParsicRu - Parsed date:', new Date(year, month, day, 12, 0, 0));
                 console.log('ParsicRu - Target time:', count);
             } else {
                 console.error('Invalid date format');
