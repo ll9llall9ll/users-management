@@ -29,7 +29,36 @@ export const guest = (() => {
      * @returns {void}
      */
     const countDownDate = () => {
-        const count = (new Date(document.body.getAttribute('data-time').replace(' ', 'T'))).getTime();
+        const eventDate = document.body.getAttribute('data-time');
+        let count;
+        
+        console.log('ParsicRu - Event date from data-time:', eventDate);
+        console.log('ParsicRu - Event date type:', typeof eventDate);
+        
+        // Проверяем, что дата установлена
+        if (!eventDate || eventDate === 'Дата будет уточнена') {
+            console.log('Date not set or will be clarified later');
+            return;
+        }
+        
+        // Парсим дату в формате DD.MM.YYYY
+        if (eventDate && eventDate.includes('.')) {
+            const parts = eventDate.split('.');
+            if (parts.length === 3) {
+                const day = parseInt(parts[0]);
+                const month = parseInt(parts[1]) - 1; // Месяцы в JS начинаются с 0
+                const year = parseInt(parts[2]);
+                count = new Date(year, month, day, 18, 0, 0).getTime(); // Устанавливаем время на 18:00 (как в acceptedRu)
+                console.log('ParsicRu - Parsed date:', new Date(year, month, day, 18, 0, 0));
+                console.log('ParsicRu - Target time:', count);
+            } else {
+                console.error('Invalid date format');
+                return;
+            }
+        } else {
+            // Пробуем стандартный парсинг для обратной совместимости
+            count = (new Date(eventDate.replace(' ', 'T'))).getTime();
+        }
 
         /**
          * @param {number} num 

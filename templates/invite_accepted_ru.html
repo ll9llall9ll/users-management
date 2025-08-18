@@ -351,7 +351,9 @@
                     const day = parseInt(parts[0]);
                     const month = parseInt(parts[1]) - 1; // Месяцы в JS начинаются с 0
                     const year = parseInt(parts[2]);
-                    targetDate = new Date(year, month, day, 12, 0, 0); // Устанавливаем время на 12:00
+                    targetDate = new Date(year, month, day, 18, 0, 0); // Устанавливаем время на 18:00
+                    console.log('AcceptedRu - Parsed date:', targetDate);
+                    console.log('AcceptedRu - Target time:', targetDate.getTime());
                 } else {
                     document.getElementById('countdown').innerHTML = '<div class="countdown-item"><span class="countdown-number">❌</span><span class="countdown-label">Неверный формат даты</span></div>';
                     return;
@@ -393,8 +395,8 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Отладочная информация
             const eventDate = document.body.getAttribute('data-time');
-            console.log('Event date from data-time:', eventDate);
-            console.log('Event date type:', typeof eventDate);
+            console.log('AcceptedRu - Event date from data-time:', eventDate);
+            console.log('AcceptedRu - Event date type:', typeof eventDate);
             
             updateCountdown();
             // Обновляем каждую секунду
