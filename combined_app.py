@@ -409,11 +409,11 @@ def export_csv_guests_with_links():
         output = io.StringIO()
         writer = csv.writer(output)
         
-        # Записываем заголовок
+        # Записываем заголовок с добавлением поля "Пол"
         if language == 'hy':
-            header = ['Կողմ', 'Հյուրի անուն', 'Հյուրի անուն հրավերում', 'Հյուրի հղում']
+            header = ['Կողմ', 'Հյուրի անուն', 'Հյուրի անուն հրավերում', 'Սեռ', 'Հյուրի հղում']
         else:
-            header = ['Сторона', 'Имя гостя', 'Имя Гостя в приглашении', 'Ссылка гостя']
+            header = ['Сторона', 'Имя гостя', 'Имя Гостя в приглашении', 'Пол', 'Ссылка гостя']
         
         writer.writerow(header)
         
@@ -431,11 +431,20 @@ def export_csv_guests_with_links():
             # Используем guest_nickname если есть, иначе пустая строка
             guest_nickname = invitation.guest_nickname if invitation.guest_nickname else ""
             
-            # Записываем строку данных
+            # Определяем пол гостя
+            if invitation.is_male is True:
+                gender = "Արական" if language == 'hy' else "Мужчина"
+            elif invitation.is_male is False:
+                gender = "Իգական" if language == 'hy' else "Женщина"
+            else:
+                gender = "Հ/Հ" if language == 'hy' else "Н/Д"
+            
+            # Записываем строку данных с добавлением поля пола
             row = [
                 side,  # Сторона
                 guest_nickname,  # Имя гостя (nickname)
                 invitation.name,  # Имя Гостя в приглашении
+                gender,  # Пол гостя
                 guest_link  # Ссылка гостя
             ]
             

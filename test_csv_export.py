@@ -56,6 +56,11 @@ def test_csv_export():
                 for i, row in enumerate(csv_reader):
                     if i == 0:
                         print(f"Заголовок: {row}")
+                        # Проверяем количество столбцов
+                        if len(row) == 5:
+                            print("✅ CSV содержит 5 столбцов: Сторона, Имя гостя, Имя в приглашении, Пол, Ссылка")
+                        else:
+                            print(f"⚠️ Неожиданное количество столбцов: {len(row)}")
                     else:
                         print(f"Строка {i}: {row}")
                 
@@ -110,6 +115,12 @@ def test_armenian_export():
                 csv_reader = csv.reader(io.StringIO(csv_data))
                 header = next(csv_reader)
                 print(f"Заголовок на армянском: {header}")
+                
+                # Проверяем количество столбцов для армянского
+                if len(header) == 5:
+                    print("✅ CSV на армянском содержит 5 столбцов: Կողմ, Հյուրի անուն, Հյուրի անուն հրավերում, Սեռ, Հյուրի հղում")
+                else:
+                    print(f"⚠️ Неожиданное количество столбцов для армянского: {len(header)}")
                 
                 # Сохраняем файл
                 with open(f"test_export_hy_{TEST_EVENT_ID}.csv", "w", encoding="utf-8") as f:
