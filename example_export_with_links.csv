@@ -1,7 +1,7 @@
-Сторона,Имя гостя,Имя Гостя в приглашении,Ссылка гостя
-Гость,Мама,Анаит Ервандовна,http://localhost:5000/invite?h=abc123def456ghi789
-Гость,Папа,Ерванд Арамаисович,http://localhost:5000/invite?h=jkl012mno345pqr678
-Гость,Бабушка,Людмила Петровна,http://localhost:5000/invite?h=stu901vwx234yz567
-Гость,Дедушка,Петр Иванович,http://localhost:5000/invite?h=abc890def123ghi456
-Гость,Сестра,Мариам Ервандовна,http://localhost:5000/invite?h=jkl789mno012pqr345
-Гость,Брат,Арам Ервандович,http://localhost:5000/invite?h=stu678vwx901yz234
+Сторона,Имя гостя,Имя Гостя в приглашении,Пол,Ссылка гостя
+Гость,Мама,Анаит Ервандовна,Женщина,http://localhost:5000/invite?h=abc123def456ghi789
+Гость,Папа,Ерванд Арамаисович,Мужчина,http://localhost:5000/invite?h=jkl012mno345pqr678
+Гость,Бабушка,Людмила Петровна,Женщина,http://localhost:5000/invite?h=stu901vwx234yz567
+Гость,Дедушка,Петр Иванович,Мужчина,http://localhost:5000/invite?h=abc890def123ghi456
+Гость,Сестра,Мариам Ервандовна,Женщина,http://localhost:5000/invite?h=jkl789mno012pqr345
+Гость,Брат,Арам Ервандович,Мужчина,http://localhost:5000/invite?h=stu678vwx901yz234
